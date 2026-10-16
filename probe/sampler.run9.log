@@ -1,0 +1,518 @@
+# sampler started 2026-10-01 16:04:06, game pid 306504
+=== hub open at 16:16:00.015891 ===
+  t(ms)  diskKB  gpu(MiB,util%)  threads  busiest threads: name user/sys ms [majflt] state
+   -431       0     7705, 100    70  GameThread 10/10 R  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S
+   -329       0     7701, 100    70  redDispatcher5 20/10 S  redDispatcher4 20/10 S  redDispatcher9 20/0 S  redDispatcher7 10/10 S  redDispatcher6 20/0 S  redDispatcher3 20/0 S
+   -228       0     7701, 100    70  redDispatcher1 20/10 S  GameThread 20/10 S  redDispatcher8 20/0 S  redDispatcher7 20/0 S  redDispatcher6 20/0 S  redDispatcher5 20/0 S
+   -126      64     7701, 100    70  redDispatcher9 20/0 S  redDispatcher4 20/0 R  redDispatcher3 20/0 R  redDispatcher2 20/0 R  redDispatcher11 20/0 S  redDispatcher10 20/0 R
+    -24       0     7701, 100    70  redDispatcher5 20/0 S  GameThread 10/10 S  Cyberpunk2077.e 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S
+     78    4168     7701, 100    70  GameThread 20/40 R  redDispatcher6 20/10 S  redDispatcher11 20/10 [13] R  redDispatcher10 30/0 [8] S  redDispatcher9 10/10 [1] S  redDispatcher8 10/10 S
+    181    1260     7701, 100    70  GameThread 20/60 [1] R  redDispatcher4 70/0 R  redDispatcher3 20/0 S  Cyberpunk2077.e 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S
+    283    7520     7773, 100    70  GameThread 30/70 R  redDispatcher4 20/40 [1] S  redDispatcher10 40/0 [8] R  redDispatcher8 10/0 S  redDispatcher5 10/0 [5] S  redDispatcher2 10/0 S
+    385      96     7773, 100    70  GameThread 30/70 R  redDispatcher10 90/0 R  redDispatcher9 10/0 S  redDispatcher4 10/0 S  GameThread 0/10 S  Cyberpunk2077.e 0/10 S
+    487    1456      7861, 34    70  GameThread 30/70 R  redDispatcher5 0/50 R  redDispatcher10 20/10 [3] S  redDispatcher6 20/0 [1] S  redDispatcher3 10/10 [9] S  redIOWorker0 0/10 S
+    589      24      7861, 34    70  GameThread 30/70 R  redDispatcher7 0/30 S  GameThread 0/30 R  redDispatcher5 10/10 S  Cyberpunk2077.e 0/10 S
+    691       0      7876, 34    70  GameThread 20/80 R  GameThread 0/40 S  redDispatcher7 0/20 S  redDispatcher1 10/0 S  audio_client_ma 10/0 S  GameThread 0/10 S
+    793       0      7876, 34    70  GameThread 30/70 R  GameThread 0/60 S  GameThread 10/0 S  Cyberpunk2077.e 0/10 R
+    894    1664      7852, 46    70  GameThread 20/80 R  GameThread 0/50 R  redDispatcher7 0/30 [1] S  redDispatcher4 10/0 S  Cyberpunk2077.e 10/0 S
+    996       0      7852, 46    70  GameThread 30/70 R  GameThread 0/40 R  redDispatcher7 0/20 S  GameThread 10/0 S
+   1098       0      7852, 46    70  GameThread 20/80 R  redDispatcher7 0/30 R  GameThread 0/30 S  Cyberpunk2077.e 10/10 S
+   1200       0      7885, 46    70  GameThread 30/70 R  GameThread 0/50 S  redDispatcher7 0/30 S  redDispatcher8 0/0 [1] S
+   1301       0      7885, 46    70  GameThread 20/80 R  GameThread 0/40 R  Cyberpunk2077.e 10/0 S
+   1403       4      7886, 46    70  GameThread 30/70 R  GameThread 0/50 S  redDispatcher7 0/30 S  Cyberpunk2077.e 10/10 S  redDispatcher2 10/0 S  redDispatcher11 0/0 [1] S
+   1505       0      7886, 46    70  GameThread 30/70 R  GameThread 0/50 S  redDispatcher7 0/20 S  redDispatcher11 10/0 S
+   1607       0      7881, 52    70  GameThread 20/80 R  GameThread 0/40 S  Cyberpunk2077.e 10/10 S  redDispatcher7 0/10 S
+   1708       0      7881, 52    70  GameThread 30/70 R  GameThread 0/50 S  redDispatcher7 0/20 S
+   1810       0      7882, 52    70  GameThread 10/90 R  GameThread 0/40 R  redDispatcher7 0/20 S  Cyberpunk2077.e 10/10 S  redDispatcher3 10/0 S  RawTcpNetworkTh 0/10 S
+   1912       0      7882, 52    70  GameThread 30/70 R  GameThread 0/60 S  GameThread 10/0 S
+   2014       0      7824, 39    70  GameThread 30/70 R  GameThread 0/40 S  redDispatcher7 0/20 S  Cyberpunk2077.e 10/10 S  GameThread 10/0 S  GameThread 10/0 S
+   2115     136      7824, 39    70  GameThread 20/80 R  GameThread 0/50 R  redDispatcher8 10/0 [2] S  redDispatcher7 0/10 S  audio_client_ma 0/10 S
+   2217       0      7886, 39    70  GameThread 30/70 R  GameThread 0/40 S  redDispatcher7 0/20 S
+   2319       0      7886, 39    70  GameThread 20/80 R  GameThread 0/40 S  redDispatcher7 0/20 S  Cyberpunk2077.e 0/10 S
+   2420       0      7868, 39    70  GameThread 30/80 R  GameThread 0/50 R  redDispatcher7 0/10 S  Cyberpunk2077.e 10/0 S
+   2522       0      7868, 39    70  GameThread 20/80 R  GameThread 0/60 S  redDispatcher7 0/10 S  Cyberpunk2077.e 0/10 S
+   2624       0      7829, 40    70  GameThread 20/70 R  redDispatcher3 0/30 S  GameThread 0/30 S  redDispatcher7 10/0 [1] S  redDispatcher6 10/0 S  Cyberpunk2077.e 10/0 S
+   2725      56      7829, 40    70  GameThread 30/70 R  [vkrt] Analysis 80/0 R  redDispatcher8 60/0 R  redDispatcher3 10/20 [3] S  redDispatcher9 20/0 [2] S  redDispatcher5 20/0 [1] S
+   2827       0      7785, 40    70  redDispatcher8 100/10 S  GameThread 30/80 R  [vkrt] Analysis 90/0 S  redDispatcher2 0/10 S  Cyberpunk2077.e 10/0 S
+   2930     360      7785, 40    70  redDispatcher3 50/0 R  GameThread 20/30 R  redDispatcher7 20/10 S  redDispatcher9 10/10 S  redDispatcher6 20/0 S  redDispatcher5 10/10 S
+   3031       0     7785, 100    70  redDispatcher3 110/0 R  GameThread 30/70 R  GameThread 0/10 S
+   3133       0     7785, 100    70  redDispatcher3 100/0 R  Cyberpunk2077.e 10/10 S  RawTcpNetworkTh 10/0 S  GameThread 0/10 S
+   3235    3076     7785, 100    70  redDispatcher3 80/0 S  redDispatcher4 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher6 0/10 S
+   3336       0     7785, 100    70  redDispatcher9 10/10 S  GameThread 10/10 R  redDispatcher8 10/0 S  redDispatcher6 10/0 R  redDispatcher5 10/0 S  redDispatcher3 0/10 S
+   3438       0     7781, 100    70  redDispatcher8 10/10 S  redDispatcher7 10/10 S  redDispatcher11 10/10 S  GameThread 10/10 S  redDispatcher5 10/0 S  redDispatcher4 10/0 S
+   3540       0     7781, 100    70  [vkrt] Analysis 20/0 R  redDispatcher9 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher2 10/0 S  redDispatcher11 10/0 S
+   3641       0      7781, 99    70  [vkrt] Analysis 100/0 R  redDispatcher4 10/10 S  redDispatcher8 10/0 S  redDispatcher5 10/0 S  redDispatcher3 10/0 S  redDispatcher10 10/0 S
+   3743       0      7781, 99    70  [vkrt] Analysis 100/0 R  redDispatcher2 10/10 S  GameThread 10/10 S  vkd3d_queue 10/0 S  redDispatcher9 10/0 S  redDispatcher6 10/0 S
+   3844       0      7781, 99    70  [vkrt] Analysis 70/0 S  GameThread 10/10 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 R  redDispatcher5 10/0 S
+   3947     148      7781, 99    70  [vkrt] Analysis 30/0 R  redDispatcher9 10/10 S  redDispatcher7 10/0 S  redDispatcher5 10/0 S  redDispatcher4 10/0 S  redDispatcher3 10/0 S
+   4048       0     7781, 100    70  [vkrt] Analysis 100/0 R  redDispatcher1 10/10 S  redDispatcher8 10/0 S  redDispatcher6 10/0 S  redDispatcher4 10/0 S  redDispatcher2 10/0 S
+   4150     244     7781, 100    70  [vkrt] Analysis 100/0 R  redDispatcher9 10/0 S  redDispatcher6 0/10 S  redDispatcher5 10/0 S  redDispatcher11 10/0 S  redDispatcher10 10/0 S
+   4252       4     7781, 100    70  [vkrt] Analysis 80/0 S  GameThread 10/10 R  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 R  redDispatcher6 10/0 S
+   4354     104     7781, 100    70  [vkrt] Analysis 30/0 R  redDispatcher7 10/10 S  redDispatcher3 10/10 S  redDispatcher5 10/0 S  redDispatcher4 10/0 S  redDispatcher2 10/0 S
+   4456       0     7781, 100    70  [vkrt] Analysis 100/0 R  redDispatcher10 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher6 10/0 S  redDispatcher5 0/10 S
+   4557       0     7781, 100    70  [vkrt] Analysis 100/0 R  GameThread 10/10 S  redDispatcher7 10/0 S  redDispatcher4 10/0 S  redDispatcher3 10/0 S
+   4659       0     7781, 100    70  [vkrt] Analysis 90/0 S  redDispatcher9 10/0 S  redDispatcher8 0/10 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S  redDispatcher2 10/0 S
+   4761       0     7781, 100    70  redDispatcher4 10/10 S  redDispatcher11 10/10 S  GameThread 10/10 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher3 10/0 S
+   4862       0     7781, 100    70  [vkrt] Analysis 100/0 R  redDispatcher9 10/10 S  redDispatcher8 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S  redDispatcher10 10/0 S
+   4964       0     7781, 100    70  [vkrt] Analysis 100/0 R  GameThread 10/10 S  Cyberpunk2077.e 10/10 S  redDispatcher7 10/0 S  redDispatcher4 10/0 S  redDispatcher3 10/0 S
+   5065       0     7781, 100    70  [vkrt] Analysis 100/0 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher6 0/10 S  redDispatcher5 10/0 S  redDispatcher2 10/0 S
+   5167       0     7781, 100    70  GameThread 10/10 R  vkd3d_queue 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher4 10/0 S  redDispatcher3 0/10 S
+   5269       0     7781, 100    70  [vkrt] Analysis 100/0 R  redDispatcher5 10/10 S  redDispatcher10 10/10 S  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S
+   5371       0     7781, 100    70  [vkrt] Analysis 100/0 R  redDispatcher8 10/0 S  redDispatcher4 10/0 S  redDispatcher3 10/0 S  redDispatcher2 10/0 S  redDispatcher11 10/0 S
+   5473       0     7781, 100    70  [vkrt] Analysis 100/0 R  redDispatcher8 0/10 S  redDispatcher7 10/0 S  redDispatcher5 10/0 S  redDispatcher1 10/0 S  GameThread 10/0 S
+   5574       0     7781, 100    70  redDispatcher9 10/10 S  [vkrt] Analysis 20/0 S  vkd3d_queue 10/0 S  redDispatcher6 10/0 S  redDispatcher4 10/0 S  redDispatcher2 10/0 S
+   5676       0     7781, 100    70  [vkrt] Analysis 90/0 R  redDispatcher7 10/10 S  vkd3d_queue 0/10 S  vkd3d_fence 10/0 S  redDispatcher8 10/0 S  redDispatcher4 0/10 S
+   5778       0     7781, 100    70  [vkrt] Analysis 100/0 R  GameThread 10/20 S  redDispatcher9 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S  redDispatcher4 10/0 S
+   5880       0     7781, 100    70  [vkrt] Analysis 100/0 R  redDispatcher5 10/10 S  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher6 10/0 S
+   5982       0     7781, 100    70  [vkrt] Analysis 20/0 S  Cyberpunk2077.e 10/10 S  redDispatcher7 10/0 S  redDispatcher6 0/10 S  redDispatcher4 10/0 S  redDispatcher3 10/0 S
+   6084       0     7781, 100    70  [vkrt] Analysis 80/0 R  GameThread 10/10 S  redDispatcher8 10/0 S  redDispatcher7 0/10 S  redDispatcher6 10/0 S  redDispatcher10 10/0 S
+   6185       0     7781, 100    70  [vkrt] Analysis 100/0 R  redDispatcher9 10/0 S  redDispatcher5 10/0 S  redDispatcher4 10/0 S  redDispatcher3 0/10 S  redDispatcher2 10/0 S
+   6287       0     7781, 100    70  [vkrt] Analysis 100/0 R  GameThread 20/30 R  redDispatcher8 10/10 S  redDispatcher9 0/10 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S
+   6389       0     7781, 100    70  [vkrt] Analysis 100/0 R  GameThread 10/30 R  redDispatcher2 10/10 S  redDispatcher9 10/0 S  redDispatcher6 10/0 S  redDispatcher3 10/0 S
+   6491       0     7781, 100    70  GameThread 40/60 R  [vkrt] Analysis 60/0 S  Cyberpunk2077.e 10/10 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher5 10/0 S
+   6592       0     7781, 100    70  GameThread 20/60 R  [vkrt] Analysis 40/0 R  redDispatcher9 10/0 S  redDispatcher6 10/0 S  redDispatcher2 10/0 S  redDispatcher10 10/0 S
+   6694       0     7781, 100    70  [vkrt] Analysis 100/0 R  GameThread 30/70 R  redDispatcher7 10/0 S  Cyberpunk2077.e 10/0 S
+   6796       0     7781, 100    70  [vkrt] Analysis 100/0 R  GameThread 20/60 R  redDispatcher11 10/10 S  redDispatcher5 10/0 R  redDispatcher4 10/0 R  redDispatcher3 10/0 R
+   6899       0     7781, 100    70  [vkrt] Analysis 100/0 R  GameThread 20/80 R  vkd3d-swapchain 0/10 S  redDispatcher8 10/0 S  redDispatcher2 10/0 S
+   7001       0     7781, 100    70  [vkrt] Analysis 100/0 R  GameThread 30/70 R  redDispatcher9 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S
+   7103       0     7781, 100    70  GameThread 30/60 R  [vkrt] Analysis 60/0 S  redDispatcher8 10/0 S  redDispatcher4 0/10 S  Cyberpunk2077.e 0/10 S
+   7204       0     7781, 100    70  GameThread 30/70 R  [vkrt] Analysis 50/0 R  redDispatcher9 10/0 S  redDispatcher2 10/0 S  redDispatcher10 10/0 S  Cyberpunk2077.e 10/0 S
+   7306       0     7781, 100    70  [vkrt] Analysis 100/0 R  GameThread 20/50 S  GameThread 0/20 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S
+   7407       0     7696, 100    70  [vkrt] Analysis 100/0 R  GameThread 50/40 R  vkd3d_fence 0/10 S  redDispatcher9 0/10 S  Cyberpunk2077.e 0/10 S
+   7509       0     7696, 100    70  [vkrt] Analysis 100/0 R  GameThread 0/40 R  audio_client_ma 0/10 S  Cyberpunk2077.e 10/0 S
+   7611       0     7721, 100    70  GameThread 0/60 S  [vkrt] Analysis 30/0 S  redDispatcher6 0/10 S  GamepadObserver 0/10 S  GameThread 10/0 S  GameThread 10/0 S
+   7713       0     7721, 100    70  GameThread 0/60 S  RawTcpNetworkTh 0/10 S  Cyberpunk2077.e 10/0 S
+   7815       0     7884, 100    70  GameThread 0/60 R  Cyberpunk2077.e 0/10 S
+   7916       0     7884, 100    70  GameThread 0/60 S  Cyberpunk2077.e 10/0 S
+
+=== hub open at 16:16:17.749865 ===
+  t(ms)  diskKB  gpu(MiB,util%)  threads  busiest threads: name user/sys ms [majflt] state
+   -444       0     7884, 100    70  redDispatcher11 100/0 R  GameThread 30/70 R
+   -343       0     7884, 100    70  GameThread 20/80 R  redDispatcher11 70/0 R  GameThread 0/20 S
+   -241       0     7858, 100    70  GameThread 30/80 R  GameThread 0/50 S  Cyberpunk2077.e 10/10 S  redDispatcher6 10/0 S  redDispatcher2 10/0 S  redDispatcher11 0/10 S
+   -139       0     7858, 100    70  GameThread 20/70 R  GameThread 0/60 R  redDispatcher8 10/0 S  redDispatcher3 10/0 R  Cyberpunk2077.e 10/0 S  redDispatcher11 0/0 [1] S
+    -37       0     7561, 100    70  GameThread 30/70 R  GameThread 0/40 S  redDispatcher11 0/30 [2] S  GameThread 0/10 S
+     65       0     7561, 100    70  GameThread 30/70 R  [vkrt] Analysis 80/0 R  redDispatcher10 60/10 R  redDispatcher9 10/10 S  redDispatcher7 10/10 S  redDispatcher3 10/10 S
+    167       0     7415, 100    70  GameThread 20/80 R  redDispatcher10 90/0 S  [vkrt] Analysis 80/0 S  redDispatcher2 0/10 S  RawTcpNetworkTh 0/10 S  Cyberpunk2077.e 10/0 S
+    269       0     7415, 100    70  redDispatcher10 0/20 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S  redDispatcher4 10/0 S
+    370       0     7881, 100    70  redDispatcher10 0/90 S  Cyberpunk2077.e 10/10 S
+    473       0     7881, 100    70  GameThread 30/70 R  redDispatcher10 60/20 R  redDispatcher1 20/0 S  redDispatcher9 10/0 S  redDispatcher8 10/0 R  redDispatcher5 10/0 S
+    575    1284     7883, 100    70  GameThread 20/40 R  redDispatcher10 10/40 R  redDispatcher7 20/0 R  redDispatcher11 10/10 S  vkd3d_queue 0/10 S  redDispatcher9 10/0 S
+    676       0     7883, 100    70  redDispatcher7 100/0 R  GameThread 20/70 S  redDispatcher10 0/60 R  redDispatcher8 10/10 R  redDispatcher9 10/0 S  redDispatcher6 10/0 S
+    778       0      7831, 71    70  redDispatcher10 0/50 S  GameThread 10/30 R  redDispatcher8 10/0 S  redDispatcher7 10/0 S  Cyberpunk2077.e 0/10 R  redDispatcher6 0/0 [1] S
+    880       0      7831, 71    70  GameThread 20/80 R  redDispatcher10 0/50 R  redDispatcher2 20/0 R  audio_client_ma 0/10 S  Cyberpunk2077.e 10/0 S
+    982       0      7863, 71    70  GameThread 20/50 S  redDispatcher10 0/40 R  redDispatcher2 10/0 S  redDispatcher1 10/0 S  [vkrt] Analysis 10/0 R  GameThread 0/10 S
+   1084       0      7863, 71    70  [vkrt] Analysis 100/0 R  redDispatcher10 10/60 R  redDispatcher5 10/10 S  GameThread 10/10 R  Cyberpunk2077.e 10/10 S  redDispatcher6 10/0 [1] S
+   1186       0      7878, 71    70  GameThread 30/80 R  [vkrt] Analysis 70/0 S  redDispatcher10 0/60 R  redDispatcher8 10/0 S  GameThread 10/0 S
+   1288       0      7878, 71    70  redDispatcher5 20/0 S  redDispatcher4 10/10 S  redDispatcher2 10/10 S  redDispatcher10 10/10 S  GameThread 20/0 S  Cyberpunk2077.e 10/10 S
+   1389       0      7758, 57    70  redDispatcher7 10/0 S  redDispatcher4 10/0 S  redDispatcher2 10/0 S  GameThread 0/10 S
+   1491       0      7758, 57    70  redDispatcher6 10/10 S  Cyberpunk2077.e 10/10 S  redDispatcher5 10/0 S  redDispatcher3 10/0 S  redDispatcher11 10/0 S  GameThread 0/10 S
+   1593       0      7759, 57    70  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher4 10/0 S  redDispatcher2 10/0 S  redDispatcher10 10/0 S  redDispatcher1 10/0 S
+   1694       0       7751, 3    70  redDispatcher7 10/0 S  redDispatcher1 0/10 S  GameThread 0/10 S  GameThread 0/10 S  redDispatcher2 0/0 [2] S
+   1796       0       7751, 3    70  Cyberpunk2077.e 10/10 S  redDispatcher9 0/10 S  redDispatcher6 10/0 S  redDispatcher3 10/0 S  redDispatcher11 10/0 [1] S  GameThread 10/0 S
+   1897       0       7743, 3    70  GameThread 30/40 S  redDispatcher9 30/0 S  redDispatcher8 20/10 S  redDispatcher7 20/10 S  redDispatcher5 30/0 S  redDispatcher3 20/10 S
+   1999       0       7743, 3    70  GameThread 30/30 S  redDispatcher4 30/10 S  redDispatcher10 30/10 S  redDispatcher8 30/0 S  redDispatcher6 20/10 S  redDispatcher5 20/10 S
+   2101       0       7743, 3    70  GameThread 30/30 S  redDispatcher5 30/0 S  redDispatcher2 20/10 R  redDispatcher1 20/10 S  redDispatcher9 20/0 S  redDispatcher8 20/0 S
+   2202       0       7743, 3    70  GameThread 30/40 S  redDispatcher9 20/10 S  redDispatcher8 20/10 S  redDispatcher7 20/10 S  redDispatcher6 30/0 S  redDispatcher3 20/10 S
+   2304       0      7743, 22    70  GameThread 30/40 S  redDispatcher9 30/0 S  redDispatcher8 30/0 R  redDispatcher7 20/10 S  redDispatcher6 20/10 S  redDispatcher5 20/10 S
+   2405       0      7743, 22    70  GameThread 30/50 R  redDispatcher6 20/10 R  redDispatcher3 20/10 R  redDispatcher2 20/10 R  redDispatcher9 20/0 R  redDispatcher8 20/0 R
+   2507       0      7743, 22    70  GameThread 40/30 S  redDispatcher9 30/0 S  redDispatcher8 20/10 S  redDispatcher7 30/0 S  redDispatcher4 20/10 R  redDispatcher3 30/0 S
+   2609       0      7743, 22    70  GameThread 30/40 S  redDispatcher7 20/10 S  redDispatcher5 20/10 S  redDispatcher2 20/10 S  redDispatcher10 30/0 S  redDispatcher9 20/0 S
+   2710       0      7743, 22    70  GameThread 30/40 R  redDispatcher6 30/10 S  redDispatcher9 20/10 S  redDispatcher8 20/10 S  redDispatcher3 20/10 R  redDispatcher11 30/0 S
+   2812       0      7743, 22    70  GameThread 40/40 S  redDispatcher5 20/10 S  redDispatcher4 30/0 S  redDispatcher1 20/10 S  redDispatcher9 20/0 S  redDispatcher8 20/0 S
+   2914       0      7743, 22    70  GameThread 30/30 S  redDispatcher9 30/10 S  redDispatcher8 20/10 S  redDispatcher7 30/0 S  redDispatcher6 20/10 S  redDispatcher4 20/10 S
+   3016       0      7743, 22    70  GameThread 30/30 R  redDispatcher8 30/0 S  redDispatcher7 20/10 S  redDispatcher5 20/10 S  redDispatcher4 20/10 S  redDispatcher2 30/0 S
+   3117       0      7743, 22    70  GameThread 30/40 S  redDispatcher11 30/10 S  redDispatcher8 20/10 S  redDispatcher6 20/10 S  redDispatcher5 30/0 S  redDispatcher3 20/10 S
+   3219       0      7743, 22    70  GameThread 30/30 R  redDispatcher8 20/10 S  redDispatcher5 20/10 S  redDispatcher4 20/10 S  redDispatcher2 20/10 S  redDispatcher10 20/10 S
+   3321       0      7743, 21    70  GameThread 30/40 R  redDispatcher7 30/10 S  redDispatcher9 20/10 S  redDispatcher6 20/10 S  redDispatcher4 20/10 R  redDispatcher3 20/10 S
+   3423       0      7743, 21    70  GameThread 30/50 R  redDispatcher8 20/10 S  redDispatcher5 30/0 S  redDispatcher1 30/0 R  redDispatcher9 20/0 S  redDispatcher7 20/0 S
+   3525       0      7743, 21    70  GameThread 30/40 R  redDispatcher2 30/10 R  redDispatcher8 30/0 S  redDispatcher6 20/10 S  redDispatcher5 20/10 S  redDispatcher3 20/10 S
+   3627       0      7743, 21    70  GameThread 30/40 R  redDispatcher4 30/10 S  redDispatcher9 20/10 S  redDispatcher7 30/0 S  redDispatcher5 30/0 S  redDispatcher3 30/0 S
+   3729       0      7743, 24    70  GameThread 30/40 R  redDispatcher9 30/0 S  redDispatcher7 20/10 S  redDispatcher3 20/10 S  redDispatcher11 30/0 R  redDispatcher10 20/10 S
+   3831       0      7743, 24    70  GameThread 30/40 R  redDispatcher8 20/10 S  redDispatcher6 20/10 S  redDispatcher5 20/10 S  redDispatcher2 30/0 S  redDispatcher10 20/10 S
+   3933       0      7743, 24    70  GameThread 20/40 R  redDispatcher4 30/10 R  redDispatcher9 20/10 R  redDispatcher8 30/0 S  redDispatcher7 20/10 S  redDispatcher6 30/0 S
+   4035       0      7743, 24    70  GameThread 30/30 R  redDispatcher9 20/10 R  redDispatcher8 20/10 S  redDispatcher6 20/10 S  redDispatcher5 30/0 S  redDispatcher3 20/10 S
+   4136       0      7743, 24    70  GameThread 30/30 R  redDispatcher8 30/0 S  redDispatcher7 30/0 S  redDispatcher5 20/10 S  redDispatcher4 20/10 S  redDispatcher11 30/0 R
+   4238       0      7743, 24    70  GameThread 20/60 R  redDispatcher3 30/10 S  redDispatcher9 30/0 [1] S  redDispatcher7 20/10 S  redDispatcher6 20/10 S  redDispatcher2 20/10 S
+   4340       0      7743, 23    70  GameThread 40/50 R  redDispatcher11 30/10 S  redDispatcher9 20/10 S  redDispatcher6 20/10 R  redDispatcher4 20/10 R  redDispatcher2 20/10 R
+   4443       0      7743, 23    70  GameThread 30/40 R  redDispatcher8 20/10 S  redDispatcher5 20/10 S  redDispatcher1 20/10 R  redDispatcher7 10/10 S  redDispatcher4 20/0 S
+   4545       0      7743, 23    70  GameThread 40/50 R  redDispatcher7 20/10 S  redDispatcher6 20/10 S  redDispatcher5 20/10 R  redDispatcher3 20/10 S  redDispatcher2 20/10 S
+   4647       0      7743, 23    70  GameThread 30/50 R  redDispatcher9 30/10 S  redDispatcher6 30/0 S  redDispatcher4 20/10 S  redDispatcher3 30/0 R  redDispatcher10 20/10 R
+   4749       0      7743, 24    70  GameThread 40/30 R  redDispatcher7 30/10 R  redDispatcher8 30/0 S  redDispatcher5 20/10 R  redDispatcher11 20/10 S  redDispatcher10 30/0 S
+   4851       0      7743, 24    70  GameThread 30/40 R  redDispatcher8 20/10 R  redDispatcher4 20/10 R  redDispatcher2 20/10 R  redDispatcher11 30/0 R  redDispatcher10 20/10 R
+   4953       0      7743, 24    70  GameThread 30/30 R  redDispatcher9 30/10 S  redDispatcher6 30/10 S  redDispatcher3 30/10 R  redDispatcher8 20/10 R  redDispatcher7 20/10 S
+   5055       0      7743, 24    70  GameThread 40/20 R  redDispatcher5 20/10 S  redDispatcher4 20/10 S  redDispatcher1 20/10 R  redDispatcher9 20/0 S  redDispatcher8 20/0 S
+   5157       0      7743, 24    70  GameThread 30/40 R  redDispatcher6 20/10 R  redDispatcher2 20/10 R  redDispatcher11 20/10 S  redDispatcher10 20/10 R  redDispatcher9 20/0 S
+   5259       0      7743, 24    70  GameThread 40/50 S  redDispatcher9 20/10 S  redDispatcher7 20/10 S  redDispatcher5 20/10 S  redDispatcher4 20/10 S  redDispatcher3 20/10 S
+   5361       0      7743, 26    70  GameThread 40/40 R  redDispatcher9 30/0 S  redDispatcher8 20/10 R  redDispatcher7 20/10 S  redDispatcher6 20/10 R  redDispatcher5 30/0 S
+   5463       0      7743, 26    70  GameThread 30/50 R  redDispatcher2 30/10 S  redDispatcher9 20/10 S  redDispatcher8 30/0 S  redDispatcher7 30/0 S  redDispatcher5 20/10 S
+   5565       0      7743, 26    70  GameThread 30/40 R  redDispatcher8 20/10 S  redDispatcher6 20/10 S  redDispatcher3 20/10 S  redDispatcher10 30/0 S  redDispatcher1 30/0 [1] S
+   5667       0      7743, 26    70  GameThread 30/40 R  redDispatcher6 30/10 S  redDispatcher9 20/10 S  redDispatcher7 30/0 S  redDispatcher5 30/0 S  redDispatcher4 30/0 S
+   5769       0      7743, 27    70  GameThread 20/40 R  redDispatcher8 20/10 S  redDispatcher7 20/10 S  redDispatcher5 20/10 S  redDispatcher3 20/10 S  redDispatcher2 20/10 S
+   5871       0      7743, 27    70  GameThread 40/30 R  redDispatcher9 30/0 S  redDispatcher8 30/0 R  redDispatcher6 30/0 R  redDispatcher4 20/10 R  redDispatcher3 30/0 S
+   5973       0      7743, 27    70  GameThread 20/40 R  redDispatcher6 20/10 S  redDispatcher4 20/10 R  redDispatcher2 20/10 R  redDispatcher1 20/10 R  redDispatcher9 20/0 S
+   6075       0      7743, 27    70  GameThread 40/30 R  redDispatcher3 30/10 S  redDispatcher9 30/0 S  redDispatcher8 20/10 S  redDispatcher7 20/10 R  redDispatcher5 20/10 S
+   6177       0      7743, 27    70  GameThread 30/40 R  redDispatcher9 20/10 S  redDispatcher7 30/0 R  redDispatcher6 30/0 S  redDispatcher4 20/10 S  redDispatcher11 30/0 R
+   6279       0      7743, 27    70  GameThread 20/40 R  redDispatcher6 20/10 R  redDispatcher3 20/10 R  redDispatcher10 20/10 R  redDispatcher1 30/0 S  redDispatcher9 20/0 R
+   6381       0      7743, 27    70  GameThread 40/40 R  redDispatcher5 30/10 S  redDispatcher9 20/10 S  redDispatcher8 20/10 S  redDispatcher7 20/10 S  redDispatcher4 20/10 S
+   6483       0      7743, 27    70  GameThread 30/40 R  redDispatcher9 30/10 S  redDispatcher8 30/0 S  redDispatcher7 20/10 S  redDispatcher6 20/10 S  redDispatcher4 20/10 S
+   6585       0      7743, 27    70  GameThread 40/30 R  redDispatcher8 30/10 S  redDispatcher7 30/0 S  redDispatcher5 20/10 S  redDispatcher3 30/0 S  redDispatcher2 20/10 R
+   6687       0      7743, 27    70  GameThread 30/30 R  redDispatcher6 20/10 R  redDispatcher2 30/0 R  redDispatcher9 20/0 R  redDispatcher8 20/0 S  redDispatcher5 20/0 S
+   6789       0      7743, 29    70  GameThread 30/40 R  redDispatcher9 30/10 S  redDispatcher7 30/10 S  redDispatcher4 30/10 S  redDispatcher3 30/10 S  redDispatcher1 30/10 R
+   6891       0      7743, 29    70  GameThread 30/40 R  redDispatcher6 20/10 S  redDispatcher2 20/10 S  redDispatcher11 20/10 R  redDispatcher9 20/0 R  redDispatcher8 20/0 S
+   6993       0      7723, 29    70  GameThread 20/70 R  GameThread 0/60 S  redDispatcher6 10/0 S  redDispatcher3 10/0 S  Cyberpunk2077.e 0/10 S
+   7095       0      7723, 29    70  GameThread 30/70 R  GameThread 0/40 R  Cyberpunk2077.e 10/0 S
+   7197       0      7872, 29    70  GameThread 30/70 R  GameThread 0/70 R  GameThread 10/0 S  Cyberpunk2077.e 10/0 S
+   7298       0      7872, 29    70  GameThread 20/80 R  GameThread 10/70 R  Cyberpunk2077.e 0/10 R
+   7400       0      7735, 83    70  GameThread 20/80 R  GameThread 0/60 R
+   7502       0      7735, 83    70  GameThread 40/40 R  redDispatcher7 30/10 S  redDispatcher10 30/10 S  redDispatcher1 30/10 R  redDispatcher9 30/0 R  redDispatcher5 20/10 R
+   7604       0      7548, 83    70  GameThread 30/40 R  redDispatcher8 30/10 S  redDispatcher11 30/10 S  redDispatcher9 20/10 S  redDispatcher5 20/10 R  redDispatcher4 20/10 R
+   7706       0      7548, 28    70  GameThread 30/40 R  redDispatcher6 30/0 R  redDispatcher4 20/10 S  redDispatcher2 30/0 S  redDispatcher10 30/0 S  redDispatcher1 30/0 R
+   7808       0      7548, 28    70  GameThread 30/30 R  redDispatcher8 20/10 S  redDispatcher7 20/10 S  redDispatcher6 20/10 S  redDispatcher3 20/10 S  vkd3d_queue 10/10 S
+   7910       0      7548, 28    70  GameThread 30/40 R  redDispatcher9 30/10 S  redDispatcher5 30/10 S  redDispatcher8 30/0 S  redDispatcher7 30/0 S  redDispatcher4 30/0 S
+
+=== hub open at 16:16:37.070173 ===
+  t(ms)  diskKB  gpu(MiB,util%)  threads  busiest threads: name user/sys ms [majflt] state
+   -401       0      7737, 97    70  redDispatcher9 20/10 S  redDispatcher8 20/0 S  redDispatcher7 20/0 S  redDispatcher6 10/10 S  redDispatcher2 10/10 S  redDispatcher11 10/10 S
+   -299       0      7737, 97    70  redDispatcher4 20/10 S  GameThread 20/10 S  redDispatcher8 10/10 S  redDispatcher7 10/10 S  redDispatcher6 20/0 S  redDispatcher3 10/10 R
+   -197       0      7737, 97    70  redDispatcher9 20/0 S  redDispatcher5 20/0 S  redDispatcher3 20/0 S  redDispatcher10 20/0 S  redDispatcher1 20/0 S  GameThread 10/10 S
+    -96       0      7737, 97    70  redDispatcher6 20/0 S  redDispatcher4 20/0 S  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S
+      6       0     7737, 100    70  redDispatcher9 20/0 S  redDispatcher7 20/0 R  redDispatcher1 10/10 S  GameThread 10/10 R  redDispatcher8 10/0 S  redDispatcher6 10/0 S
+    108     772     7737, 100    70  GameThread 20/30 R  redDispatcher5 30/10 S  redDispatcher9 10/10 S  redDispatcher8 20/0 [2] S  redDispatcher7 20/0 S  redDispatcher3 20/0 S
+    210      20     7818, 100    70  GameThread 30/80 R  redDispatcher1 90/10 R  redDispatcher3 50/20 R  redDispatcher9 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S
+    312    2204     7818, 100    70  GameThread 20/70 R  redDispatcher3 30/20 S  redDispatcher1 40/0 [1] S  GameThread 0/30 S  redDispatcher7 10/10 R  Cyberpunk2077.e 10/10 S
+    414     236       7850, 0    70  GameThread 20/80 R  GameThread 0/40 S  redDispatcher7 0/30 S  redDispatcher8 10/0 S  Cyberpunk2077.e 0/10 S
+    515       0       7850, 0    70  GameThread 20/80 R  GameThread 0/50 S  RawTcpNetworkTh 0/10 S  Cyberpunk2077.e 0/10 S
+    617       0       7699, 0    70  GameThread 40/70 R  GameThread 0/60 R  Cyberpunk2077.e 10/0 S
+    719       0       7699, 0    70  GameThread 30/70 R  GameThread 0/50 R  redDispatcher7 0/30 S  GameThread 10/0 S  Cyberpunk2077.e 0/10 S
+    821       0       7859, 0    70  GameThread 20/80 R  GameThread 0/40 S  redDispatcher7 0/30 S  GameThread 0/10 S  Cyberpunk2077.e 10/0 S
+    923       0       7859, 0    70  GameThread 30/70 R  GameThread 0/50 S  audio_client_ma 0/10 S  Cyberpunk2077.e 0/10 S
+   1024       0      7870, 41    70  GameThread 30/70 R  GameThread 0/40 R  redDispatcher7 0/30 S  Cyberpunk2077.e 10/10 S  GameThread 0/10 S
+   1126       0      7870, 41    70  GameThread 30/70 R  GameThread 0/40 R  redDispatcher7 0/20 S
+   1228       0      7883, 41    70  GameThread 20/80 R  GameThread 0/50 S  redDispatcher9 10/0 S  redDispatcher7 0/10 S
+   1330       0      7883, 41    70  GameThread 20/70 R  GameThread 0/50 R  Cyberpunk2077.e 10/0 S
+   1431       0      7884, 39    70  GameThread 30/80 R  GameThread 0/40 S  redDispatcher7 0/30 R  Cyberpunk2077.e 0/10 S
+   1533       0      7884, 39    70  GameThread 20/80 R  GameThread 0/50 S  Cyberpunk2077.e 10/10 S  redDispatcher7 0/10 S  redDispatcher1 10/0 S
+   1635       0      7850, 39    70  GameThread 20/80 R  GameThread 0/50 S  redDispatcher7 0/10 S  [vkps] Update 10/0 S  GameThread 10/0 S
+   1737       0      7850, 39    70  GameThread 20/80 R  GameThread 0/40 S  redDispatcher7 0/20 S  redDispatcher5 10/0 S  Cyberpunk2077.e 10/0 S
+   1839       0      7848, 38    70  GameThread 20/80 R  GameThread 0/50 S  redDispatcher7 0/20 S  Cyberpunk2077.e 10/10 S
+   1940       0      7848, 38    70  GameThread 30/70 R  GameThread 0/40 R  redDispatcher7 0/20 S  RawTcpNetworkTh 10/0 S
+   2042       0      7880, 38    70  GameThread 30/70 R  GameThread 0/40 R  Cyberpunk2077.e 10/10 S  redDispatcher7 0/10 S
+   2145       0      7880, 38    70  GameThread 20/80 R  redDispatcher7 0/40 S  GameThread 0/30 R  GameThread 10/0 S
+   2247       0      7870, 38    70  GameThread 20/80 R  GameThread 0/60 R  [vkps] Update 0/10 S  GameThread 0/10 S  Cyberpunk2077.e 10/0 S
+   2349       0      7870, 38    70  GameThread 20/80 R  GameThread 0/70 R  redDispatcher6 10/0 S  Cyberpunk2077.e 0/10 S
+   2450       0      7445, 44    70  GameThread 30/70 R  GameThread 0/70 R  audio_client_ma 0/10 S  GameThread 10/0 S  Cyberpunk2077.e 10/0 R
+   2552       0      7445, 44    70  GameThread 20/80 R  GameThread 0/20 R  Cyberpunk2077.e 0/10 S
+   2654       0      7874, 44    70  GameThread 30/70 R  GameThread 0/80 S  redDispatcher3 10/0 S
+   2756       0      7874, 44    70  GameThread 20/80 R  GameThread 10/50 S  Cyberpunk2077.e 10/10 S  redDispatcher4 10/0 S  redDispatcher2 10/0 S  redDispatcher10 10/0 S
+   2857       0      7861, 65    70  GameThread 30/70 R  GameThread 0/50 S  vkd3d_fence 10/0 S  redDispatcher7 10/0 S  redDispatcher2 0/10 S  GameThread 10/0 S
+   2959       0      7861, 65    70  GameThread 40/60 R  GameThread 0/60 R  redDispatcher11 10/0 S  Cyberpunk2077.e 0/10 S
+   3061       0      7875, 65    70  GameThread 20/80 R  GameThread 0/60 R  redDispatcher8 10/0 S  GameThread 0/10 S  Cyberpunk2077.e 10/0 S
+   3163       0      7875, 65    70  GameThread 30/70 R  redDispatcher9 20/10 S  GameThread 0/30 S  redDispatcher6 10/10 S  redDispatcher5 10/10 R  redDispatcher4 10/10 R
+   3264       0      7886, 65    70  GameThread 20/60 R  redDispatcher8 70/0 R  redDispatcher9 10/0 S  redDispatcher5 10/0 S  redDispatcher11 10/0 S  redDispatcher10 10/0 S
+   3366       0      7886, 65    70  redDispatcher8 100/0 R  GameThread 10/40 S  Cyberpunk2077.e 10/10 S  redDispatcher10 0/0 [1] S
+   3468       0     7886, 100    70  redDispatcher8 100/0 R
+   3569       0     7886, 100    70  redDispatcher8 100/0 R  Cyberpunk2077.e 10/10 S  audio_client_ma 10/0 S  RawTcpNetworkTh 0/10 S
+   3671       0     7879, 100    70  [vkrt] Analysis 60/0 R  redDispatcher8 40/0 S  redDispatcher7 20/0 S  redDispatcher4 20/0 S  redDispatcher3 20/0 S  redDispatcher10 10/10 R
+   3773       0     7879, 100    70  [vkrt] Analysis 100/0 R  redDispatcher2 10/10 S  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher7 0/10 S  redDispatcher6 10/0 S
+   3874       0     7879, 100    70  redDispatcher5 10/10 S  [vkrt] Analysis 20/0 S  GameThread 0/20 S  vkd3d_queue 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S
+   3976       0     7879, 100    70  GameThread 20/10 S  redDispatcher9 10/10 S  redDispatcher11 10/10 S  redDispatcher1 10/10 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S
+   4078       0     7879, 100    70  GameThread 10/10 S  Cyberpunk2077.e 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S
+   4179       0     7879, 100    70  redDispatcher8 10/10 S  redDispatcher6 10/10 S  redDispatcher4 10/10 S  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher7 10/0 S
+   4281       0     7879, 100    70  redDispatcher2 10/10 S  redDispatcher11 20/0 S  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S
+   4383       0     7879, 100    70  GameThread 10/10 S  Cyberpunk2077.e 10/10 S  redDispatcher9 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S
+   4484       0     7859, 100    70  GameThread 20/30 R  GameThread 0/50 R  redDispatcher9 10/10 S  redDispatcher7 10/10 S  redDispatcher1 10/10 S  redDispatcher8 10/0 S
+   4586       0     7859, 100    70  GameThread 20/80 R  GameThread 0/50 R  Cyberpunk2077.e 0/10 S
+   4688       0     7717, 100    70  GameThread 30/70 R  GameThread 10/60 R
+   4789       0     7717, 100    70  GameThread 30/50 S  GameThread 0/40 S  [vkrt] Analysis 30/0 R  Cyberpunk2077.e 10/10 R  redDispatcher8 10/0 S  redDispatcher6 0/10 S
+   4891       0      7458, 41    70  [vkrt] Analysis 100/0 R  redDispatcher2 10/10 S  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S
+   4994       0      7458, 41    70  [vkrt] Analysis 100/0 R  redDispatcher8 10/10 S  redDispatcher11 20/0 S  GameThread 10/10 S  vkd3d_queue 10/0 S  redDispatcher9 10/0 S
+   5096       0      7458, 41    70  GameThread 10/20 R  [vkrt] Analysis 20/0 S  vkd3d_queue 0/10 S  redDispatcher9 10/0 R  redDispatcher6 10/0 R  redDispatcher5 10/0 R
+   5198       0      7458, 41    70  redDispatcher7 10/10 S  redDispatcher3 10/10 S  redDispatcher2 10/10 S  GameThread 10/10 S  vkd3d_fence 0/10 S  redDispatcher9 10/0 S
+   5300       0      7458, 41    70  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S  redDispatcher4 10/0 S
+   5401       0      7458, 41    70  redDispatcher6 10/10 S  redDispatcher5 20/0 S  redDispatcher10 10/10 S  redDispatcher1 10/10 S  GameThread 10/10 S  redDispatcher8 10/0 S
+   5503       0     7458, 100    70  GameThread 10/10 S  Cyberpunk2077.e 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S
+   5604       0     7458, 100    70  [vkrt] Analysis 30/0 R  GameThread 10/20 S  redDispatcher8 10/10 S  redDispatcher9 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S
+   5706       0     7458, 100    70  [vkrt] Analysis 90/0 R  redDispatcher4 10/10 S  redDispatcher11 10/10 S  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S
+   5808       0     7458, 100    70  [vkrt] Analysis 100/0 R  redDispatcher9 10/10 S  redDispatcher8 10/0 S  redDispatcher4 10/0 R  redDispatcher2 10/0 S  redDispatcher11 10/0 S
+   5910       0     7458, 100    70  [vkrt] Analysis 80/0 S  GameThread 10/20 R  redDispatcher6 10/10 R  redDispatcher2 10/10 S  redDispatcher10 10/10 R  redDispatcher8 10/0 S
+   6012       0     7458, 100    70  GameThread 10/20 R  vkd3d_queue 10/10 S  redDispatcher3 10/10 R  vkd3d_queue 10/0 S  vkd3d-swapchain 0/10 S  redDispatcher9 10/0 R
+   6114       0     7458, 100    70  redDispatcher8 10/10 R  redDispatcher5 10/10 S  redDispatcher4 10/10 S  redDispatcher1 10/10 S  GameThread 10/10 R  vkd3d_fence 0/10 S
+   6216       0     7458, 100    70  redDispatcher9 10/10 R  redDispatcher7 10/10 S  GameThread 10/10 R  Cyberpunk2077.e 10/10 S  redDispatcher8 10/0 S  redDispatcher6 10/0 R
+   6318       0     7458, 100    70  GameThread 10/20 R  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 R  redDispatcher6 10/0 S  redDispatcher5 10/0 S
+   6420       0     7458, 100    70  redDispatcher8 10/10 S  redDispatcher3 10/10 R  redDispatcher11 10/10 R  redDispatcher9 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 R
+   6522       0     7458, 100    70  [vkrt] Analysis 30/0 R  redDispatcher5 10/10 S  redDispatcher4 10/10 S  redDispatcher10 10/10 S  GameThread 10/10 S  Cyberpunk2077.e 10/10 S
+   6624       0     7458, 100    70  [vkrt] Analysis 90/0 R  GameThread 10/20 S  redDispatcher9 10/0 S  redDispatcher8 10/0 R  redDispatcher7 10/0 S  redDispatcher6 10/0 S
+   6725       0     7458, 100    70  [vkrt] Analysis 100/0 S  redDispatcher1 10/10 S  GameThread 10/10 S  Cyberpunk2077.e 10/10 S  vkd3d_queue 10/0 S  vkd3d_fence 10/0 S
+   6827       0     7458, 100    70  redDispatcher9 10/10 S  redDispatcher2 10/10 S  GameThread 10/10 S  redDispatcher8 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S
+   6929       0     7458, 100    70  [vkrt] Analysis 90/0 R  redDispatcher7 10/10 S  redDispatcher6 10/10 S  Cyberpunk2077.e 10/10 S  redDispatcher9 10/0 S  redDispatcher8 0/10 S
+   7030       0     7458, 100    70  [vkrt] Analysis 30/0 S  GameThread 10/20 S  redDispatcher3 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S
+   7132       0     7458, 100    70  [vkrt] Analysis 70/10 R  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S
+   7234       0     7458, 100    70  [vkrt] Analysis 70/0 S  redDispatcher5 20/0 S  redDispatcher11 10/10 S  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S
+   7335       0     7458, 100    70  [vkrt] Analysis 30/0 R  GameThread 10/10 S  Cyberpunk2077.e 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S
+   7437       0     7458, 100    70  [vkrt] Analysis 100/0 R  redDispatcher2 10/10 S  GameThread 10/10 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S
+   7539       0     7458, 100    70  redDispatcher9 10/10 S  GameThread 10/10 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher4 10/0 S
+   7641       0     7458, 100    70  [vkrt] Analysis 90/0 R  redDispatcher8 10/10 S  redDispatcher10 10/10 S  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher6 10/0 S
+   7743       0     7458, 100    70  [vkrt] Analysis 90/0 S  redDispatcher4 10/10 S  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S
+   7846       0     7458, 100    70  redDispatcher6 10/10 S  redDispatcher5 10/10 S  GameThread 10/10 R  vkd3d_queue 10/0 S  redDispatcher9 10/0 S  redDispatcher7 10/0 S
+   7947       0     7458, 100    70  [vkrt] Analysis 100/0 R  redDispatcher7 10/10 S  redDispatcher3 10/10 S  redDispatcher2 10/10 S  redDispatcher1 10/10 R  GameThread 10/10 R
+
+=== hub open at 16:16:55.960513 ===
+  t(ms)  diskKB  gpu(MiB,util%)  threads  busiest threads: name user/sys ms [majflt] state
+   -455      84     7740, 100    70  redDispatcher3 10/10 S  redDispatcher1 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S
+   -353       0     7740, 100    70  redDispatcher8 20/10 S  redDispatcher9 10/10 S  redDispatcher7 20/0 S  redDispatcher4 20/0 S  redDispatcher1 20/0 S  GameThread 10/10 S
+   -251       0     7740, 100    70  GameThread 20/10 S  redDispatcher9 20/0 S  redDispatcher7 10/10 S  redDispatcher2 20/0 S  redDispatcher10 20/0 S  redDispatcher8 10/0 S
+   -150       0     7740, 100    70  redDispatcher6 20/0 S  redDispatcher5 20/0 S  redDispatcher3 20/0 S  redDispatcher11 20/0 S  redDispatcher10 10/10 S  GameThread 10/10 S
+    -48       0     7740, 100    70  redDispatcher4 20/10 S  redDispatcher7 20/0 S  redDispatcher6 10/10 S  redDispatcher5 20/0 S  redDispatcher2 20/0 S  redDispatcher11 10/10 S
+     54       0      7740, 97    70  GameThread 10/20 R  redDispatcher8 10/10 S  redDispatcher11 20/0 S  redDispatcher10 20/0 R  vkd3d_queue 10/0 S  redDispatcher9 10/0 S
+    156     716      7740, 97    70  GameThread 20/50 R  redDispatcher8 50/0 R  redDispatcher1 20/10 S  redDispatcher2 20/0 S  Cyberpunk2077.e 10/10 S  redIOWorker0 0/10 S
+    258       0      7762, 97    70  redDispatcher8 90/0 S  GameThread 40/50 R  redDispatcher3 10/10 S  redDispatcher9 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S
+    359       0      7762, 97    70  [vkrt] Analysis 80/0 S  GameThread 10/20 R  redDispatcher9 10/10 S  redDispatcher7 10/10 R  redDispatcher5 10/10 [1] S  redDispatcher4 20/0 S
+    461       0      7801, 97    70  redDispatcher10 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher3 10/0 S
+    563       0      7801, 97    70  redDispatcher11 10/10 S  redDispatcher1 10/10 S  GameThread 10/10 S  Cyberpunk2077.e 10/10 S  redDispatcher8 10/0 S  redDispatcher6 0/10 S
+    665       0      7793, 97    70  GameThread 10/40 [2] S  redDispatcher2 20/10 [1] S  redDispatcher9 20/0 S  redDispatcher7 20/0 [1] S  redDispatcher5 20/0 S  redDispatcher4 10/10 [1] S
+    766       0      7793, 97    70  GameThread 30/40 R  redDispatcher6 30/10 S  redDispatcher9 20/10 S  redDispatcher8 20/10 S  redDispatcher7 20/10 S  redDispatcher5 10/10 R
+    870       0      7793, 97    70  GameThread 40/50 R  redDispatcher4 20/10 S  redDispatcher11 20/10 S  redDispatcher1 20/10 S  redDispatcher8 20/0 S  redDispatcher7 20/0 S
+    972       0      7793, 97    70  GameThread 30/40 R  redDispatcher9 20/10 R  redDispatcher8 20/10 S  redDispatcher6 20/10 S  redDispatcher5 20/10 S  redDispatcher3 20/10 S
+   1074       0       7793, 7    70  GameThread 30/30 R  redDispatcher8 20/10 R  redDispatcher7 20/10 S  redDispatcher3 20/10 S  redDispatcher2 20/10 S  redDispatcher11 30/0 S
+   1176       0       7793, 7    70  GameThread 40/50 R  redDispatcher4 30/10 S  redDispatcher9 20/10 R  redDispatcher6 20/10 S  redDispatcher5 20/10 S  redDispatcher10 20/10 S
+   1278       0       7793, 7    70  GameThread 30/50 R  redDispatcher8 20/10 S  redDispatcher7 20/10 R  redDispatcher6 20/10 S  redDispatcher5 20/10 S  redDispatcher3 30/0 S
+   1380       0       7793, 7    70  GameThread 30/50 S  redDispatcher9 20/10 S  redDispatcher7 30/0 S  redDispatcher3 20/10 S  redDispatcher2 20/10 S  redDispatcher11 30/0 S
+   1482       0       7793, 7    70  GameThread 20/30 S  redDispatcher9 30/0 S  redDispatcher8 20/10 S  redDispatcher4 20/10 S  redDispatcher3 20/10 S  redDispatcher11 20/10 S
+   1584       0       7793, 7    70  GameThread 30/40 S  redDispatcher2 30/10 S  redDispatcher9 20/10 S  redDispatcher8 30/0 S  redDispatcher7 30/0 S  redDispatcher6 20/10 S
+   1685       0      7793, 12    70  GameThread 30/30 S  redDispatcher6 20/10 S  redDispatcher4 20/10 R  redDispatcher10 20/10 S  redDispatcher9 20/0 S  redDispatcher8 20/0 S
+   1787       0      7793, 12    70  GameThread 30/40 S  redDispatcher3 30/10 R  redDispatcher11 30/10 S  redDispatcher1 30/10 S  redDispatcher7 20/10 S  redDispatcher4 30/0 S
+   1888       0      7793, 12    70  GameThread 20/40 S  redDispatcher6 30/10 S  redDispatcher9 20/10 S  redDispatcher8 20/10 S  redDispatcher5 30/0 S  redDispatcher7 20/0 S
+   1990       0      7793, 12    70  GameThread 40/40 R  redDispatcher5 20/10 S  redDispatcher4 20/10 S  redDispatcher2 20/10 S  redDispatcher9 20/0 R  redDispatcher8 20/0 S
+   2092       0      7793, 11    70  GameThread 30/50 R  redDispatcher9 20/10 S  redDispatcher8 30/0 S  redDispatcher7 20/10 S  redDispatcher6 20/10 S  redDispatcher3 20/10 S
+   2194       0      7793, 11    70  GameThread 50/50 R  redDispatcher7 30/0 S  redDispatcher6 20/10 S  redDispatcher5 20/10 S  redDispatcher4 20/10 S  redDispatcher2 20/10 S
+   2295       0      7793, 11    70  GameThread 30/40 S  redDispatcher3 30/10 S  redDispatcher10 30/10 S  redDispatcher9 20/10 S  redDispatcher8 30/0 S  redDispatcher6 30/0 S
+   2397       0      7793, 11    70  GameThread 20/30 R  redDispatcher7 20/10 S  redDispatcher4 30/0 S  redDispatcher2 20/10 S  redDispatcher11 20/10 S  redDispatcher9 20/0 S
+   2499       0      7793, 11    70  GameThread 30/50 S  redDispatcher8 30/10 S  redDispatcher10 30/10 S  redDispatcher9 30/0 S  redDispatcher7 30/0 S  redDispatcher6 20/10 R
+   2601       0      7793, 21    70  GameThread 40/50 S  redDispatcher4 30/10 R  redDispatcher9 20/10 S  redDispatcher2 20/10 S  redDispatcher11 20/10 R  redDispatcher1 30/0 S
+   2703       0      7793, 21    70  GameThread 30/50 R  redDispatcher10 30/10 S  redDispatcher7 20/10 R  redDispatcher6 20/10 R  redDispatcher3 20/10 S  redDispatcher1 20/10 R
+   2808       0      7793, 21    70  GameThread 40/50 R  redDispatcher4 20/10 S  redDispatcher2 20/10 R  redDispatcher9 10/10 R  redDispatcher8 20/0 S  redDispatcher6 20/0 R
+   2910       0      7793, 21    70  GameThread 30/60 S  redDispatcher7 30/10 S  redDispatcher9 20/10 S  redDispatcher8 20/10 S  redDispatcher6 20/10 S  redDispatcher5 20/10 S
+   3011       0      7793, 16    70  GameThread 40/30 S  redDispatcher1 30/10 S  redDispatcher3 30/0 S  redDispatcher2 20/10 S  redDispatcher10 30/0 S  redDispatcher9 20/0 S
+   3113       0      7793, 16    70  GameThread 30/40 S  redDispatcher5 30/10 [1] S  redDispatcher8 20/10 S  redDispatcher4 20/10 S  redDispatcher3 20/10 S  redDispatcher11 20/10 S
+   3215       0      7793, 16    70  GameThread 30/50 S  redDispatcher9 20/10 S  redDispatcher6 20/10 S  redDispatcher2 20/10 S  redDispatcher10 20/10 S  redDispatcher8 20/0 S
+   3317       0      7793, 16    70  GameThread 30/40 S  redDispatcher8 30/0 S  redDispatcher7 30/0 S  redDispatcher5 20/10 S  redDispatcher4 20/10 S  redDispatcher2 30/0 S
+   3419       0      7793, 16    70  GameThread 20/30 S  redDispatcher1 30/10 S  redDispatcher8 20/10 S  redDispatcher6 20/10 S  redDispatcher3 20/10 S  redDispatcher2 20/10 S
+   3521       0      7793, 16    70  GameThread 30/30 S  redDispatcher7 30/10 S  redDispatcher9 20/10 S  redDispatcher8 30/0 S  redDispatcher6 20/10 S  redDispatcher4 20/10 S
+   3623       0      7793, 22    70  GameThread 30/40 S  redDispatcher5 30/10 S  redDispatcher9 30/0 S  redDispatcher3 20/10 S  redDispatcher2 20/10 S  redDispatcher11 20/10 S
+   3725       0      7793, 22    70  GameThread 30/40 S  redDispatcher1 30/10 S  redDispatcher8 20/10 S  redDispatcher7 30/0 S  redDispatcher6 20/10 S  redDispatcher4 20/10 S
+   3827       0      7793, 22    70  GameThread 30/40 S  redDispatcher10 30/10 S  redDispatcher9 20/10 S  redDispatcher5 20/10 S  redDispatcher3 20/10 S  redDispatcher2 20/10 S
+   3928       0      7793, 22    70  GameThread 30/30 S  redDispatcher6 30/10 S  redDispatcher9 20/10 S  redDispatcher8 20/10 S  redDispatcher4 20/10 S  redDispatcher1 20/10 S
+   4030       0      7793, 25    70  GameThread 30/30 S  redDispatcher7 20/10 S  redDispatcher3 20/10 S  redDispatcher2 20/10 S  redDispatcher11 30/0 S  redDispatcher9 20/0 S
+   4132       0      7793, 25    70  GameThread 30/40 R  redDispatcher5 20/10 S  redDispatcher9 20/0 R  redDispatcher8 20/0 S  redDispatcher7 20/0 R  redDispatcher4 10/10 S
+   4234       0      7793, 25    70  GameThread 40/50 R  redDispatcher6 20/10 R  redDispatcher10 20/10 R  redDispatcher8 10/10 R  redDispatcher7 20/0 S  redDispatcher5 20/0 R
+   4336       0      7793, 25    70  GameThread 30/70 R  redDispatcher9 30/10 S  redDispatcher3 30/0 S  redDispatcher2 20/10 S  redDispatcher11 20/10 S  redDispatcher8 20/0 S
+   4438       0      7651, 25    70  GameThread 20/80 R  GameThread 0/60 R  Cyberpunk2077.e 10/10 S
+   4540       0      7651, 25    70  GameThread 20/70 R  GameThread 0/50 S
+   4642       0      7877, 22    70  GameThread 30/80 R  GameThread 0/60 S  Cyberpunk2077.e 10/10 S  audio_client_ma 0/10 S  RawTcpNetworkTh 0/10 S
+   4744       0      7877, 22    70  GameThread 20/80 R  GameThread 0/70 S
+   4845       0      7883, 22    70  GameThread 30/70 R  GameThread 0/60 S  Cyberpunk2077.e 10/10 S
+   4947       0      7883, 22    70  GameThread 20/70 S  GameThread 0/40 S  redDispatcher7 10/10 S  redDispatcher6 10/0 S  redDispatcher5 0/10 S  redDispatcher2 10/0 S
+   5049       0      7759, 42    70  GameThread 40/40 R  redDispatcher8 20/10 S  redDispatcher6 20/10 S  redDispatcher5 30/0 S  redDispatcher3 20/10 S  redDispatcher10 20/10 S
+   5152       0      7759, 42    70  GameThread 40/50 R  redDispatcher1 20/10 S  redDispatcher9 10/10 R  redDispatcher8 20/0 S  redDispatcher4 20/0 S  redDispatcher2 20/0 S
+   5254       0      7759, 42    70  GameThread 30/50 R  redDispatcher9 20/10 R  redDispatcher7 20/10 R  redDispatcher5 30/0 R  redDispatcher4 20/10 R  redDispatcher11 20/10 R
+   5356       0      7759, 42    70  GameThread 30/30 R  redDispatcher3 30/10 R  redDispatcher8 30/0 R  redDispatcher5 20/10 S  redDispatcher2 20/10 R  redDispatcher10 30/0 S
+   5459       0      7759, 42    70  GameThread 40/50 R  redDispatcher6 30/10 S  redDispatcher9 20/10 R  redDispatcher8 20/10 S  redDispatcher7 20/10 S  redDispatcher5 30/0 S
+   5561       0      7759, 42    70  GameThread 30/40 R  redDispatcher4 20/10 S  redDispatcher11 30/0 S  redDispatcher9 20/0 R  redDispatcher8 20/0 R  redDispatcher7 20/0 R
+   5663       0      7759, 21    70  GameThread 30/30 R  redDispatcher8 30/0 S  redDispatcher6 20/10 S  redDispatcher5 20/10 S  redDispatcher2 20/10 S  redDispatcher10 30/0 S
+   5766       0      7759, 21    70  GameThread 30/40 R  redDispatcher3 30/10 R  redDispatcher9 30/0 R  redDispatcher8 20/10 R  redDispatcher7 20/10 R  redDispatcher4 20/10 R
+   5868       0      7759, 21    70  GameThread 30/40 R  redDispatcher9 20/10 R  redDispatcher8 30/0 R  redDispatcher7 20/10 R  redDispatcher6 20/10 R  redDispatcher2 20/10 R
+   5970       0      7759, 21    70  GameThread 30/30 R  redDispatcher11 30/10 R  redDispatcher9 30/0 S  redDispatcher6 30/0 R  redDispatcher5 30/0 S  redDispatcher10 20/10 R
+   6072       0      7759, 23    70  GameThread 30/40 R  redDispatcher8 20/10 S  redDispatcher7 20/10 S  redDispatcher5 20/10 R  redDispatcher4 20/10 S  redDispatcher9 20/0 S
+   6174       0      7759, 23    70  GameThread 30/50 S  redDispatcher9 20/10 S  redDispatcher3 20/10 S  redDispatcher2 20/10 S  redDispatcher10 20/10 S  redDispatcher1 20/10 S
+   6275       0      7759, 23    70  GameThread 30/30 S  redDispatcher7 20/10 S  redDispatcher6 20/10 S  redDispatcher5 20/10 S  redDispatcher3 20/10 R  redDispatcher11 20/10 S
+   6377       0      7759, 23    70  GameThread 30/50 R  redDispatcher9 20/10 S  redDispatcher8 20/10 R  redDispatcher4 30/0 S  redDispatcher2 20/10 S  redDispatcher7 20/0 S
+   6479       0      7759, 23    70  GameThread 50/30 S  redDispatcher8 20/10 S  redDispatcher7 20/10 R  redDispatcher6 20/10 S  redDispatcher5 20/10 S  redDispatcher4 20/10 S
+   6581       0      7759, 23    70  GameThread 20/40 S  redDispatcher3 30/10 S  redDispatcher10 30/10 S  redDispatcher9 20/10 S  redDispatcher8 20/10 S  redDispatcher7 30/0 S
+   6683       0      7759, 21    70  GameThread 30/40 S  redDispatcher7 20/10 S  redDispatcher2 20/10 S  redDispatcher1 30/0 S  redDispatcher9 20/0 S  redDispatcher8 20/0 S
+   6785       0      7759, 21    70  GameThread 30/40 S  redDispatcher6 20/10 S  redDispatcher5 20/10 S  redDispatcher4 20/10 S  redDispatcher11 20/10 S  redDispatcher9 20/0 S
+   6886       0      7759, 21    70  GameThread 20/40 S  redDispatcher9 20/10 S  redDispatcher8 20/10 R  redDispatcher7 20/10 S  redDispatcher6 30/0 R  redDispatcher2 30/0 R
+   6988       0      7759, 21    70  GameThread 30/50 R  redDispatcher9 30/0 S  redDispatcher8 20/10 S  redDispatcher5 20/10 S  redDispatcher3 20/10 S  redDispatcher1 20/10 S
+   7091       0      7759, 29    70  GameThread 30/60 S  redDispatcher8 30/0 S  redDispatcher7 30/0 S  redDispatcher6 20/10 S  redDispatcher5 30/0 R  redDispatcher4 20/10 S
+   7193       0      7759, 29    70  GameThread 40/50 R  redDispatcher9 30/10 S  redDispatcher11 30/10 S  redDispatcher7 20/10 S  redDispatcher4 20/10 S  redDispatcher1 20/10 S
+   7294       0      7759, 29    70  GameThread 30/40 S  redDispatcher3 30/10 S  redDispatcher8 20/10 S  redDispatcher6 30/0 S  redDispatcher5 30/0 S  redDispatcher2 20/10 S
+   7396       0      7759, 29    70  GameThread 30/30 S  redDispatcher7 20/10 S  redDispatcher5 20/10 S  redDispatcher4 30/0 S  redDispatcher11 20/10 S  redDispatcher10 20/10 S
+   7498       0      7759, 29    70  GameThread 30/40 S  redDispatcher9 20/10 S  redDispatcher8 30/0 S  redDispatcher6 20/10 S  redDispatcher4 20/10 S  redDispatcher2 20/10 S
+   7600       0      7759, 29    70  GameThread 20/40 S  redDispatcher9 30/0 S  redDispatcher7 20/10 S  redDispatcher11 20/10 S  redDispatcher10 20/10 S  redDispatcher1 30/0 S
+   7702       0      7759, 29    70  GameThread 30/30 S  redDispatcher5 30/10 S  redDispatcher9 20/10 S  redDispatcher8 20/10 S  redDispatcher7 30/0 S  redDispatcher6 30/0 S
+   7804       0      7759, 29    70  GameThread 40/50 R  redDispatcher6 20/10 R  redDispatcher4 20/10 R  redDispatcher3 20/10 R  redDispatcher11 20/10 R  redDispatcher10 20/10 R
+   7908       0      7759, 29    70  GameThread 30/50 R  redDispatcher9 20/10 S  redDispatcher4 20/10 S  redDispatcher2 20/10 S  redDispatcher1 30/0 S  redDispatcher8 20/0 S
+
+=== hub open at 16:17:11.656976 ===
+  t(ms)  diskKB  gpu(MiB,util%)  threads  busiest threads: name user/sys ms [majflt] state
+   -456       0     7740, 100    70  redDispatcher7 20/0 S  redDispatcher6 20/0 S  redDispatcher3 20/0 S  redDispatcher10 20/0 S  redDispatcher1 20/0 S  redDispatcher9 10/0 S
+   -354       0     7740, 100    70  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S
+   -252       0     7740, 100    70  redDispatcher9 20/10 S  redDispatcher3 20/10 R  redDispatcher8 20/0 S  redDispatcher6 10/10 S  redDispatcher5 20/0 S  redDispatcher4 20/0 S
+   -150       0     7740, 100    70  redDispatcher2 20/10 S  redDispatcher11 20/10 S  redDispatcher10 20/10 S  redDispatcher9 20/0 S  redDispatcher8 10/10 S  redDispatcher7 20/0 S
+    -49       0     7740, 100    70  redDispatcher7 20/10 S  redDispatcher9 20/0 S  redDispatcher8 20/0 S  redDispatcher4 20/0 S  redDispatcher3 20/0 S  redDispatcher2 20/0 S
+     53       0     7740, 100    70  [vkrt] Analysis 40/0 R  GameThread 10/20 R  redDispatcher6 20/0 S  redDispatcher5 10/10 S  Cyberpunk2077.e 10/10 S  redDispatcher9 10/0 R
+    155     816     7812, 100    70  [vkrt] Analysis 100/0 S  GameThread 10/60 R  redDispatcher4 20/20 S  redDispatcher9 20/0 S  redDispatcher8 20/0 R  redDispatcher5 20/0 R
+    256       0     7812, 100    70  redDispatcher8 100/0 R  redDispatcher5 70/30 R  GameThread 30/70 R  redDispatcher2 10/10 S  Cyberpunk2077.e 0/10 S
+    358     448      7742, 95    70  GameThread 30/70 R  redDispatcher9 10/20 S  GameThread 0/30 S  redDispatcher3 10/10 S  redDispatcher1 10/10 S  redDispatcher8 10/0 [3] S
+    460       0      7742, 95    70  GameThread 20/80 R  GameThread 0/50 S  redDispatcher9 0/20 S  Cyberpunk2077.e 10/10 S  RawTcpNetworkTh 0/10 S  GameThread 10/0 S
+    561      16      7782, 95    70  GameThread 40/70 R  GameThread 0/60 R  redDispatcher7 10/0 S  redDispatcher11 10/0 [1] S  audio_client_ma 10/0 S  GameThread 10/0 S
+    663     372      7782, 95    70  GameThread 30/70 R  GameThread 0/40 R  redDispatcher9 0/20 S  redDispatcher8 10/10 S  GameThread 0/10 S  redDispatcher10 0/0 [1] S
+    765     348      7765, 39    70  GameThread 20/70 R  GameThread 0/40 S  redDispatcher9 0/20 S  Cyberpunk2077.e 10/0 S  redDispatcher6 0/0 [1] S
+    867       0      7765, 39    70  GameThread 30/70 R  GameThread 0/40 R  redDispatcher3 0/30 S  GameThread 10/0 S  Cyberpunk2077.e 10/0 S
+    969       0      7879, 39    70  GameThread 30/80 R  GameThread 0/50 S  redDispatcher10 10/0 S  Cyberpunk2077.e 0/10 S
+   1070       0      7879, 39    70  GameThread 10/80 R  GameThread 0/50 R  redDispatcher3 0/20 S  Cyberpunk2077.e 10/0 S
+   1172       0      7857, 39    70  GameThread 30/70 R  GameThread 0/50 R  redDispatcher3 0/20 S  GameThread 0/10 S  Cyberpunk2077.e 10/0 S
+   1274       0      7857, 39    70  GameThread 30/80 R  GameThread 0/40 R  redDispatcher3 0/20 S  Cyberpunk2077.e 10/0 S
+   1376       0      7847, 40    70  GameThread 20/80 R  GameThread 0/40 R  Cyberpunk2077.e 10/10 S  redDispatcher3 0/10 S  GameThread 10/0 S
+   1477       0      7847, 40    70  GameThread 30/70 R  GameThread 0/50 S  redDispatcher3 0/20 S
+   1579       0      7875, 40    70  GameThread 20/80 R  GameThread 0/40 S  Cyberpunk2077.e 10/10 S  redDispatcher3 0/10 S
+   1681       0      7875, 40    70  GameThread 20/70 R  GameThread 0/40 R  redDispatcher3 0/20 S
+   1782       0      7881, 40    70  GameThread 30/70 R  GameThread 0/50 R  redDispatcher3 0/20 S  Cyberpunk2077.e 10/0 R
+   1884       0      7881, 40    70  GameThread 20/80 R  GameThread 0/40 S  redDispatcher3 0/10 R  Cyberpunk2077.e 0/10 S
+   1986       0      7879, 40    70  GameThread 30/70 R  GameThread 0/40 S  redDispatcher3 0/20 S  redDispatcher6 10/0 S  audio_client_ma 0/10 S  GameThread 0/10 S
+   2088       0      7879, 40    70  GameThread 40/70 R  redDispatcher3 0/50 S  GameThread 0/30 R  redDispatcher9 0/10 [1] S  redDispatcher5 10/0 S  redDispatcher1 10/0 S
+   2189       0      7795, 40    70  GameThread 20/80 R  GameThread 0/50 S  GameThread 10/0 S  Cyberpunk2077.e 10/0 S
+   2291       0      7795, 40    70  GameThread 40/60 R  GameThread 0/70 R  Cyberpunk2077.e 0/10 S
+   2393       0      7370, 29    70  GameThread 30/70 R  GameThread 0/60 R  redDispatcher2 10/0 S  RawTcpNetworkTh 10/0 S  Cyberpunk2077.e 10/0 S
+   2494       0      7370, 29    70  GameThread 20/70 R  GameThread 0/80 R  Cyberpunk2077.e 0/50 R  audio_client_ma 0/20 R
+   2598       0      7340, 29    70  GameThread 30/80 R  GameThread 0/60 R  Cyberpunk2077.e 0/30 S  redDispatcher4 10/10 S  redDispatcher9 10/0 S  redDispatcher7 10/0 S
+   2700    5752      7340, 29    70  GameThread 30/70 R  GameThread 0/40 S  redDispatcher5 20/0 [6] R  redDispatcher1 20/0 R  vkd3d_fence 0/10 S  redDispatcher8 10/0 S
+   2801       0      7868, 95    70  redDispatcher1 100/0 R  GameThread 20/80 R  Cyberpunk2077.e 10/10 S  redDispatcher5 0/10 S  RawTcpNetworkTh 0/10 S  redIOWorker0 0/0 [1] S
+   2903       0      7868, 95    70  redDispatcher1 100/0 R  GameThread 20/70 R  GameThread 10/0 S  GameThread 0/10 S
+   3005       0      7868, 95    70  GameThread 20/80 R  redDispatcher1 10/40 R  Cyberpunk2077.e 10/10 S  GameThread 0/10 S
+   3106     756      7868, 95    70  redDispatcher5 60/0 [1] R  GameThread 20/30 S  redDispatcher1 20/20 [2] S  redDispatcher2 20/10 [5] S  redDispatcher11 10/10 S  vkd3d_queue 0/10 S
+   3208       0      7868, 95    70  redDispatcher5 100/0 R  GameThread 30/70 R  redDispatcher7 10/10 S  redDispatcher4 10/0 S  audio_client_ma 10/0 S  Cyberpunk2077.e 0/10 S
+   3310       0      7868, 95    70  GameThread 40/60 R  redDispatcher5 60/0 S  redDispatcher1 40/0 R  redDispatcher6 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S
+   3411       0     7864, 100    70  GameThread 10/50 S  redDispatcher1 50/0 S  vkd3d_queue 10/0 S  redDispatcher5 10/0 S  redDispatcher3 0/10 S  redDispatcher2 10/0 S
+   3513       0     7864, 100    70  [vkrt] Analysis 80/0 R  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S
+   3615       0     7864, 100    70  [vkrt] Analysis 100/0 R  redDispatcher9 0/10 S  redDispatcher2 10/0 S  redDispatcher11 10/0 S  redDispatcher10 0/10 S  GameThread 0/10 S
+   3717       0     7864, 100    70  [vkrt] Analysis 80/0 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher4 10/0 S
+   3819       0     7864, 100    70  [vkrt] Analysis 20/0 R  redDispatcher5 10/0 R  redDispatcher11 10/0 S  redDispatcher1 10/0 R  GameThread 0/10 R  Cyberpunk2077.e 10/0 S
+   3921       0     7864, 100    70  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 [4] S
+   4022       0     7864, 100    70  redDispatcher6 10/10 S  redDispatcher4 10/10 S  [vkrt] Analysis 20/0 R  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S
+   4124       0     7864, 100    70  [vkrt] Analysis 30/0 S  redDispatcher5 10/10 R  GameThread 10/10 S  vkd3d_fence 10/0 S  redDispatcher7 10/0 R  redDispatcher3 10/0 R
+   4226       0     7864, 100    70  redDispatcher8 10/10 R  redDispatcher5 10/0 S  redDispatcher4 10/0 S  redDispatcher3 10/0 R  redDispatcher1 10/0 S  [vkps] Update 10/0 S
+   4328       0     7864, 100    70  redDispatcher9 10/10 S  GameThread 10/10 S  redDispatcher7 0/10 S  redDispatcher6 10/0 S  redDispatcher2 10/0 S  redDispatcher11 10/0 S
+   4430       0     7864, 100    70  [vkrt] Analysis 100/0 S  redDispatcher3 10/10 S  GameThread 10/10 S  Cyberpunk2077.e 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 R
+   4531       0     7864, 100    70  vkd3d_queue 10/0 S  redDispatcher8 10/0 S  redDispatcher5 10/0 S  redDispatcher4 10/0 S  redDispatcher3 10/0 S  redDispatcher2 10/0 S
+   4633       0     7864, 100    70  [vkrt] Analysis 100/0 R  GameThread 20/10 S  redDispatcher6 10/10 R  redDispatcher8 10/0 R  redDispatcher7 10/0 R  redDispatcher4 10/0 R
+   4735       0     7864, 100    70  [vkrt] Analysis 100/0 R  redDispatcher10 10/10 S  redDispatcher9 10/0 S  redDispatcher7 10/0 S  redDispatcher5 10/0 S  redDispatcher3 10/0 S
+   4837       0     7864, 100    70  [vkrt] Analysis 50/0 S  GameThread 0/40 S  redDispatcher8 10/0 S  redDispatcher6 10/0 S  redDispatcher3 10/0 S  redDispatcher11 10/0 S
+   4939       0     7864, 100    70  GameThread 30/70 R  GameThread 0/60 S  redDispatcher9 10/0 S  redDispatcher4 10/0 S  redDispatcher2 10/0 S  GameThread 0/10 S
+   5041       0     7448, 100    70  GameThread 30/70 S  GameThread 0/50 S  Cyberpunk2077.e 10/10 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher5 10/0 R
+   5142       0     7448, 100    70  [vkrt] Analysis 50/0 R  redDispatcher9 10/10 S  redDispatcher2 10/10 S  GameThread 10/10 S  vkd3d_queue 0/10 S  redDispatcher6 10/0 S
+   5244       0     7327, 100    70  [vkrt] Analysis 100/0 R  Cyberpunk2077.e 10/10 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher5 10/0 S  redDispatcher3 10/0 S
+   5346       0     7327, 100    70  [vkrt] Analysis 100/0 R  redDispatcher5 10/10 S  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher6 10/0 S
+   5448       0     7327, 100    70  [vkrt] Analysis 20/0 S  Cyberpunk2077.e 10/10 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher4 10/0 S  redDispatcher3 10/0 S
+   5549       0     7327, 100    70  GameThread 10/10 R  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 0/10 S  redDispatcher6 0/10 S  redDispatcher5 10/0 R
+   5651       0     7327, 100    70  GameThread 10/10 S  Cyberpunk2077.e 10/10 S  redDispatcher9 10/0 S  redDispatcher8 0/10 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S
+   5753       0     7327, 100    70  redDispatcher8 10/0 S  redDispatcher5 10/0 S  redDispatcher2 10/0 S
+   5854       0     7327, 100    70  GameThread 10/20 S  redDispatcher9 10/10 S  redDispatcher7 20/0 S  redDispatcher4 10/10 S  redDispatcher3 10/10 S  redDispatcher10 10/10 S
+   5956       0     7327, 100    70  [vkrt] Analysis 30/0 R  Cyberpunk2077.e 10/10 S  redDispatcher6 10/0 S  redDispatcher11 10/0 S  redDispatcher1 10/0 S  GameThread 10/0 S
+   6057       0     7327, 100    70  [vkrt] Analysis 100/0 R  redDispatcher11 10/10 S  GameThread 10/10 R  redDispatcher9 10/0 R  redDispatcher8 10/0 S  redDispatcher7 10/0 R
+   6160       0     7327, 100    70  [vkrt] Analysis 100/0 R  redDispatcher6 10/0 S  redDispatcher5 10/0 S  redDispatcher4 10/0 S  redDispatcher3 10/0 S  redDispatcher10 10/0 S
+   6262       0     7327, 100    70  [vkrt] Analysis 80/0 S  Cyberpunk2077.e 10/10 S  vkd3d_queue 10/0 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S
+   6363       0     7327, 100    70  GameThread 20/10 S  redDispatcher1 10/10 S  redDispatcher8 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S  redDispatcher4 10/0 S
+   6465       0     7327, 100    70  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S  redDispatcher3 10/0 S
+   6567       0     7327, 100    70  redDispatcher10 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher6 0/10 S  redDispatcher5 10/0 S
+   6669       0     7327, 100    70  GameThread 10/10 S  Cyberpunk2077.e 10/10 S  redDispatcher8 0/10 S  redDispatcher6 10/0 S  redDispatcher4 10/0 S  redDispatcher3 10/0 S
+   6770       0     7327, 100    70  vkd3d_fence 10/0 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S
+   6872       0     7327, 100    70  redDispatcher2 10/10 R  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher5 10/0 S
+   6974       0     7327, 100    70  [vkrt] Analysis 30/0 R  redDispatcher3 10/10 S  redDispatcher2 20/0 S  redDispatcher9 0/10 S  redDispatcher6 10/0 S  redDispatcher4 10/0 S
+   7075       0     7313, 100    70  [vkrt] Analysis 100/0 R  GameThread 10/10 R  vkd3d_queue 10/0 S  redDispatcher9 10/0 S  redDispatcher8 10/0 R  redDispatcher7 10/0 S
+   7177       0     7313, 100    70  [vkrt] Analysis 100/0 R  redDispatcher4 10/10 S  vkd3d-swapchain 0/10 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S
+   7279       0     7313, 100    70  [vkrt] Analysis 70/0 S  redDispatcher9 10/0 S  redDispatcher11 0/10 S  redDispatcher10 10/0 S  redDispatcher1 10/0 S  GameThread 0/10 S
+   7381       0     7313, 100    70  GameThread 10/10 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S  redDispatcher4 10/0 S
+   7482       0     7313, 100    70  redDispatcher1 10/10 S  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher5 10/0 S
+   7584       0     7313, 100    70  redDispatcher7 10/10 R  redDispatcher8 10/0 R  redDispatcher5 10/0 S  redDispatcher2 10/0 S  redDispatcher11 10/0 R  redDispatcher10 10/0 R
+   7686       0     7313, 100    70  redDispatcher6 10/10 S  GameThread 10/10 S  vkd3d_queue 0/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S  redDispatcher4 10/0 S
+   7788       0     7313, 100    70  redDispatcher10 10/10 S  redDispatcher9 0/10 S  redDispatcher5 10/0 S  redDispatcher1 10/0 S  Cyberpunk2077.e 0/10 S
+   7889       0     7313, 100    70  redDispatcher8 10/10 S  redDispatcher2 10/10 S  GameThread 10/10 S  redDispatcher9 10/0 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S
+   7991       0     7313, 100    70  redDispatcher5 10/10 S  redDispatcher8 10/0 S  redDispatcher7 10/0 S  redDispatcher4 0/10 S  redDispatcher3 10/0 S  redDispatcher11 0/10 S
+
+=== hub open at 16:17:37.252045 ===
+  t(ms)  diskKB  gpu(MiB,util%)  threads  busiest threads: name user/sys ms [majflt] state
+   -399       0      7883, 91    70  redDispatcher1 40/30 R  GameThread 20/50 S  redDispatcher7 10/0 S  redDispatcher6 10/0 S  redDispatcher4 10/0 S  redDispatcher2 10/0 S
+   -297       0      7880, 91    70  redDispatcher1 50/20 R  redDispatcher8 10/0 R  redDispatcher6 0/10 S  Cyberpunk2077.e 0/10 S
+   -195       0      7880, 91    70  GameThread 20/70 R  redDispatcher1 0/50 R  redDispatcher9 10/0 S  redDispatcher7 10/0 S  redDispatcher5 10/0 S  redDispatcher3 10/0 S
+    -93       0      7789, 68    70  GameThread 30/50 [1] R  [vkrt] Analysis 50/0 S  redDispatcher4 20/10 S  redDispatcher3 20/10 S  redDispatcher1 20/10 S  redDispatcher9 10/10 S
+      9       0      7789, 68    70  GameThread 10/20 S  redDispatcher9 20/0 S  redDispatcher8 10/0 R  redDispatcher7 10/0 R  redDispatcher6 10/0 R  redDispatcher5 10/0 S
+    110       0      7789, 68    70  redDispatcher8 10/10 S  redDispatcher6 20/0 S  redDispatcher2 10/10 S  vkd3d_fence 10/0 S  redDispatcher9 10/0 S  redDispatcher7 10/0 S
+    212     284      7789, 68    70  GameThread 20/40 R  redDispatcher4 40/0 R  redDispatcher11 10/10 S  redDispatcher8 10/0 S  redDispatcher5 10/0 S  redDispatcher3 10/0 S
+    314       0     7799, 100    70  redDispatcher4 90/0 [1] S  GameThread 30/60 S  redDispatcher9 20/0 R  redDispatcher7 20/0 R  redDispatcher10 20/0 S  vkd3d_queue 10/0 S
+    416      28     7799, 100    70  redDispatcher9 0/10 S  redDispatcher6 10/0 S  redDispatcher2 10/0 S  redDispatcher11 10/0 S  redDispatcher1 10/0 S  GameThread 0/10 S
+    517     260     7839, 100    70  redDispatcher10 10/10 S  redDispatcher1 10/10 S  GameThread 10/10 S  Cyberpunk2077.e 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 S
+    619       0     7839, 100    70  redDispatcher4 10/10 R  GameThread 10/10 R  redDispatcher8 10/0 R  redDispatcher5 10/0 S  redDispatcher2 10/0 S  redDispatcher1 10/0 S
+    721       0     7831, 100    70  redDispatcher6 10/10 S  GameThread 10/10 R  Cyberpunk2077.e 10/10 S  redDispatcher9 10/0 S  redDispatcher7 10/0 S  redDispatcher5 10/0 S
+    823       0     7831, 100    70  GameThread 30/40 R  redDispatcher9 20/10 S  redDispatcher8 30/0 S  redDispatcher7 20/10 S  redDispatcher5 20/10 S  redDispatcher3 20/10 S
+    924       0       7831, 4    70  GameThread 40/40 R  redDispatcher2 20/10 S  redDispatcher11 30/0 S  redDispatcher10 20/10 S  redDispatcher1 20/10 S  redDispatcher9 20/0 S
+   1027       0       7831, 4    70  GameThread 30/40 R  redDispatcher4 30/10 S  redDispatcher9 20/10 R  redDispatcher8 30/0 R  redDispatcher5 20/10 S  redDispatcher3 20/10 R
+   1129       0       7831, 4    70  GameThread 40/30 R  redDispatcher7 30/10 R  redDispatcher6 30/10 S  redDispatcher2 30/0 S  redDispatcher11 30/0 S  redDispatcher10 20/10 R
+   1231       0       7831, 4    70  GameThread 30/40 R  redDispatcher4 30/10 R  redDispatcher3 30/10 R  redDispatcher9 20/10 S  redDispatcher8 30/0 R  redDispatcher5 20/10 R
+   1333       0      7831, 22    70  GameThread 40/60 R  redDispatcher7 20/10 R  redDispatcher11 20/10 R  redDispatcher10 20/10 R  redDispatcher1 20/10 S  redDispatcher9 20/0 R
+   1435       0      7831, 22    70  GameThread 40/50 R  redDispatcher5 20/10 R  redDispatcher2 20/10 R  redDispatcher9 20/0 R  redDispatcher8 20/0 R  redDispatcher7 20/0 R
+   1537       0      7831, 22    70  GameThread 40/60 R  redDispatcher9 20/10 R  redDispatcher6 20/10 R  redDispatcher4 20/10 S  redDispatcher11 20/10 S  redDispatcher8 20/0 R
+   1640       0      7831, 22    70  GameThread 50/40 R  redDispatcher2 20/10 S  redDispatcher1 20/10 S  redDispatcher9 20/0 S  redDispatcher8 10/10 S  redDispatcher6 20/0 S
+   1742       0      7831, 22    70  GameThread 40/50 R  redDispatcher4 20/10 S  redDispatcher3 20/10 S  redDispatcher11 20/10 S  redDispatcher10 20/10 S  vkd3d_queue 10/10 S
+   1845       0      7831, 19    70  GameThread 40/60 R  redDispatcher7 20/10 S  redDispatcher6 20/10 S  redDispatcher5 20/10 R  redDispatcher9 20/0 S  redDispatcher8 20/0 S
+   1947       0      7831, 19    70  GameThread 40/50 R  redDispatcher11 20/10 S  redDispatcher10 20/10 R  redDispatcher8 10/10 S  redDispatcher5 10/10 R  redDispatcher4 20/0 S
+   2049       0      7831, 19    70  GameThread 40/50 R  redDispatcher9 20/10 S  redDispatcher6 20/10 S  redDispatcher2 20/10 R  redDispatcher8 20/0 R  redDispatcher7 10/10 R
+   2151       0      7831, 19    70  GameThread 40/60 R  redDispatcher5 20/10 S  redDispatcher3 20/10 R  redDispatcher9 20/0 R  redDispatcher8 10/10 R  redDispatcher7 20/0 S
+   2253       0      7831, 20    70  GameThread 40/60 R  redDispatcher8 30/0 R  redDispatcher7 20/10 R  redDispatcher2 20/10 R  redDispatcher9 10/10 R  redDispatcher6 20/0 R
+   2356       0      7831, 20    70  GameThread 40/50 R  redDispatcher10 20/10 S  redDispatcher1 20/10 S  redDispatcher9 20/0 S  redDispatcher8 20/0 S  redDispatcher6 10/10 R
+   2461       0      7831, 20    70  GameThread 50/50 R  redDispatcher9 10/10 R  redDispatcher8 10/10 R  redDispatcher6 20/0 R  redDispatcher5 10/10 R  redDispatcher2 10/10 S
+   2564       0      7831, 20    70  GameThread 40/60 R  redDispatcher7 20/10 S  redDispatcher8 20/0 S  redDispatcher3 10/10 R  redDispatcher11 20/0 S  Cyberpunk2077.e 10/10 S
+   2666       0      7831, 20    70  GameThread 40/50 R  redDispatcher6 20/10 R  redDispatcher5 20/10 R  redDispatcher4 20/10 S  redDispatcher1 20/10 R  redDispatcher9 20/0 S
+   2768       0      7831, 20    70  GameThread 40/60 R  redDispatcher10 30/10 S  redDispatcher8 20/10 S  redDispatcher2 20/10 S  redDispatcher11 20/10 R  redDispatcher9 10/10 S
+   2870       0      7831, 14    70  GameThread 30/50 R  redDispatcher9 20/0 S  redDispatcher6 10/10 S  redDispatcher5 10/10 S  redDispatcher4 10/10 R  redDispatcher2 10/10 R
+   2972       0      7831, 14    70  GameThread 40/50 R  redDispatcher7 10/10 S  redDispatcher3 10/10 S  redDispatcher10 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 R
+   3074       0      7831, 14    70  GameThread 50/50 R  redDispatcher6 20/10 R  redDispatcher11 20/10 S  redDispatcher8 10/10 S  redDispatcher7 20/0 R  redDispatcher5 20/0 S
+   3177       0      7831, 14    70  GameThread 30/60 R  GameThread 0/40 S  redDispatcher4 20/10 S  redDispatcher9 10/10 S  redDispatcher10 10/10 S  redDispatcher8 10/0 S
+   3279       0      7579, 18    70  GameThread 30/80 R  GameThread 0/60 S  Cyberpunk2077.e 10/10 S
+   3381       0      7579, 18    70  GameThread 20/80 R  GameThread 0/70 S  redDispatcher6 10/0 S  redDispatcher3 10/0 S
+   3483       0      7200, 18    70  GameThread 20/80 R  GameThread 0/60 S  Cyberpunk2077.e 10/0 S
+   3585       0      7200, 18    70  GameThread 40/50 R  redDispatcher9 20/0 R  redDispatcher7 10/10 R  redDispatcher5 10/10 R  redDispatcher3 10/10 R  redDispatcher1 10/10 S
+   3687       0      7085, 33    70  GameThread 50/30 R  redDispatcher8 10/10 R  redDispatcher6 10/10 R  redDispatcher5 20/0 S  redDispatcher2 10/10 S  redDispatcher11 10/10 S
+   3789       0      7085, 33    70  GameThread 40/50 R  redDispatcher6 10/10 S  Cyberpunk2077.e 10/10 S  redDispatcher9 10/0 S  redDispatcher8 10/0 R  redDispatcher7 10/0 R
+   3891       0      7085, 33    70  GameThread 40/50 R  redDispatcher8 10/10 S  redDispatcher7 10/10 S  redDispatcher3 20/0 R  redDispatcher1 10/10 S  redDispatcher9 10/0 R
+   3993       0      7085, 33    70  GameThread 50/50 R  redDispatcher9 20/10 S  redDispatcher4 20/10 R  redDispatcher11 20/10 S  redDispatcher8 20/0 S  redDispatcher7 20/0 S
+   4095       0      7085, 33    70  GameThread 40/40 R  redDispatcher9 20/10 S  redDispatcher8 20/10 S  redDispatcher7 20/10 S  redDispatcher5 20/10 S  redDispatcher2 20/10 S
+   4197       0      7085, 33    70  GameThread 40/40 R  redDispatcher6 30/0 R  redDispatcher3 20/10 R  redDispatcher11 30/0 R  redDispatcher10 30/0 R  redDispatcher9 20/0 R
+   4299       0      7085, 30    70  GameThread 30/50 R  redDispatcher4 20/10 S  redDispatcher9 20/0 S  redDispatcher8 20/0 R  redDispatcher7 20/0 R  redDispatcher6 20/0 S
+   4401       0      7085, 30    70  GameThread 50/50 R  redDispatcher7 30/10 R  redDispatcher5 30/10 R  redDispatcher3 30/10 R  redDispatcher9 20/10 S  redDispatcher8 20/10 S
+   4504       0      7085, 30    70  GameThread 30/50 R  redDispatcher2 30/10 S  redDispatcher4 20/10 S  redDispatcher11 20/10 S  redDispatcher1 20/10 S  redDispatcher9 20/0 R
+   4606       0      7085, 30    70  GameThread 30/40 R  redDispatcher8 20/10 R  redDispatcher7 30/0 R  redDispatcher6 20/10 S  redDispatcher1 30/0 R  redDispatcher9 20/0 S
+   4708       0      7085, 28    70  GameThread 40/40 R  redDispatcher9 20/10 S  redDispatcher4 20/10 S  redDispatcher3 20/10 R  redDispatcher11 20/10 R  redDispatcher10 20/10 S
+   4809       0      7085, 28    70  GameThread 40/40 R  redDispatcher5 30/10 R  redDispatcher9 20/10 R  redDispatcher8 20/10 R  redDispatcher6 20/10 R  redDispatcher4 20/10 S
+   4912       0      7085, 28    70  GameThread 20/40 R  redDispatcher9 10/10 R  redDispatcher2 10/10 S  redDispatcher8 10/0 R  redDispatcher7 10/0 R  redDispatcher5 10/0 R
+   5014       0      7085, 28    70  GameThread 40/50 R  redDispatcher7 20/10 R  redDispatcher6 30/0 S  redDispatcher3 20/10 S  redDispatcher2 30/0 S  redDispatcher11 20/10 S
+   5115       0      7085, 28    70  GameThread 30/50 R  redDispatcher9 20/10 R  redDispatcher8 20/10 R  redDispatcher4 20/10 R  redDispatcher2 20/10 R  redDispatcher10 20/10 R
+   5217       0      7085, 28    70  GameThread 40/40 R  redDispatcher7 20/10 R  redDispatcher6 20/10 S  redDispatcher5 20/10 R  redDispatcher3 20/10 R  redDispatcher1 20/10 R
+   5320       0      7085, 29    70  GameThread 30/50 R  redDispatcher8 20/10 S  redDispatcher5 20/10 S  redDispatcher4 20/10 R  redDispatcher9 20/0 S  redDispatcher7 20/0 S
+   5422       0      7085, 29    70  GameThread 30/50 R  redDispatcher11 30/10 S  redDispatcher9 30/0 S  redDispatcher3 20/10 S  redDispatcher1 20/10 R  redDispatcher7 20/0 S
+   5524       0      7085, 29    70  GameThread 40/50 R  redDispatcher8 20/10 S  redDispatcher7 20/10 S  redDispatcher2 20/10 R  redDispatcher9 10/10 S  redDispatcher6 10/10 S
+   5626       0      7085, 29    70  GameThread 40/50 R  redDispatcher6 30/0 S  redDispatcher4 20/10 R  redDispatcher3 20/10 R  redDispatcher11 20/10 R  redDispatcher10 20/10 R
+   5728       0      7085, 24    70  GameThread 50/50 R  redDispatcher6 20/10 R  redDispatcher9 10/10 R  redDispatcher8 10/10 S  redDispatcher7 10/10 R  redDispatcher2 20/0 S
+   5830       0      7085, 24    70  GameThread 40/50 R  redDispatcher5 20/10 S  redDispatcher4 20/10 S  redDispatcher3 20/10 S  redDispatcher1 20/10 S  redDispatcher9 10/10 S
+   5932       0      7085, 24    70  GameThread 40/50 R  redDispatcher11 10/10 S  redDispatcher10 20/0 S  redDispatcher9 10/0 R  redDispatcher8 10/0 S  redDispatcher6 10/0 R
+   6034       0      7085, 24    70  GameThread 40/60 R  redDispatcher7 20/10 R  redDispatcher2 20/10 S  redDispatcher1 20/10 S  redDispatcher9 10/10 S  redDispatcher8 20/0 R
+   6136       0      7085, 24    70  GameThread 30/50 R  redDispatcher8 20/10 S  redDispatcher6 20/10 S  redDispatcher3 20/10 S  redDispatcher11 20/10 R  redDispatcher9 20/0 S
+   6238       0      7085, 24    70  GameThread 30/50 R  redDispatcher7 20/10 R  redDispatcher5 20/10 S  redDispatcher4 20/10 S  redDispatcher10 20/10 R  redDispatcher9 10/10 S
+   6340       0      7085, 26    70  GameThread 50/40 R  redDispatcher9 20/10 R  redDispatcher8 20/10 S  redDispatcher5 20/10 R  redDispatcher3 20/10 S  redDispatcher1 20/10 R
+   6442       0      7085, 26    70  GameThread 40/40 R  redDispatcher7 20/10 R  redDispatcher6 30/0 S  redDispatcher2 20/10 R  redDispatcher11 20/10 S  redDispatcher10 30/0 R
+   6544       0      7085, 26    70  GameThread 40/50 R  redDispatcher9 20/10 R  redDispatcher6 20/10 S  redDispatcher5 30/0 S  redDispatcher4 20/10 S  redDispatcher3 20/10 S
+   6647       0      7085, 26    70  GameThread 30/50 R  redDispatcher8 20/10 R  redDispatcher4 20/10 R  redDispatcher9 20/0 S  redDispatcher7 10/10 R  redDispatcher6 20/0 S
+   6749       0      7085, 32    70  GameThread 40/40 R  redDispatcher1 30/10 R  redDispatcher9 20/10 R  redDispatcher7 20/10 R  redDispatcher5 30/0 R  redDispatcher3 20/10 R
+   6851       0      7085, 32    70  GameThread 50/50 R  redDispatcher8 20/10 R  redDispatcher2 20/10 R  redDispatcher7 20/0 R  redDispatcher6 10/10 R  redDispatcher5 10/10 R
+   6953       0      7085, 32    70  GameThread 40/50 R  redDispatcher9 20/10 S  redDispatcher11 20/10 S  redDispatcher10 20/10 S  redDispatcher8 20/0 S  redDispatcher6 20/0 S
+   7055       0      7085, 32    70  GameThread 30/50 R  redDispatcher7 30/10 R  redDispatcher6 20/10 R  redDispatcher5 30/0 S  redDispatcher1 20/10 S  redDispatcher9 20/0 S
+   7157       0      7085, 32    70  GameThread 40/40 R  redDispatcher9 20/10 S  redDispatcher8 20/10 S  redDispatcher6 20/10 R  redDispatcher5 20/10 R  redDispatcher4 20/10 S
+   7260       0      7085, 31    70  GameThread 30/50 R  redDispatcher7 20/10 R  redDispatcher3 20/10 R  redDispatcher11 20/10 S  redDispatcher9 20/0 R  redDispatcher8 20/0 S
+   7362       0      7085, 31    70  GameThread 30/40 S  redDispatcher8 30/10 S  redDispatcher9 20/10 R  redDispatcher6 20/10 R  redDispatcher5 20/10 R  redDispatcher4 30/0 R
+   7465       0      7085, 31    70  GameThread 40/60 R  redDispatcher7 20/10 S  redDispatcher6 20/10 S  redDispatcher5 20/0 S  redDispatcher4 10/10 R  redDispatcher3 10/10 R
+   7568       0      7085, 31    70  GameThread 40/50 R  redDispatcher9 20/10 S  redDispatcher2 20/10 R  redDispatcher10 20/10 R  redDispatcher1 30/0 S  redDispatcher8 20/0 R
+   7669       0      7085, 27    70  GameThread 30/40 S  redDispatcher3 30/10 S  redDispatcher8 20/10 S  redDispatcher7 20/10 S  redDispatcher5 20/10 S  redDispatcher4 20/10 S
+   7771       0      7085, 27    70  GameThread 40/40 R  redDispatcher9 30/0 S  redDispatcher8 30/0 S  redDispatcher2 20/10 S  redDispatcher10 20/10 S  redDispatcher7 20/0 S
+   7873       0      7085, 27    70  GameThread 30/40 R  redDispatcher6 30/10 S  redDispatcher8 20/10 S  redDispatcher5 20/10 S  redDispatcher2 20/10 S  redDispatcher11 20/10 S
+   7975       0      7085, 27    70  GameThread 50/40 R  redDispatcher7 30/10 S  redDispatcher4 30/10 S  redDispatcher1 30/10 S  redDispatcher9 20/10 S  redDispatcher3 20/10 S
+

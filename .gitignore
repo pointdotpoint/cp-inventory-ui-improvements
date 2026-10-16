@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Editors and OS
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+
+# Scratch output from WolvenKit extracts and graph builds
+*.animgraph.json
+/tmp/

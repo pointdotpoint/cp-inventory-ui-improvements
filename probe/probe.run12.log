@@ -1,0 +1,1849 @@
+=== open #1  2026-10-01 19:27:05  mode: normal  recorded 7.3 s ===
+gameplay before open: average frame 14.8 ms, worst 18.4 ms (120 frames)
+slow frames after open (> 25 ms):
+  frame   2  at     51 ms  took   27.6 ms
+  frame   3  at    182 ms  took  131.4 ms
+  frame  46  at    841 ms  took   39.3 ms
+  frame  52  at   3622 ms  took 2708.2 ms
+  frame  53  at   3695 ms  took   73.5 ms
+  frame  54  at   3725 ms  took   30.1 ms
+  frame  57  at   3796 ms  took   38.1 ms
+  frame  58  at   3834 ms  took   38.4 ms
+  frame  59  at   3873 ms  took   38.4 ms
+  frame  60  at   3912 ms  took   39.6 ms
+  frame  61  at   3955 ms  took   43.1 ms
+  frame  62  at   4006 ms  took   50.6 ms
+  frame  63  at   4048 ms  took   42.5 ms
+  frame  64  at   4088 ms  took   39.7 ms
+  frame  65  at   4127 ms  took   38.8 ms
+  frame  66  at   4166 ms  took   39.1 ms
+  frame  67  at   4204 ms  took   38.4 ms
+  frame  68  at   4244 ms  took   39.3 ms
+  frame  69  at   4283 ms  took   39.3 ms
+  frame  70  at   4322 ms  took   39.3 ms
+  frame  71  at   4361 ms  took   38.9 ms
+  frame  72  at   4404 ms  took   42.2 ms
+  frame  73  at   4445 ms  took   41.3 ms
+  frame  74  at   4478 ms  took   33.6 ms
+  frame  75  at   4517 ms  took   38.7 ms
+  frame  76  at   4556 ms  took   39.0 ms
+  frame  77  at   4595 ms  took   38.9 ms
+  frame  78  at   4634 ms  took   38.7 ms
+  frame  79  at   4673 ms  took   39.1 ms
+  frame  80  at   4712 ms  took   38.8 ms
+  frame  81  at   4751 ms  took   39.2 ms
+  frame  82  at   4790 ms  took   39.1 ms
+  frame  83  at   4830 ms  took   39.7 ms
+  frame  84  at   4869 ms  took   39.1 ms
+  frame  85  at   4908 ms  took   39.5 ms
+  frame  86  at   4948 ms  took   39.8 ms
+  frame  87  at   4987 ms  took   38.7 ms
+  frame  88  at   5026 ms  took   38.9 ms
+  frame  89  at   5065 ms  took   39.1 ms
+  frame  90  at   5104 ms  took   39.3 ms
+  frame  91  at   5143 ms  took   38.5 ms
+  frame  92  at   5181 ms  took   38.8 ms
+  frame  93  at   5220 ms  took   38.7 ms
+  frame  94  at   5259 ms  took   38.9 ms
+  frame  95  at   5298 ms  took   38.9 ms
+  frame  96  at   5337 ms  took   39.3 ms
+  frame  97  at   5375 ms  took   38.0 ms
+  frame  98  at   5414 ms  took   39.0 ms
+  frame  99  at   5453 ms  took   39.0 ms
+  frame 100  at   5492 ms  took   39.0 ms
+  frame 101  at   5531 ms  took   38.5 ms
+  frame 102  at   5584 ms  took   53.6 ms
+  frame 103  at   5663 ms  took   78.3 ms
+  frame 104  at   5701 ms  took   38.5 ms
+  frame 105  at   5740 ms  took   38.6 ms
+  frame 106  at   5778 ms  took   38.5 ms
+  frame 107  at   5817 ms  took   38.7 ms
+  frame 108  at   5854 ms  took   37.0 ms
+  frame 109  at   5891 ms  took   37.0 ms
+  frame 110  at   5928 ms  took   37.0 ms
+  frame 111  at   5966 ms  took   38.2 ms
+  frame 112  at   6003 ms  took   36.8 ms
+  frame 113  at   6039 ms  took   36.6 ms
+  frame 114  at   6076 ms  took   36.8 ms
+  frame 115  at   6113 ms  took   36.7 ms
+  frame 116  at   6151 ms  took   37.7 ms
+  frame 117  at   6187 ms  took   36.3 ms
+  frame 118  at   6224 ms  took   36.8 ms
+  frame 119  at   6264 ms  took   39.9 ms
+  frame 120  at   6367 ms  took  103.6 ms
+  frame 121  at   6427 ms  took   59.8 ms
+  frame 122  at   6487 ms  took   59.6 ms
+  frame 123  at   6547 ms  took   60.0 ms
+  frame 124  at   6606 ms  took   59.3 ms
+  frame 125  at   6666 ms  took   59.8 ms
+  frame 126  at   6709 ms  took   43.6 ms
+  frame 127  at   6753 ms  took   43.4 ms
+  frame 128  at   6796 ms  took   43.5 ms
+  frame 129  at   6840 ms  took   43.6 ms
+  frame 130  at   6883 ms  took   43.5 ms
+  frame 131  at   6920 ms  took   37.2 ms
+  frame 132  at   6958 ms  took   37.3 ms
+  frame 133  at   6995 ms  took   37.2 ms
+  frame 134  at   7032 ms  took   36.7 ms
+  frame 135  at   7069 ms  took   37.3 ms
+  frame 136  at   7106 ms  took   36.9 ms
+  frame 137  at   7143 ms  took   37.5 ms
+  frame 138  at   7180 ms  took   36.5 ms
+  frame 139  at   7217 ms  took   37.6 ms
+  frame 140  at   7254 ms  took   36.7 ms
+  frame 141  at   7291 ms  took   37.0 ms
+frames: 141   worst: 2708.2 ms   total in slow frames: 6543.7 ms
+FastInventory v0.5 (delayed V + keep-alive cache), V SHOWN
+inventory init #1 at 25 ms (frame 2): normal
+script calls (inclusive time, nested calls counted in their parents too):
+  MenuHubGameController.OnInitialize                         x1       4.0 ms   at 1 ms (frame 1)
+  gameuiInventoryGameController.OnSetUserData                x1       6.0 ms   at 25 ms (frame 2)
+  InventoryDataManagerV2.Initialize                          x2       1.0 ms   at 25 ms (frame 2), 31 ms (frame 2)
+  InventoryItemModeLogicController.SetupData                 x1       0.0 ms   at 26 ms (frame 2)
+  gameuiInventoryGameController.RefreshPlayerCyberware       x1       2.0 ms   at 26 ms (frame 2)
+  gameuiInventoryGameController.RefreshUI                    x1       0.0 ms   at 28 ms (frame 2)
+  gameuiInventoryGameController.SetupPlayerStats             x1       1.0 ms   at 30 ms (frame 2)
+  gameuiInventoryGameController.OnInitialize                 x1       0.0 ms   at 32 ms (frame 2)
+  gameuiInventoryGameController.OnEquipmentAreaCategoryCreated x7     120.0 ms   at 46 ms (frame 3), 61 ms (frame 3), 82 ms (frame 3), 118 ms (frame 3)
+  gameuiInventoryGameController.PopulateArea                 x11    119.0 ms   at 46 ms (frame 3), 62 ms (frame 3), 70 ms (frame 3), 82 ms (frame 3)
+  inkInventoryPuppetPreviewGameController.OnInitialize       x1       0.0 ms   at 876 ms (frame 50)
+  EquipmentEx.PaperdollHelper.AddPreview                     x1       0.0 ms   at 876 ms (frame 50)
+  inkPuppetPreviewGameController.OnPreviewInitialized        x1       0.0 ms   at 876 ms (frame 50)
+  inkInventoryPuppetPreviewGameController.OnSetCameraSetupEvent x1       0.0 ms   at 876 ms (frame 50)
+
+=== open #2  2026-10-01 19:27:17  mode: normal  recorded 9.9 s ===
+gameplay before open: average frame 29.7 ms, worst 452.0 ms (120 frames)
+slow frames after open (> 25 ms):
+  frame   3  at    168 ms  took  126.6 ms
+  frame  54  at   2915 ms  took 2018.4 ms
+  frame  57  at   2975 ms  took   33.2 ms
+  frame  58  at   3018 ms  took   43.3 ms
+  frame  59  at   3058 ms  took   39.9 ms
+  frame  60  at   3114 ms  took   56.3 ms
+  frame  61  at   3157 ms  took   42.8 ms
+  frame  62  at   3201 ms  took   43.8 ms
+  frame  63  at   3243 ms  took   42.3 ms
+  frame  64  at   3285 ms  took   42.4 ms
+  frame  65  at   3327 ms  took   42.1 ms
+  frame  66  at   3369 ms  took   41.9 ms
+  frame  67  at   3413 ms  took   43.7 ms
+  frame  68  at   3455 ms  took   41.5 ms
+  frame  69  at   3516 ms  took   61.2 ms
+  frame  70  at   3573 ms  took   57.1 ms
+  frame  71  at   3627 ms  took   54.6 ms
+  frame  72  at   3671 ms  took   43.3 ms
+  frame  73  at   3721 ms  took   50.5 ms
+  frame  74  at   3771 ms  took   49.3 ms
+  frame  75  at   3813 ms  took   42.7 ms
+  frame  76  at   3857 ms  took   43.9 ms
+  frame  77  at   3901 ms  took   43.9 ms
+  frame  78  at   3945 ms  took   43.5 ms
+  frame  79  at   3989 ms  took   43.9 ms
+  frame  80  at   4033 ms  took   44.0 ms
+  frame  81  at   4076 ms  took   43.3 ms
+  frame  82  at   4120 ms  took   43.9 ms
+  frame  83  at   4164 ms  took   43.8 ms
+  frame  84  at   4207 ms  took   43.8 ms
+  frame  85  at   4250 ms  took   42.5 ms
+  frame  86  at   4291 ms  took   41.1 ms
+  frame  87  at   4334 ms  took   42.9 ms
+  frame  88  at   4376 ms  took   42.1 ms
+  frame  89  at   4419 ms  took   43.1 ms
+  frame  90  at   4459 ms  took   40.4 ms
+  frame  91  at   4502 ms  took   42.3 ms
+  frame  92  at   4544 ms  took   42.6 ms
+  frame  93  at   4586 ms  took   41.5 ms
+  frame  94  at   4627 ms  took   41.6 ms
+  frame  95  at   4669 ms  took   42.0 ms
+  frame  96  at   4711 ms  took   41.5 ms
+  frame  97  at   4753 ms  took   42.1 ms
+  frame  98  at   4794 ms  took   41.5 ms
+  frame  99  at   4836 ms  took   41.8 ms
+  frame 100  at   4878 ms  took   42.0 ms
+  frame 101  at   4920 ms  took   41.3 ms
+  frame 102  at   4962 ms  took   42.1 ms
+  frame 103  at   5003 ms  took   41.5 ms
+  frame 104  at   5045 ms  took   41.9 ms
+  frame 105  at   5086 ms  took   41.1 ms
+  frame 106  at   5128 ms  took   41.9 ms
+  frame 107  at   5169 ms  took   40.7 ms
+  frame 108  at   5210 ms  took   41.4 ms
+  frame 109  at   5252 ms  took   41.5 ms
+  frame 110  at   5293 ms  took   41.6 ms
+  frame 111  at   5334 ms  took   40.9 ms
+  frame 112  at   5376 ms  took   41.5 ms
+  frame 113  at   5418 ms  took   41.9 ms
+  frame 114  at   5459 ms  took   41.2 ms
+  frame 115  at   5502 ms  took   42.9 ms
+  frame 116  at   5545 ms  took   42.8 ms
+  frame 117  at   5587 ms  took   42.5 ms
+  frame 118  at   5628 ms  took   41.2 ms
+  frame 119  at   5670 ms  took   42.1 ms
+  frame 120  at   5712 ms  took   41.3 ms
+  frame 121  at   5754 ms  took   42.4 ms
+  frame 122  at   5796 ms  took   42.1 ms
+  frame 123  at   5839 ms  took   42.2 ms
+  frame 124  at   5880 ms  took   41.8 ms
+  frame 125  at   5923 ms  took   43.0 ms
+  frame 126  at   5965 ms  took   41.9 ms
+  frame 127  at   6008 ms  took   42.3 ms
+  frame 128  at   6050 ms  took   42.1 ms
+  frame 129  at   6092 ms  took   42.0 ms
+  frame 130  at   6135 ms  took   42.9 ms
+  frame 131  at   6177 ms  took   42.8 ms
+  frame 132  at   6220 ms  took   42.5 ms
+  frame 133  at   6263 ms  took   43.1 ms
+  frame 134  at   6305 ms  took   42.6 ms
+  frame 135  at   6348 ms  took   42.9 ms
+  frame 136  at   6391 ms  took   43.1 ms
+  frame 137  at   6435 ms  took   43.9 ms
+  frame 138  at   6479 ms  took   43.1 ms
+  frame 139  at   6521 ms  took   42.9 ms
+  frame 140  at   6564 ms  took   42.6 ms
+  frame 141  at   6607 ms  took   43.4 ms
+  frame 142  at   6649 ms  took   41.9 ms
+  frame 143  at   6692 ms  took   42.7 ms
+  frame 144  at   6736 ms  took   44.4 ms
+  frame 145  at   6779 ms  took   42.9 ms
+  frame 146  at   6822 ms  took   42.5 ms
+  frame 147  at   6864 ms  took   42.8 ms
+  frame 148  at   6908 ms  took   44.0 ms
+  frame 149  at   6949 ms  took   40.5 ms
+  frame 150  at   6992 ms  took   42.7 ms
+  frame 151  at   7034 ms  took   42.1 ms
+  frame 152  at   7075 ms  took   41.0 ms
+  frame 153  at   7116 ms  took   40.8 ms
+  frame 154  at   7158 ms  took   42.1 ms
+  frame 155  at   7199 ms  took   41.1 ms
+  frame 156  at   7242 ms  took   43.2 ms
+  frame 157  at   7284 ms  took   41.9 ms
+  frame 158  at   7326 ms  took   42.0 ms
+  frame 159  at   7367 ms  took   41.6 ms
+  frame 160  at   7409 ms  took   42.0 ms
+  frame 161  at   7451 ms  took   41.1 ms
+  frame 162  at   7493 ms  took   42.0 ms
+  frame 163  at   7535 ms  took   42.0 ms
+  frame 164  at   7576 ms  took   41.7 ms
+  frame 165  at   7618 ms  took   41.6 ms
+  frame 166  at   7660 ms  took   41.7 ms
+  frame 167  at   7702 ms  took   42.4 ms
+  frame 168  at   7744 ms  took   41.9 ms
+  frame 169  at   7864 ms  took  120.3 ms
+  frame 170  at   8001 ms  took  136.7 ms
+  frame 171  at   8041 ms  took   39.8 ms
+  frame 172  at   8127 ms  took   86.1 ms
+  frame 173  at   8170 ms  took   43.5 ms
+  frame 174  at   8211 ms  took   40.4 ms
+  frame 175  at   8253 ms  took   42.0 ms
+  frame 217  at   8983 ms  took   49.3 ms
+  frame 218  at   9156 ms  took  173.6 ms
+  frame 265  at   9864 ms  took   39.1 ms
+frames: 265   worst: 2018.4 ms   total in slow frames: 7718.4 ms
+FastInventory v0.5 (delayed V + keep-alive cache), V SHOWN
+inventory init #2 at 20 ms (frame 2): normal
+inventory init #3 at 8932 ms (frame 217): normal
+script calls (inclusive time, nested calls counted in their parents too):
+  MenuHubGameController.OnInitialize                         x1       5.0 ms   at 1 ms (frame 1)
+  gameuiInventoryGameController.OnSetUserData                x2       9.0 ms   at 20 ms (frame 2), 8932 ms (frame 217)
+  InventoryDataManagerV2.Initialize                          x4       0.0 ms   at 20 ms (frame 2), 25 ms (frame 2), 7745 ms (frame 169), 8932 ms (frame 217)
+  InventoryItemModeLogicController.SetupData                 x2       0.0 ms   at 20 ms (frame 2), 8933 ms (frame 217)
+  gameuiInventoryGameController.RefreshPlayerCyberware       x2       3.0 ms   at 21 ms (frame 2), 8933 ms (frame 217)
+  gameuiInventoryGameController.RefreshUI                    x2       0.0 ms   at 22 ms (frame 2), 8935 ms (frame 217)
+  gameuiInventoryGameController.SetupPlayerStats             x2       0.0 ms   at 24 ms (frame 2), 8937 ms (frame 217)
+  gameuiInventoryGameController.OnInitialize                 x2       0.0 ms   at 25 ms (frame 2), 8945 ms (frame 217)
+  gameuiInventoryGameController.OnEquipmentAreaCategoryCreated x14    225.0 ms   at 37 ms (frame 3), 51 ms (frame 3), 70 ms (frame 3), 105 ms (frame 3)
+  gameuiInventoryGameController.PopulateArea                 x22    220.0 ms   at 37 ms (frame 3), 52 ms (frame 3), 60 ms (frame 3), 70 ms (frame 3)
+  inkInventoryPuppetPreviewGameController.OnInitialize       x2       0.0 ms   at 860 ms (frame 52), 9817 ms (frame 265)
+  EquipmentEx.PaperdollHelper.AddPreview                     x2       0.0 ms   at 860 ms (frame 52), 9817 ms (frame 265)
+  inkPuppetPreviewGameController.OnPreviewInitialized        x2       0.0 ms   at 860 ms (frame 52), 9817 ms (frame 265)
+  inkInventoryPuppetPreviewGameController.OnSetCameraSetupEvent x2       0.0 ms   at 860 ms (frame 52), 9817 ms (frame 265)
+  inkInventoryPuppetPreviewGameController.OnUninitialize     x1       0.0 ms   at 7744 ms (frame 169)
+  BackpackMainGameController.OnInitialize                    x1       1.0 ms   at 7744 ms (frame 169)
+
+=== open #3  2026-10-01 19:27:28  mode: normal  recorded 9.0 s ===
+gameplay before open: average frame 42.3 ms, worst 452.0 ms (120 frames)
+slow frames after open (> 25 ms):
+  frame   1  at     46 ms  took   46.4 ms
+  frame   3  at    196 ms  took  126.8 ms
+  frame  50  at   2850 ms  took 1948.7 ms
+  frame  51  at   2902 ms  took   51.9 ms
+  frame  53  at   2953 ms  took   36.7 ms
+  frame  54  at   3028 ms  took   74.4 ms
+  frame  55  at   3064 ms  took   36.7 ms
+  frame  56  at   3103 ms  took   38.2 ms
+  frame  57  at   3141 ms  took   38.2 ms
+  frame  58  at   3179 ms  took   38.2 ms
+  frame  59  at   3217 ms  took   38.2 ms
+  frame  60  at   3255 ms  took   37.8 ms
+  frame  61  at   3293 ms  took   37.8 ms
+  frame  62  at   3331 ms  took   37.9 ms
+  frame  63  at   3369 ms  took   38.1 ms
+  frame  64  at   3407 ms  took   38.2 ms
+  frame  65  at   3445 ms  took   38.4 ms
+  frame  66  at   3484 ms  took   38.4 ms
+  frame  67  at   3521 ms  took   37.3 ms
+  frame  68  at   3559 ms  took   38.2 ms
+  frame  69  at   3598 ms  took   38.7 ms
+  frame  70  at   3636 ms  took   38.4 ms
+  frame  71  at   3675 ms  took   38.3 ms
+  frame  72  at   3713 ms  took   38.3 ms
+  frame  73  at   3751 ms  took   37.9 ms
+  frame  74  at   3790 ms  took   38.9 ms
+  frame  75  at   3828 ms  took   37.9 ms
+  frame  76  at   3866 ms  took   38.1 ms
+  frame  77  at   3904 ms  took   38.5 ms
+  frame  78  at   3943 ms  took   38.1 ms
+  frame  79  at   3981 ms  took   38.5 ms
+  frame  80  at   4020 ms  took   38.5 ms
+  frame  81  at   4058 ms  took   38.1 ms
+  frame  82  at   4097 ms  took   38.9 ms
+  frame  83  at   4135 ms  took   38.1 ms
+  frame  84  at   4173 ms  took   37.9 ms
+  frame  85  at   4211 ms  took   38.2 ms
+  frame  86  at   4249 ms  took   38.7 ms
+  frame  87  at   4287 ms  took   37.8 ms
+  frame  88  at   4325 ms  took   37.4 ms
+  frame  89  at   4363 ms  took   38.0 ms
+  frame  90  at   4400 ms  took   37.6 ms
+  frame  91  at   4438 ms  took   37.7 ms
+  frame  92  at   4475 ms  took   37.2 ms
+  frame  93  at   4513 ms  took   37.5 ms
+  frame  94  at   4550 ms  took   37.3 ms
+  frame  95  at   4588 ms  took   38.1 ms
+  frame  96  at   4626 ms  took   37.9 ms
+  frame  97  at   4664 ms  took   37.9 ms
+  frame  98  at   4701 ms  took   37.6 ms
+  frame  99  at   4740 ms  took   38.9 ms
+  frame 100  at   4779 ms  took   39.0 ms
+  frame 101  at   4818 ms  took   39.0 ms
+  frame 102  at   4857 ms  took   38.9 ms
+  frame 103  at   4896 ms  took   39.1 ms
+  frame 104  at   4933 ms  took   37.1 ms
+  frame 105  at   4971 ms  took   37.2 ms
+  frame 106  at   5009 ms  took   37.9 ms
+  frame 107  at   5046 ms  took   37.5 ms
+  frame 108  at   5083 ms  took   37.3 ms
+  frame 109  at   5120 ms  took   36.8 ms
+  frame 110  at   5158 ms  took   37.8 ms
+  frame 111  at   5196 ms  took   37.6 ms
+  frame 112  at   5233 ms  took   37.5 ms
+  frame 113  at   5270 ms  took   37.2 ms
+  frame 114  at   5307 ms  took   36.9 ms
+  frame 115  at   5345 ms  took   37.6 ms
+  frame 116  at   5382 ms  took   37.6 ms
+  frame 117  at   5420 ms  took   37.6 ms
+  frame 118  at   5458 ms  took   37.7 ms
+  frame 119  at   5495 ms  took   37.3 ms
+  frame 120  at   5533 ms  took   38.1 ms
+  frame 121  at   5571 ms  took   37.6 ms
+  frame 122  at   5609 ms  took   37.8 ms
+  frame 123  at   5647 ms  took   38.3 ms
+  frame 124  at   5684 ms  took   37.5 ms
+  frame 125  at   5722 ms  took   37.3 ms
+  frame 126  at   5759 ms  took   37.3 ms
+  frame 127  at   5796 ms  took   37.6 ms
+  frame 128  at   5834 ms  took   37.4 ms
+  frame 129  at   5872 ms  took   37.8 ms
+  frame 130  at   5908 ms  took   36.3 ms
+  frame 131  at   5945 ms  took   36.5 ms
+  frame 132  at   5981 ms  took   36.4 ms
+  frame 133  at   6018 ms  took   36.7 ms
+  frame 134  at   6054 ms  took   36.2 ms
+  frame 135  at   6092 ms  took   37.8 ms
+  frame 136  at   6129 ms  took   37.1 ms
+  frame 137  at   6166 ms  took   37.5 ms
+  frame 138  at   6204 ms  took   37.5 ms
+  frame 139  at   6242 ms  took   38.2 ms
+  frame 140  at   6279 ms  took   37.5 ms
+  frame 141  at   6317 ms  took   37.4 ms
+  frame 142  at   6355 ms  took   38.1 ms
+  frame 143  at   6392 ms  took   37.5 ms
+  frame 144  at   6431 ms  took   38.4 ms
+  frame 145  at   6468 ms  took   37.9 ms
+  frame 146  at   6506 ms  took   38.0 ms
+  frame 147  at   6544 ms  took   37.9 ms
+  frame 148  at   6583 ms  took   38.2 ms
+  frame 149  at   6620 ms  took   37.5 ms
+  frame 150  at   6658 ms  took   37.8 ms
+  frame 151  at   6695 ms  took   37.3 ms
+  frame 152  at   6733 ms  took   37.5 ms
+  frame 153  at   6770 ms  took   37.7 ms
+  frame 154  at   6808 ms  took   37.5 ms
+  frame 155  at   6846 ms  took   37.8 ms
+  frame 156  at   6883 ms  took   37.4 ms
+  frame 157  at   6921 ms  took   37.7 ms
+  frame 158  at   6958 ms  took   37.3 ms
+  frame 159  at   6995 ms  took   37.5 ms
+  frame 160  at   7032 ms  took   36.9 ms
+  frame 161  at   7070 ms  took   37.8 ms
+  frame 162  at   7107 ms  took   37.2 ms
+  frame 163  at   7145 ms  took   37.7 ms
+  frame 164  at   7182 ms  took   37.1 ms
+  frame 165  at   7220 ms  took   38.1 ms
+  frame 166  at   7257 ms  took   37.1 ms
+  frame 167  at   7295 ms  took   37.7 ms
+  frame 168  at   7332 ms  took   37.3 ms
+  frame 169  at   7370 ms  took   37.7 ms
+  frame 170  at   7408 ms  took   37.5 ms
+  frame 171  at   7445 ms  took   37.2 ms
+  frame 172  at   7482 ms  took   37.2 ms
+  frame 173  at   7519 ms  took   37.2 ms
+  frame 174  at   7556 ms  took   37.1 ms
+  frame 175  at   7594 ms  took   37.3 ms
+  frame 176  at   7630 ms  took   36.8 ms
+  frame 177  at   7667 ms  took   36.3 ms
+  frame 178  at   7704 ms  took   37.3 ms
+  frame 179  at   7741 ms  took   36.7 ms
+  frame 180  at   7778 ms  took   37.2 ms
+  frame 181  at   7815 ms  took   37.0 ms
+  frame 182  at   7852 ms  took   37.3 ms
+  frame 183  at   7888 ms  took   35.8 ms
+  frame 184  at   7925 ms  took   37.2 ms
+  frame 185  at   7962 ms  took   36.7 ms
+  frame 186  at   7999 ms  took   36.9 ms
+  frame 187  at   8035 ms  took   36.6 ms
+  frame 188  at   8072 ms  took   36.9 ms
+  frame 189  at   8109 ms  took   36.6 ms
+  frame 190  at   8147 ms  took   38.1 ms
+  frame 191  at   8185 ms  took   37.6 ms
+  frame 192  at   8223 ms  took   38.5 ms
+  frame 193  at   8261 ms  took   37.8 ms
+  frame 194  at   8299 ms  took   38.1 ms
+  frame 195  at   8337 ms  took   38.0 ms
+  frame 196  at   8375 ms  took   37.9 ms
+  frame 197  at   8413 ms  took   38.6 ms
+  frame 198  at   8451 ms  took   37.2 ms
+  frame 199  at   8489 ms  took   38.6 ms
+  frame 200  at   8526 ms  took   37.2 ms
+  frame 201  at   8564 ms  took   37.8 ms
+  frame 202  at   8601 ms  took   36.3 ms
+  frame 203  at   8638 ms  took   37.6 ms
+  frame 204  at   8676 ms  took   38.1 ms
+  frame 205  at   8715 ms  took   38.4 ms
+  frame 206  at   8753 ms  took   38.0 ms
+  frame 207  at   8791 ms  took   38.4 ms
+  frame 208  at   8829 ms  took   38.1 ms
+  frame 209  at   8867 ms  took   38.1 ms
+  frame 210  at   8905 ms  took   37.8 ms
+  frame 211  at   8943 ms  took   38.2 ms
+  frame 212  at   8982 ms  took   38.4 ms
+frames: 212   worst: 1948.7 ms   total in slow frames: 8238.7 ms
+FastInventory v0.5 (delayed V + keep-alive cache), V SHOWN
+inventory init #4 at 46 ms (frame 2): normal
+script calls (inclusive time, nested calls counted in their parents too):
+  MenuHubGameController.OnInitialize                         x1       4.0 ms   at 1 ms (frame 1)
+  gameuiInventoryGameController.OnSetUserData                x1       6.0 ms   at 46 ms (frame 2)
+  InventoryDataManagerV2.Initialize                          x2       0.0 ms   at 46 ms (frame 2), 52 ms (frame 2)
+  InventoryItemModeLogicController.SetupData                 x1       0.0 ms   at 47 ms (frame 2)
+  gameuiInventoryGameController.RefreshPlayerCyberware       x1       2.0 ms   at 47 ms (frame 2)
+  gameuiInventoryGameController.RefreshUI                    x1       0.0 ms   at 49 ms (frame 2)
+  gameuiInventoryGameController.SetupPlayerStats             x1       0.0 ms   at 51 ms (frame 2)
+  gameuiInventoryGameController.OnInitialize                 x1       0.0 ms   at 52 ms (frame 2)
+  gameuiInventoryGameController.OnEquipmentAreaCategoryCreated x7     115.0 ms   at 66 ms (frame 3), 81 ms (frame 3), 100 ms (frame 3), 137 ms (frame 3)
+  gameuiInventoryGameController.PopulateArea                 x11    114.0 ms   at 67 ms (frame 3), 81 ms (frame 3), 90 ms (frame 3), 100 ms (frame 3)
+  inkInventoryPuppetPreviewGameController.OnInitialize       x1       0.0 ms   at 873 ms (frame 48)
+  EquipmentEx.PaperdollHelper.AddPreview                     x1       0.0 ms   at 873 ms (frame 48)
+  inkPuppetPreviewGameController.OnPreviewInitialized        x1       0.0 ms   at 873 ms (frame 48)
+  inkInventoryPuppetPreviewGameController.OnSetCameraSetupEvent x1       0.0 ms   at 873 ms (frame 48)
+
+=== open #4  2026-10-01 19:27:48  mode: normal  recorded 9.1 s ===
+gameplay before open: average frame 16.1 ms, worst 47.7 ms (120 frames)
+slow frames after open (> 25 ms):
+  frame   3  at    177 ms  took  129.8 ms
+  frame  53  at   2849 ms  took 1953.9 ms
+  frame  54  at   2906 ms  took   56.7 ms
+  frame  57  at   2987 ms  took   43.4 ms
+  frame  58  at   3029 ms  took   42.4 ms
+  frame  59  at   3099 ms  took   70.3 ms
+  frame  60  at   3143 ms  took   43.4 ms
+  frame  61  at   3187 ms  took   44.3 ms
+  frame  62  at   3232 ms  took   44.8 ms
+  frame  63  at   3276 ms  took   44.5 ms
+  frame  64  at   3321 ms  took   45.0 ms
+  frame  65  at   3366 ms  took   44.5 ms
+  frame  66  at   3411 ms  took   45.1 ms
+  frame  67  at   3456 ms  took   44.8 ms
+  frame  68  at   3501 ms  took   45.6 ms
+  frame  69  at   3547 ms  took   45.7 ms
+  frame  70  at   3592 ms  took   45.5 ms
+  frame  71  at   3638 ms  took   45.1 ms
+  frame  72  at   3682 ms  took   44.3 ms
+  frame  73  at   3726 ms  took   44.3 ms
+  frame  74  at   3770 ms  took   43.9 ms
+  frame  75  at   3814 ms  took   44.3 ms
+  frame  76  at   3859 ms  took   44.2 ms
+  frame  77  at   3903 ms  took   44.2 ms
+  frame  78  at   3946 ms  took   43.5 ms
+  frame  79  at   3991 ms  took   44.5 ms
+  frame  80  at   4035 ms  took   43.9 ms
+  frame  81  at   4079 ms  took   44.6 ms
+  frame  82  at   4123 ms  took   43.9 ms
+  frame  83  at   4167 ms  took   44.0 ms
+  frame  84  at   4211 ms  took   43.5 ms
+  frame  85  at   4254 ms  took   43.5 ms
+  frame  86  at   4297 ms  took   43.1 ms
+  frame  87  at   4341 ms  took   43.4 ms
+  frame  88  at   4384 ms  took   43.2 ms
+  frame  89  at   4427 ms  took   43.1 ms
+  frame  90  at   4470 ms  took   43.4 ms
+  frame  91  at   4514 ms  took   43.6 ms
+  frame  92  at   4558 ms  took   43.6 ms
+  frame  93  at   4601 ms  took   42.9 ms
+  frame  94  at   4644 ms  took   43.0 ms
+  frame  95  at   4686 ms  took   42.9 ms
+  frame  96  at   4730 ms  took   43.2 ms
+  frame  97  at   4773 ms  took   43.2 ms
+  frame  98  at   4816 ms  took   43.3 ms
+  frame  99  at   4859 ms  took   43.3 ms
+  frame 100  at   4903 ms  took   43.0 ms
+  frame 101  at   4946 ms  took   43.3 ms
+  frame 102  at   4989 ms  took   42.9 ms
+  frame 103  at   5032 ms  took   42.9 ms
+  frame 104  at   5075 ms  took   43.4 ms
+  frame 105  at   5119 ms  took   43.6 ms
+  frame 106  at   5161 ms  took   42.9 ms
+  frame 107  at   5205 ms  took   43.2 ms
+  frame 108  at   5248 ms  took   43.0 ms
+  frame 109  at   5291 ms  took   43.5 ms
+  frame 110  at   5335 ms  took   43.4 ms
+  frame 111  at   5378 ms  took   43.5 ms
+  frame 112  at   5422 ms  took   43.6 ms
+  frame 113  at   5466 ms  took   44.8 ms
+  frame 114  at   5510 ms  took   43.5 ms
+  frame 115  at   5554 ms  took   44.5 ms
+  frame 116  at   5599 ms  took   44.2 ms
+  frame 117  at   5643 ms  took   44.2 ms
+  frame 118  at   5687 ms  took   44.3 ms
+  frame 119  at   5731 ms  took   44.1 ms
+  frame 120  at   5776 ms  took   44.4 ms
+  frame 121  at   5820 ms  took   44.6 ms
+  frame 122  at   5865 ms  took   44.6 ms
+  frame 123  at   5909 ms  took   44.6 ms
+  frame 124  at   5954 ms  took   44.6 ms
+  frame 125  at   5998 ms  took   44.5 ms
+  frame 126  at   6043 ms  took   44.9 ms
+  frame 127  at   6087 ms  took   43.5 ms
+  frame 128  at   6130 ms  took   43.2 ms
+  frame 129  at   6174 ms  took   43.8 ms
+  frame 130  at   6217 ms  took   43.4 ms
+  frame 131  at   6261 ms  took   43.7 ms
+  frame 132  at   6304 ms  took   42.8 ms
+  frame 133  at   6348 ms  took   43.8 ms
+  frame 134  at   6391 ms  took   43.7 ms
+  frame 135  at   6435 ms  took   43.8 ms
+  frame 136  at   6479 ms  took   43.9 ms
+  frame 137  at   6522 ms  took   43.2 ms
+  frame 138  at   6565 ms  took   42.7 ms
+  frame 139  at   6608 ms  took   43.1 ms
+  frame 140  at   6651 ms  took   43.1 ms
+  frame 141  at   6694 ms  took   42.5 ms
+  frame 142  at   6737 ms  took   42.8 ms
+  frame 143  at   6779 ms  took   42.9 ms
+  frame 144  at   6823 ms  took   43.6 ms
+  frame 145  at   6866 ms  took   42.7 ms
+  frame 146  at   6910 ms  took   44.3 ms
+  frame 147  at   6953 ms  took   43.1 ms
+  frame 148  at   6996 ms  took   43.1 ms
+  frame 149  at   7039 ms  took   43.0 ms
+  frame 150  at   7082 ms  took   43.0 ms
+  frame 151  at   7126 ms  took   43.2 ms
+  frame 152  at   7169 ms  took   43.6 ms
+  frame 153  at   7212 ms  took   42.9 ms
+  frame 154  at   7255 ms  took   43.2 ms
+  frame 155  at   7298 ms  took   42.6 ms
+  frame 156  at   7341 ms  took   43.2 ms
+  frame 157  at   7384 ms  took   43.2 ms
+  frame 158  at   7428 ms  took   43.8 ms
+  frame 159  at   7471 ms  took   43.1 ms
+  frame 160  at   7515 ms  took   43.5 ms
+  frame 161  at   7558 ms  took   43.3 ms
+  frame 162  at   7601 ms  took   43.0 ms
+  frame 163  at   7644 ms  took   43.4 ms
+  frame 164  at   7688 ms  took   43.4 ms
+  frame 165  at   7732 ms  took   44.0 ms
+  frame 166  at   7774 ms  took   42.4 ms
+  frame 167  at   7817 ms  took   43.2 ms
+  frame 168  at   7860 ms  took   43.0 ms
+  frame 169  at   7903 ms  took   43.3 ms
+  frame 170  at   7947 ms  took   43.2 ms
+  frame 171  at   7990 ms  took   43.4 ms
+  frame 172  at   8033 ms  took   43.2 ms
+  frame 173  at   8076 ms  took   43.1 ms
+  frame 174  at   8120 ms  took   43.6 ms
+  frame 175  at   8163 ms  took   43.5 ms
+  frame 176  at   8207 ms  took   43.5 ms
+  frame 177  at   8251 ms  took   43.8 ms
+  frame 178  at   8295 ms  took   44.3 ms
+  frame 179  at   8338 ms  took   43.2 ms
+  frame 180  at   8383 ms  took   45.3 ms
+  frame 181  at   8427 ms  took   43.5 ms
+  frame 182  at   8471 ms  took   43.6 ms
+  frame 183  at   8513 ms  took   42.5 ms
+  frame 184  at   8557 ms  took   44.1 ms
+  frame 185  at   8601 ms  took   44.1 ms
+  frame 186  at   8645 ms  took   44.0 ms
+  frame 187  at   8689 ms  took   43.6 ms
+  frame 188  at   8733 ms  took   44.1 ms
+  frame 189  at   8776 ms  took   43.4 ms
+  frame 190  at   8820 ms  took   43.8 ms
+  frame 191  at   8864 ms  took   43.9 ms
+  frame 192  at   8908 ms  took   44.0 ms
+  frame 193  at   8952 ms  took   43.9 ms
+  frame 194  at   8995 ms  took   42.9 ms
+  frame 195  at   9038 ms  took   43.7 ms
+  frame 196  at   9082 ms  took   43.7 ms
+frames: 196   worst: 1953.9 ms   total in slow frames: 8279.4 ms
+FastInventory v0.5 (delayed V + keep-alive cache), V SHOWN
+inventory init #5 at 24 ms (frame 2): normal
+script calls (inclusive time, nested calls counted in their parents too):
+  MenuHubGameController.OnInitialize                         x1       4.0 ms   at 1 ms (frame 1)
+  gameuiInventoryGameController.OnSetUserData                x1       5.0 ms   at 24 ms (frame 2)
+  InventoryDataManagerV2.Initialize                          x2       0.0 ms   at 24 ms (frame 2), 30 ms (frame 2)
+  InventoryItemModeLogicController.SetupData                 x1       0.0 ms   at 25 ms (frame 2)
+  gameuiInventoryGameController.RefreshPlayerCyberware       x1       2.0 ms   at 25 ms (frame 2)
+  gameuiInventoryGameController.RefreshUI                    x1       0.0 ms   at 27 ms (frame 2)
+  gameuiInventoryGameController.SetupPlayerStats             x1       0.0 ms   at 29 ms (frame 2)
+  gameuiInventoryGameController.OnInitialize                 x1       0.0 ms   at 30 ms (frame 2)
+  gameuiInventoryGameController.OnEquipmentAreaCategoryCreated x7     116.0 ms   at 45 ms (frame 3), 60 ms (frame 3), 79 ms (frame 3), 115 ms (frame 3)
+  gameuiInventoryGameController.PopulateArea                 x11    115.0 ms   at 45 ms (frame 3), 61 ms (frame 3), 68 ms (frame 3), 79 ms (frame 3)
+  inkInventoryPuppetPreviewGameController.OnInitialize       x1       0.0 ms   at 858 ms (frame 51)
+  EquipmentEx.PaperdollHelper.AddPreview                     x1       0.0 ms   at 858 ms (frame 51)
+  inkPuppetPreviewGameController.OnPreviewInitialized        x1       0.0 ms   at 858 ms (frame 51)
+  inkInventoryPuppetPreviewGameController.OnSetCameraSetupEvent x1       0.0 ms   at 858 ms (frame 51)
+
+=== open #5  2026-10-01 19:28:07  mode: normal  recorded 13.4 s ===
+gameplay before open: average frame 17.0 ms, worst 66.2 ms (120 frames)
+slow frames after open (> 25 ms):
+  frame   1  at     26 ms  took   26.2 ms
+  frame   3  at    173 ms  took  123.1 ms
+  frame  53  at   2536 ms  took 1641.7 ms
+  frame  56  at   2611 ms  took   39.6 ms
+  frame  57  at   3006 ms  took  394.8 ms
+  frame  59  at   3067 ms  took   51.0 ms
+  frame  60  at   3135 ms  took   67.9 ms
+  frame  61  at   3203 ms  took   68.4 ms
+  frame  62  at   3270 ms  took   67.2 ms
+  frame  63  at   3312 ms  took   42.0 ms
+  frame  64  at   3355 ms  took   42.9 ms
+  frame  65  at   3399 ms  took   43.5 ms
+  frame  66  at   3442 ms  took   43.5 ms
+  frame  67  at   3486 ms  took   43.5 ms
+  frame  68  at   3529 ms  took   43.4 ms
+  frame  69  at   3573 ms  took   43.5 ms
+  frame  70  at   3616 ms  took   43.3 ms
+  frame  71  at   3660 ms  took   43.9 ms
+  frame  72  at   3703 ms  took   43.0 ms
+  frame  73  at   3747 ms  took   43.8 ms
+  frame  74  at   3790 ms  took   43.7 ms
+  frame  75  at   3833 ms  took   42.9 ms
+  frame  76  at   3876 ms  took   43.1 ms
+  frame  77  at   3920 ms  took   43.7 ms
+  frame  78  at   3963 ms  took   43.3 ms
+  frame  79  at   4007 ms  took   43.3 ms
+  frame  80  at   4050 ms  took   43.4 ms
+  frame  81  at   4094 ms  took   43.8 ms
+  frame  82  at   4137 ms  took   43.0 ms
+  frame  83  at   4179 ms  took   42.1 ms
+  frame  84  at   4222 ms  took   42.7 ms
+  frame  85  at   4264 ms  took   42.8 ms
+  frame  86  at   4307 ms  took   42.7 ms
+  frame  87  at   4350 ms  took   42.7 ms
+  frame  88  at   4393 ms  took   42.9 ms
+  frame  89  at   4435 ms  took   42.4 ms
+  frame  90  at   4478 ms  took   43.0 ms
+  frame  91  at   4521 ms  took   42.5 ms
+  frame  92  at   4564 ms  took   43.1 ms
+  frame  93  at   4606 ms  took   42.4 ms
+  frame  94  at   4649 ms  took   43.2 ms
+  frame  95  at   4692 ms  took   42.4 ms
+  frame  96  at   4734 ms  took   42.5 ms
+  frame  97  at   4777 ms  took   42.5 ms
+  frame  98  at   4819 ms  took   42.4 ms
+  frame  99  at   4862 ms  took   43.2 ms
+  frame 100  at   4905 ms  took   43.0 ms
+  frame 101  at   4950 ms  took   45.2 ms
+  frame 102  at   4992 ms  took   41.8 ms
+  frame 103  at   5035 ms  took   42.5 ms
+  frame 104  at   5077 ms  took   42.6 ms
+  frame 105  at   5119 ms  took   41.9 ms
+  frame 106  at   5161 ms  took   42.2 ms
+  frame 107  at   5203 ms  took   42.0 ms
+  frame 108  at   5245 ms  took   41.5 ms
+  frame 109  at   5287 ms  took   42.3 ms
+  frame 110  at   5329 ms  took   41.4 ms
+  frame 111  at   5371 ms  took   42.4 ms
+  frame 112  at   5414 ms  took   42.6 ms
+  frame 113  at   5457 ms  took   43.7 ms
+  frame 114  at   5499 ms  took   42.1 ms
+  frame 115  at   5543 ms  took   43.3 ms
+  frame 116  at   5585 ms  took   42.6 ms
+  frame 117  at   5628 ms  took   42.9 ms
+  frame 118  at   5673 ms  took   44.5 ms
+  frame 119  at   5714 ms  took   41.2 ms
+  frame 120  at   5757 ms  took   42.8 ms
+  frame 121  at   5800 ms  took   43.4 ms
+  frame 122  at   5843 ms  took   43.0 ms
+  frame 123  at   5885 ms  took   42.2 ms
+  frame 124  at   5930 ms  took   44.3 ms
+  frame 125  at   5973 ms  took   43.3 ms
+  frame 126  at   6015 ms  took   41.7 ms
+  frame 127  at   6058 ms  took   43.3 ms
+  frame 128  at   6102 ms  took   43.6 ms
+  frame 129  at   6145 ms  took   43.6 ms
+  frame 130  at   6190 ms  took   45.1 ms
+  frame 131  at   6231 ms  took   40.8 ms
+  frame 132  at   6276 ms  took   44.8 ms
+  frame 133  at   6320 ms  took   43.8 ms
+  frame 134  at   6362 ms  took   42.8 ms
+  frame 135  at   6406 ms  took   43.9 ms
+  frame 136  at   6449 ms  took   42.7 ms
+  frame 137  at   6491 ms  took   42.5 ms
+  frame 138  at   6535 ms  took   43.2 ms
+  frame 139  at   6577 ms  took   42.7 ms
+  frame 140  at   6620 ms  took   42.6 ms
+  frame 141  at   6663 ms  took   43.3 ms
+  frame 142  at   6706 ms  took   42.4 ms
+  frame 143  at   6749 ms  took   43.0 ms
+  frame 144  at   6791 ms  took   42.6 ms
+  frame 145  at   6835 ms  took   43.5 ms
+  frame 146  at   6877 ms  took   42.6 ms
+  frame 147  at   6920 ms  took   42.5 ms
+  frame 148  at   6964 ms  took   44.3 ms
+  frame 149  at   7007 ms  took   42.8 ms
+  frame 150  at   7049 ms  took   42.4 ms
+  frame 151  at   7092 ms  took   43.1 ms
+  frame 152  at   7135 ms  took   42.6 ms
+  frame 153  at   7178 ms  took   42.6 ms
+  frame 154  at   7221 ms  took   43.6 ms
+  frame 155  at   7264 ms  took   42.8 ms
+  frame 156  at   7308 ms  took   44.3 ms
+  frame 157  at   7350 ms  took   42.2 ms
+  frame 158  at   7394 ms  took   43.1 ms
+  frame 159  at   7436 ms  took   42.9 ms
+  frame 160  at   7480 ms  took   43.1 ms
+  frame 161  at   7523 ms  took   43.5 ms
+  frame 162  at   7566 ms  took   42.6 ms
+  frame 163  at   7609 ms  took   43.0 ms
+  frame 164  at   7652 ms  took   42.9 ms
+  frame 165  at   7694 ms  took   42.5 ms
+  frame 166  at   7737 ms  took   43.1 ms
+  frame 167  at   7780 ms  took   42.5 ms
+  frame 168  at   7823 ms  took   42.9 ms
+  frame 169  at   7865 ms  took   42.8 ms
+  frame 170  at   7908 ms  took   43.0 ms
+  frame 171  at   7951 ms  took   42.3 ms
+  frame 172  at   7993 ms  took   42.7 ms
+  frame 173  at   8036 ms  took   42.7 ms
+  frame 174  at   8079 ms  took   42.8 ms
+  frame 175  at   8121 ms  took   42.2 ms
+  frame 176  at   8163 ms  took   42.0 ms
+  frame 177  at   8207 ms  took   43.4 ms
+  frame 178  at   8249 ms  took   42.8 ms
+  frame 179  at   8293 ms  took   43.5 ms
+  frame 180  at   8335 ms  took   42.5 ms
+  frame 181  at   8378 ms  took   43.2 ms
+  frame 182  at   8422 ms  took   43.4 ms
+  frame 183  at   8464 ms  took   42.5 ms
+  frame 184  at   8508 ms  took   43.2 ms
+  frame 185  at   8551 ms  took   43.2 ms
+  frame 186  at   8594 ms  took   43.1 ms
+  frame 187  at   8637 ms  took   43.2 ms
+  frame 188  at   8680 ms  took   43.2 ms
+  frame 189  at   8723 ms  took   43.0 ms
+  frame 190  at   8767 ms  took   44.1 ms
+  frame 191  at   8810 ms  took   42.6 ms
+  frame 192  at   8853 ms  took   42.6 ms
+  frame 193  at   8894 ms  took   41.8 ms
+  frame 194  at   8937 ms  took   43.0 ms
+  frame 195  at   8981 ms  took   43.9 ms
+  frame 196  at   9025 ms  took   43.6 ms
+  frame 197  at   9068 ms  took   43.0 ms
+  frame 198  at   9110 ms  took   42.2 ms
+  frame 199  at   9153 ms  took   42.6 ms
+  frame 200  at   9196 ms  took   43.2 ms
+  frame 201  at   9239 ms  took   43.0 ms
+  frame 202  at   9282 ms  took   42.8 ms
+  frame 203  at   9325 ms  took   43.7 ms
+  frame 204  at   9369 ms  took   43.5 ms
+  frame 205  at   9412 ms  took   43.1 ms
+  frame 206  at   9455 ms  took   43.3 ms
+  frame 207  at   9499 ms  took   43.6 ms
+  frame 208  at   9542 ms  took   43.5 ms
+  frame 209  at   9587 ms  took   44.4 ms
+  frame 210  at   9630 ms  took   43.7 ms
+  frame 211  at   9673 ms  took   42.2 ms
+  frame 212  at   9715 ms  took   42.3 ms
+  frame 213  at   9758 ms  took   42.7 ms
+  frame 214  at   9800 ms  took   42.0 ms
+  frame 215  at   9842 ms  took   42.2 ms
+  frame 216  at   9885 ms  took   43.5 ms
+  frame 217  at   9928 ms  took   42.6 ms
+  frame 218  at   9971 ms  took   43.0 ms
+  frame 219  at  10014 ms  took   43.1 ms
+  frame 220  at  10057 ms  took   43.1 ms
+  frame 221  at  10099 ms  took   42.4 ms
+  frame 222  at  10142 ms  took   43.0 ms
+  frame 223  at  10186 ms  took   43.5 ms
+  frame 224  at  10228 ms  took   42.3 ms
+  frame 225  at  10269 ms  took   41.0 ms
+  frame 226  at  10312 ms  took   42.8 ms
+  frame 227  at  10354 ms  took   42.2 ms
+  frame 228  at  10397 ms  took   42.9 ms
+  frame 229  at  10439 ms  took   42.0 ms
+  frame 230  at  10481 ms  took   42.3 ms
+  frame 231  at  10526 ms  took   44.2 ms
+  frame 232  at  10569 ms  took   43.0 ms
+  frame 233  at  10611 ms  took   42.3 ms
+  frame 234  at  10656 ms  took   45.1 ms
+  frame 235  at  10697 ms  took   40.6 ms
+  frame 236  at  10739 ms  took   42.6 ms
+  frame 237  at  10782 ms  took   43.0 ms
+  frame 238  at  10825 ms  took   42.4 ms
+  frame 239  at  10867 ms  took   42.4 ms
+  frame 240  at  10910 ms  took   43.4 ms
+  frame 241  at  10954 ms  took   43.2 ms
+  frame 242  at  10996 ms  took   42.8 ms
+  frame 243  at  11041 ms  took   44.3 ms
+  frame 244  at  11084 ms  took   43.4 ms
+  frame 245  at  11128 ms  took   43.7 ms
+  frame 246  at  11171 ms  took   43.3 ms
+  frame 247  at  11214 ms  took   42.6 ms
+  frame 248  at  11256 ms  took   42.2 ms
+  frame 249  at  11299 ms  took   43.4 ms
+  frame 250  at  11343 ms  took   43.3 ms
+  frame 251  at  11386 ms  took   43.2 ms
+  frame 252  at  11429 ms  took   43.0 ms
+  frame 253  at  11472 ms  took   42.9 ms
+  frame 254  at  11515 ms  took   42.9 ms
+  frame 255  at  11558 ms  took   43.1 ms
+  frame 256  at  11601 ms  took   43.6 ms
+  frame 257  at  11644 ms  took   42.9 ms
+  frame 258  at  11687 ms  took   42.9 ms
+  frame 259  at  11730 ms  took   43.0 ms
+  frame 260  at  11773 ms  took   42.6 ms
+  frame 261  at  11815 ms  took   42.3 ms
+  frame 262  at  11858 ms  took   43.1 ms
+  frame 263  at  11901 ms  took   42.7 ms
+  frame 264  at  11943 ms  took   42.5 ms
+  frame 265  at  11985 ms  took   42.1 ms
+  frame 266  at  12027 ms  took   42.1 ms
+  frame 267  at  12070 ms  took   42.2 ms
+  frame 268  at  12112 ms  took   42.1 ms
+  frame 269  at  12154 ms  took   42.2 ms
+  frame 270  at  12196 ms  took   42.5 ms
+  frame 271  at  12239 ms  took   42.4 ms
+  frame 272  at  12282 ms  took   42.9 ms
+  frame 273  at  12325 ms  took   43.1 ms
+  frame 274  at  12368 ms  took   43.7 ms
+  frame 275  at  12411 ms  took   43.0 ms
+  frame 276  at  12454 ms  took   43.0 ms
+  frame 277  at  12502 ms  took   47.2 ms
+  frame 278  at  12542 ms  took   40.2 ms
+  frame 279  at  12586 ms  took   43.8 ms
+  frame 280  at  12629 ms  took   43.8 ms
+  frame 281  at  12673 ms  took   43.7 ms
+  frame 282  at  12717 ms  took   43.8 ms
+  frame 283  at  12760 ms  took   43.1 ms
+  frame 284  at  12803 ms  took   42.7 ms
+  frame 285  at  12846 ms  took   43.5 ms
+  frame 286  at  12889 ms  took   42.7 ms
+  frame 287  at  12933 ms  took   43.5 ms
+  frame 288  at  12977 ms  took   44.4 ms
+  frame 289  at  13019 ms  took   42.3 ms
+  frame 290  at  13063 ms  took   43.7 ms
+  frame 291  at  13107 ms  took   43.7 ms
+  frame 292  at  13149 ms  took   42.6 ms
+  frame 293  at  13192 ms  took   42.6 ms
+  frame 294  at  13235 ms  took   42.9 ms
+  frame 295  at  13277 ms  took   42.7 ms
+  frame 296  at  13321 ms  took   43.2 ms
+  frame 297  at  13364 ms  took   43.3 ms
+frames: 297   worst: 1641.7 ms   total in slow frames: 12573.6 ms
+FastInventory v0.5 (delayed V + keep-alive cache), V SHOWN
+inventory init #6 at 26 ms (frame 2): normal
+script calls (inclusive time, nested calls counted in their parents too):
+  MenuHubGameController.OnInitialize                         x1       5.0 ms   at 2 ms (frame 1)
+  gameuiInventoryGameController.OnSetUserData                x1       5.0 ms   at 26 ms (frame 2)
+  InventoryDataManagerV2.Initialize                          x2       0.0 ms   at 26 ms (frame 2), 32 ms (frame 2)
+  InventoryItemModeLogicController.SetupData                 x1       1.0 ms   at 26 ms (frame 2)
+  gameuiInventoryGameController.RefreshPlayerCyberware       x1       2.0 ms   at 27 ms (frame 2)
+  gameuiInventoryGameController.RefreshUI                    x1       0.0 ms   at 29 ms (frame 2)
+  gameuiInventoryGameController.SetupPlayerStats             x1       0.0 ms   at 30 ms (frame 2)
+  gameuiInventoryGameController.OnInitialize                 x1       0.0 ms   at 32 ms (frame 2)
+  gameuiInventoryGameController.OnEquipmentAreaCategoryCreated x7     112.0 ms   at 43 ms (frame 3), 59 ms (frame 3), 76 ms (frame 3), 111 ms (frame 3)
+  gameuiInventoryGameController.PopulateArea                 x11    112.0 ms   at 43 ms (frame 3), 59 ms (frame 3), 66 ms (frame 3), 76 ms (frame 3)
+  inkInventoryPuppetPreviewGameController.OnInitialize       x1       0.0 ms   at 856 ms (frame 51)
+  EquipmentEx.PaperdollHelper.AddPreview                     x1       0.0 ms   at 856 ms (frame 51)
+  inkPuppetPreviewGameController.OnPreviewInitialized        x1       0.0 ms   at 856 ms (frame 51)
+  inkInventoryPuppetPreviewGameController.OnSetCameraSetupEvent x1       0.0 ms   at 856 ms (frame 51)
+
+=== open #6  2026-10-01 19:28:13  mode: normal  recorded 1.2 s ===
+gameplay before open: average frame 16.3 ms, worst 41.1 ms (120 frames)
+slow frames after open (> 25 ms):
+  frame   9  at    168 ms  took   29.0 ms
+  frame  16  at    313 ms  took   51.3 ms
+  frame  51  at   1043 ms  took  240.3 ms
+  frame  54  at   1197 ms  took  125.1 ms
+frames: 57   worst: 240.3 ms   total in slow frames: 445.7 ms
+FastInventory v0.5 (delayed V + keep-alive cache), V SHOWN
+script calls (inclusive time, nested calls counted in their parents too):
+  MenuHubGameController.OnInitialize                         x1       5.0 ms   at 1 ms (frame 1)
+  InventoryDataManagerV2.Initialize                          x1       1.0 ms   at 21 ms (frame 2)
+
+=== open #7  2026-10-01 19:28:14  mode: normal  recorded 0.9 s ===
+gameplay before open: average frame 16.3 ms, worst 41.1 ms (120 frames)
+slow frames after open (> 25 ms):
+  frame   1  at     34 ms  took   34.1 ms
+  frame   3  at     85 ms  took   34.8 ms
+frames: 58   worst: 34.8 ms   total in slow frames: 69.0 ms
+FastInventory v0.5 (delayed V + keep-alive cache), V SHOWN
+script calls (inclusive time, nested calls counted in their parents too):
+  MenuHubGameController.OnInitialize                         x1       6.0 ms   at 1 ms (frame 1)
+  InventoryDataManagerV2.Initialize                          x1       0.0 ms   at 24 ms (frame 2)
+
+=== open #1  2026-10-01 20:16:37  mode: normal  recorded 15.0 s ===
+gameplay before open: average frame 19.0 ms, worst 307.9 ms (120 frames)
+slow frames after open (> 25 ms):
+  frame   1  at     26 ms  took   26.4 ms
+  frame   2  at     57 ms  took   30.6 ms
+  frame   3  at    185 ms  took  127.7 ms
+  frame  38  at    735 ms  took   38.4 ms
+  frame  49  at    923 ms  took   42.5 ms
+  frame  50  at   3870 ms  took 2946.9 ms
+  frame  51  at   3910 ms  took   40.6 ms
+  frame  53  at   4025 ms  took   99.5 ms
+  frame  54  at   4124 ms  took   99.5 ms
+  frame  55  at   4224 ms  took   99.6 ms
+  frame  56  at   4323 ms  took   99.5 ms
+  frame  57  at   4363 ms  took   39.9 ms
+  frame  58  at   4403 ms  took   39.8 ms
+  frame  59  at   4444 ms  took   40.6 ms
+  frame  60  at   4485 ms  took   41.9 ms
+  frame  61  at   4527 ms  took   41.4 ms
+  frame  62  at   4568 ms  took   41.0 ms
+  frame  63  at   4609 ms  took   41.5 ms
+  frame  64  at   4650 ms  took   41.0 ms
+  frame  65  at   4692 ms  took   42.2 ms
+  frame  66  at   4735 ms  took   42.1 ms
+  frame  67  at   4776 ms  took   41.4 ms
+  frame  68  at   4817 ms  took   41.4 ms
+  frame  69  at   4859 ms  took   42.0 ms
+  frame  70  at   4901 ms  took   41.9 ms
+  frame  71  at   4943 ms  took   41.7 ms
+  frame  72  at   4985 ms  took   41.9 ms
+  frame  73  at   5027 ms  took   41.9 ms
+  frame  74  at   5069 ms  took   42.3 ms
+  frame  75  at   5111 ms  took   41.4 ms
+  frame  76  at   5153 ms  took   42.1 ms
+  frame  77  at   5194 ms  took   41.7 ms
+  frame  78  at   5236 ms  took   41.8 ms
+  frame  79  at   5277 ms  took   40.8 ms
+  frame  80  at   5318 ms  took   41.1 ms
+  frame  81  at   5359 ms  took   41.3 ms
+  frame  82  at   5401 ms  took   41.5 ms
+  frame  83  at   5445 ms  took   44.5 ms
+  frame  84  at   5487 ms  took   41.5 ms
+  frame  85  at   5528 ms  took   41.3 ms
+  frame  86  at   5570 ms  took   41.6 ms
+  frame  87  at   5611 ms  took   41.6 ms
+  frame  88  at   5653 ms  took   41.7 ms
+  frame  89  at   5695 ms  took   41.7 ms
+  frame  90  at   5765 ms  took   70.1 ms
+  frame  91  at   5806 ms  took   41.2 ms
+  frame  92  at   5847 ms  took   41.2 ms
+  frame  93  at   5888 ms  took   41.2 ms
+  frame  94  at   5930 ms  took   41.2 ms
+  frame  95  at   5970 ms  took   40.6 ms
+  frame  96  at   6012 ms  took   41.3 ms
+  frame  97  at   6052 ms  took   40.7 ms
+  frame  98  at   6093 ms  took   41.2 ms
+  frame  99  at   6134 ms  took   40.7 ms
+  frame 100  at   6175 ms  took   41.1 ms
+  frame 101  at   6216 ms  took   40.8 ms
+  frame 102  at   6257 ms  took   40.9 ms
+  frame 103  at   6304 ms  took   47.2 ms
+  frame 104  at   6351 ms  took   47.0 ms
+  frame 105  at   6398 ms  took   47.1 ms
+  frame 106  at   6440 ms  took   41.9 ms
+  frame 107  at   6482 ms  took   41.8 ms
+  frame 108  at   6525 ms  took   43.4 ms
+  frame 109  at   6569 ms  took   44.0 ms
+  frame 110  at   6612 ms  took   42.4 ms
+  frame 111  at   6654 ms  took   41.9 ms
+  frame 112  at   6696 ms  took   42.1 ms
+  frame 113  at   6738 ms  took   42.0 ms
+  frame 114  at   6780 ms  took   42.5 ms
+  frame 115  at   6822 ms  took   41.7 ms
+  frame 116  at   6864 ms  took   42.2 ms
+  frame 117  at   6908 ms  took   43.4 ms
+  frame 118  at   6949 ms  took   41.7 ms
+  frame 119  at   6992 ms  took   42.6 ms
+  frame 120  at   7035 ms  took   43.1 ms
+  frame 121  at   7076 ms  took   41.3 ms
+  frame 122  at   7119 ms  took   42.3 ms
+  frame 123  at   7161 ms  took   42.2 ms
+  frame 124  at   7203 ms  took   42.3 ms
+  frame 125  at   7244 ms  took   41.1 ms
+  frame 126  at   7286 ms  took   41.8 ms
+  frame 127  at   7327 ms  took   41.2 ms
+  frame 128  at   7369 ms  took   41.2 ms
+  frame 129  at   7410 ms  took   41.2 ms
+  frame 130  at   7451 ms  took   41.3 ms
+  frame 131  at   7492 ms  took   41.2 ms
+  frame 132  at   7533 ms  took   41.1 ms
+  frame 133  at   7574 ms  took   40.6 ms
+  frame 134  at   7614 ms  took   40.7 ms
+  frame 135  at   7655 ms  took   40.8 ms
+  frame 136  at   7696 ms  took   41.2 ms
+  frame 137  at   7738 ms  took   41.1 ms
+  frame 138  at   7778 ms  took   40.5 ms
+  frame 139  at   7820 ms  took   41.7 ms
+  frame 140  at   7860 ms  took   40.4 ms
+  frame 141  at   7901 ms  took   40.6 ms
+  frame 142  at   7942 ms  took   41.5 ms
+  frame 143  at   7984 ms  took   41.3 ms
+  frame 144  at   8025 ms  took   41.0 ms
+  frame 145  at   8066 ms  took   41.1 ms
+  frame 146  at   8107 ms  took   41.1 ms
+  frame 147  at   8148 ms  took   40.7 ms
+  frame 148  at   8188 ms  took   40.8 ms
+  frame 149  at   8229 ms  took   40.7 ms
+  frame 150  at   8270 ms  took   41.2 ms
+  frame 151  at   8311 ms  took   40.9 ms
+  frame 152  at   8353 ms  took   41.5 ms
+  frame 153  at   8394 ms  took   41.2 ms
+  frame 154  at   8435 ms  took   40.9 ms
+  frame 155  at   8476 ms  took   41.0 ms
+  frame 156  at   8518 ms  took   41.9 ms
+  frame 157  at   8559 ms  took   41.7 ms
+  frame 158  at   8601 ms  took   41.6 ms
+  frame 159  at   8642 ms  took   41.4 ms
+  frame 160  at   8684 ms  took   41.7 ms
+  frame 161  at   8726 ms  took   41.5 ms
+  frame 162  at   8769 ms  took   42.9 ms
+  frame 163  at   8808 ms  took   39.1 ms
+  frame 164  at   8849 ms  took   41.0 ms
+  frame 165  at   8889 ms  took   40.3 ms
+  frame 166  at   8938 ms  took   48.8 ms
+  frame 167  at   8979 ms  took   41.6 ms
+  frame 168  at   9020 ms  took   40.4 ms
+  frame 169  at   9060 ms  took   40.8 ms
+  frame 170  at   9101 ms  took   40.8 ms
+  frame 171  at   9142 ms  took   41.0 ms
+  frame 172  at   9182 ms  took   39.9 ms
+  frame 173  at   9223 ms  took   40.4 ms
+  frame 174  at   9263 ms  took   40.5 ms
+  frame 175  at   9304 ms  took   41.0 ms
+  frame 176  at   9345 ms  took   41.1 ms
+  frame 177  at   9386 ms  took   40.5 ms
+  frame 178  at   9426 ms  took   40.5 ms
+  frame 179  at   9467 ms  took   40.7 ms
+  frame 180  at   9509 ms  took   41.7 ms
+  frame 181  at   9550 ms  took   41.1 ms
+  frame 182  at   9591 ms  took   41.2 ms
+  frame 183  at   9632 ms  took   40.7 ms
+  frame 184  at   9673 ms  took   41.7 ms
+  frame 185  at   9714 ms  took   40.9 ms
+  frame 186  at   9756 ms  took   41.5 ms
+  frame 187  at   9796 ms  took   40.6 ms
+  frame 188  at   9838 ms  took   42.0 ms
+  frame 189  at   9879 ms  took   40.7 ms
+  frame 190  at   9920 ms  took   41.4 ms
+  frame 191  at   9962 ms  took   41.4 ms
+  frame 192  at  10004 ms  took   41.7 ms
+  frame 193  at  10045 ms  took   41.2 ms
+  frame 194  at  10086 ms  took   41.1 ms
+  frame 195  at  10128 ms  took   41.7 ms
+  frame 196  at  10169 ms  took   41.2 ms
+  frame 197  at  10210 ms  took   40.7 ms
+  frame 198  at  10251 ms  took   41.1 ms
+  frame 199  at  10292 ms  took   41.4 ms
+  frame 200  at  10333 ms  took   40.8 ms
+  frame 201  at  10374 ms  took   41.1 ms
+  frame 202  at  10414 ms  took   40.3 ms
+  frame 203  at  10455 ms  took   40.5 ms
+  frame 204  at  10495 ms  took   40.6 ms
+  frame 205  at  10537 ms  took   42.2 ms
+  frame 206  at  10583 ms  took   45.4 ms
+  frame 207  at  10624 ms  took   41.0 ms
+  frame 208  at  10665 ms  took   40.9 ms
+  frame 209  at  10706 ms  took   41.6 ms
+  frame 210  at  10748 ms  took   41.8 ms
+  frame 211  at  10790 ms  took   41.3 ms
+  frame 212  at  10830 ms  took   40.5 ms
+  frame 213  at  10871 ms  took   40.9 ms
+  frame 214  at  10912 ms  took   40.9 ms
+  frame 215  at  10953 ms  took   41.3 ms
+  frame 216  at  10993 ms  took   40.5 ms
+  frame 217  at  11035 ms  took   41.2 ms
+  frame 218  at  11076 ms  took   41.0 ms
+  frame 219  at  11116 ms  took   40.4 ms
+  frame 220  at  11157 ms  took   41.1 ms
+  frame 221  at  11198 ms  took   40.6 ms
+  frame 222  at  11238 ms  took   40.9 ms
+  frame 223  at  11278 ms  took   39.7 ms
+  frame 224  at  11319 ms  took   41.0 ms
+  frame 225  at  11360 ms  took   41.2 ms
+  frame 226  at  11403 ms  took   42.2 ms
+  frame 227  at  11443 ms  took   40.4 ms
+  frame 228  at  11484 ms  took   41.1 ms
+  frame 229  at  11525 ms  took   41.2 ms
+  frame 230  at  11570 ms  took   44.3 ms
+  frame 231  at  11611 ms  took   40.9 ms
+  frame 232  at  11652 ms  took   41.0 ms
+  frame 233  at  11693 ms  took   41.1 ms
+  frame 234  at  11734 ms  took   41.8 ms
+  frame 235  at  11775 ms  took   40.8 ms
+  frame 236  at  11816 ms  took   40.6 ms
+  frame 237  at  11857 ms  took   41.2 ms
+  frame 238  at  11898 ms  took   41.1 ms
+  frame 239  at  11940 ms  took   41.6 ms
+  frame 240  at  11982 ms  took   41.9 ms
+  frame 241  at  12023 ms  took   41.6 ms
+  frame 242  at  12071 ms  took   47.7 ms
+  frame 243  at  12112 ms  took   40.9 ms
+  frame 244  at  12153 ms  took   41.5 ms
+  frame 245  at  12195 ms  took   42.0 ms
+  frame 246  at  12237 ms  took   41.6 ms
+  frame 247  at  12278 ms  took   41.3 ms
+  frame 248  at  12320 ms  took   41.3 ms
+  frame 249  at  12360 ms  took   40.7 ms
+  frame 250  at  12401 ms  took   40.9 ms
+  frame 251  at  12442 ms  took   41.0 ms
+  frame 252  at  12484 ms  took   41.7 ms
+  frame 253  at  12525 ms  took   41.2 ms
+  frame 254  at  12567 ms  took   41.9 ms
+  frame 255  at  12608 ms  took   41.0 ms
+  frame 256  at  12649 ms  took   41.1 ms
+  frame 257  at  12689 ms  took   40.5 ms
+  frame 258  at  12730 ms  took   41.0 ms
+  frame 259  at  12771 ms  took   40.2 ms
+  frame 260  at  12812 ms  took   41.2 ms
+  frame 261  at  12853 ms  took   40.8 ms
+  frame 262  at  12894 ms  took   41.1 ms
+  frame 263  at  12935 ms  took   40.9 ms
+  frame 264  at  12976 ms  took   41.2 ms
+  frame 265  at  13017 ms  took   41.6 ms
+  frame 266  at  13059 ms  took   41.3 ms
+  frame 267  at  13100 ms  took   41.3 ms
+  frame 268  at  13141 ms  took   41.4 ms
+  frame 269  at  13182 ms  took   41.2 ms
+  frame 270  at  13224 ms  took   41.3 ms
+  frame 271  at  13265 ms  took   41.2 ms
+  frame 272  at  13306 ms  took   41.2 ms
+  frame 273  at  13347 ms  took   41.3 ms
+  frame 274  at  13389 ms  took   41.1 ms
+  frame 275  at  13430 ms  took   41.5 ms
+  frame 276  at  13480 ms  took   49.6 ms
+  frame 277  at  13533 ms  took   53.1 ms
+  frame 278  at  13574 ms  took   41.0 ms
+  frame 279  at  13616 ms  took   42.1 ms
+  frame 280  at  13657 ms  took   41.3 ms
+  frame 281  at  13699 ms  took   41.5 ms
+  frame 282  at  13740 ms  took   41.5 ms
+  frame 283  at  13787 ms  took   46.5 ms
+  frame 284  at  13823 ms  took   36.4 ms
+  frame 285  at  13864 ms  took   41.4 ms
+  frame 286  at  13906 ms  took   41.2 ms
+  frame 287  at  13947 ms  took   41.4 ms
+  frame 288  at  13988 ms  took   41.2 ms
+  frame 289  at  14029 ms  took   40.7 ms
+  frame 290  at  14070 ms  took   41.0 ms
+  frame 291  at  14110 ms  took   40.6 ms
+  frame 292  at  14151 ms  took   41.0 ms
+  frame 293  at  14192 ms  took   40.8 ms
+  frame 294  at  14234 ms  took   41.5 ms
+  frame 295  at  14275 ms  took   40.8 ms
+  frame 296  at  14316 ms  took   41.2 ms
+  frame 297  at  14356 ms  took   40.7 ms
+  frame 298  at  14398 ms  took   41.4 ms
+  frame 299  at  14439 ms  took   41.2 ms
+  frame 300  at  14480 ms  took   41.0 ms
+  frame 301  at  14521 ms  took   40.9 ms
+  frame 302  at  14562 ms  took   40.8 ms
+  frame 303  at  14603 ms  took   40.8 ms
+  frame 304  at  14643 ms  took   40.4 ms
+  frame 305  at  14685 ms  took   41.7 ms
+  frame 306  at  14726 ms  took   41.0 ms
+  frame 307  at  14767 ms  took   41.0 ms
+  frame 308  at  14807 ms  took   40.3 ms
+  frame 309  at  14848 ms  took   41.0 ms
+  frame 310  at  14889 ms  took   41.0 ms
+  frame 311  at  14930 ms  took   40.9 ms
+  frame 312  at  14972 ms  took   42.0 ms
+  frame 313  at  15013 ms  took   40.9 ms
+frames: 313   worst: 2946.9 ms   total in slow frames: 14341.0 ms
+FastInventory v0.5 (delayed V + keep-alive cache), V SHOWN
+inventory init #1 at 30 ms (frame 2): normal
+script calls (inclusive time, nested calls counted in their parents too):
+  MenuHubGameController.OnInitialize                         x1       8.0 ms   at 1 ms (frame 1)
+  gameuiInventoryGameController.OnSetUserData                x1       5.0 ms   at 30 ms (frame 2)
+  InventoryDataManagerV2.Initialize                          x2       0.0 ms   at 30 ms (frame 2), 35 ms (frame 2)
+  InventoryItemModeLogicController.SetupData                 x1       0.0 ms   at 31 ms (frame 2)
+  gameuiInventoryGameController.RefreshPlayerCyberware       x1       2.0 ms   at 31 ms (frame 2)
+  gameuiInventoryGameController.RefreshUI                    x1       0.0 ms   at 33 ms (frame 2)
+  gameuiInventoryGameController.SetupPlayerStats             x1       1.0 ms   at 34 ms (frame 2)
+  gameuiInventoryGameController.OnInitialize                 x1       1.0 ms   at 35 ms (frame 2)
+  gameuiInventoryGameController.OnEquipmentAreaCategoryCreated x7     116.0 ms   at 52 ms (frame 3), 68 ms (frame 3), 88 ms (frame 3), 123 ms (frame 3)
+  gameuiInventoryGameController.PopulateArea                 x11    115.0 ms   at 53 ms (frame 3), 68 ms (frame 3), 77 ms (frame 3), 88 ms (frame 3)
+  inkInventoryPuppetPreviewGameController.OnInitialize       x1       0.0 ms   at 857 ms (frame 48)
+  EquipmentEx.PaperdollHelper.AddPreview                     x1       0.0 ms   at 857 ms (frame 48)
+  inkPuppetPreviewGameController.OnPreviewInitialized        x1       0.0 ms   at 857 ms (frame 48)
+  inkInventoryPuppetPreviewGameController.OnSetCameraSetupEvent x1       0.0 ms   at 857 ms (frame 48)
+
+=== open #2  2026-10-01 20:16:46  mode: normal  recorded 1.3 s ===
+gameplay before open: average frame 53.9 ms, worst 690.7 ms (120 frames)
+slow frames after open (> 25 ms):
+  frame   1  at    195 ms  took  195.2 ms
+  frame   2  at    454 ms  took  258.4 ms
+  frame   3  at    623 ms  took  169.3 ms
+  frame   5  at    726 ms  took   85.2 ms
+  frame  41  at   1295 ms  took   47.4 ms
+  frame  42  at   1336 ms  took   41.4 ms
+frames: 42   worst: 258.4 ms   total in slow frames: 796.9 ms
+FastInventory v0.5 (delayed V + keep-alive cache), V SHOWN
+inventory init #2 at 188 ms (frame 2): normal
+script calls (inclusive time, nested calls counted in their parents too):
+  MenuHubGameController.OnInitialize                         x1       5.0 ms   at 2 ms (frame 1)
+  gameuiInventoryGameController.OnSetUserData                x1       6.0 ms   at 188 ms (frame 2)
+  InventoryDataManagerV2.Initialize                          x2       0.0 ms   at 188 ms (frame 2), 194 ms (frame 2)
+  InventoryItemModeLogicController.SetupData                 x1       0.0 ms   at 189 ms (frame 2)
+  gameuiInventoryGameController.RefreshPlayerCyberware       x1       2.0 ms   at 190 ms (frame 2)
+  gameuiInventoryGameController.RefreshUI                    x1       0.0 ms   at 192 ms (frame 2)
+  gameuiInventoryGameController.SetupPlayerStats             x1       1.0 ms   at 193 ms (frame 2)
+  gameuiInventoryGameController.OnInitialize                 x1       0.0 ms   at 194 ms (frame 2)
+  gameuiInventoryGameController.OnEquipmentAreaCategoryCreated x7     121.0 ms   at 442 ms (frame 3), 457 ms (frame 3), 476 ms (frame 3), 515 ms (frame 3)
+  gameuiInventoryGameController.PopulateArea                 x11    121.0 ms   at 442 ms (frame 3), 457 ms (frame 3), 465 ms (frame 3), 476 ms (frame 3)
+  inkInventoryPuppetPreviewGameController.OnInitialize       x1       0.0 ms   at 1234 ms (frame 41)
+  EquipmentEx.PaperdollHelper.AddPreview                     x1       0.0 ms   at 1234 ms (frame 41)
+  inkPuppetPreviewGameController.OnPreviewInitialized        x1       0.0 ms   at 1234 ms (frame 41)
+  inkInventoryPuppetPreviewGameController.OnSetCameraSetupEvent x1       0.0 ms   at 1234 ms (frame 41)
+
+=== open #3  2026-10-01 20:17:07  mode: normal  recorded 15.0 s ===
+gameplay before open: average frame 29.6 ms, worst 508.3 ms (120 frames)
+slow frames after open (> 25 ms):
+  frame   2  at     49 ms  took   25.7 ms
+  frame   3  at    183 ms  took  133.3 ms
+  frame   4  at    208 ms  took   25.1 ms
+  frame   5  at    234 ms  took   25.8 ms
+  frame   6  at    287 ms  took   53.2 ms
+  frame   7  at    331 ms  took   44.6 ms
+  frame   8  at    368 ms  took   36.9 ms
+  frame   9  at    398 ms  took   29.5 ms
+  frame  10  at    427 ms  took   29.5 ms
+  frame  11  at    456 ms  took   28.8 ms
+  frame  40  at    916 ms  took   52.3 ms
+  frame  41  at    959 ms  took   42.9 ms
+  frame  42  at   3285 ms  took 2325.6 ms
+  frame  46  at   3415 ms  took   73.0 ms
+  frame  47  at   3447 ms  took   31.4 ms
+  frame  48  at   3530 ms  took   83.4 ms
+  frame  49  at   3591 ms  took   61.3 ms
+  frame  50  at   3654 ms  took   62.5 ms
+  frame  51  at   3716 ms  took   62.3 ms
+  frame  52  at   3759 ms  took   42.5 ms
+  frame  53  at   3801 ms  took   42.6 ms
+  frame  54  at   3844 ms  took   42.4 ms
+  frame  55  at   3886 ms  took   42.9 ms
+  frame  56  at   3929 ms  took   42.7 ms
+  frame  57  at   3972 ms  took   42.8 ms
+  frame  58  at   4015 ms  took   43.5 ms
+  frame  59  at   4058 ms  took   42.0 ms
+  frame  60  at   4102 ms  took   44.2 ms
+  frame  61  at   4145 ms  took   43.3 ms
+  frame  62  at   4188 ms  took   42.9 ms
+  frame  63  at   4230 ms  took   42.3 ms
+  frame  64  at   4274 ms  took   43.4 ms
+  frame  65  at   4317 ms  took   43.6 ms
+  frame  66  at   4360 ms  took   43.3 ms
+  frame  67  at   4404 ms  took   43.4 ms
+  frame  68  at   4448 ms  took   43.7 ms
+  frame  69  at   4491 ms  took   43.0 ms
+  frame  70  at   4533 ms  took   42.7 ms
+  frame  71  at   4576 ms  took   42.7 ms
+  frame  72  at   4619 ms  took   42.9 ms
+  frame  73  at   4662 ms  took   43.1 ms
+  frame  74  at   4704 ms  took   42.6 ms
+  frame  75  at   4747 ms  took   43.0 ms
+  frame  76  at   4789 ms  took   42.0 ms
+  frame  77  at   4832 ms  took   42.8 ms
+  frame  78  at   6209 ms  took 1376.3 ms
+  frame  79  at   6245 ms  took   36.8 ms
+  frame  80  at   6288 ms  took   42.8 ms
+  frame  81  at   6331 ms  took   43.0 ms
+  frame  82  at   6374 ms  took   43.0 ms
+  frame  83  at   6417 ms  took   43.0 ms
+  frame  84  at   6464 ms  took   47.1 ms
+  frame  85  at   6511 ms  took   47.2 ms
+  frame  86  at   6559 ms  took   47.2 ms
+  frame  87  at   6602 ms  took   43.3 ms
+  frame  88  at   6645 ms  took   43.4 ms
+  frame  89  at   6689 ms  took   43.3 ms
+  frame  90  at   6732 ms  took   43.3 ms
+  frame  91  at   6776 ms  took   43.7 ms
+  frame  92  at   6818 ms  took   42.3 ms
+  frame  93  at   6861 ms  took   42.8 ms
+  frame  94  at   6904 ms  took   43.0 ms
+  frame  95  at   6946 ms  took   42.2 ms
+  frame  96  at   6988 ms  took   42.4 ms
+  frame  97  at   7031 ms  took   42.6 ms
+  frame  98  at   7073 ms  took   42.0 ms
+  frame  99  at   7116 ms  took   42.7 ms
+  frame 100  at   7159 ms  took   43.6 ms
+  frame 101  at   7200 ms  took   41.1 ms
+  frame 102  at   7246 ms  took   45.3 ms
+  frame 103  at   7289 ms  took   43.1 ms
+  frame 104  at   7363 ms  took   73.7 ms
+  frame 105  at   7406 ms  took   43.2 ms
+  frame 106  at   7449 ms  took   43.2 ms
+  frame 107  at   7491 ms  took   42.2 ms
+  frame 108  at   7534 ms  took   42.4 ms
+  frame 109  at   7577 ms  took   43.1 ms
+  frame 110  at   7620 ms  took   43.3 ms
+  frame 111  at   7664 ms  took   43.6 ms
+  frame 112  at   7707 ms  took   43.3 ms
+  frame 113  at   7750 ms  took   43.3 ms
+  frame 114  at   7793 ms  took   43.0 ms
+  frame 115  at   7836 ms  took   43.0 ms
+  frame 116  at   7879 ms  took   43.5 ms
+  frame 117  at   7923 ms  took   43.5 ms
+  frame 118  at   7966 ms  took   43.5 ms
+  frame 119  at   8010 ms  took   43.5 ms
+  frame 120  at   8053 ms  took   43.5 ms
+  frame 121  at   8097 ms  took   43.1 ms
+  frame 122  at   8139 ms  took   42.8 ms
+  frame 123  at   8183 ms  took   43.5 ms
+  frame 124  at   8226 ms  took   43.1 ms
+  frame 125  at   8269 ms  took   43.3 ms
+  frame 126  at   8312 ms  took   42.5 ms
+  frame 127  at   8355 ms  took   43.2 ms
+  frame 128  at   8397 ms  took   42.1 ms
+  frame 129  at   8439 ms  took   42.1 ms
+  frame 130  at   8482 ms  took   42.7 ms
+  frame 131  at   8524 ms  took   42.7 ms
+  frame 132  at   8567 ms  took   43.0 ms
+  frame 133  at   8611 ms  took   43.4 ms
+  frame 134  at   8654 ms  took   43.1 ms
+  frame 135  at   8696 ms  took   42.2 ms
+  frame 136  at   8739 ms  took   43.0 ms
+  frame 137  at   8781 ms  took   42.2 ms
+  frame 138  at   8824 ms  took   43.0 ms
+  frame 139  at   8868 ms  took   43.4 ms
+  frame 140  at   8911 ms  took   43.7 ms
+  frame 141  at   8953 ms  took   42.0 ms
+  frame 142  at   8997 ms  took   43.4 ms
+  frame 143  at   9041 ms  took   44.0 ms
+  frame 144  at   9085 ms  took   44.1 ms
+  frame 145  at   9129 ms  took   44.4 ms
+  frame 146  at   9174 ms  took   45.0 ms
+  frame 147  at   9216 ms  took   41.9 ms
+  frame 148  at   9258 ms  took   41.7 ms
+  frame 149  at   9300 ms  took   42.2 ms
+  frame 150  at   9342 ms  took   42.5 ms
+  frame 151  at   9385 ms  took   42.6 ms
+  frame 152  at   9428 ms  took   42.5 ms
+  frame 153  at   9470 ms  took   43.0 ms
+  frame 154  at   9511 ms  took   40.8 ms
+  frame 155  at   9554 ms  took   43.1 ms
+  frame 156  at   9598 ms  took   43.3 ms
+  frame 157  at   9640 ms  took   42.1 ms
+  frame 158  at   9682 ms  took   42.4 ms
+  frame 159  at   9724 ms  took   42.3 ms
+  frame 160  at   9767 ms  took   42.8 ms
+  frame 161  at   9810 ms  took   42.8 ms
+  frame 162  at   9853 ms  took   42.8 ms
+  frame 163  at   9895 ms  took   42.5 ms
+  frame 164  at   9938 ms  took   42.6 ms
+  frame 165  at   9981 ms  took   42.5 ms
+  frame 166  at  10023 ms  took   42.6 ms
+  frame 167  at  10066 ms  took   42.5 ms
+  frame 168  at  10108 ms  took   42.0 ms
+  frame 169  at  10150 ms  took   42.2 ms
+  frame 170  at  10192 ms  took   42.1 ms
+  frame 171  at  10234 ms  took   42.2 ms
+  frame 172  at  10276 ms  took   42.2 ms
+  frame 173  at  10318 ms  took   41.4 ms
+  frame 174  at  10360 ms  took   41.9 ms
+  frame 175  at  10401 ms  took   41.8 ms
+  frame 176  at  10445 ms  took   43.1 ms
+  frame 177  at  10486 ms  took   41.9 ms
+  frame 178  at  10528 ms  took   41.8 ms
+  frame 179  at  10570 ms  took   41.9 ms
+  frame 180  at  10613 ms  took   42.4 ms
+  frame 181  at  10655 ms  took   42.6 ms
+  frame 182  at  10697 ms  took   42.2 ms
+  frame 183  at  10739 ms  took   41.7 ms
+  frame 184  at  10781 ms  took   41.5 ms
+  frame 185  at  10823 ms  took   42.4 ms
+  frame 186  at  10865 ms  took   42.0 ms
+  frame 187  at  10907 ms  took   41.6 ms
+  frame 188  at  10949 ms  took   42.5 ms
+  frame 189  at  10991 ms  took   42.2 ms
+  frame 190  at  11034 ms  took   42.9 ms
+  frame 191  at  11077 ms  took   43.2 ms
+  frame 192  at  11119 ms  took   41.8 ms
+  frame 193  at  11161 ms  took   42.0 ms
+  frame 194  at  11204 ms  took   42.8 ms
+  frame 195  at  11246 ms  took   41.8 ms
+  frame 196  at  11289 ms  took   43.3 ms
+  frame 197  at  11332 ms  took   42.6 ms
+  frame 198  at  11374 ms  took   42.3 ms
+  frame 199  at  11417 ms  took   42.6 ms
+  frame 200  at  11459 ms  took   42.6 ms
+  frame 201  at  11502 ms  took   42.4 ms
+  frame 202  at  11545 ms  took   43.3 ms
+  frame 203  at  11588 ms  took   42.7 ms
+  frame 204  at  11630 ms  took   42.8 ms
+  frame 205  at  11673 ms  took   42.5 ms
+  frame 206  at  11715 ms  took   42.3 ms
+  frame 207  at  11758 ms  took   42.3 ms
+  frame 208  at  11801 ms  took   43.3 ms
+  frame 209  at  11843 ms  took   42.2 ms
+  frame 210  at  11885 ms  took   42.3 ms
+  frame 211  at  11929 ms  took   43.2 ms
+  frame 212  at  11971 ms  took   42.2 ms
+  frame 213  at  12013 ms  took   41.9 ms
+  frame 214  at  12055 ms  took   42.3 ms
+  frame 215  at  12097 ms  took   42.2 ms
+  frame 216  at  12140 ms  took   43.1 ms
+  frame 217  at  12183 ms  took   42.6 ms
+  frame 218  at  12225 ms  took   42.3 ms
+  frame 219  at  12267 ms  took   42.2 ms
+  frame 220  at  12310 ms  took   42.2 ms
+  frame 221  at  12352 ms  took   42.3 ms
+  frame 222  at  12395 ms  took   42.9 ms
+  frame 223  at  12437 ms  took   42.2 ms
+  frame 224  at  12478 ms  took   41.0 ms
+  frame 225  at  12520 ms  took   42.0 ms
+  frame 226  at  12562 ms  took   42.6 ms
+  frame 227  at  12605 ms  took   42.5 ms
+  frame 228  at  12647 ms  took   41.9 ms
+  frame 229  at  12689 ms  took   42.1 ms
+  frame 230  at  12731 ms  took   42.2 ms
+  frame 231  at  12774 ms  took   42.8 ms
+  frame 232  at  12816 ms  took   42.2 ms
+  frame 233  at  12859 ms  took   42.3 ms
+  frame 234  at  12901 ms  took   42.5 ms
+  frame 235  at  12944 ms  took   43.0 ms
+  frame 236  at  12986 ms  took   42.3 ms
+  frame 237  at  13029 ms  took   42.7 ms
+  frame 238  at  13071 ms  took   42.2 ms
+  frame 239  at  13113 ms  took   42.3 ms
+  frame 240  at  13157 ms  took   43.3 ms
+  frame 241  at  13199 ms  took   42.6 ms
+  frame 242  at  13243 ms  took   43.7 ms
+  frame 243  at  13285 ms  took   41.9 ms
+  frame 244  at  13329 ms  took   44.1 ms
+  frame 245  at  13372 ms  took   43.1 ms
+  frame 246  at  13414 ms  took   42.1 ms
+  frame 247  at  13457 ms  took   42.9 ms
+  frame 248  at  13500 ms  took   42.7 ms
+  frame 249  at  13542 ms  took   42.5 ms
+  frame 250  at  13585 ms  took   42.9 ms
+  frame 251  at  13628 ms  took   42.5 ms
+  frame 252  at  13670 ms  took   42.8 ms
+  frame 253  at  13713 ms  took   42.5 ms
+  frame 254  at  13756 ms  took   42.6 ms
+  frame 255  at  13799 ms  took   42.9 ms
+  frame 256  at  13841 ms  took   42.7 ms
+  frame 257  at  13884 ms  took   43.0 ms
+  frame 258  at  13926 ms  took   42.2 ms
+  frame 259  at  13968 ms  took   41.9 ms
+  frame 260  at  14010 ms  took   41.9 ms
+  frame 261  at  14053 ms  took   42.4 ms
+  frame 262  at  14094 ms  took   41.2 ms
+  frame 263  at  14136 ms  took   41.9 ms
+  frame 264  at  14178 ms  took   42.4 ms
+  frame 265  at  14220 ms  took   41.8 ms
+  frame 266  at  14262 ms  took   42.1 ms
+  frame 267  at  14304 ms  took   41.9 ms
+  frame 268  at  14346 ms  took   42.1 ms
+  frame 269  at  14388 ms  took   42.1 ms
+  frame 270  at  14430 ms  took   42.0 ms
+  frame 271  at  14472 ms  took   42.3 ms
+  frame 272  at  14515 ms  took   42.1 ms
+  frame 273  at  14556 ms  took   41.9 ms
+  frame 274  at  14599 ms  took   42.5 ms
+  frame 275  at  14641 ms  took   41.7 ms
+  frame 276  at  14683 ms  took   42.2 ms
+  frame 277  at  14725 ms  took   42.0 ms
+  frame 278  at  14767 ms  took   42.6 ms
+  frame 279  at  14810 ms  took   42.1 ms
+  frame 280  at  14852 ms  took   42.3 ms
+  frame 281  at  14894 ms  took   41.6 ms
+  frame 282  at  14936 ms  took   42.5 ms
+  frame 283  at  14978 ms  took   42.3 ms
+  frame 284  at  15021 ms  took   42.2 ms
+frames: 284   worst: 2325.6 ms   total in slow frames: 14531.5 ms
+FastInventory v0.5 (delayed V + keep-alive cache), V SHOWN
+inventory init #3 at 23 ms (frame 2): normal
+script calls (inclusive time, nested calls counted in their parents too):
+  MenuHubGameController.OnInitialize                         x1       6.0 ms   at 1 ms (frame 1)
+  gameuiInventoryGameController.OnSetUserData                x1       5.0 ms   at 23 ms (frame 2)
+  InventoryDataManagerV2.Initialize                          x2       0.0 ms   at 23 ms (frame 2), 28 ms (frame 2)
+  InventoryItemModeLogicController.SetupData                 x1       0.0 ms   at 24 ms (frame 2)
+  gameuiInventoryGameController.RefreshPlayerCyberware       x1       2.0 ms   at 24 ms (frame 2)
+  gameuiInventoryGameController.RefreshUI                    x1       0.0 ms   at 26 ms (frame 2)
+  gameuiInventoryGameController.SetupPlayerStats             x1       0.0 ms   at 27 ms (frame 2)
+  gameuiInventoryGameController.OnInitialize                 x1       0.0 ms   at 28 ms (frame 2)
+  gameuiInventoryGameController.OnEquipmentAreaCategoryCreated x7     121.0 ms   at 43 ms (frame 3), 59 ms (frame 3), 79 ms (frame 3), 117 ms (frame 3)
+  gameuiInventoryGameController.PopulateArea                 x11    119.0 ms   at 43 ms (frame 3), 59 ms (frame 3), 67 ms (frame 3), 79 ms (frame 3)
+  inkInventoryPuppetPreviewGameController.OnInitialize       x1       1.0 ms   at 858 ms (frame 40)
+  EquipmentEx.PaperdollHelper.AddPreview                     x1       0.0 ms   at 858 ms (frame 40)
+  inkPuppetPreviewGameController.OnPreviewInitialized        x1       0.0 ms   at 859 ms (frame 40)
+  inkInventoryPuppetPreviewGameController.OnSetCameraSetupEvent x2       0.0 ms   at 859 ms (frame 40), 6238 ms (frame 80)
+
+=== open #4  2026-10-01 20:18:16  mode: normal  recorded 1.1 s ===
+gameplay before open: average frame 42.5 ms, worst 43.9 ms (120 frames)
+slow frames after open (> 25 ms):
+  frame   1  at     43 ms  took   42.8 ms
+  frame   2  at    159 ms  took  115.8 ms
+  frame   3  at    201 ms  took   42.9 ms
+  frame   4  at    291 ms  took   89.8 ms
+  frame   5  at    334 ms  took   42.6 ms
+  frame   6  at    377 ms  took   42.9 ms
+  frame   7  at    419 ms  took   42.3 ms
+  frame  26  at    710 ms  took   28.9 ms
+frames: 50   worst: 115.8 ms   total in slow frames: 447.9 ms
+FastInventory v0.5 (delayed V + keep-alive cache), V SHOWN
+script calls (inclusive time, nested calls counted in their parents too):
+  MenuHubGameController.OnInitialize                         x1       5.0 ms   at 1 ms (frame 1)
+  InventoryDataManagerV2.Initialize                          x1       1.0 ms   at 25 ms (frame 2)
+
+=== open #1  2026-10-01 21:14:59  mode: normal  recorded 15.0 s ===
+gameplay before open: average frame 15.5 ms, worst 38.9 ms (120 frames)
+slow frames after open (> 25 ms):
+  frame   3  at    180 ms  took  136.0 ms
+  frame  53  at   3608 ms  took 2714.3 ms
+  frame  54  at   3643 ms  took   35.2 ms
+  frame  57  at   3706 ms  took   33.6 ms
+  frame  58  at   3739 ms  took   33.0 ms
+  frame  59  at   3798 ms  took   58.4 ms
+  frame  60  at   3831 ms  took   33.4 ms
+  frame  61  at   3864 ms  took   33.3 ms
+  frame  62  at   3898 ms  took   33.7 ms
+  frame  63  at   3931 ms  took   32.9 ms
+  frame  64  at   3964 ms  took   33.7 ms
+  frame  65  at   3998 ms  took   33.4 ms
+  frame  66  at   4031 ms  took   33.4 ms
+  frame  67  at   4066 ms  took   34.5 ms
+  frame  68  at   4099 ms  took   33.6 ms
+  frame  69  at   4134 ms  took   34.4 ms
+  frame  70  at   4167 ms  took   33.5 ms
+  frame  71  at   4201 ms  took   33.8 ms
+  frame  72  at   4235 ms  took   33.7 ms
+  frame  73  at   4269 ms  took   34.2 ms
+  frame  74  at   4302 ms  took   33.4 ms
+  frame  75  at   4336 ms  took   33.7 ms
+  frame  76  at   4369 ms  took   33.3 ms
+  frame  77  at   4403 ms  took   33.7 ms
+  frame  78  at   4437 ms  took   33.6 ms
+  frame  79  at   4470 ms  took   33.2 ms
+  frame  80  at   4503 ms  took   33.4 ms
+  frame  81  at   4537 ms  took   33.4 ms
+  frame  82  at   4570 ms  took   33.3 ms
+  frame  83  at   4603 ms  took   33.2 ms
+  frame  84  at   4637 ms  took   33.4 ms
+  frame  85  at   4670 ms  took   33.0 ms
+  frame  86  at   4703 ms  took   33.6 ms
+  frame  87  at   4736 ms  took   32.9 ms
+  frame  88  at   4770 ms  took   33.7 ms
+  frame  89  at   4803 ms  took   33.2 ms
+  frame  90  at   4837 ms  took   33.8 ms
+  frame  91  at   4870 ms  took   32.8 ms
+  frame  92  at   4903 ms  took   33.4 ms
+  frame  93  at   4936 ms  took   33.4 ms
+  frame  94  at   4969 ms  took   33.1 ms
+  frame  95  at   5002 ms  took   32.6 ms
+  frame  96  at   5035 ms  took   33.2 ms
+  frame  97  at   5068 ms  took   32.6 ms
+  frame  98  at   5102 ms  took   34.1 ms
+  frame  99  at   6588 ms  took 1486.4 ms
+  frame 100  at   6616 ms  took   27.8 ms
+  frame 101  at   6649 ms  took   33.1 ms
+  frame 102  at   6682 ms  took   33.1 ms
+  frame 103  at   6716 ms  took   33.2 ms
+  frame 104  at   6749 ms  took   33.2 ms
+  frame 105  at   6781 ms  took   32.0 ms
+  frame 106  at   6813 ms  took   32.1 ms
+  frame 107  at   6852 ms  took   39.1 ms
+  frame 108  at   6891 ms  took   39.1 ms
+  frame 109  at   6924 ms  took   32.6 ms
+  frame 110  at   6956 ms  took   32.5 ms
+  frame 111  at   6989 ms  took   32.6 ms
+  frame 112  at   7023 ms  took   34.1 ms
+  frame 113  at   7056 ms  took   32.8 ms
+  frame 114  at   7088 ms  took   32.8 ms
+  frame 115  at   7121 ms  took   32.7 ms
+  frame 116  at   7154 ms  took   33.0 ms
+  frame 117  at   7188 ms  took   33.5 ms
+  frame 118  at   7221 ms  took   33.0 ms
+  frame 119  at   7254 ms  took   33.0 ms
+  frame 120  at   7286 ms  took   32.6 ms
+  frame 121  at   7319 ms  took   33.2 ms
+  frame 122  at   7352 ms  took   32.5 ms
+  frame 123  at   7385 ms  took   33.1 ms
+  frame 124  at   7417 ms  took   32.3 ms
+  frame 125  at   7451 ms  took   33.7 ms
+  frame 126  at   7483 ms  took   31.6 ms
+  frame 127  at   7516 ms  took   33.3 ms
+  frame 128  at   7548 ms  took   32.3 ms
+  frame 129  at   7580 ms  took   32.3 ms
+  frame 130  at   7612 ms  took   31.8 ms
+  frame 131  at   7644 ms  took   32.2 ms
+  frame 132  at   7677 ms  took   32.1 ms
+  frame 133  at   7709 ms  took   32.4 ms
+  frame 134  at   7741 ms  took   32.1 ms
+  frame 135  at   7773 ms  took   32.1 ms
+  frame 136  at   7805 ms  took   31.9 ms
+  frame 137  at   7837 ms  took   32.0 ms
+  frame 138  at   7870 ms  took   33.0 ms
+  frame 139  at   7902 ms  took   32.4 ms
+  frame 140  at   7935 ms  took   32.5 ms
+  frame 141  at   7967 ms  took   32.5 ms
+  frame 142  at   7999 ms  took   32.2 ms
+  frame 143  at   8031 ms  took   31.9 ms
+  frame 144  at   8063 ms  took   31.5 ms
+  frame 145  at   8094 ms  took   30.9 ms
+  frame 146  at   8126 ms  took   32.3 ms
+  frame 147  at   8158 ms  took   32.0 ms
+  frame 148  at   8191 ms  took   32.6 ms
+  frame 149  at   8224 ms  took   32.9 ms
+  frame 150  at   8256 ms  took   32.6 ms
+  frame 151  at   8289 ms  took   32.7 ms
+  frame 152  at   8322 ms  took   32.7 ms
+  frame 153  at   8355 ms  took   33.1 ms
+  frame 154  at   8388 ms  took   33.2 ms
+  frame 155  at   8421 ms  took   33.5 ms
+  frame 156  at   8454 ms  took   32.7 ms
+  frame 157  at   8487 ms  took   32.7 ms
+  frame 158  at   8520 ms  took   32.8 ms
+  frame 159  at   8553 ms  took   33.2 ms
+  frame 160  at   8586 ms  took   33.2 ms
+  frame 161  at   8619 ms  took   33.3 ms
+  frame 162  at   8653 ms  took   33.2 ms
+  frame 163  at   8686 ms  took   33.3 ms
+  frame 164  at   8719 ms  took   32.6 ms
+  frame 165  at   8751 ms  took   32.6 ms
+  frame 166  at   8783 ms  took   32.1 ms
+  frame 167  at   8815 ms  took   32.1 ms
+  frame 168  at   8847 ms  took   32.1 ms
+  frame 169  at   8880 ms  took   32.2 ms
+  frame 170  at   8912 ms  took   32.5 ms
+  frame 171  at   8944 ms  took   32.2 ms
+  frame 172  at   8977 ms  took   32.3 ms
+  frame 173  at   9009 ms  took   31.9 ms
+  frame 174  at   9041 ms  took   32.2 ms
+  frame 175  at   9073 ms  took   32.2 ms
+  frame 176  at   9111 ms  took   37.8 ms
+  frame 177  at   9137 ms  took   26.5 ms
+  frame 178  at   9170 ms  took   32.8 ms
+  frame 179  at   9202 ms  took   31.6 ms
+  frame 180  at   9235 ms  took   33.5 ms
+  frame 181  at   9269 ms  took   33.3 ms
+  frame 182  at   9302 ms  took   33.4 ms
+  frame 183  at   9335 ms  took   32.7 ms
+  frame 184  at   9407 ms  took   72.1 ms
+  frame 187  at   9474 ms  took   35.5 ms
+  frame 188  at   9507 ms  took   33.0 ms
+  frame 189  at   9540 ms  took   32.8 ms
+  frame 190  at   9573 ms  took   32.7 ms
+  frame 191  at   9605 ms  took   32.9 ms
+  frame 192  at   9639 ms  took   33.2 ms
+  frame 193  at   9672 ms  took   33.6 ms
+  frame 194  at   9706 ms  took   33.7 ms
+  frame 195  at   9740 ms  took   33.7 ms
+  frame 196  at   9773 ms  took   33.7 ms
+  frame 197  at   9807 ms  took   33.7 ms
+  frame 198  at   9841 ms  took   33.6 ms
+  frame 199  at   9874 ms  took   33.7 ms
+  frame 200  at   9907 ms  took   33.2 ms
+  frame 201  at   9941 ms  took   33.3 ms
+  frame 202  at   9974 ms  took   33.1 ms
+  frame 203  at  10007 ms  took   32.8 ms
+  frame 204  at  10039 ms  took   32.6 ms
+  frame 205  at  10072 ms  took   32.5 ms
+  frame 206  at  10104 ms  took   32.8 ms
+  frame 207  at  10137 ms  took   32.9 ms
+  frame 208  at  10170 ms  took   32.8 ms
+  frame 209  at  10202 ms  took   32.3 ms
+  frame 210  at  10235 ms  took   32.8 ms
+  frame 211  at  10268 ms  took   32.4 ms
+  frame 212  at  10300 ms  took   32.5 ms
+  frame 213  at  10332 ms  took   31.8 ms
+  frame 214  at  10365 ms  took   33.0 ms
+  frame 215  at  10398 ms  took   32.9 ms
+  frame 216  at  10431 ms  took   32.8 ms
+  frame 217  at  10464 ms  took   32.9 ms
+  frame 218  at  10496 ms  took   32.6 ms
+  frame 219  at  10528 ms  took   32.4 ms
+  frame 220  at  10561 ms  took   32.8 ms
+  frame 221  at  10593 ms  took   32.0 ms
+  frame 222  at  10626 ms  took   32.6 ms
+  frame 223  at  10658 ms  took   32.6 ms
+  frame 224  at  10691 ms  took   32.9 ms
+  frame 225  at  10724 ms  took   32.9 ms
+  frame 226  at  10757 ms  took   32.8 ms
+  frame 227  at  10790 ms  took   32.8 ms
+  frame 228  at  10823 ms  took   32.8 ms
+  frame 229  at  10856 ms  took   33.3 ms
+  frame 230  at  10890 ms  took   34.1 ms
+  frame 231  at  10924 ms  took   33.7 ms
+  frame 232  at  10957 ms  took   33.4 ms
+  frame 233  at  10989 ms  took   32.0 ms
+  frame 234  at  11021 ms  took   32.1 ms
+  frame 235  at  11053 ms  took   31.6 ms
+  frame 236  at  11085 ms  took   31.8 ms
+  frame 237  at  11118 ms  took   32.7 ms
+  frame 238  at  11150 ms  took   32.8 ms
+  frame 239  at  11183 ms  took   32.7 ms
+  frame 240  at  11216 ms  took   32.8 ms
+  frame 241  at  11249 ms  took   32.7 ms
+  frame 242  at  11282 ms  took   33.0 ms
+  frame 243  at  11314 ms  took   32.2 ms
+  frame 244  at  11347 ms  took   32.8 ms
+  frame 245  at  11379 ms  took   32.4 ms
+  frame 246  at  11412 ms  took   32.8 ms
+  frame 247  at  11444 ms  took   32.1 ms
+  frame 248  at  11477 ms  took   32.9 ms
+  frame 249  at  11509 ms  took   32.5 ms
+  frame 250  at  11542 ms  took   32.9 ms
+  frame 251  at  11576 ms  took   33.4 ms
+  frame 252  at  11609 ms  took   33.5 ms
+  frame 253  at  11641 ms  took   32.2 ms
+  frame 254  at  11674 ms  took   32.2 ms
+  frame 255  at  11706 ms  took   32.2 ms
+  frame 256  at  11738 ms  took   32.2 ms
+  frame 257  at  11770 ms  took   32.4 ms
+  frame 258  at  11805 ms  took   34.3 ms
+  frame 259  at  11838 ms  took   33.7 ms
+  frame 260  at  11872 ms  took   33.9 ms
+  frame 261  at  11906 ms  took   33.8 ms
+  frame 262  at  11938 ms  took   32.2 ms
+  frame 263  at  11971 ms  took   32.3 ms
+  frame 264  at  12003 ms  took   32.9 ms
+  frame 265  at  12036 ms  took   32.8 ms
+  frame 266  at  12068 ms  took   31.8 ms
+  frame 267  at  12101 ms  took   32.4 ms
+  frame 268  at  12132 ms  took   31.8 ms
+  frame 269  at  12165 ms  took   32.6 ms
+  frame 270  at  12197 ms  took   32.2 ms
+  frame 271  at  12229 ms  took   32.4 ms
+  frame 272  at  12261 ms  took   32.0 ms
+  frame 273  at  12293 ms  took   31.6 ms
+  frame 274  at  12325 ms  took   31.6 ms
+  frame 275  at  12356 ms  took   31.6 ms
+  frame 276  at  12389 ms  took   32.4 ms
+  frame 277  at  12421 ms  took   32.3 ms
+  frame 278  at  12453 ms  took   32.4 ms
+  frame 279  at  12486 ms  took   32.3 ms
+  frame 280  at  12518 ms  took   32.3 ms
+  frame 281  at  12550 ms  took   32.3 ms
+  frame 282  at  12583 ms  took   32.7 ms
+  frame 283  at  12615 ms  took   32.5 ms
+  frame 284  at  12648 ms  took   32.4 ms
+  frame 285  at  12680 ms  took   32.7 ms
+  frame 286  at  12713 ms  took   32.7 ms
+  frame 287  at  12745 ms  took   31.9 ms
+  frame 288  at  12778 ms  took   32.7 ms
+  frame 289  at  12810 ms  took   32.2 ms
+  frame 290  at  12843 ms  took   32.7 ms
+  frame 291  at  12875 ms  took   32.8 ms
+  frame 292  at  12909 ms  took   33.1 ms
+  frame 293  at  12941 ms  took   32.3 ms
+  frame 294  at  12974 ms  took   33.6 ms
+  frame 295  at  13007 ms  took   32.1 ms
+  frame 296  at  13039 ms  took   32.6 ms
+  frame 297  at  13071 ms  took   32.3 ms
+  frame 298  at  13124 ms  took   52.6 ms
+  frame 300  at  13167 ms  took   31.0 ms
+  frame 301  at  13200 ms  took   32.1 ms
+  frame 302  at  13232 ms  took   32.2 ms
+  frame 303  at  13264 ms  took   32.1 ms
+  frame 304  at  13296 ms  took   32.2 ms
+  frame 305  at  13330 ms  took   33.7 ms
+  frame 306  at  13363 ms  took   33.8 ms
+  frame 307  at  13397 ms  took   33.8 ms
+  frame 308  at  13431 ms  took   33.7 ms
+  frame 309  at  13465 ms  took   33.8 ms
+  frame 310  at  13497 ms  took   32.4 ms
+  frame 311  at  13530 ms  took   32.5 ms
+  frame 312  at  13563 ms  took   32.8 ms
+  frame 313  at  13595 ms  took   32.6 ms
+  frame 314  at  13628 ms  took   32.6 ms
+  frame 315  at  13662 ms  took   34.6 ms
+  frame 316  at  13695 ms  took   32.8 ms
+  frame 317  at  13728 ms  took   32.8 ms
+  frame 318  at  13762 ms  took   33.7 ms
+  frame 319  at  13795 ms  took   32.9 ms
+  frame 320  at  13828 ms  took   33.7 ms
+  frame 321  at  13861 ms  took   32.8 ms
+  frame 322  at  13894 ms  took   32.8 ms
+  frame 323  at  13927 ms  took   32.6 ms
+  frame 324  at  13960 ms  took   33.1 ms
+  frame 325  at  13993 ms  took   33.0 ms
+  frame 326  at  14025 ms  took   32.7 ms
+  frame 327  at  14058 ms  took   32.2 ms
+  frame 328  at  14090 ms  took   32.4 ms
+  frame 329  at  14129 ms  took   39.2 ms
+  frame 330  at  14155 ms  took   25.3 ms
+  frame 331  at  14187 ms  took   32.2 ms
+  frame 332  at  14219 ms  took   31.8 ms
+  frame 333  at  14250 ms  took   31.9 ms
+  frame 334  at  14283 ms  took   32.6 ms
+  frame 335  at  14316 ms  took   32.8 ms
+  frame 336  at  14348 ms  took   32.4 ms
+  frame 337  at  14381 ms  took   33.0 ms
+  frame 338  at  14414 ms  took   32.4 ms
+  frame 339  at  14447 ms  took   33.6 ms
+  frame 340  at  14480 ms  took   32.7 ms
+  frame 341  at  14513 ms  took   33.4 ms
+  frame 342  at  14547 ms  took   33.2 ms
+  frame 343  at  14579 ms  took   32.5 ms
+  frame 344  at  14613 ms  took   33.6 ms
+  frame 345  at  14646 ms  took   33.7 ms
+  frame 346  at  14689 ms  took   42.9 ms
+  frame 348  at  14746 ms  took   33.1 ms
+  frame 349  at  14779 ms  took   33.2 ms
+  frame 350  at  14812 ms  took   33.0 ms
+  frame 351  at  14845 ms  took   33.1 ms
+  frame 352  at  14878 ms  took   33.2 ms
+  frame 353  at  14911 ms  took   33.4 ms
+  frame 354  at  14946 ms  took   34.1 ms
+  frame 355  at  14979 ms  took   33.2 ms
+  frame 356  at  15012 ms  took   33.7 ms
+frames: 356   worst: 2714.3 ms   total in slow frames: 14157.8 ms
+FastInventory v0.5 (delayed V + keep-alive cache), V SHOWN
+inventory init #1 at 22 ms (frame 2): normal
+script calls (inclusive time, nested calls counted in their parents too):
+  MenuHubGameController.OnInitialize                         x1       4.0 ms   at 2 ms (frame 1)
+  gameuiInventoryGameController.OnSetUserData                x1       5.0 ms   at 22 ms (frame 2)
+  InventoryDataManagerV2.Initialize                          x2       0.0 ms   at 22 ms (frame 2), 28 ms (frame 2)
+  InventoryItemModeLogicController.SetupData                 x1       0.0 ms   at 23 ms (frame 2)
+  gameuiInventoryGameController.RefreshPlayerCyberware       x1       2.0 ms   at 23 ms (frame 2)
+  gameuiInventoryGameController.RefreshUI                    x1       0.0 ms   at 25 ms (frame 2)
+  gameuiInventoryGameController.SetupPlayerStats             x1       0.0 ms   at 27 ms (frame 2)
+  gameuiInventoryGameController.OnInitialize                 x1       0.0 ms   at 28 ms (frame 2)
+  gameuiInventoryGameController.OnEquipmentAreaCategoryCreated x7     124.0 ms   at 40 ms (frame 3), 56 ms (frame 3), 75 ms (frame 3), 116 ms (frame 3)
+  gameuiInventoryGameController.PopulateArea                 x11    123.0 ms   at 41 ms (frame 3), 56 ms (frame 3), 64 ms (frame 3), 75 ms (frame 3)
+  inkInventoryPuppetPreviewGameController.OnInitialize       x1       0.0 ms   at 859 ms (frame 51)
+  EquipmentEx.PaperdollHelper.AddPreview                     x1       0.0 ms   at 859 ms (frame 51)
+  inkPuppetPreviewGameController.OnPreviewInitialized        x1       0.0 ms   at 859 ms (frame 51)
+  inkInventoryPuppetPreviewGameController.OnSetCameraSetupEvent x2       0.0 ms   at 859 ms (frame 51), 6610 ms (frame 101)
+
+=== open #2  2026-10-01 21:15:17  mode: normal  recorded 0.9 s ===
+gameplay before open: average frame 32.6 ms, worst 38.6 ms (120 frames)
+slow frames after open (> 25 ms):
+  frame   1  at     33 ms  took   32.6 ms
+  frame   2  at    168 ms  took  135.6 ms
+  frame   3  at    240 ms  took   71.7 ms
+  frame   4  at    284 ms  took   43.9 ms
+  frame   5  at    314 ms  took   30.3 ms
+  frame   7  at    368 ms  took   33.0 ms
+  frame   9  at    417 ms  took   33.8 ms
+frames: 41   worst: 135.6 ms   total in slow frames: 380.9 ms
+FastInventory v0.5 (delayed V + keep-alive cache), V SHOWN
+script calls (inclusive time, nested calls counted in their parents too):
+  MenuHubGameController.OnInitialize                         x1       5.0 ms   at 1 ms (frame 1)
+  InventoryDataManagerV2.Initialize                          x1       0.0 ms   at 20 ms (frame 2)
+

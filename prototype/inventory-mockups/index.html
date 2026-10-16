@@ -1,0 +1,544 @@
+<!doctype html>
+<!--
+  PROTOTYPE: throwaway inventory-screen mockups. Delete once a direction is chosen.
+  Question: which layout makes the inventory clearer and more striking?
+  Four variants plus the current in-game screen, switchable via ?variant=now|A|B|C|D
+  and ?aspect=16:9|21:9. Coordinates are game design units (3840x2160 canvas),
+  x relative to screen centre, so winners port directly to InventoryRedesignPrototype.reds.
+  Run: python3 -m http.server 8765 -d prototype/inventory-mockups
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inventory mockups</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --tile: rgba(38, 9, 20, 0.88);
+  --tile-hover: rgba(62, 14, 31, 0.95);
+  --backdrop: 0.25; /* inventory backdrop opacity, set live by the switcher */
+  --blur: 20;
+  --red: #e33a55;
+  --red-dim: #7c2134;
+  --text: #f6dbe1;
+  --text-dim: #b48b95;
+  --cyan: #5ef6ff;
+  --hint: #ff4f6e;
+  --tab: #ff5a64;
+  --bg-top: #4a2029;
+  --bg-mid: #2b2028;
+  --bg-low: #161f26;
+  --bg-bottom: #121d23;
+}
+html, body { margin: 0; height: 100%; background: #050607; overflow: hidden; }
+body { font-family: Rajdhani, system-ui, sans-serif; }
+
+/* ---- game stage (design units) ---- */
+#stage {
+  position: absolute; left: 0; top: 0; height: 2160px; transform-origin: 0 0; overflow: hidden;
+  color: var(--text);
+  background: #000;
+}
+/* Layers behind the UI: game scene, menu backdrop (adjustable), optional edge shade. */
+.world { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(calc(var(--blur) * 1px)); transform: scale(1.04); pointer-events: none; }
+.backdrop { position: absolute; inset: 0; opacity: var(--backdrop); pointer-events: none;
+  background: radial-gradient(120% 75% at 50% 0%, var(--bg-top) 0%, var(--bg-mid) 38%, var(--bg-low) 72%, var(--bg-bottom) 100%); }
+.scrim { position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(10, 4, 8, 0.78) 0%, rgba(10, 4, 8, 0.45) 22%, rgba(10, 4, 8, 0) 34%, rgba(10, 4, 8, 0) 66%, rgba(10, 4, 8, 0.45) 78%, rgba(10, 4, 8, 0.78) 100%),
+              linear-gradient(rgba(10, 4, 8, 0.7), rgba(10, 4, 8, 0) 13%, rgba(10, 4, 8, 0) 86%, rgba(10, 4, 8, 0.6)); }
+#stage * { box-sizing: border-box; }
+.abs { position: absolute; }
+.v { position: absolute; pointer-events: none; user-select: none; }
+.label { position: absolute; font-size: 42px; font-weight: 600; white-space: nowrap; }
+.label.small { font-size: 32px; color: var(--text-dim); }
+
+.tile { position: absolute; background: var(--tile); border: 3px solid transparent; cursor: pointer; }
+.tile:hover, .tile.hot { background: var(--tile-hover); border-color: var(--red); }
+.tile.sel { background: var(--tile-hover); border-color: var(--text); box-shadow: 0 0 44px rgba(227, 58, 85, 0.4); }
+.tile img { position: absolute; left: 50%; top: 46%; transform: translate(-50%, -50%); width: 76%; height: 64%; object-fit: contain; pointer-events: none; }
+.tile.empty img { opacity: 0.28; }
+.tile .cap { position: absolute; left: 16px; bottom: 8px; font-size: 30px; font-weight: 600; color: var(--text-dim); }
+.tile .num { position: absolute; left: 16px; bottom: 6px; font-size: 38px; font-weight: 700; }
+.tile .count { left: auto; right: 16px; }
+.tile .dot { position: absolute; right: 16px; top: 16px; width: 14px; height: 14px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 14px var(--cyan); }
+
+/* vanilla hub header */
+.hdr { position: absolute; font-size: 44px; font-weight: 500; white-space: nowrap; display: flex; align-items: center; gap: 40px; }
+.tabs { transform: translateX(-50%); gap: 46px; text-transform: uppercase; }
+.tabs .t { color: var(--tab); position: relative; }
+.tabs .t.on { color: #fff; }
+.tabs .t.on::after { content: ""; position: absolute; left: -24px; right: -24px; bottom: -30px; height: 5px; background: #fff; }
+.keybox { display: inline-grid; place-items: center; min-width: 58px; height: 58px; padding: 0 10px; border: 3px solid var(--cyan); color: var(--cyan); font-size: 40px; font-weight: 600; }
+.hline { position: absolute; height: 2px; background: rgba(255, 90, 100, 0.25); }
+
+/* key hints */
+.hints { position: absolute; bottom: 44px; display: flex; gap: 56px; align-items: center; font-size: 46px; font-weight: 600; color: var(--hint); white-space: nowrap; }
+.hints .keybox { margin-right: 14px; min-width: 52px; height: 52px; font-size: 32px; }
+.hints .keybox.plain { border-color: #f6dbe1; color: #f6dbe1; }
+
+/* action bar */
+.actbar { position: absolute; display: flex; align-items: center; gap: 56px; font-size: 40px; white-space: nowrap; }
+.act { background: none; border: 0; border-bottom: 4px solid transparent; color: var(--text-dim); font: inherit; font-weight: 600; padding: 6px 0; cursor: pointer; }
+.act:hover { color: var(--text); border-bottom-color: var(--red); }
+.act .val { color: var(--text); margin-left: 16px; }
+.sep { width: 2px; height: 46px; background: var(--red-dim); }
+.primary { position: absolute; display: flex; align-items: center; justify-content: space-between; padding: 0 36px; background: rgba(227, 58, 85, 0.16); border: 3px solid var(--red); color: var(--text); font: 600 42px Rajdhani, sans-serif; cursor: pointer; }
+.primary:hover { background: rgba(227, 58, 85, 0.32); }
+
+/* tooltip and rows */
+#tip { position: absolute; display: none; padding: 20px 28px; min-width: 300px; background: rgba(14, 6, 11, 0.96); border-left: 5px solid var(--red); pointer-events: none; z-index: 5; }
+#tip b { display: block; font-size: 42px; font-weight: 700; }
+#tip span { display: block; font-size: 32px; color: var(--text-dim); }
+.rowtxt { position: absolute; font-size: 40px; font-weight: 600; pointer-events: none; }
+.rowtxt small { display: block; font-size: 30px; color: var(--text-dim); font-weight: 500; }
+.body-guide { position: absolute; width: 3px; background: linear-gradient(var(--red-dim), transparent); }
+
+/* callouts */
+svg.callouts { position: absolute; left: 0; top: 0; pointer-events: none; }
+svg.callouts path { fill: none; stroke: var(--red-dim); stroke-width: 3; }
+svg.callouts circle { fill: var(--red-dim); }
+svg.callouts .on path { stroke: var(--text); stroke-width: 4; }
+svg.callouts .on circle { fill: var(--text); r: 12; }
+
+/* dock and detail panel */
+.dockbg { position: absolute; left: 0; right: 0; top: 1600px; bottom: 0; background: linear-gradient(rgba(8, 5, 9, 0), rgba(8, 5, 9, 0.88) 38%); pointer-events: none; }
+.detail { position: absolute; width: 620px; }
+.detail .k { font-size: 32px; color: var(--text-dim); }
+.detail .n { font-size: 76px; font-weight: 700; line-height: 1; margin: 10px 0 18px; }
+.detail .s { font-size: 36px; }
+.detail .s + .s { color: var(--text-dim); }
+.detail .rule { height: 3px; background: var(--red); width: 120px; margin-bottom: 26px; }
+
+/* ---- prototype chrome (not part of the design) ---- */
+#switcher { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); max-width: calc(100vw - 16px); display: flex; align-items: center; gap: 4px; padding: 5px; background: #fff; color: #111; border-radius: 999px; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45); font: 500 14px system-ui, sans-serif; z-index: 20; }
+#switcher button { white-space: nowrap; border: 0; background: transparent; color: inherit; font: inherit; padding: 7px 12px; border-radius: 999px; cursor: pointer; }
+#switcher button:hover { background: #eee; }
+#switcher button:focus-visible { outline: 2px solid #2563eb; }
+#switcher .name { min-width: 150px; white-space: nowrap; text-align: center; font-weight: 600; }
+#switcher .div { width: 1px; height: 20px; background: #ddd; }
+#switcher label { white-space: nowrap; display: flex; align-items: center; gap: 8px; padding: 0 10px; }
+#switcher input { width: 80px; accent-color: #e33a55; }
+#switcher output { min-width: 34px; font-variant-numeric: tabular-nums; }
+#notes { position: fixed; left: 14px; bottom: 14px; width: 380px; max-height: calc(100vh - 28px); overflow: auto; padding: 14px 16px; background: #fff; color: #1a1a1a; border-radius: 10px; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45); font: 13.5px/1.45 system-ui, sans-serif; z-index: 20; }
+#notes h2 { margin: 0 0 6px; font-size: 15px; }
+#notes h3 { margin: 10px 0 2px; font-size: 12px; color: #666; font-weight: 600; }
+#notes p, #notes ul { margin: 0; }
+#notes ul { padding-left: 18px; }
+#notes .risk { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; margin-left: 6px; }
+#notes .low { background: #dcfce7; color: #166534; } #notes .med { background: #fef3c7; color: #92400e; } #notes .high { background: #fee2e2; color: #991b1b; }
+#notes .foot { margin-top: 10px; color: #777; font-size: 12px; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<aside id="notes" aria-live="polite"></aside>
+<nav id="switcher" aria-label="Prototype variant switcher">
+  <button id="prev" aria-label="Previous variant">&larr;</button>
+  <span class="name" id="vname"></span>
+  <button id="next" aria-label="Next variant">&rarr;</button>
+  <span class="div"></span>
+  <button id="aspect" title="Toggle aspect (W)"></button>
+  <span class="div"></span>
+  <label>Backdrop <input id="backdrop" type="range" min="0" max="100" step="5"><output id="backdropOut"></output></label>
+  <label>Blur <input id="blur" type="range" min="0" max="24" step="2"><output id="blurOut"></output></label>
+  <button id="scrim" title="Darken screen edges behind the UI columns (S)"></button>
+  <span class="div"></span>
+  <button id="notesBtn" title="Toggle notes (N)">Notes</button>
+</nav>
+<script>
+const SLOTS = {
+  w1: { label: 'Weapon 1', group: 'Weapons', ammo: '112' },
+  w2: { label: 'Weapon 2', group: 'Weapons', ammo: '999' },
+  w3: { label: 'Weapon 3', group: 'Weapons', ammo: '175' },
+  cy1: { label: 'Operating system', group: 'Cyberware' },
+  cy2: { label: 'Arms', group: 'Cyberware' },
+  cy3: { label: 'Hands', group: 'Cyberware' },
+  q1: { label: 'Quick slot 1', group: 'Quick access' },
+  q2: { label: 'Quick slot 2', group: 'Quick access', count: '3' },
+  head: { label: 'Head', group: 'Clothing' },
+  face: { label: 'Face', group: 'Clothing' },
+  outer: { label: 'Outer torso', group: 'Clothing' },
+  inner: { label: 'Inner torso', group: 'Clothing', isNew: true },
+  legs: { label: 'Legs', group: 'Clothing' },
+  feet: { label: 'Feet', group: 'Clothing' },
+  outfit: { label: 'Outfit', group: 'Clothing', empty: true },
+};
+
+// V as framed in the 2026-10-14 screenshot (preview at 150%), in design units.
+const V = { x: -649, y: 238, w: 1237 };
+
+const NOTES = {
+  now: {
+    title: 'Current: v5 in game',
+    body: `<p>Screenshot from 2026-10-14, shown for comparison only. Everything else on this page is a mockup.</p>`,
+  },
+  A: {
+    title: 'A: Quiet tiles', risk: ['low', 'Low risk'],
+    body: `<h3>Idea</h3><p>Keep today's layout, but calm it down so V is the focus.</p>
+      <h3>Changes from now</h3><ul>
+      <li>One tile style everywhere, cyberware included</li>
+      <li>No border at rest; red on hover, light on selection</li>
+      <li>Icons fill about 75% of the tile</li>
+      <li>Slot names inside clothing tiles replace the Head, Upper body, Lower body and Outfit labels</li>
+      <li>Cyan only where it means something (example: new item on Inner torso)</li>
+      <li>Columns moved outward so nothing overlaps V</li>
+      <li>Hide V, Pose and Related links merge into one bar</li></ul>
+      <h3>In game</h3><p>Restyling only. Slot roots stay in their native containers, so input and gamepad navigation are unchanged.</p>`,
+  },
+  B: {
+    title: 'B: Body column', risk: ['med', 'Medium risk'],
+    body: `<h3>Idea</h3><p>Clothing reads head to toe, like V.</p>
+      <h3>Changes from A</h3><ul>
+      <li>Clothing becomes one labelled column, ordered top to bottom</li>
+      <li>Outfit is separate, under the column</li>
+      <li>Wardrobe becomes the main button next to clothing</li></ul>
+      <h3>In game</h3><p>Head/face, outer/inner and legs/feet live in two-tile category grids. A single column means reparenting slot roots out of those grids, so controller references and gamepad navigation need checking.</p>`,
+  },
+  C: {
+    title: 'C: Callouts', risk: ['high', 'High risk'],
+    body: `<h3>Idea</h3><p>Each item points to where it sits on V. Hover a tile to light its line.</p>
+      <h3>Changes</h3><ul>
+      <li>Slots grouped by body position, not by category</li>
+      <li>Cyberware sits beside the body part it belongs to</li>
+      <li>Weapons point at the held weapon</li></ul>
+      <h3>In game</h3><p>Anchor points are fixed screen positions. They only line up with V at the default framing; zoom, pan, rotation and poses all break them. A realistic version would hide the lines whenever the view changes, so treat this mostly as a look test.</p>`,
+  },
+  D: {
+    title: 'D: Bottom dock', risk: ['med', 'Medium–high risk'],
+    body: `<h3>Idea</h3><p>V gets the whole screen. All gear sits in one row along the bottom, and a detail panel names what you hover.</p>
+      <h3>Changes</h3><ul>
+      <li>Every category on one row, grouped and labelled</li>
+      <li>Detail panel instead of tooltips</li>
+      <li>Actions and Related links move to the top corners</li></ul>
+      <h3>In game</h3><p>Large reparent of every category container. Tiles are small (170 units). Gamepad navigation becomes a single left/right row, which may be faster or harder to scan.</p>`,
+  },
+};
+
+const ORDER = ['now', 'A', 'B', 'C', 'D'];
+const params = new URLSearchParams(location.search);
+let variant = ORDER.includes(params.get('variant')) ? params.get('variant') : 'B';
+let aspect = params.get('aspect') === '21:9' ? '21:9' : '16:9';
+let showNotes = params.get('notes') !== '0';
+const clampInt = (v, lo, hi, d) => { const n = parseInt(v ?? d, 10); return Number.isNaN(n) ? d : Math.min(hi, Math.max(lo, n)); };
+let backdrop = clampInt(params.get('backdrop'), 0, 100, 25);
+let blur = clampInt(params.get('blur'), 0, 24, 20);
+let scrim = params.get('scrim') !== '0';
+let selected = null;
+let W = 3840;
+const H = 2160;
+const stage = document.getElementById('stage');
+let hooks = {};
+
+const cx = (x) => W / 2 + x;
+function el(tag, cls, parent, css, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (css) Object.assign(e.style, css);
+  if (text != null) e.textContent = text;
+  (parent || stage).appendChild(e);
+  return e;
+}
+function at(e, x, y) { e.style.left = cx(x) + 'px'; e.style.top = y + 'px'; return e; }
+function label(text, x, y, cls) { return at(el('div', 'label' + (cls ? ' ' + cls : ''), stage, null, text), x, y); }
+
+function tile(id, x, y, w, h, opts = {}) {
+  const s = SLOTS[id];
+  const t = at(el('div', 'tile' + (s.empty ? ' empty' : '') + (selected === id ? ' sel' : '')), x, y);
+  t.style.width = w + 'px';
+  t.style.height = h + 'px';
+  t.dataset.id = id;
+  t.tabIndex = 0;
+  t.setAttribute('aria-label', s.label + (s.empty ? ', empty' : ''));
+  const img = el('img', '', t);
+  img.src = 'assets/' + id + '.png';
+  img.alt = '';
+  if (opts.caption) el('div', 'cap', t, null, s.label);
+  if (s.ammo) el('div', 'num', t, null, s.ammo);
+  if (s.count) el('div', 'num count', t, null, s.count);
+  if (s.isNew) el('div', 'dot', t);
+  const enter = () => (hooks.hover || showTip)(id, t, true);
+  const leave = () => (hooks.hover || showTip)(id, t, false);
+  t.addEventListener('mouseenter', enter);
+  t.addEventListener('mouseleave', leave);
+  t.addEventListener('focus', enter);
+  t.addEventListener('blur', leave);
+  t.addEventListener('click', () => select(id));
+  t.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(id); } });
+  return t;
+}
+function select(id) {
+  selected = selected === id ? null : id;
+  stage.querySelectorAll('.tile').forEach((n) => n.classList.toggle('sel', n.dataset.id === selected));
+  if (hooks.select) hooks.select(selected);
+}
+function state(s) { return s.empty ? 'Empty' : s.isNew ? 'Equipped, new item' : 'Equipped'; }
+
+let tip;
+function showTip(id, t, on) {
+  if (!on) { tip.style.display = 'none'; return; }
+  const s = SLOTS[id];
+  tip.innerHTML = `<b>${s.label}</b><span>${s.group}</span><span>${state(s)}${s.ammo ? ', ' + s.ammo + ' rounds' : ''}${s.count ? ', ' + s.count + ' left' : ''}</span>`;
+  tip.style.display = 'block';
+  const left = parseFloat(t.style.left), top = parseFloat(t.style.top), w = parseFloat(t.style.width);
+  // Open toward the screen centre, as the game's own tooltips do.
+  if (left + w / 2 < W / 2) tip.style.left = (left + w + 24) + 'px';
+  else tip.style.left = (left - 24 - tip.offsetWidth) + 'px';
+  tip.style.top = top + 'px';
+}
+
+function vImage(scale = 1) {
+  const img = el('img', 'v');
+  img.src = 'assets/v.png';
+  img.alt = 'V, character preview';
+  img.style.width = V.w * scale + 'px';
+  at(img, V.x * scale, V.y);
+}
+
+function header() {
+  const l = at(el('div', 'hdr'), -1500, 48);
+  l.innerHTML = '<span style="color:var(--text-dim)">LEVEL</span><span style="font-size:56px">50</span><span>STREET CRED</span>';
+  const tabs = at(el('div', 'hdr tabs'), 0, 146);
+  tabs.innerHTML = '<span class="keybox">1</span>' +
+    ['Cyberware', 'Inventory', 'Map', 'Character', 'Journal'].map((t) => `<span class="t${t === 'Inventory' ? ' on' : ''}">${t}</span>`).join('') +
+    '<span class="keybox">3</span>';
+  const line = at(el('div', 'hline'), -950, 226);
+  line.style.width = '1900px';
+  const r = at(el('div', 'hdr'), 1085, 48);
+  r.innerHTML = '<span>&#9650; 1602/100000424</span><span>&euro;$ 649546</span>';
+}
+
+function hints() {
+  const h = el('div', 'hints', stage, { right: '106px' });
+  h.innerHTML = '<span><span class="keybox">V</span>Reset view</span><span><span class="keybox plain">LMB</span>Move V</span>' +
+    '<span><span class="keybox plain">&#8597;</span>Zoom</span><span><span class="keybox plain">Esc</span>Close</span>';
+}
+
+function actions(items, x, y, css) {
+  const bar = at(el('div', 'actbar', stage, css), x, y);
+  for (const it of items) {
+    if (it === '|') { el('span', 'sep', bar); continue; }
+    const b = el('button', 'act', bar, null, it.t);
+    if (it.v) el('span', 'val', b, null, it.v);
+  }
+  return bar;
+}
+const HIDE = { t: 'Hide V' }, POSE = { t: 'Pose', v: 'Tabula Rasa' };
+const LINKS = [{ t: 'Backpack' }, { t: 'Crafting' }, { t: 'Stats' }, { t: 'Wardrobe' }];
+
+// Weapons, cyberware and quick access: shared by A and B.
+function leftColumn(x0) {
+  label('Weapons', x0, 380);
+  tile('w1', x0, 440, 224, 211);
+  tile('w2', x0 + 243, 440, 224, 211);
+  tile('w3', x0, 670, 467, 211);
+  label('Cyberware', x0, 960);
+  ['cy1', 'cy2', 'cy3'].forEach((id, i) => tile(id, x0 + i * 216, 1020, 200, 200));
+  label('Quick access', x0, 1290);
+  tile('q1', x0, 1350, 200, 200);
+  tile('q2', x0 + 216, 1350, 200, 200);
+}
+
+const RENDER = {
+  now() {
+    const img = el('img', 'v', stage, { width: '3840px', height: '2160px' });
+    img.src = 'assets/current.jpg';
+    img.alt = 'Current inventory screen in game';
+    at(img, -1920, 0);
+  },
+
+  A() {
+    header(); vImage();
+    const x0 = -1560, x1 = 660;
+    leftColumn(x0);
+    label('Clothing', x1, 380);
+    tile('head', x1, 440, 218, 179, { caption: 1 });
+    tile('face', x1, 635, 218, 179, { caption: 1 });
+    tile('legs', x1, 830, 218, 179, { caption: 1 });
+    tile('feet', x1, 1025, 218, 179, { caption: 1 });
+    tile('outer', x1 + 234, 440, 218, 179, { caption: 1 });
+    tile('inner', x1 + 234, 635, 218, 179, { caption: 1 });
+    tile('outfit', x1 + 234, 830, 218, 374, { caption: 1 });
+    actions([HIDE, POSE, '|', ...LINKS], x0, 1980);
+    hints();
+  },
+
+  B() {
+    header(); vImage();
+    const x0 = -1560, x1 = 680;
+    leftColumn(x0);
+    label('Clothing', x1, 380);
+    const guide = at(el('div', 'body-guide'), x1 - 34, 440);
+    guide.style.height = 6 * 172 - 16 + 'px';
+    ['head', 'face', 'outer', 'inner', 'legs', 'feet'].forEach((id, i) => {
+      const y = 440 + i * 172;
+      tile(id, x1, y, 180, 156);
+      at(el('div', 'rowtxt', stage, null, SLOTS[id].label), x1 + 212, y + 52);
+    });
+    label('Outfit', x1, 1500);
+    tile('outfit', x1, 1560, 180, 156);
+    const t = at(el('div', 'rowtxt'), x1 + 212, 1588);
+    t.innerHTML = 'Empty<small>Set one in the wardrobe</small>';
+    const btn = at(el('button', 'primary'), x1, 1770);
+    Object.assign(btn.style, { width: '560px', height: '108px' });
+    btn.innerHTML = '<span>Open wardrobe</span><span>&#8250;</span>';
+    actions([HIDE, POSE, '|', LINKS[0], LINKS[1], LINKS[2]], x0, 1980);
+    hints();
+  },
+
+  C() {
+    header(); vImage();
+    const xL = -1560, xR = 700, tw = 200, th = 180;
+    // Anchor points on V at the screenshot's framing.
+    const callouts = [
+      { id: 'head', x: xL, y: 300, to: [-394, 330] },
+      { id: 'cy1', x: xL, y: 540, to: [-300, 560] },
+      { id: 'face', x: xL, y: 780, to: [-349, 760] },
+      { id: 'outfit', x: xR, y: 300 },
+      { id: 'outer', x: xR, y: 540, to: [11, 883] },
+      { id: 'inner', x: xR, y: 780, to: [-49, 1138] },
+      { id: 'cy2', x: xR, y: 1020, to: [176, 1228] },
+      { id: 'cy3', x: xR, y: 1260, to: [431, 1738] },
+      { id: 'legs', x: xR, y: 1500, to: [60, 2000] },
+      { id: 'feet', x: xR, y: 1740, to: [-120, 2160] },
+    ];
+    const NS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('class', 'callouts');
+    svg.setAttribute('width', W); svg.setAttribute('height', H);
+    stage.appendChild(svg);
+    const lines = {};
+    function line(key, from, to) {
+      const g = document.createElementNS(NS, 'g');
+      const p = document.createElementNS(NS, 'path');
+      const elbow = from[0] + (to[0] > from[0] ? 70 : -70);
+      p.setAttribute('d', `M${cx(from[0])},${from[1]} L${cx(elbow)},${from[1]} L${cx(to[0])},${to[1]}`);
+      const c = document.createElementNS(NS, 'circle');
+      c.setAttribute('cx', cx(to[0])); c.setAttribute('cy', to[1]); c.setAttribute('r', 8);
+      g.append(p, c); svg.appendChild(g);
+      lines[key] = g;
+    }
+    for (const c of callouts) {
+      label(SLOTS[c.id].label, c.x, c.y - 46, 'small');
+      tile(c.id, c.x, c.y, tw, th);
+      if (c.to) line(c.id, [c.x < 0 ? c.x + tw : c.x, c.y + th / 2], c.to);
+    }
+    label('Weapons', xL, 1010, 'small');
+    tile('w1', xL, 1060, 200, 180);
+    tile('w2', xL + 216, 1060, 200, 180);
+    tile('w3', xL, 1256, 416, 180);
+    line('weapons', [xL + 416, 1250], [-529, 988]);
+    label('Quick access', xL, 1520, 'small');
+    tile('q1', xL, 1570, 200, 180);
+    tile('q2', xL + 216, 1570, 200, 180);
+    hooks.hover = (id, t, on) => {
+      const key = ['w1', 'w2', 'w3'].includes(id) ? 'weapons' : id;
+      if (lines[key]) lines[key].classList.toggle('on', on);
+      showTip(id, t, on);
+    };
+    actions([HIDE, POSE, '|', ...LINKS], xL, 1990);
+    hints();
+  },
+
+  D() {
+    header(); vImage();
+    el('div', 'dockbg');
+    const groups = [
+      ['Weapons', ['w1', 'w2', 'w3']],
+      ['Cyberware', ['cy1', 'cy2', 'cy3']],
+      ['Quick access', ['q1', 'q2']],
+      ['Clothing', ['head', 'face', 'outer', 'inner', 'legs', 'feet']],
+      ['Outfit', ['outfit']],
+    ];
+    const ts = 170, gap = 14, ggap = 70;
+    const count = groups.reduce((n, g) => n + g[1].length, 0);
+    const total = count * ts + groups.reduce((n, g) => n + (g[1].length - 1) * gap, 0) + (groups.length - 1) * ggap;
+    let x = -total / 2;
+    for (const [name, ids] of groups) {
+      label(name, x, 1730, 'small');
+      ids.forEach((id) => { tile(id, x, 1786, ts, ts, { caption: name === 'Clothing' }); x += ts + gap; });
+      x += ggap - gap;
+    }
+    const d = at(el('div', 'detail'), 860, 560);
+    const render = (id) => {
+      if (!id) { d.innerHTML = '<div class="rule"></div><div class="s">Hover a slot to see what is equipped.</div>'; return; }
+      const s = SLOTS[id];
+      d.innerHTML = `<div class="rule"></div><div class="k">${s.group}</div><div class="n">${s.label}</div>` +
+        `<div class="s">${state(s)}</div>` + (s.ammo ? `<div class="s">${s.ammo} rounds</div>` : '') +
+        (s.count ? `<div class="s">${s.count} left</div>` : '') + '<div class="s">Click to change</div>';
+    };
+    render(selected);
+    hooks.hover = (id, t, on) => render(on ? id : selected);
+    hooks.select = render;
+    actions([HIDE, POSE], -1560, 300);
+    const links = actions(LINKS, 0, 300);
+    links.style.left = 'auto';
+    links.style.right = (W / 2 - 1560) + 'px';
+    hints();
+  },
+};
+
+// Keep a strip below the stage free for the switcher so it never covers the design.
+function fit() {
+  const avail = innerHeight - 60;
+  const s = Math.min(innerWidth / W, avail / H);
+  stage.style.width = W + 'px';
+  stage.style.transform = `translate(${(innerWidth - W * s) / 2}px, ${(avail - H * s) / 2}px) scale(${s})`;
+}
+
+function render() {
+  W = aspect === '21:9' ? 5160 : 3840;
+  stage.replaceChildren();
+  hooks = {};
+  const world = el('img', 'world');
+  world.src = 'assets/world.jpg';
+  world.alt = '';
+  el('div', 'backdrop');
+  if (scrim) el('div', 'scrim');
+  tip = el('div');
+  tip.id = 'tip';
+  RENDER[variant]();
+  fit();
+  const n = NOTES[variant];
+  document.getElementById('vname').textContent = (variant === 'now' ? 'Now' : variant) + ': ' + n.title.replace(/^[^:]+: /, '');
+  document.getElementById('aspect').textContent = aspect === '21:9' ? '21:9 (3440×1440)' : '16:9';
+  const notes = document.getElementById('notes');
+  notes.hidden = !showNotes;
+  notes.innerHTML = `<h2>${n.title}${n.risk ? `<span class="risk ${n.risk[0]}">${n.risk[1]}</span>` : ''}</h2>${n.body}` +
+    `<p class="foot">Keys: ← → switch variant, W aspect, N notes, S edge shade. V and icons are cut from the 2026-10-14 screenshot; the city is a stand-in from your 2026-09-02 street screenshot, mirrored to remove a passer-by. Rajdhani approximates the game font.</p>`;
+  const root = document.documentElement.style;
+  root.setProperty('--backdrop', backdrop / 100);
+  root.setProperty('--blur', blur);
+  document.getElementById('backdrop').value = backdrop;
+  document.getElementById('backdropOut').textContent = backdrop + '%';
+  document.getElementById('blur').value = blur;
+  document.getElementById('blurOut').textContent = blur + 'px';
+  document.getElementById('scrim').textContent = 'Edge shade: ' + (scrim ? 'on' : 'off');
+  const p = new URLSearchParams({ variant, aspect, backdrop, blur, scrim: scrim ? 1 : 0 });
+  if (!showNotes) p.set('notes', '0');
+  history.replaceState(null, '', '?' + p);
+}
+
+function step(d) { variant = ORDER[(ORDER.indexOf(variant) + d + ORDER.length) % ORDER.length]; render(); }
+document.getElementById('prev').onclick = () => step(-1);
+document.getElementById('next').onclick = () => step(1);
+document.getElementById('aspect').onclick = () => { aspect = aspect === '21:9' ? '16:9' : '21:9'; render(); };
+document.getElementById('notesBtn').onclick = () => { showNotes = !showNotes; render(); };
+document.getElementById('backdrop').oninput = (e) => { backdrop = +e.target.value; render(); };
+document.getElementById('blur').oninput = (e) => { blur = +e.target.value; render(); };
+document.getElementById('scrim').onclick = () => { scrim = !scrim; render(); };
+addEventListener('keydown', (e) => {
+  if (e.target.closest('input, textarea, [contenteditable]')) return;
+  if (e.key === 'ArrowLeft') step(-1);
+  else if (e.key === 'ArrowRight') step(1);
+  else if (e.key === 'w' || e.key === 'W') { aspect = aspect === '21:9' ? '16:9' : '21:9'; render(); }
+  else if (e.key === 'n' || e.key === 'N') { showNotes = !showNotes; render(); }
+  else if (e.key === 's' || e.key === 'S') { scrim = !scrim; render(); }
+});
+addEventListener('resize', fit);
+render();
+</script>
+</body>
+</html>
