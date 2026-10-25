@@ -12,3 +12,6 @@ __pycache__/
 # Scratch output from WolvenKit extracts and graph builds
 *.animgraph.json
 /tmp/
+
+# Playwright MCP screenshots and snapshots
+.playwright-mcp/

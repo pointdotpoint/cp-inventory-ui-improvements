@@ -4,6 +4,8 @@ module InventoryRedesignPrototype
 
 public class RedesignInventoryReadyEvent extends Event {}
 
+public class RedesignWardrobeCheckEvent extends Event {}
+
 // Runtime-created widgets can exist before ink initializes their property manager.
 public func RedesignUnbind(widget: wref<inkWidget>, property: CName) -> Void {
     if IsDefined(widget) && IsDefined(widget.propertyManager) {
@@ -175,7 +177,7 @@ private func RedesignInventory() -> Void {
     this.RedesignSection(n"default_wrapper/outfitContainer", 680.0, 1230.0, 1.0);
     this.RedesignSection(n"default_wrapper/statsContainer", -1560.0, 1630.0, 0.7);
     this.RedesignLinks();
-    // Scale the rendered surface without moving VFocus's collider or saved camera.
+    // Scale the rendered surface without moving PreviewZoom's collider or saved camera.
     // Set an absolute value so reopening/refreshing never compounds the enlargement.
     let preview: wref<inkWidget> = this.PreviewViewSurface();
     if IsDefined(preview) {
@@ -186,7 +188,7 @@ private func RedesignInventory() -> Void {
     if IsDefined(this.m_buttonHintsController) {
         RedesignTintTree(this.m_buttonHintsController.GetRootWidget(), new HDRColor(0.98, 0.78, 0.82, 1.0));
     }
-    ModLog(n"InventoryRedesignPrototype", "Inventory layout applied (prototype v6: layout B body column)");
+    ModLog(n"InventoryRedesignPrototype", "Inventory layout applied (prototype v7: links follow wardrobe and item modes)");
 }
 
 // Equipment-EX appends its Wardrobe button to menuLinks/btnsContainer. Wardrobe becomes
@@ -223,15 +225,75 @@ private func RedesignLinks() -> Void {
         link.Reparent(bar);
         this.RedesignTextLink(link as inkCompoundWidget);
     }
+    this.m_redesignLinkBar = bar;
     if IsDefined(wardrobe) {
         wardrobe.Reparent(wrapper);
         RedesignPlace(wardrobe, 680.0, 1490.0, 0.85);
+        this.m_redesignWardrobe = wardrobe;
+        // Equipment-EX's own OnClick opens the wardrobe; this one hides the links under it.
+        wardrobe.RegisterToCallback(n"OnClick", this, n"OnRedesignWardrobeClick");
     } else {
         ModLog(n"InventoryRedesignPrototype", "Wardrobe button not found; Equipment-EX may not have added it");
     }
     let menuLinks: ref<inkWidget> = this.GetChildWidgetByPath(n"default_wrapper/menuLinks");
     if IsDefined(menuLinks) {
         menuLinks.SetVisible(false);
+    }
+}
+
+// The moved links left menuLinks, which is what default_wrapper_outro fades, so they stayed
+// visible under the wardrobe and the item chooser. They follow those screens here instead.
+@addField(gameuiInventoryGameController)
+private let m_redesignLinkBar: wref<inkWidget>;
+
+@addField(gameuiInventoryGameController)
+private let m_redesignWardrobe: wref<inkWidget>;
+
+@addMethod(gameuiInventoryGameController)
+protected cb func OnRedesignWardrobeClick(evt: ref<inkPointerEvent>) -> Bool {
+    if evt.IsAction(n"click") {
+        // Checked a frame later: the wardrobe may not open (Equipment-EX's requirement popup).
+        GameInstance.GetDelaySystem(this.GetPlayerControlledObject().GetGame()).DelayEventNextFrame(this, new RedesignWardrobeCheckEvent());
+    }
+    return false;
+}
+
+@addMethod(gameuiInventoryGameController)
+protected cb func OnRedesignWardrobeCheck(evt: ref<RedesignWardrobeCheckEvent>) -> Bool {
+    if IsDefined(this.GetChildWidgetByPath(n"wardrobe")) {
+        this.RedesignShowLinks(false);
+    }
+    return true;
+}
+
+// Vanilla calls this on every mode change with Center for the default screen; Equipment-EX
+// calls it with Center when the wardrobe closes.
+@wrapMethod(gameuiInventoryGameController)
+private final func PlaySlidePaperdollAnimation(position: PaperdollPositionAnimation, opt hide: Bool) -> Void {
+    wrappedMethod(position, hide);
+    this.RedesignShowLinks(Equals(position, PaperdollPositionAnimation.Center));
+}
+
+@addMethod(gameuiInventoryGameController)
+private func RedesignShowLinks(visible: Bool) -> Void {
+    let widgets: array<wref<inkWidget>> = [this.m_redesignLinkBar, this.m_redesignWardrobe];
+    // Hidden at once, since a transparent widget still takes clicks; shown with a fade.
+    for widget in widgets {
+        if IsDefined(widget) && !visible {
+            widget.SetVisible(false);
+        } else if IsDefined(widget) && !widget.IsVisible() {
+            widget.SetOpacity(0.0);
+            widget.SetVisible(true);
+            let fade: ref<inkAnimTransparency> = new inkAnimTransparency();
+            fade.SetDuration(0.3);
+            fade.SetStartTransparency(0.0);
+            fade.SetEndTransparency(1.0);
+            fade.SetType(inkanimInterpolationType.Linear);
+            fade.SetMode(inkanimInterpolationMode.EasyIn);
+            let anim: ref<inkAnimDef> = new inkAnimDef();
+            anim.AddInterpolator(fade);
+            widget.PlayAnimation(anim);
+        }
     }
 }
 
@@ -316,7 +378,7 @@ private func RedesignClothingHeaders() -> Void {
 
 @addMethod(gameuiInventoryGameController)
 private func RedesignWalk(widget: wref<inkWidget>) -> Void {
-    // The preview collider and its render surface belong to VFocus.
+    // The preview collider and its render surface belong to PreviewZoom (PreviewPoses).
     if Equals(widget.GetName(), n"paperDoll") {
         return;
     }

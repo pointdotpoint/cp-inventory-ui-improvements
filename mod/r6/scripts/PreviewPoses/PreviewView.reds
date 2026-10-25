@@ -2,14 +2,14 @@
 // position) and restores it the next time the screen opens. Stored in the save game next to
 // the pose (persistent fields on PreviewPosesState). Wardrobe inherits Inventory's zoom.
 //
-// Zoom and position belong to VFocus (module BetterVZoom), which this file reads and writes:
-// - inventory: zoom step gameuiInventoryGameController.m_bvzZoomLevel (camera setup 12 + step),
+// Zoom and position belong to PreviewZoom.reds, which this file reads and writes:
+// - inventory: zoom step gameuiInventoryGameController.m_pzZoom (camera setup 12 + step),
 //   position = margin of paperDoll/canvas/preview;
-// - wardrobe: zoom step inkPreviewGameController.m_bvzWardrobeZoomLevel, position = margin of
-//   m_bvzWardrobePreviewWidget.
+// - wardrobe: zoom step inkPreviewGameController.m_pzWardrobeZoom, position = margin of
+//   m_pzWardrobeImage.
 //
 // Pan and rotation are sampled while the screen is open, because by the time a screen's
-// OnUninitialize runs its preview widgets are already gone. VFocus resets the view during the
+// OnUninitialize runs its preview widgets are already gone. PreviewZoom resets the view during the
 // first frames after opening, so restoring waits a few frames and sampling starts after that.
 //
 // Inventory rotation is stored as a starting yaw; wardrobe keeps its front view.
@@ -23,7 +23,7 @@ private let m_pvAutomaticReset: Bool;
 @addMethod(gameuiInventoryGameController)
 private func PreviewViewSaveZoom() -> Void {
     let state: ref<PreviewPosesState> = PreviewPosesState.Get(this.GetPlayerControlledObject().GetGame());
-    state.m_invZoom = this.m_bvzZoomLevel;
+    state.m_invZoom = this.m_pzZoom;
     state.m_invZoomValid = true;
 }
 
@@ -31,9 +31,9 @@ private func PreviewViewSaveZoom() -> Void {
 private func PreviewViewRestoreZoom() -> Void {
     let state: ref<PreviewPosesState> = PreviewPosesState.Get(this.GetPlayerControlledObject().GetGame());
     if !this.PreviewViewInDefaultMode() || (!state.m_invZoomValid && !state.m_invViewValid) { return; }
-    this.m_bvzZoomLevel = Clamp(state.m_invZoom, 0, 11);
+    this.m_pzZoom = Clamp(state.m_invZoom, 0, 11);
     let cameraEvent: ref<gameuiPuppetPreview_SetCameraSetupEvent> = new gameuiPuppetPreview_SetCameraSetupEvent();
-    cameraEvent.setupIndex = Cast<Uint32>(12 + this.m_bvzZoomLevel);
+    cameraEvent.setupIndex = Cast<Uint32>(12 + this.m_pzZoom);
     this.QueueEvent(cameraEvent);
 }
 
@@ -166,7 +166,7 @@ protected cb func OnUninitialize() -> Bool {
 protected cb func OnPreviewViewRestore(evt: ref<PreviewViewRestoreEvent>) -> Bool {
     // A closed or reinitialized preview must not restart a queued restoration chain.
     if evt.generation != this.m_pvRestoreGeneration { return false; }
-    // Let VFocus finish its own reset first; it applies over the first couple of frames.
+    // Let PreviewZoom finish its own reset first; it applies over the first couple of frames.
     if evt.pass < 3 {
         let next: ref<PreviewViewRestoreEvent> = new PreviewViewRestoreEvent();
         next.pass = evt.pass + 1;
@@ -177,24 +177,24 @@ protected cb func OnPreviewViewRestore(evt: ref<PreviewViewRestoreEvent>) -> Boo
 
     let state: ref<PreviewPosesState> = PreviewPosesState.Get(this.GetPlayerControlledObject().GetGame());
     if this.PreviewViewIsWardrobe() {
-        if this.m_bvzWardrobeDetected {
+        if this.m_pzWardrobe {
             let inventory: wref<gameuiInventoryGameController> = state.m_inventory;
             if IsDefined(inventory) {
-                this.m_bvzWardrobeZoomLevel = inventory.m_bvzZoomLevel;
+                this.m_pzWardrobeZoom = inventory.m_pzZoom;
                 let surface: wref<inkWidget> = inventory.PreviewViewSurface();
-                if IsDefined(surface) && IsDefined(this.m_bvzWardrobePreviewWidget) {
-                    this.m_bvzWardrobePreviewWidget.SetRenderTransformPivot(0.5, 0.5);
-                    this.m_bvzWardrobePreviewWidget.SetScale(surface.GetScale());
+                if IsDefined(surface) && IsDefined(this.m_pzWardrobeImage) {
+                    this.m_pzWardrobeImage.SetRenderTransformPivot(0.5, 0.5);
+                    this.m_pzWardrobeImage.SetScale(surface.GetScale());
                 }
             }
-            this.BetterVZoomWardrobeApplyCamera();
-            if state.m_wardViewValid && IsDefined(this.m_bvzWardrobePreviewWidget) {
-                let margin: inkMargin = this.m_bvzWardrobePreviewWidget.GetMargin();
+            this.PreviewZoomWardrobeCamera();
+            if state.m_wardViewValid && IsDefined(this.m_pzWardrobeImage) {
+                let margin: inkMargin = this.m_pzWardrobeImage.GetMargin();
                 margin.left = state.m_wardLeft;
                 margin.top = state.m_wardTop;
-                this.m_bvzWardrobePreviewWidget.SetMargin(margin);
+                this.m_pzWardrobeImage.SetMargin(margin);
             }
-            PreviewViewLog("restored wardrobe view zoom=" + ToString(this.m_bvzWardrobeZoomLevel) + " left=" + ToString(state.m_wardLeft) + " top=" + ToString(state.m_wardTop));
+            PreviewViewLog("restored wardrobe view zoom=" + ToString(this.m_pzWardrobeZoom) + " left=" + ToString(state.m_wardLeft) + " top=" + ToString(state.m_wardTop));
         }
     } else {
         let inventory: wref<gameuiInventoryGameController> = state.m_inventory;
@@ -249,9 +249,9 @@ protected cb func OnPreviewViewPoll(proxy: ref<inkAnimProxy>) -> Bool {
     }
     let state: ref<PreviewPosesState> = PreviewPosesState.Get(this.GetPlayerControlledObject().GetGame());
     if this.PreviewViewIsWardrobe() {
-        if this.m_bvzWardrobeDetected && IsDefined(this.m_bvzWardrobePreviewWidget) {
-            let margin: inkMargin = this.m_bvzWardrobePreviewWidget.GetMargin();
-            state.m_wardZoom = this.m_bvzWardrobeZoomLevel;
+        if this.m_pzWardrobe && IsDefined(this.m_pzWardrobeImage) {
+            let margin: inkMargin = this.m_pzWardrobeImage.GetMargin();
+            state.m_wardZoom = this.m_pzWardrobeZoom;
             state.m_wardLeft = margin.left;
             state.m_wardTop = margin.top;
             state.m_wardViewValid = true;

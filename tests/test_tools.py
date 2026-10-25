@@ -64,6 +64,22 @@ class PoseParserTests(unittest.TestCase):
         ])
 
 
+class PreviewTargetTests(unittest.TestCase):
+    def test_both_cameras_and_the_texture_get_the_wide_portrait_target(self):
+        import build_preview_target as target
+        camera = {"$type": "entRenderToTextureCameraComponent", "fov": 32,
+                  "resolutionWidth": 720, "resolutionHeight": 720}
+        entity = {"Data": {"RootChunk": {"components": [dict(camera)],
+                                         "compiledData": {"Data": {"Chunks": [{"$type": "other"}, dict(camera)]}}}}}
+        self.assertEqual(target.patch_target(entity), 2)
+        for found in (entity["Data"]["RootChunk"]["components"][0],
+                      entity["Data"]["RootChunk"]["compiledData"]["Data"]["Chunks"][1]):
+            self.assertEqual((found["fov"], found["resolutionWidth"], found["resolutionHeight"]), (99, 2880, 5760))
+        texture = {"Data": {"RootChunk": {"width": 720, "height": 720, "scaleToViewport": 1}}}
+        target.patch_texture(texture)
+        self.assertEqual(texture["Data"]["RootChunk"], {"width": 2880, "height": 5760, "scaleToViewport": 0})
+
+
 class SamplerTests(unittest.TestCase):
     def test_gpu_process_is_reaped_when_sampling_is_interrupted(self):
         spec = importlib.util.spec_from_file_location("sampler", ROOT / "probe" / "sampler.py")

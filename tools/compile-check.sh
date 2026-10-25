@@ -14,6 +14,7 @@ cp -r "$GAME/r6/scripts/." "$STAGE/r6/scripts/"
 # RED4ext plugins hand their scripts to the compiler separately; fold them in here.
 for dir in PhotoModeEx/Scripts ArchiveXL/Scripts Codeware/Scripts mod_settings TweakXL/Scripts; do
     name="${dir%%/*}"
+    [ -d "$GAME/red4ext/plugins/$dir" ] || continue
     mkdir -p "$STAGE/r6/scripts/_plugins/$name"
     cp "$GAME/red4ext/plugins/$dir"/*.reds "$STAGE/r6/scripts/_plugins/$name/"
 done

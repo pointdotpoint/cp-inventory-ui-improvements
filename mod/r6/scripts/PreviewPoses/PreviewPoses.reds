@@ -52,6 +52,8 @@ public class PreviewPosesState extends ScriptableSystem {
     private let m_restored: Bool;
     public let m_preview: wref<inkPuppetPreviewGameController>;
     public let m_inventoryPreview: wref<inkPuppetPreviewGameController>;
+    // The inventory's puppet preview, whose camera the wardrobe zooms too (PreviewZoom.reds).
+    public let m_cameraPreview: wref<inkInventoryPuppetPreviewGameController>;
     // POSES button on the screen, and CLOSE on the browser column.
     public let m_button: wref<inkText>;
     private let m_close: wref<inkText>;
@@ -772,7 +774,7 @@ public class PreviewPosesState extends ScriptableSystem {
                 let pose: Int32 = this.m_grid[entry];
                 let selected: Bool = pose == this.m_pose;
                 let hovered: Bool = this.m_hover == tile;
-                this.m_tileLabels[i].SetText(this.PoseName(pose));
+                this.SetTileText(this.m_tileLabels[i], this.PoseName(pose));
                 this.m_tileLabels[i].SetTintColor(selected ? this.Blue() : (hovered ? this.ActiveRed() : this.Red()));
                 let bg: wref<inkRectangle> = this.m_tileBackgrounds[i];
                 bg.SetTintColor(selected ? this.FaintBlue() : (hovered ? this.HoverRed() : this.DarkRed()));
@@ -1031,12 +1033,16 @@ public class PreviewPosesState extends ScriptableSystem {
             bar.SetInteractive(false);
             bar.Reparent(tile);
             let label: ref<inkText> = this.MakeText("", false, target, true);
+            // A fixed box: with Fill and DotsEnd long names wrapped to a third line that ran
+            // out of the tile. SetTileText picks a size that fits; the last line is cut.
             label.SetFitToContent(false);
-            label.SetAnchor(inkEAnchor.Fill);
-            label.SetMargin(new inkMargin(22.0, 4.0, 12.0, 4.0));
+            label.SetAnchor(inkEAnchor.CenterLeft);
+            label.SetAnchorPoint(0.0, 0.5);
+            label.SetMargin(new inkMargin(22.0, 0.0, 0.0, 0.0));
+            label.SetSize(tileWidth - 34.0, 70.0);
             label.SetFontSize(28);
-            label.SetWrapping(true);
-            label.SetOverflowPolicy(textOverflowPolicy.DotsEnd);
+            label.SetWrapping(true, tileWidth - 34.0);
+            label.SetOverflowPolicy(textOverflowPolicy.DotsEndLastLine);
             label.SetVerticalAlignment(textVerticalAlignment.Center);
             label.SetInteractive(false);
             label.Reparent(tile);
@@ -1047,6 +1053,25 @@ public class PreviewPosesState extends ScriptableSystem {
             ArrayPush(this.m_tileFrames, frame);
             index += 1;
         }
+    }
+
+    // The largest size whose estimated lines fit the 70-unit box, as photo mode's grid does:
+    // about 0.5 x size per upper-case character, 1.25 x size per line, with slack for word
+    // wrapping. 18 allows three lines; anything longer is cut on the last one.
+    private func SetTileText(label: ref<inkText>, text: String) -> Void {
+        let width: Float = label.GetWidth();
+        let chars: Float = Cast<Float>(StrLen(text));
+        let sizes: array<Int32> = [28, 24, 21, 18];
+        let chosen: Int32 = 18;
+        for size in sizes {
+            let perLine: Float = width / (0.5 * Cast<Float>(size));
+            let lines: Float = Cast<Float>(CeilF(chars * 1.15 / perLine));
+            if chosen == 18 && lines * 1.25 * Cast<Float>(size) <= 70.0 {
+                chosen = size;
+            }
+        }
+        label.SetFontSize(chosen);
+        label.SetText(text);
     }
 
     // Four edge rectangles in a Fill canvas. Tint does not reach children, so callers

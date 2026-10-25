@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Build a separate eight-column grid from serialized Equipment-EX wardrobe JSON.
+"""Build a separate seven-column card grid from serialized Equipment-EX wardrobe JSON.
+
+Cells are 192 x 216: the item display (224 x 202, scaled to 0.75 at runtime) on top and
+room for a two-line item name under it, which WardrobeTabs.reds adds to each cell.
 
 Usage: build_wardrobe_grid.py wardrobe.inkwidget.json grid.inkwidget.json
 Deserialize the output with WolvenKit, then pack at wardrobe_tabs/gui/grid.inkwidget.
@@ -8,6 +11,11 @@ import copy
 import json
 import sys
 from pathlib import Path
+
+COLUMNS = 7
+CELL_HEIGHT = 216
+GRID_NAME = "wardrobeCardGrid"
+CELL_NAME = "wardrobeCardItem"
 
 
 def find_widget(value, name):
@@ -50,15 +58,15 @@ def build(source):
         assert templates[1]["widgetItem"]["$value"] == "InventoryGridSlot:EquipmentEx.InventoryGridSlotController"
         templates[0]["widgetLibrary"]["library"]["DepotPath"]["$value"] = "wardrobe_tabs\\gui\\grid.inkwidget"
         grid["parentWidget"] = None
-        grid["name"]["$value"] = "wardrobeEightColumnGrid"
+        grid["name"]["$value"] = GRID_NAME
         grid["userData"] = target["rootWidget"]["Data"]["userData"]
         target["rootWidget"]["Data"] = grid
         target["gameController"] = None
         widget = item["rootWidget"]["Data"]
         assert (widget["size"]["X"], widget["size"]["Y"]) == (224, 202)
-        widget["size"].update(X=168, Y=151.5)
-        widget["name"]["$value"] = "wardrobeEightColumnItem"
-        assert grid["size"]["X"] / widget["size"]["X"] == 8
+        widget["size"].update(X=grid["size"]["X"] / COLUMNS, Y=CELL_HEIGHT)
+        widget["name"]["$value"] = CELL_NAME
+        assert round(grid["size"]["X"] / widget["size"]["X"]) == COLUMNS
     library["libraryItems"] = [root, cell]
     library["rootDefinitionIndex"] = 0
     library["externalDependenciesForInternalItems"] = []
@@ -71,4 +79,4 @@ if __name__ == "__main__":
     output = build(json.loads(source_path.read_text()))
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(output, indent=2) + "\n")
-    print(f"Built {output_path}: 1344 / 168 = 8 columns")
+    print(f"Built {output_path}: {COLUMNS} columns of {1344 / COLUMNS} x {CELL_HEIGHT}")

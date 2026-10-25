@@ -1,0 +1,816 @@
+<!doctype html>
+<!--
+  PROTOTYPE: throwaway wardrobe-screen mockups. Delete once a direction is chosen.
+  Question: which wardrobe layout is easier to use and more striking than today's
+  Equipment-EX accordion?
+  Three variants plus the current screen, switchable via ?variant=now|A|B|C, with
+  ?group=1 (colour variants grouped), ?backdrop= and ?blur= (world behind the menu).
+  Coordinates are game design units (3840x2160), x relative to screen centre.
+  Run: python3 -m http.server 8766 --bind 127.0.0.1 -d prototype/wardrobe-mockups
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wardrobe mockups</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --tile: rgba(38, 9, 20, 0.88);
+  --tile-hover: rgba(62, 14, 31, 0.95);
+  --panel: rgba(18, 5, 11, 0.80);
+  --backdrop: 0.25;
+  --blur: 20;
+  --red: #e33a55;
+  --red-dim: #7c2134;
+  --text: #f6dbe1;
+  --text-dim: #b48b95;
+  --cyan: #5ef6ff;
+  --cyan-dim: rgba(94, 246, 255, 0.10);
+  --hint: #ff4f6e;
+  --tab: #ff5a64;
+  --bg-top: #4a2029;
+  --bg-mid: #2b2028;
+  --bg-low: #161f26;
+  --bg-bottom: #121d23;
+}
+html, body { margin: 0; height: 100%; background: #050607; overflow: hidden; }
+body { font-family: Rajdhani, system-ui, sans-serif; }
+
+#stage { position: absolute; left: 0; top: 0; height: 2160px; transform-origin: 0 0; overflow: hidden; color: var(--text); background: #000; }
+#stage * { box-sizing: border-box; }
+.world { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(calc(var(--blur) * 1px)); transform: scale(1.04); pointer-events: none; }
+.backdrop { position: absolute; inset: 0; opacity: var(--backdrop); pointer-events: none;
+  background: radial-gradient(120% 75% at 50% 0%, var(--bg-top) 0%, var(--bg-mid) 38%, var(--bg-low) 72%, var(--bg-bottom) 100%); }
+.scrim { position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(10, 4, 8, 0.7) 0%, rgba(10, 4, 8, 0) 30%, rgba(10, 4, 8, 0) 55%, rgba(10, 4, 8, 0.75) 72%, rgba(10, 4, 8, 0.85) 100%),
+              linear-gradient(rgba(10, 4, 8, 0.7), rgba(10, 4, 8, 0) 13%, rgba(10, 4, 8, 0) 86%, rgba(10, 4, 8, 0.6)); }
+.abs { position: absolute; }
+.v { position: absolute; pointer-events: none; user-select: none; }
+button { font-family: inherit; }
+
+/* hub header and hints (vanilla) */
+.hdr { position: absolute; font-size: 44px; font-weight: 500; white-space: nowrap; display: flex; align-items: center; gap: 40px; }
+.tabs { transform: translateX(-50%); gap: 46px; text-transform: uppercase; }
+.tabs .t { color: var(--tab); position: relative; }
+.tabs .t.on { color: #fff; }
+.tabs .t.on::after { content: ""; position: absolute; left: -24px; right: -24px; bottom: -30px; height: 5px; background: #fff; }
+.keybox { display: inline-grid; place-items: center; min-width: 58px; height: 58px; padding: 0 10px; border: 3px solid var(--cyan); color: var(--cyan); font-size: 40px; font-weight: 600; }
+.hline { position: absolute; height: 2px; background: rgba(255, 90, 100, 0.25); }
+.hints { position: absolute; bottom: 44px; display: flex; gap: 52px; align-items: center; font-size: 44px; font-weight: 600; color: var(--hint); white-space: nowrap; }
+.hints .keybox { margin-right: 14px; min-width: 52px; height: 52px; font-size: 30px; }
+.hints .keybox.plain { border-color: var(--text); color: var(--text); }
+.actbar { position: absolute; display: flex; align-items: center; gap: 48px; font-size: 40px; white-space: nowrap; }
+.act { background: none; border: 0; border-bottom: 4px solid transparent; color: var(--text-dim); font: inherit; font-weight: 600; padding: 6px 0; cursor: pointer; }
+.act:hover { color: var(--text); border-bottom-color: var(--red); }
+.act .val { color: var(--text); margin-left: 16px; }
+.sep { width: 2px; height: 46px; background: var(--red-dim); }
+
+/* panel chrome */
+.panel { position: absolute; background: var(--panel); border: 2px solid rgba(227, 58, 85, 0.32); }
+.panel::before { content: ""; position: absolute; left: -2px; right: -2px; top: -2px; height: 5px; background: var(--red); }
+.ptabs { position: absolute; display: flex; gap: 56px; font-size: 46px; font-weight: 600; text-transform: uppercase; }
+.ptabs span { color: var(--tab); cursor: pointer; padding-bottom: 12px; border-bottom: 4px solid transparent; }
+.ptabs span.on { color: var(--cyan); border-bottom-color: var(--cyan); }
+.search { position: absolute; height: 76px; background: rgba(10, 3, 7, 0.7); border: 2px solid var(--red-dim); color: var(--text); font: 600 34px Rajdhani, sans-serif; padding: 0 26px; outline: none; }
+.search::placeholder { color: var(--text-dim); opacity: 0.7; }
+.search:focus { border-color: var(--red); }
+.chip { display: inline-flex; align-items: center; gap: 12px; height: 64px; padding: 0 24px; border: 2px solid var(--red-dim); color: var(--text-dim); font-size: 32px; font-weight: 600; cursor: pointer; background: rgba(10, 3, 7, 0.5); white-space: nowrap; }
+.chip:hover { color: var(--text); border-color: var(--red); }
+.chip.on { color: var(--cyan); border-color: var(--cyan); background: var(--cyan-dim); }
+.chip .n { color: var(--text-dim); font-size: 26px; }
+.chip.eq::after { content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+.scroll { overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--red) transparent; }
+.hscroll { overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; scrollbar-color: var(--red) transparent; }
+
+/* slot rail (A) */
+.sec { height: 66px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; font-size: 32px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; cursor: pointer; border-bottom: 2px solid rgba(124, 33, 52, 0.5); user-select: none; }
+.sec:hover { color: var(--text); }
+.sec .n { font-size: 26px; font-weight: 600; text-transform: none; }
+.slot { height: 104px; display: grid; grid-template-columns: 84px 1fr auto; gap: 20px; align-items: center; padding: 0 20px 0 26px; cursor: pointer; position: relative; }
+.slot:hover { background: rgba(227, 58, 85, 0.12); }
+.slot.on { background: var(--cyan-dim); }
+.slot.on::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 6px; background: var(--cyan); }
+.th { width: 84px; height: 84px; background: var(--tile); border: 2px solid rgba(124, 33, 52, 0.6); display: grid; place-items: center; overflow: hidden; }
+.th img { width: 80%; height: 80%; object-fit: contain; }
+.th.none { background: transparent; border: 2px dashed rgba(180, 139, 149, 0.3); }
+.slot .nm { font-size: 34px; font-weight: 600; line-height: 1.05; }
+.slot .it { font-size: 27px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.slot .it.eq { color: var(--cyan); }
+.slot .ct { font-size: 26px; color: var(--text-dim); }
+
+/* item tiles (A) and cards (B, C) */
+.grid { display: grid; align-content: start; }
+.itm { position: relative; background: var(--tile); border: 3px solid transparent; cursor: pointer; }
+.itm:hover, .itm.hot { background: var(--tile-hover); border-color: var(--red); }
+.itm.eq { border-color: var(--cyan); box-shadow: inset 0 0 0 2px rgba(94, 246, 255, 0.2), 0 0 30px rgba(94, 246, 255, 0.18); }
+.itm.eq::after { content: ""; position: absolute; right: 0; top: 0; border-style: solid; border-width: 0 34px 34px 0; border-color: transparent var(--cyan) transparent transparent; }
+.itm img { position: absolute; left: 50%; top: 44%; transform: translate(-50%, -50%); width: 78%; height: 62%; object-fit: contain; pointer-events: none; }
+.dots { position: absolute; left: 12px; bottom: 10px; display: flex; gap: 7px; align-items: center; }
+.dot { width: 20px; height: 20px; border-radius: 50%; border: 3px solid; flex: none; }
+.dots .more { font-size: 22px; color: var(--text-dim); font-weight: 600; margin-left: 2px; }
+.card { position: relative; background: var(--tile); border: 3px solid transparent; cursor: pointer; }
+.card:hover, .card.hot { background: var(--tile-hover); border-color: var(--red); }
+.card.eq { border-color: var(--cyan); box-shadow: 0 0 34px rgba(94, 246, 255, 0.2); }
+.card .art { position: absolute; left: 0; right: 0; top: 0; display: grid; place-items: center; }
+.card .art img { width: 74%; height: 80%; object-fit: contain; pointer-events: none; }
+.card .nm { position: absolute; left: 20px; right: 20px; font-size: 30px; font-weight: 600; line-height: 1.05; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.card .vr { position: absolute; left: 20px; right: 20px; font-size: 25px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card .dots { left: 20px; }
+.card.eq .nm { color: var(--cyan); }
+.tag { position: absolute; right: 14px; top: 12px; font-size: 22px; font-weight: 700; color: #05080a; background: var(--cyan); padding: 2px 10px; }
+
+/* detail */
+.dstrip { position: absolute; display: grid; grid-template-columns: 150px 1fr auto; gap: 30px; align-items: center; padding: 0 30px; border-top: 2px solid var(--red-dim); }
+.dstrip .art { width: 150px; height: 110px; display: grid; place-items: center; }
+.dstrip .art img { max-width: 100%; max-height: 100%; }
+.dstrip b { display: block; font-size: 44px; line-height: 1; }
+.dstrip span { display: block; font-size: 30px; color: var(--text-dim); margin-top: 6px; }
+.dstrip .keys { font-size: 30px; color: var(--hint); text-align: right; line-height: 1.5; font-weight: 600; }
+.dcard .art { height: 380px; display: grid; place-items: center; background: var(--tile); border: 2px solid var(--red-dim); }
+.dcard .art img { width: 72%; height: 72%; object-fit: contain; }
+.dcard .nm { font-size: 66px; font-weight: 700; line-height: 1; margin: 30px 0 10px; }
+.dcard .vr { font-size: 34px; color: var(--text-dim); }
+.dcard .meta { font-size: 30px; color: var(--text-dim); margin-top: 22px; line-height: 1.5; }
+.dcard .meta em { color: var(--text); font-style: normal; }
+.swatches { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 26px; }
+.swatch { width: 56px; height: 56px; border-radius: 50%; border: 5px solid; cursor: pointer; position: relative; }
+.swatch.on { outline: 4px solid var(--cyan); outline-offset: 5px; }
+.btnrow { display: flex; gap: 20px; margin-top: 34px; }
+.btn { height: 84px; padding: 0 34px; display: inline-flex; align-items: center; border: 3px solid var(--red); background: rgba(227, 58, 85, 0.16); color: var(--text); font: 600 36px Rajdhani, sans-serif; cursor: pointer; }
+.btn:hover { background: rgba(227, 58, 85, 0.32); }
+.btn.ghost { border-color: var(--red-dim); background: transparent; color: var(--text-dim); }
+.btn.ghost:hover { color: var(--text); border-color: var(--red); }
+
+/* body column (B) */
+.brow { position: absolute; display: grid; grid-template-columns: 124px 1fr; gap: 26px; align-items: center; cursor: pointer; width: 640px; }
+.brow .th { width: 124px; height: 124px; }
+.brow .nm { font-size: 36px; font-weight: 600; }
+.brow .it { font-size: 29px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.brow .it.eq { color: var(--cyan); }
+.brow:hover .th { border-color: var(--red); }
+.brow.on .th { border-color: var(--cyan); box-shadow: 0 0 30px rgba(94, 246, 255, 0.25); }
+.brow.on .nm { color: var(--cyan); }
+.guide { position: absolute; width: 3px; background: linear-gradient(var(--red-dim), rgba(124, 33, 52, 0)); }
+.lbl { position: absolute; font-size: 42px; font-weight: 600; white-space: nowrap; }
+.lbl.small { font-size: 32px; color: var(--text-dim); }
+.big { position: absolute; font-size: 84px; font-weight: 700; line-height: 1; white-space: nowrap; }
+.sub { position: absolute; font-size: 34px; color: var(--text-dim); white-space: nowrap; }
+
+/* outfits list (C) */
+.ofit { height: 112px; display: grid; grid-template-columns: 1fr auto; align-items: center; padding: 0 26px; border: 2px solid var(--red-dim); background: rgba(18, 5, 11, 0.6); cursor: pointer; margin-bottom: 16px; }
+.ofit:hover { border-color: var(--red); }
+.ofit.on { border-color: var(--cyan); background: var(--cyan-dim); }
+.ofit b { display: block; font-size: 38px; }
+.ofit span { font-size: 26px; color: var(--text-dim); }
+.ofit .pc { font-size: 28px; color: var(--text-dim); }
+.dock { position: absolute; left: 0; right: 0; background: linear-gradient(rgba(8, 4, 8, 0), rgba(8, 4, 8, 0.86) 22%, rgba(8, 4, 8, 0.92)); }
+.empty-msg { font-size: 36px; color: var(--text-dim); padding: 30px; }
+
+/* prototype chrome (not part of the design) */
+#switcher { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); max-width: calc(100vw - 16px); display: flex; align-items: center; gap: 4px; padding: 5px; background: #fff; color: #111; border-radius: 999px; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45); font: 500 14px system-ui, sans-serif; z-index: 20; }
+#switcher button { white-space: nowrap; border: 0; background: transparent; color: inherit; font: inherit; padding: 7px 12px; border-radius: 999px; cursor: pointer; }
+#switcher button:hover { background: #eee; }
+#switcher button:focus-visible { outline: 2px solid #2563eb; }
+#switcher .name { min-width: 190px; white-space: nowrap; text-align: center; font-weight: 600; }
+#switcher .div { width: 1px; height: 20px; background: #ddd; }
+#switcher label { white-space: nowrap; display: flex; align-items: center; gap: 8px; padding: 0 10px; }
+#switcher input { width: 80px; accent-color: #e33a55; }
+#switcher output { min-width: 34px; font-variant-numeric: tabular-nums; }
+#notes { position: fixed; left: 14px; top: 14px; width: 390px; max-height: calc(100vh - 84px); overflow: auto; padding: 14px 16px; background: #fff; color: #1a1a1a; border-radius: 10px; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45); font: 13.5px/1.45 system-ui, sans-serif; z-index: 20; }
+#notes h2 { margin: 0 0 6px; font-size: 15px; }
+#notes h3 { margin: 10px 0 2px; font-size: 12px; color: #666; font-weight: 600; }
+#notes p, #notes ul { margin: 0; }
+#notes ul { padding-left: 18px; }
+#notes .risk { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; margin-left: 6px; }
+#notes .low { background: #dcfce7; color: #166534; } #notes .med { background: #fef3c7; color: #92400e; } #notes .high { background: #fee2e2; color: #991b1b; }
+#notes .foot { margin-top: 10px; color: #777; font-size: 12px; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<aside id="notes" aria-live="polite"></aside>
+<nav id="switcher" aria-label="Prototype variant switcher">
+  <button id="prev" aria-label="Previous variant">&larr;</button>
+  <span class="name" id="vname"></span>
+  <button id="next" aria-label="Next variant">&rarr;</button>
+  <span class="div"></span>
+  <button id="group" title="Group colour variants of the same item (G)"></button>
+  <span class="div"></span>
+  <label>Backdrop <input id="backdrop" type="range" min="0" max="100" step="5"><output id="backdropOut"></output></label>
+  <label>Blur <input id="blur" type="range" min="0" max="24" step="2"><output id="blurOut"></output></label>
+  <span class="div"></span>
+  <button id="notesBtn" title="Toggle notes (N)">Notes</button>
+</nav>
+<script>
+// ---------- data ----------
+// Equipment-EX's slots, by the body areas WardrobeTabs uses. Item counts for Head,
+// Balaclava, Mask and Glasses are from the screenshot; the rest are placeholders.
+const AREAS = [
+  ['Head', [['head', 'Head', 258], ['balaclava', 'Balaclava', 18], ['mask', 'Mask', 353], ['glasses', 'Glasses', 96],
+    ['eyes', 'Eyes', 41], ['eyel', 'Left eye', 9], ['eyer', 'Right eye', 9], ['wreath', 'Wreath', 12],
+    ['earl', 'Left ear', 64], ['earr', 'Right ear', 64], ['neck', 'Neckwear', 120],
+    ['necktight', 'Choker', 33], ['neckshort', 'Short necklace', 47], ['necklong', 'Long necklace', 29]]],
+  ['Body', [['tunder', 'Under torso', 88], ['tinner', 'Inner torso', 412], ['tmiddle', 'Middle torso', 205],
+    ['touter', 'Outer torso', 318], ['taux', 'Torso extra', 74], ['back', 'Back', 52], ['waist', 'Waist', 96],
+    ['bodyunder', 'Body under', 31], ['bodyinner', 'Body inner', 58], ['bodymiddle', 'Body middle', 44], ['bodyouter', 'Body outer', 37]]],
+  ['Arms', [['shl', 'Left shoulder', 21], ['shr', 'Right shoulder', 21], ['elbl', 'Left elbow', 14], ['elbr', 'Right elbow', 14],
+    ['wrl', 'Left wrist', 58], ['wrr', 'Right wrist', 58], ['hands', 'Hands', 77], ['handl', 'Left hand', 22], ['handr', 'Right hand', 22],
+    ['fingl', 'Left fingers', 40], ['fingr', 'Right fingers', 40], ['naill', 'Left nails', 25], ['nailr', 'Right nails', 25]]],
+  ['Legs', [['linner', 'Inner legs', 66], ['lmiddle', 'Middle legs', 190], ['louter', 'Outer legs', 154],
+    ['thl', 'Left thigh', 30], ['thr', 'Right thigh', 30], ['knl', 'Left knee', 18], ['knr', 'Right knee', 18],
+    ['ankl', 'Left ankle', 22], ['ankr', 'Right ankle', 22]]],
+  ['Feet', [['feet', 'Feet', 233], ['toel', 'Left toes', 15], ['toer', 'Right toes', 15], ['tnl', 'Left toenails', 12], ['tnr', 'Right toenails', 12]]],
+];
+const SLOT = {};
+const SLOT_ORDER = [];
+for (const [area, slots] of AREAS) for (const [id, name, count] of slots) { SLOT[id] = { id, name, count, area }; SLOT_ORDER.push(id); }
+
+// Stand-in icon per slot (from the inventory screenshot) and family names to fake variety.
+const STAND = (id) => {
+  const a = SLOT[id].area;
+  if (a === 'Head') return ['neck', 'necktight', 'neckshort', 'necklong', 'balaclava', 'mask'].includes(id) ? 'face' : 'head';
+  if (a === 'Body') return id.startsWith('body') ? 'outfit' : (id === 'touter' || id === 'taux' || id === 'back') ? 'outer' : 'inner';
+  if (a === 'Arms') return 'outer';
+  return a === 'Legs' ? 'legs' : 'feet';
+};
+const FAMILIES = {
+  Head: ['Beanie', 'Bucket Hat', 'Kabuki Cap', 'Nomad Helmet', 'Bandana', 'Visor Cap', 'Headwrap', 'Hood', 'Netrunner Rig', 'Trilby'],
+  face: ['Gaiter', 'Shemagh', 'Respirator', 'Half Mask', 'Kitsune Mask', 'Scarf', 'Neck Wrap', 'Choker Chain', 'Tag Chain', 'Bead Necklace'],
+  Body: ['Cropped Tee', 'Tactical Harness', 'Mesh Top', 'Bomber Jacket', 'Corset', 'Tank Top', 'Hoodie', 'Trench Coat', 'Kevlar Vest', 'Racer Jacket', 'Tube Top', 'Shirt'],
+  Arms: ['Fingerless Gloves', 'Arm Warmers', 'Wrist Cuff', 'Elbow Pads', 'Bracer', 'Rings', 'Nail Set', 'Shoulder Plate'],
+  Legs: ['Cargo Shorts', 'Biker Pants', 'Fishnets', 'Combat Trousers', 'Skirt', 'Knee Pads', 'Garter', 'Leggings', 'Thigh Holster'],
+  Feet: ['Combat Boots', 'Sneakers', 'Platforms', 'Sandals', 'Heels', 'Toe Rings', 'Socks'],
+};
+const COLOURS = [['Black', 0, 0.55, '#1c1c20'], ['Red', -20, 1, '#c8323e'], ['Bone', 180, 0.9, '#d8cdb8'], ['Teal', 140, 1, '#2aa6a0'],
+  ['Camo', 60, 0.8, '#66704a'], ['Chrome', 200, 1.25, '#c9ced6'], ['Purple', 250, 1, '#7c4ac8'], ['Gold', 30, 1.1, '#c9a24a']];
+const SOURCES = ['Base game', 'Phantom Liberty', 'Rockerboy Collection', 'Nomad Threads', 'Kitsch Pack', 'Corpo Wear'];
+
+// The 18 glasses tiles visible in the screenshot, read off their icons.
+const GLASSES = [
+  ['crown', 'Burger King Crown', 'Gold', '#d9b34a', '#d9b34a', 'bk_crown'],
+  ['g01', 'Round Specs', 'Gold frame, clear lens', '#c9a24a', '#eef3f7'],
+  ['g02', 'Round Specs', 'Silver frame, clear lens', '#c9ccd2', '#eef3f7'],
+  ['g03', 'Round Specs', 'Gold frame, rose lens', '#c9a24a', '#9a5560'],
+  ['g04', 'Round Specs', 'Silver frame, rose lens', '#c9ccd2', '#9a5560'],
+  ['g05', 'Round Specs', 'Gold frame, smoke lens', '#c9a24a', '#6b6e74'],
+  ['g06', 'Round Specs', 'Silver frame, smoke lens', '#c9ccd2', '#6b6e74'],
+  ['g07', 'Lennon Rounds', 'Gold frame, clear lens', '#c9a24a', '#f4f6f8'],
+  ['g08', 'Lennon Rounds', 'Silver frame, clear lens', '#c9ccd2', '#f4f6f8'],
+  ['g09', 'Lennon Rounds', 'Gold frame, mirror lens', '#c9a24a', '#ffffff'],
+  ['g10', 'Lennon Rounds', 'Silver frame, mirror lens', '#c9ccd2', '#ffffff'],
+  ['g11', 'Lennon Rounds', 'Gold frame, amber lens', '#c9a24a', '#c08a2a'],
+  ['g12', 'Lennon Rounds', 'Silver frame, amber lens', '#c9ccd2', '#c08a2a'],
+  ['g13', 'Aviators', 'Gold frame, pink lens', '#c9a24a', '#c050a0'],
+  ['g14', 'Aviators', 'Gold frame, brown lens', '#c9a24a', '#7a4a2a'],
+  ['g15', 'Aviators', 'Gold frame, dark lens', '#c9a24a', '#2a2420'],
+  ['g16', 'Wire Aviators', 'Silver frame, clear lens', '#9aa3ad', '#dfe6ec'],
+  ['g17', 'Wire Aviators', 'Silver frame, smoke lens', '#9aa3ad', '#5a5e64'],
+];
+const GLASS_FILLER = ['Cat-Eye Frames', 'Tech Visor', 'Half-Rims', 'Sport Wraps', 'Shield Shades', 'Monocle', 'Hex Frames', 'Clubmasters', 'Slit Shades', 'Goggles'];
+
+const ITEMS = {};
+function buildItems() {
+  for (const id of SLOT_ORDER) {
+    const s = SLOT[id];
+    const list = [];
+    if (id === 'glasses') {
+      GLASSES.forEach(([icon, fam, v, frame, lens, src], i) =>
+        list.push({ id: 'glasses-' + i, slot: id, fam, v, icon, filter: '', frame, lens, src: src || 'Base game', real: true }));
+      let f = 0;
+      while (list.length < s.count) {
+        const base = GLASSES[1 + (f * 5) % 17];
+        const fam = GLASS_FILLER[f % GLASS_FILLER.length] + (f >= GLASS_FILLER.length ? ' II' : '');
+        const n = 3 + (f % 4);
+        for (let k = 0; k < n && list.length < s.count; k++) {
+          const c = COLOURS[(f + k) % COLOURS.length];
+          list.push({ id: 'glasses-' + list.length, slot: id, fam, v: c[0], icon: GLASSES[1 + (f * 5 + k) % 17][0],
+            filter: '', frame: base[3], lens: c[3], src: SOURCES[f % SOURCES.length] });
+        }
+        f++;
+      }
+    } else {
+      const pool = FAMILIES[STAND(id) === 'face' ? 'face' : s.area];
+      let f = 0;
+      while (list.length < s.count) {
+        const fam = pool[f % pool.length] + (f >= pool.length ? ' ' + ['II', 'III', 'IV', 'V', 'VI', 'VII'][Math.floor(f / pool.length) - 1] : '');
+        const n = 2 + (f * 7) % 5;
+        for (let k = 0; k < n && list.length < s.count; k++) {
+          const c = COLOURS[(f * 3 + k) % COLOURS.length];
+          list.push({ id: id + '-' + list.length, slot: id, fam, v: c[0], icon: STAND(id),
+            filter: `hue-rotate(${c[1]}deg) saturate(${c[0] === 'Black' ? 0.3 : 1.3}) brightness(${c[2]})`,
+            frame: c[3], lens: c[3], src: SOURCES[(f + id.length) % SOURCES.length] });
+        }
+        f++;
+      }
+    }
+    ITEMS[id] = list;
+  }
+}
+buildItems();
+const ITEM = {};
+for (const id of SLOT_ORDER) for (const it of ITEMS[id]) ITEM[it.id] = it;
+// The named colour when the family has it, otherwise the family's first colour.
+function find(slot, fam, v) {
+  const list = ITEMS[slot];
+  return (list.find((it) => it.fam === fam && it.v === v) || list.find((it) => it.fam === fam) || list[0]).id;
+}
+
+// What V wears in the mockup. Only the crown is real; the rest stand in for her outfit.
+const START_EQUIPPED = {
+  glasses: 'glasses-0',
+  tinner: find('tinner', 'Cropped Tee', 'Red'),
+  touter: find('touter', 'Tactical Harness', 'Black'),
+  hands: find('hands', 'Fingerless Gloves', 'Black'),
+  louter: find('louter', 'Cargo Shorts', 'Black'),
+  feet: find('feet', 'Combat Boots', 'Black'),
+};
+const OUTFITS = [
+  { name: 'Current look', pieces: 6, note: 'Unsaved' },
+  { name: 'Street kid', pieces: 9, note: 'Saved 2 days ago' },
+  { name: 'Nomad run', pieces: 7, note: 'Saved last week' },
+  { name: 'Club night', pieces: 11, note: 'Saved last week' },
+  { name: 'Corpo meeting', pieces: 8, note: 'Saved 3 weeks ago' },
+];
+
+// V as framed in the screenshot, in design units (display px x 1.92).
+const V = { x: -1152, y: 227, w: 845 };
+
+const NOTES = {
+  now: { title: 'Now: Equipment-EX + WardrobeTabs', body: `<p>Screenshot from 2026-10-14, for comparison only. Everything else on this page is a mockup.</p>` },
+  A: {
+    title: 'A: Slot sidebar', risk: ['low', 'Low–medium risk'],
+    body: `<h3>Idea</h3><p>Same screen, same place. The accordion becomes a sidebar, so the whole panel height goes to items.</p>
+      <h3>Changes from now</h3><ul>
+      <li>Sidebar of slots, grouped by body area (the HEAD…FEET tabs become foldable sections)</li>
+      <li>Each slot shows what is equipped there: the sidebar is also the outfit summary</li>
+      <li>Search runs over every slot; the sidebar shows match counts per slot</li>
+      <li>Bar under the grid names the hovered item, its colour and the mod it came from</li>
+      <li>Equipped item: cyan frame and corner, as the game marks equipped gear</li>
+      <li>Hide V / Poses bar no longer clipped</li></ul>
+      <h3>In game</h3><p>Uses the same filtering WardrobeTabs already does (replacing the grid's data source), narrowed from a body area to one slot. The sidebar is new widgets in the screen's own tree. Equipment-EX's slot headers are hidden, not removed.</p>`,
+  },
+  B: {
+    title: 'B: Body column + drawer', risk: ['med', 'Medium risk'],
+    body: `<h3>Idea</h3><p>Matches the inventory's chosen layout B: what V wears reads head to toe beside her, and the selected slot opens as a large drawer.</p>
+      <h3>Changes</h3><ul>
+      <li>Left column: the main slots and anything equipped, in body order</li>
+      <li>Drawer: big named cards instead of bare icons; area tabs and slot chips reach every other slot</li>
+      <li>Outfit bar at the bottom: unsaved changes, save as outfit, undo</li>
+      <li>V moves right so she sits between the column and the drawer</li></ul>
+      <h3>In game</h3><p>Cards (name under the icon) need a new item template; Equipment-EX's cell is icon-only. The column is new widgets. Moving V is the existing VFocus/PreviewView framing.</p>`,
+  },
+  C: {
+    title: 'C: Try-on dock', risk: ['high', 'High risk'],
+    body: `<h3>Idea</h3><p>V gets the centre of the screen. Items run along a dock at the bottom; the right side is a large detail card with every colour of the hovered item.</p>
+      <h3>Changes</h3><ul>
+      <li>Area tabs and slot chips above one scrolling row of cards</li>
+      <li>Detail card: big icon, colour swatches, source mod, equip / add to outfit</li>
+      <li>Saved outfits always visible on the left</li></ul>
+      <h3>In game</h3><p>Replaces Equipment-EX's vertical scroll grid with a horizontal one, a deep change to its virtual grid. Gamepad navigation becomes left/right. Treat it as a look test unless it clearly wins.</p>`,
+  },
+};
+
+// ---------- state ----------
+const ORDER = ['now', 'A', 'B', 'C'];
+const params = new URLSearchParams(location.search);
+let variant = ORDER.includes(params.get('variant')) ? params.get('variant') : 'A';
+let showNotes = params.get('notes') !== '0';
+const clampInt = (v, lo, hi, d) => { const n = parseInt(v ?? d, 10); return Number.isNaN(n) ? d : Math.min(hi, Math.max(lo, n)); };
+let backdrop = clampInt(params.get('backdrop'), 0, 100, 25);
+let blur = clampInt(params.get('blur'), 0, 24, 20);
+let group = params.get('group') === '1';
+let slot = 'glasses';
+let area = 'Head';
+let query = '';
+let folded = new Set(['Body', 'Arms', 'Legs', 'Feet']);
+let equipped = { ...START_EQUIPPED };
+let changes = 0;
+let outfit = 0;
+let detailId = null;
+const W = 3840, H = 2160;
+const stage = document.getElementById('stage');
+const scrollMemo = {};
+
+// ---------- helpers ----------
+const cx = (x) => W / 2 + x;
+function el(tag, cls, parent, css, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (css) Object.assign(e.style, css);
+  if (text != null) e.textContent = text;
+  (parent || stage).appendChild(e);
+  return e;
+}
+function at(e, x, y, w, h) {
+  e.style.left = cx(x) + 'px'; e.style.top = y + 'px';
+  if (w != null) e.style.width = w + 'px';
+  if (h != null) e.style.height = h + 'px';
+  return e;
+}
+function img(parent, it) {
+  const i = el('img', '', parent);
+  i.src = 'assets/' + it.icon + '.png';
+  i.alt = '';
+  if (it.filter) i.style.filter = it.filter;
+  return i;
+}
+function remember(e, key) { e.dataset.scroll = key; }
+
+const matches = (it) => !query || (it.fam + ' ' + it.v).toLowerCase().includes(query);
+function visibleItems(s) { return ITEMS[s].filter(matches); }
+// Grouped view: one entry per family, showing the equipped variant when there is one.
+function entries(s) {
+  const list = visibleItems(s);
+  if (!group) return list.map((it) => ({ it, variants: [it] }));
+  const fams = new Map();
+  for (const it of list) { if (!fams.has(it.fam)) fams.set(it.fam, []); fams.get(it.fam).push(it); }
+  return [...fams.values()].map((vs) => ({ it: vs.find((v) => equipped[s] === v.id) || vs[0], variants: vs }));
+}
+function familyOf(it) { return ITEMS[it.slot].filter((x) => x.fam === it.fam); }
+function slotItem(s) { return equipped[s] ? ITEM[equipped[s]] : null; }
+function itemName(it) { return group || it.fam === it.v ? it.fam : it.fam; }
+
+function equip(id) {
+  const it = ITEM[id];
+  equipped[it.slot] = equipped[it.slot] === id ? undefined : id;
+  if (!equipped[it.slot]) delete equipped[it.slot];
+  changes++;
+  outfit = 0;
+  detailId = id;
+  render();
+}
+function pickSlot(s) { slot = s; area = SLOT[s].area; folded.delete(area); detailId = null; render(); }
+
+function dots(parent, variants, max = 6) {
+  const d = el('div', 'dots', parent);
+  variants.slice(0, max).forEach((v) => {
+    const dot = el('span', 'dot', d);
+    dot.style.background = v.lens; dot.style.borderColor = v.frame;
+  });
+  if (variants.length > max) el('span', 'more', d, null, '+' + (variants.length - max));
+  return d;
+}
+function hoverable(node, it, onHover) {
+  node.addEventListener('mouseenter', () => onHover(it, true));
+  node.addEventListener('mouseleave', () => onHover(it, false));
+  node.addEventListener('click', () => equip(it.id));
+  node.tabIndex = 0;
+  node.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); equip(it.id); } });
+  node.addEventListener('focus', () => onHover(it, true));
+}
+
+// ---------- shared chrome ----------
+function header() {
+  const l = at(el('div', 'hdr'), -1820, 48);
+  l.innerHTML = '<span style="font-size:56px">49</span><span style="color:var(--text-dim)">LEVEL</span><span style="font-size:56px">50</span><span>STREET CRED</span>';
+  const tabs = at(el('div', 'hdr tabs'), 0, 146);
+  tabs.innerHTML = '<span class="keybox">1</span>' +
+    ['Cyberware', 'Inventory', 'Map', 'Character', 'Journal'].map((t) => `<span class="t${t === 'Inventory' ? ' on' : ''}">${t}</span>`).join('') +
+    '<span class="keybox">3</span>';
+  at(el('div', 'hline'), -950, 226, 1900);
+  const r = at(el('div', 'hdr'), 1060, 48);
+  r.innerHTML = '<span>&#9650; 1602/100000424</span><span>&euro;$ 649546</span>';
+}
+function hints(right = 100) {
+  const h = el('div', 'hints', stage, { right: right + 'px' });
+  h.innerHTML = '<span><span class="keybox">V</span>Reset view</span><span><span class="keybox plain">LMB</span>Move V</span>' +
+    '<span><span class="keybox plain">RMB</span>Rotate</span><span><span class="keybox plain">&#8597;</span>Zoom</span>' +
+    '<span><span class="keybox">X</span>Unequip all</span><span><span class="keybox plain">Esc</span>Close</span>';
+}
+function poseBar(x, y) {
+  const bar = at(el('div', 'actbar'), x, y);
+  el('button', 'act', bar, null, 'Hide V');
+  el('span', 'sep', bar);
+  const p = el('button', 'act', bar, null, 'Pose');
+  el('span', 'val', p, null, 'Ryssolo07 20');
+}
+function vImage(x = V.x, scale = 1) {
+  const i = el('img', 'v');
+  i.src = 'assets/v.png';
+  i.alt = 'V, character preview';
+  i.style.width = V.w * scale + 'px';
+  at(i, x, V.y + (1 - scale) * 0 - (scale - 1) * 260);
+}
+function panelTabs(x, y) {
+  const t = at(el('div', 'ptabs'), x, y);
+  t.innerHTML = '<span class="on">Available clothing</span><span>Outfits</span>';
+}
+function searchBox(x, y, w, placeholder) {
+  const s = at(el('input', 'search'), x, y, w);
+  s.placeholder = placeholder;
+  s.value = query;
+  s.setAttribute('aria-label', placeholder);
+  s.addEventListener('input', () => {
+    query = s.value.trim().toLowerCase();
+    // Searching jumps to the first slot with a match when the current one has none.
+    if (query && !visibleItems(slot).length) {
+      const first = SLOT_ORDER.find((id) => visibleItems(id).length);
+      if (first) { slot = first; area = SLOT[first].area; }
+    }
+    if (query) folded.clear();
+    render();
+    const again = stage.querySelector('input.search');
+    again.focus();
+    again.setSelectionRange(again.value.length, again.value.length);
+  });
+  return s;
+}
+
+// ---------- variants ----------
+const RENDER = {
+  now() {
+    const i = el('img', 'v', stage, { width: '3840px', height: '2160px' });
+    i.src = 'assets/current.jpg';
+    i.alt = 'Current wardrobe screen in game';
+    at(i, -1920, 0);
+  },
+
+  A() {
+    header(); vImage();
+    const px = 120, pw = 1680, top = 250, bottom = 1960;
+    at(el('div', 'panel'), px, top, pw, bottom - top);
+    panelTabs(px + 40, top + 34);
+    searchBox(px + 40, top + 140, 1000, 'Search every slot');
+    const opts = at(el('div', 'abs', stage, { display: 'flex', gap: '16px' }), px + 1070, top + 146);
+    const g = el('span', 'chip' + (group ? ' on' : ''), opts, null, 'Group colours');
+    g.onclick = () => { group = !group; render(); };
+    el('span', 'chip', opts, null, 'Sort: Name');
+
+    // Sidebar
+    const railTop = top + 250, railW = 470;
+    const rail = at(el('div', 'abs scroll'), px + 2, railTop, railW, bottom - railTop - 2);
+    remember(rail, 'A-rail');
+    for (const [name, slots] of AREAS) {
+      const live = slots.filter(([id]) => !query || visibleItems(id).length);
+      if (!live.length) continue;
+      const worn = live.filter(([id]) => equipped[id]).length;
+      const sec = el('div', 'sec', rail);
+      sec.innerHTML = `<span>${folded.has(name) ? '+' : '&minus;'}&nbsp; ${name}</span><span class="n">${query ? live.length + ' slots match' : worn ? worn + ' worn' : ''}</span>`;
+      sec.onclick = () => { folded.has(name) ? folded.delete(name) : folded.add(name); render(); };
+      if (folded.has(name)) continue;
+      for (const [id] of live) {
+        const s = SLOT[id], it = slotItem(id);
+        const row = el('div', 'slot' + (id === slot ? ' on' : ''), rail);
+        const th = el('div', 'th' + (it ? '' : ' none'), row);
+        if (it) img(th, it);
+        const txt = el('div', '', row);
+        el('div', 'nm', txt, null, s.name);
+        el('div', 'it' + (it ? ' eq' : ''), txt, null, it ? it.fam + (it.real && it.fam === it.v ? '' : ', ' + it.v) : 'Empty');
+        el('div', 'ct', row, null, String(query ? visibleItems(id).length : s.count));
+        row.onclick = () => pickSlot(id);
+      }
+    }
+    at(el('div', 'abs', stage, { background: 'rgba(227,58,85,.3)' }), px + railW + 2, railTop, 2, bottom - railTop - 2);
+
+    // Grid
+    const gx = px + railW + 40, gw = pw - railW - 70;
+    const s = SLOT[slot], list = entries(slot);
+    const title = at(el('div', 'lbl'), gx, railTop + 4);
+    title.innerHTML = `${s.name} <span style="color:var(--text-dim);font-size:32px;font-weight:500;margin-left:18px">${list.length} ${group ? 'items, ' + visibleItems(slot).length + ' colours' : 'items'}</span>`;
+    const cols = 7, gap = 14, tw = (gw - gap * (cols - 1)) / cols;
+    const grid = at(el('div', 'abs grid scroll'), gx, railTop + 80, gw + 16, 1270 - 80);
+    Object.assign(grid.style, { gridTemplateColumns: `repeat(${cols}, ${tw}px)`, gap: gap + 'px', gridAutoRows: (tw * 0.92) + 'px', paddingRight: '16px' });
+    remember(grid, 'A-grid-' + slot + group);
+    const strip = at(el('div', 'dstrip'), gx - 40 - 2 + 0, bottom - 210, gw + 70, 208);
+    const show = (it, on) => {
+      const d = on ? it : (detailId ? ITEM[detailId] : slotItem(slot));
+      if (!d) { strip.innerHTML = '<div></div><div><span>Hover an item to see its name, colour and source.</span></div><div></div>'; return; }
+      const fam = familyOf(d);
+      strip.innerHTML = '';
+      const a = el('div', 'art', strip); img(a, d);
+      const t = el('div', '', strip);
+      el('b', '', t, null, d.fam);
+      el('span', '', t, null, d.v + (fam.length > 1 ? `  (${fam.length} colours)` : ''));
+      el('span', '', t, null, 'From ' + d.src + (equipped[d.slot] === d.id ? '  |  Equipped' : ''));
+      const k = el('div', 'keys', strip);
+      k.innerHTML = (equipped[d.slot] === d.id ? 'Click to unequip' : 'Click to equip') + '<br><span style="color:var(--text-dim);font-weight:500">Right-click: add to outfit</span>';
+    };
+    if (!list.length) el('div', 'empty-msg', grid, null, 'No items in this slot match the search.');
+    for (const { it, variants } of list) {
+      const t = el('div', 'itm' + (variants.some((v) => equipped[slot] === v.id) ? ' eq' : ''), grid);
+      t.setAttribute('aria-label', it.fam + ', ' + it.v);
+      img(t, it);
+      if (group && variants.length > 1) dots(t, variants, 4);
+      hoverable(t, it, show);
+    }
+    show(null, false);
+    poseBar(-1640, 1990);
+    hints();
+  },
+
+  B() {
+    header();
+    vImage(-640);
+    // Body column: main slots plus anything equipped, head to toe.
+    const colX = -1720;
+    at(el('div', 'lbl small'), colX, 280).textContent = 'Wearing';
+    const rows = ['head', 'glasses', 'neck', 'tinner', 'touter', 'hands', 'louter', 'feet'];
+    for (const id of SLOT_ORDER) if (equipped[id] && !rows.includes(id)) rows.push(id);
+    rows.sort((a, b) => SLOT_ORDER.indexOf(a) - SLOT_ORDER.indexOf(b));
+    const y0 = 350, step = Math.min(196, 1560 / rows.length);
+    at(el('div', 'guide'), colX - 34, y0, null, step * rows.length - 40);
+    rows.forEach((id, i) => {
+      const it = slotItem(id);
+      const r = at(el('div', 'brow' + (id === slot ? ' on' : '')), colX, y0 + i * step);
+      const th = el('div', 'th' + (it ? '' : ' none'), r);
+      if (it) img(th, it);
+      const t = el('div', '', r);
+      el('div', 'nm', t, null, SLOT[id].name);
+      el('div', 'it' + (it ? ' eq' : ''), t, null, it ? it.fam : 'Empty');
+      r.onclick = () => pickSlot(id);
+    });
+    const more = at(el('span', 'chip'), colX, y0 + rows.length * step + 10);
+    more.innerHTML = `All ${SLOT_ORDER.length} slots <span class="n">in the drawer</span>`;
+
+    // Drawer
+    const dx = 420, dw = 1400, top = 250, bottom = 1990;
+    at(el('div', 'panel'), dx, top, dw, bottom - top);
+    const s = SLOT[slot], list = entries(slot);
+    at(el('div', 'big'), dx + 50, top + 50).textContent = s.name;
+    at(el('div', 'sub'), dx + 54, top + 150).textContent =
+      `${list.length} ${group ? 'items in ' + visibleItems(slot).length + ' colours' : 'items'}${slotItem(slot) ? '  |  wearing ' + slotItem(slot).fam : ''}`;
+    searchBox(dx + dw - 640, top + 60, 590, 'Search every slot');
+    const tabs = at(el('div', 'abs', stage, { display: 'flex', gap: '14px' }), dx + 50, top + 240);
+    for (const [name] of AREAS) {
+      const c = el('span', 'chip' + (name === area ? ' on' : ''), tabs, { textTransform: 'uppercase' }, name);
+      c.onclick = () => { area = name; render(); };
+    }
+    const chips = at(el('div', 'abs hscroll', stage, { display: 'flex', gap: '12px', paddingBottom: '10px' }), dx + 50, top + 330, dw - 100, 86);
+    remember(chips, 'B-chips-' + area);
+    for (const [id, name] of AREAS.find((a) => a[0] === area)[1]) {
+      if (query && !visibleItems(id).length) continue;
+      const c = el('span', 'chip' + (id === slot ? ' on' : '') + (equipped[id] ? ' eq' : ''), chips);
+      c.innerHTML = `${name} <span class="n">${query ? visibleItems(id).length : SLOT[id].count}</span>`;
+      c.onclick = () => pickSlot(id);
+    }
+    const cols = 5, gap = 20, cw = (dw - 100 - 16 - gap * (cols - 1)) / cols, ch = 330;
+    const grid = at(el('div', 'abs grid scroll'), dx + 50, top + 440, dw - 84, bottom - top - 440 - 150);
+    Object.assign(grid.style, { gridTemplateColumns: `repeat(${cols}, ${cw}px)`, gap: gap + 'px', gridAutoRows: ch + 'px', paddingRight: '16px' });
+    remember(grid, 'B-grid-' + slot + group);
+    if (!list.length) el('div', 'empty-msg', grid, null, 'No items in this slot match the search.');
+    for (const { it, variants } of list) {
+      const on = variants.some((v) => equipped[slot] === v.id);
+      const c = el('div', 'card' + (on ? ' eq' : ''), grid);
+      const art = el('div', 'art', c, { height: '210px' }); img(art, it);
+      el('div', 'nm', c, { top: '214px' }, it.fam);
+      if (group && variants.length > 1) { const d = dots(c, variants, 6); d.style.bottom = '22px'; }
+      else el('div', 'vr', c, { bottom: '20px' }, it.v);
+      if (on) el('span', 'tag', c, null, 'WEARING');
+      hoverable(c, it, () => {});
+    }
+    // Outfit bar
+    const bar = at(el('div', 'abs', stage, { display: 'flex', alignItems: 'center', gap: '24px', borderTop: '2px solid var(--red-dim)', padding: '0 50px' }), dx, bottom - 130, dw, 130);
+    const st = el('div', '', bar, { flex: '1', fontSize: '34px' });
+    st.innerHTML = changes ? `<b style="font-size:40px">Current look</b> <span style="color:var(--text-dim)">&nbsp; ${changes} unsaved change${changes > 1 ? 's' : ''}</span>`
+      : `<b style="font-size:40px">Current look</b> <span style="color:var(--text-dim)">&nbsp; saved as Street kid</span>`;
+    const undo = el('button', 'btn ghost', bar, null, 'Undo');
+    undo.onclick = () => { equipped = { ...START_EQUIPPED }; changes = 0; render(); };
+    el('button', 'btn ghost', bar, null, 'Outfits (4)');
+    el('button', 'btn', bar, null, 'Save as outfit');
+    poseBar(-1720, 2000);
+    hints(90);
+  },
+
+  C() {
+    header();
+    vImage(-470, 1.04);
+    // Outfits, top left
+    at(el('div', 'lbl small'), -1760, 290).textContent = 'Outfits';
+    const ol = at(el('div', 'abs'), -1760, 350, 600);
+    OUTFITS.forEach((o, i) => {
+      const r = el('div', 'ofit' + (i === outfit ? ' on' : ''), ol);
+      r.innerHTML = `<div><b>${o.name}</b><span>${i === 0 && changes ? changes + ' changes, unsaved' : o.note}</span></div><div class="pc">${i === 0 ? Object.keys(equipped).length : o.pieces} pieces</div>`;
+      r.onclick = () => { outfit = i; render(); };
+    });
+    const ob = at(el('div', 'abs', stage, { display: 'flex', gap: '16px' }), -1760, 350 + OUTFITS.length * 128 + 10);
+    el('button', 'btn', ob, null, 'Save current');
+    const un = el('button', 'btn ghost', ob, null, 'Unequip all');
+    un.onclick = () => { equipped = {}; changes++; render(); };
+    poseBar(-1760, 1290);
+
+    // Detail card, top right
+    const card = at(el('div', 'abs dcard'), 1180, 290, 620);
+    const show = (it, on) => {
+      const d = on ? it : (detailId ? ITEM[detailId] : slotItem(slot) || ITEMS[slot][0]);
+      card.innerHTML = '';
+      const a = el('div', 'art', card); img(a, d);
+      el('div', 'nm', card, null, d.fam);
+      el('div', 'vr', card, null, d.v);
+      const fam = familyOf(d);
+      if (fam.length > 1) {
+        const sw = el('div', 'swatches', card);
+        for (const v of fam) {
+          const b = el('span', 'swatch' + (v.id === d.id ? ' on' : ''), sw);
+          b.style.background = v.lens; b.style.borderColor = v.frame; b.title = v.v;
+          b.onclick = (e) => { e.stopPropagation(); detailId = v.id; render(); };
+        }
+      }
+      const m = el('div', 'meta', card);
+      m.innerHTML = `Slot <em>${SLOT[d.slot].name}</em><br>From <em>${d.src}</em>${fam.length > 1 ? `<br><em>${fam.length}</em> colours` : ''}`;
+      const br = el('div', 'btnrow', card);
+      const eq = el('button', 'btn', br, null, equipped[d.slot] === d.id ? 'Unequip' : 'Equip');
+      eq.onclick = () => equip(d.id);
+      el('button', 'btn ghost', br, null, 'Add to outfit');
+    };
+
+    // Dock
+    el('div', 'dock', stage, { top: '1440px', bottom: '0' });
+    const tabs = at(el('div', 'abs', stage, { display: 'flex', gap: '14px', alignItems: 'center' }), -1760, 1520, 3520, 70);
+    for (const [name] of AREAS) {
+      const c = el('span', 'chip' + (name === area ? ' on' : ''), tabs, { textTransform: 'uppercase' }, name);
+      c.onclick = () => { area = name; render(); };
+    }
+    el('span', 'sep', tabs, { margin: '0 16px' });
+    const slotsRow = el('div', 'hscroll', tabs, { display: 'flex', gap: '12px', flex: '1' });
+    remember(slotsRow, 'C-slots-' + area);
+    for (const [id, name] of AREAS.find((a) => a[0] === area)[1]) {
+      if (query && !visibleItems(id).length) continue;
+      const c = el('span', 'chip' + (id === slot ? ' on' : '') + (equipped[id] ? ' eq' : ''), slotsRow, null, name);
+      c.onclick = () => pickSlot(id);
+    }
+    searchBox(1200, 1420, 600, 'Search every slot');
+    const list = entries(slot);
+    const strip = at(el('div', 'abs hscroll', stage, { display: 'flex', gap: '20px', paddingBottom: '18px' }), -1760, 1630, 3520, 330);
+    remember(strip, 'C-strip-' + slot + group);
+    strip.addEventListener('wheel', (e) => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { strip.scrollLeft += e.deltaY * 3; e.preventDefault(); } }, { passive: false });
+    if (!list.length) el('div', 'empty-msg', strip, null, 'No items in this slot match the search.');
+    for (const { it, variants } of list) {
+      const on = variants.some((v) => equipped[slot] === v.id);
+      const c = el('div', 'card' + (on ? ' eq' : ''), strip, { flex: '0 0 240px', height: '300px' });
+      const art = el('div', 'art', c, { height: '186px' }); img(art, it);
+      el('div', 'nm', c, { top: '190px', fontSize: '28px' }, it.fam);
+      if (group && variants.length > 1) { const d = dots(c, variants, 5); d.style.bottom = '18px'; }
+      else el('div', 'vr', c, { bottom: '14px' }, it.v);
+      hoverable(c, it, show);
+    }
+    show(null, false);
+    hints(90);
+  },
+};
+
+// ---------- frame ----------
+function fit() {
+  const avail = innerHeight - 60;
+  const s = Math.min(innerWidth / W, avail / H);
+  stage.style.width = W + 'px';
+  stage.style.transform = `translate(${(innerWidth - W * s) / 2}px, ${(avail - H * s) / 2}px) scale(${s})`;
+}
+
+function render() {
+  stage.querySelectorAll('[data-scroll]').forEach((n) => {
+    scrollMemo[n.dataset.scroll] = n.scrollTop || n.scrollLeft;
+  });
+  stage.replaceChildren();
+  const world = el('img', 'world');
+  world.src = 'assets/world.jpg';
+  world.alt = '';
+  el('div', 'backdrop');
+  if (variant !== 'now') el('div', 'scrim');
+  RENDER[variant]();
+  stage.querySelectorAll('[data-scroll]').forEach((n) => {
+    const v = scrollMemo[n.dataset.scroll];
+    if (v) { if (n.classList.contains('hscroll')) n.scrollLeft = v; else n.scrollTop = v; }
+  });
+  fit();
+  const n = NOTES[variant];
+  document.getElementById('vname').textContent = n.title;
+  const notes = document.getElementById('notes');
+  notes.hidden = !showNotes;
+  notes.innerHTML = `<h2>${n.title}${n.risk ? `<span class="risk ${n.risk[0]}">${n.risk[1]}</span>` : ''}</h2>${n.body}` +
+    `<h3>Try</h3><ul><li>Click a slot, then an item to equip it (click again to unequip)</li><li>Type "aviator" or "camo" in the search</li><li>Group colours (G) folds colour variants into one tile with dots</li></ul>` +
+    `<p class="foot">Keys: ← → switch variant, G group colours, N notes. V, the crown and the 17 glasses are cut from the 2026-10-14 wardrobe screenshot; their names are read off the icons. Every other icon is a stand-in from the inventory screenshot, recoloured, with made-up names, colours and sources. Slot counts other than Head, Balaclava, Mask and Glasses are placeholders. The city is the same stand-in as the inventory mockups. V's picture is static: equipping changes the panels, not her.</p>`;
+  const root = document.documentElement.style;
+  root.setProperty('--backdrop', variant === 'now' ? 1 : backdrop / 100);
+  root.setProperty('--blur', blur);
+  document.getElementById('backdrop').value = backdrop;
+  document.getElementById('backdropOut').textContent = backdrop + '%';
+  document.getElementById('blur').value = blur;
+  document.getElementById('blurOut').textContent = blur + 'px';
+  document.getElementById('group').textContent = 'Group colours: ' + (group ? 'on' : 'off');
+  const p = new URLSearchParams({ variant, group: group ? 1 : 0, backdrop, blur });
+  if (!showNotes) p.set('notes', '0');
+  history.replaceState(null, '', '?' + p);
+}
+
+function step(d) { variant = ORDER[(ORDER.indexOf(variant) + d + ORDER.length) % ORDER.length]; render(); }
+document.getElementById('prev').onclick = () => step(-1);
+document.getElementById('next').onclick = () => step(1);
+document.getElementById('group').onclick = () => { group = !group; render(); };
+document.getElementById('notesBtn').onclick = () => { showNotes = !showNotes; render(); };
+document.getElementById('backdrop').oninput = (e) => { backdrop = +e.target.value; render(); };
+document.getElementById('blur').oninput = (e) => { blur = +e.target.value; render(); };
+addEventListener('keydown', (e) => {
+  if (e.target.closest('input, textarea, [contenteditable]')) return;
+  if (e.key === 'ArrowLeft') step(-1);
+  else if (e.key === 'ArrowRight') step(1);
+  else if (e.key === 'g' || e.key === 'G') { group = !group; render(); }
+  else if (e.key === 'n' || e.key === 'N') { showNotes = !showNotes; render(); }
+});
+addEventListener('resize', fit);
+render();
+</script>
+</body>
+</html>
