@@ -47,6 +47,10 @@ public abstract class WardrobeTabsConfig {
     public static func PanelWidth() -> Float = 1382.0;
     public static func HeaderHeight() -> Float = 230.0;
     public static func ContainerWidth() -> Float = 1352.0;
+    // The grid container's height in Equipment-EX's layout. Set explicitly when the container
+    // is widened: its GetSize() read 0 while building, which left the outfit bar (anchored to
+    // the container's bottom) on top of the area tabs and the backdrop empty.
+    public static func ContainerHeight() -> Float = 1414.0;
     // The outfit bar covers the bottom of the grid; the grid gets as much extra scroll room.
     public static func BarHeight() -> Float = 120.0;
     // Backdrop behind the grid.
@@ -771,7 +775,7 @@ private func WardrobeTabsBuild(screen: ref<WardrobeScreenController>) -> Void {
         // Room for the slot sidebar: the container widens and its contents move right, all but
         // the scroll bar, which is anchored to the right edge.
         let gridLeft: Float = WardrobeTabsConfig.GridLeft();
-        grid.SetSize(WardrobeTabsConfig.ContainerWidth() + gridLeft, grid.GetSize().Y);
+        grid.SetSize(WardrobeTabsConfig.ContainerWidth() + gridLeft, WardrobeTabsConfig.ContainerHeight());
         let child: Int32 = 0;
         while child < grid.GetNumChildren() {
             let widget: ref<inkWidget> = grid.GetWidgetByIndex(child);
@@ -794,7 +798,7 @@ private func WardrobeTabsBuild(screen: ref<WardrobeScreenController>) -> Void {
     // Host for the outfit list, occupying the grid's place in the panel.
     let host: ref<inkCanvas> = new inkCanvas();
     host.SetName(n"wardrobeOutfitsHost");
-    host.SetSize(1352.0, 1414.0);
+    host.SetSize(WardrobeTabsConfig.ContainerWidth(), WardrobeTabsConfig.ContainerHeight());
     host.SetHAlign(inkEHorizontalAlign.Left);
     host.SetVAlign(inkEVerticalAlign.Fill);
     // Lined up with the grid; the sidebar's column stays empty in OUTFITS.
@@ -815,7 +819,7 @@ private func WardrobeTabsBuild(screen: ref<WardrobeScreenController>) -> Void {
         let list: ref<inkWidget> = manager.GetWidget(n"scroll_wrapper");
         if IsDefined(list) {
             list.SetMargin(new inkMargin(0.0, 0.0, 0.0, 0.0));
-            list.SetSize(1352.0, 1414.0 - WardrobeTabsConfig.BarHeight() - 30.0);
+            list.SetSize(WardrobeTabsConfig.ContainerWidth(), WardrobeTabsConfig.ContainerHeight() - WardrobeTabsConfig.BarHeight() - 30.0);
         }
     }
 
