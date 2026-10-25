@@ -9,8 +9,7 @@ __pycache__/
 *~
 .DS_Store
 
-# Scratch output from WolvenKit extracts and graph builds
-*.animgraph.json
+# Scratch output from WolvenKit extracts
 /tmp/
 
 # Playwright MCP screenshots and snapshots

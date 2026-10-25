@@ -823,11 +823,6 @@ private func WardrobeTabsBuild(screen: ref<WardrobeScreenController>) -> Void {
     if IsDefined(preview) {
         preview.SetTranslation(WardrobeTabsConfig.PreviewShift(), 0.0);
     }
-    // PreviewPoses' zoom collider (PreviewZoom.reds) follows V, clear of the drawer.
-    let collider: ref<inkWidget> = this.GetChildWidgetByPath(n"previewZoomCollider");
-    if IsDefined(collider) {
-        collider.SetTranslation(WardrobeTabsConfig.PreviewShift(), 0.0);
-    }
 
     ArrayClear(screen.m_wtButtons);
     ArrayClear(screen.m_wtButtonBgs);
