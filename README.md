@@ -1,12 +1,12 @@
 # Cyberpunk 2077 wardrobe UI
 
-WardrobeTabs, a redesign of the Equipment-EX wardrobe screen for Cyberpunk 2077 (patch 2.31),
+WardrobeTabs, a redesign of the Equipment-EX wardrobe screen for Cyberpunk 2077 (patch 2.5),
 written in redscript.
 
 - Body column left of V: one group per body area, a tile per worn item and a + tile.
 - Drawer on the right: title, search, HEAD / BODY / ARMS / LEGS / FEET tabs and EQUIPPED ONLY
   on top; the selected area's slots as a sidebar left of the grid; the slot's items as
-  seven-column named cards; an outfit bar with the current look and OUTFITS / BACK.
+  named cards, 4 to 7 per row (7 by default); an outfit bar with the current look and OUTFITS / BACK.
 - Outfits view: SAVE OUTFIT, NO OUTFIT and search on top; saved outfits as a three-column grid
   with a favourite star on each cell, favourites first.
 

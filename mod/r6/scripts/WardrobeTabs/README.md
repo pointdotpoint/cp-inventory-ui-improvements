@@ -52,6 +52,15 @@ area tabs holding one get a yellow dot. The tag goes once the card is hovered
 long enough to try the item on, or the item is equipped. The first opening with
 this build only records what V owns, so nothing is tagged until later. Both
 lists are saved with the game.
+Mod packs: each card names the mod pack its item comes from, in small text at
+the bottom of the item art (base-game items show none). PACK: ALL in the header
+opens a list of ALL, BASE GAME and every pack V owns items from, with counts;
+picking one filters the grid, the slot counts and the NEW dots, until the game
+is quit. Typing a pack name in the search box matches its items too. Packs are
+detected in game, with nothing to run: an item whose name is a numeric game key
+is base game, any other is a mod item, grouped by the prefix of its item ID
+(Items.yv_long_coat -> YV). Known prefixes get a readable name (YV -> VOID) from
+`WardrobeTabsPackNames.reds`; unknown ones show the prefix in capitals.
 The camera follows the area: picking HEAD, BODY, ARMS, LEGS or FEET (tab, body
 column header or + tile, or a row in another area) moves it to that area's own
 camera setup: HEAD and BODY aim at the upper body (HEAD from farther back so the
@@ -88,7 +97,7 @@ V is shifted so she sits between the body column and the drawer.
 ## Card grid
 
 The card resource keeps the existing 1344-unit grid width and changes item cells
-from 224×202 to 192×216, seven to a row: the item display scaled to 0.75 on top, the name below
+from 224×202 to 192×216 at seven to a row (one grid per column count, 4 to 7, cells growing to 336×378 at four): the item display scaled to 0.75 on top, the name below
 (added to each cell at runtime and updated when the grid recycles the cell). A new
 grid is spawned inside the existing scroll area during the base screen
 initialization, before Equipment-EX captures its controller and binds its source.
@@ -100,7 +109,36 @@ Equipment-EX or vanilla resources. Missing resources or a failed grid spawn leav
 the original grid in place. `WardrobeTabs` entries in CET's `gamelog.log` identify
 which grid was installed. This confirms initialization, not visible rendering.
 
+## Search
+
+An X at the right end of the search box (item search in the wardrobe, outfit search
+in OUTFITS) clears it; it shows only while the box holds text.
+While a search, EQUIPPED ONLY or a pack filter is active, each area tab shows how
+many items in that area match, e.g. LEGS (8); areas with no match dim.
+
+## Columns
+
+The 4 5 6 7 buttons in the drawer header, left of PACK, set how many cards a row
+holds; fewer columns make bigger cards (item art, name and tags grow with them).
+The grid switches at once and the choice is saved with the game.
+
+## Settings
+
+With Mod Settings installed, Settings > Mods > Wardrobe Tabs has two switches, both
+on by default: "Preview items on hover" (off: resting on a card still clears its NEW
+tag but tries nothing on) and "Move camera to the selected area" (off: the camera
+only moves with Equipment-EX's wheel zoom). Changes apply the next time the
+wardrobe opens. Without Mod Settings both stay on.
+
 ## Rebuild
+
+To add readable names for newly met packs, regenerate the known pack names from
+the game's `r6/tweaks` (names come from folder names, overridden in
+`tools/pack_names.txt`), then compile and install as usual:
+
+```sh
+python3 tools/build_pack_index.py
+```
 
 Extract `equipment_ex/gui/wardrobe.inkwidget` from the installed EquipmentEx.archive
 with WolvenKit and serialize it to JSON. Then run:

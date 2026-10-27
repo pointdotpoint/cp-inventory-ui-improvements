@@ -1,0 +1,151 @@
+#!/usr/bin/env python3
+"""Writes WardrobeTabsPackNames.reds: display names for known mod packs, by item ID prefix.
+
+The mod detects packs in game (see WardrobeTabsPackOf): an item whose display name is not a
+numeric LocKey is a mod item, and its pack is its record ID's prefix (Items.yv_long_coat ->
+"yv"). This dev tool maps those prefixes to readable names: it scans every .yaml/.yml under
+the game's r6/tweaks, expands ${var} (or $(var)) record names from their $instances, and names
+each prefix after the folder (or file) that defines it, renamed through tools/pack_names.txt
+("raw = Display"). Unknown prefixes show in game as the prefix in capitals.
+
+Usage: tools/build_pack_index.py [<game dir>] [<output .reds>]
+Players never run this; rerun it to add newly met packs to the shipped name list.
+"""
+import os
+import re
+import sys
+
+import yaml
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+GAME = os.path.expanduser("~/.local/share/Steam/steamapps/common/Cyberpunk 2077")
+OUT = os.path.join(HERE, "..", "mod", "r6", "scripts", "WardrobeTabs", "WardrobeTabsPackNames.reds")
+NAMES = os.path.join(HERE, "pack_names.txt")
+TEMPLATE = re.compile(r"\$[{(](\w+)[})]")  # ${var} and the older $(var)
+
+
+class TweakLoader(yaml.SafeLoader):
+    pass
+
+
+# TweakXL tags (!append, !append-once, !remove, ...) only matter for values; keep the data.
+def _any_tag(loader, suffix, node):
+    if isinstance(node, yaml.MappingNode):
+        return loader.construct_mapping(node)
+    if isinstance(node, yaml.SequenceNode):
+        return loader.construct_sequence(node)
+    return loader.construct_scalar(node)
+
+
+TweakLoader.add_multi_constructor("!", _any_tag)
+
+
+def expand(name, body):
+    """The record names one top-level key stands for."""
+    if not TEMPLATE.search(name):
+        return [name]
+    instances = body.get("$instances") if isinstance(body, dict) else None
+    names = []
+    for instance in instances or []:
+        if not isinstance(instance, dict):
+            continue
+        names.append(TEMPLATE.sub(lambda m: str(instance.get(m.group(1), m.group(0))), name))
+    return [n for n in names if not TEMPLATE.search(n)]
+
+
+def is_clothing(body):
+    """Clothing records: based on a clothing record or typed as one (poses, props and the like
+    are not, and their generic prefixes would claim other packs' items)."""
+    base = str(body.get("$base", ""))
+    kind = str(body.get("$type", ""))
+    return "Clothing" in base or kind in ("Clothing", "Clothing_Record", "gamedataClothing_Record")
+
+
+def prefix_of(record):
+    """The pack prefix of a record ID, as the mod reads it: up to the first _ or . after Items."""
+    return re.split(r"[_.]", record[len("Items."):], maxsplit=1)[0].lower()
+
+
+def records(path):
+    with open(path, encoding="utf-8", errors="replace") as f:
+        try:
+            data = yaml.load(f, Loader=TweakLoader)
+        except yaml.YAMLError as error:
+            print(f"skipped {path}: {error}".splitlines()[0], file=sys.stderr)
+            return []
+    if not isinstance(data, dict):
+        return []
+    found = []
+    for key, body in data.items():
+        if isinstance(key, str) and key.startswith("Items.") and isinstance(body, dict) and is_clothing(body):
+            found.extend(expand(key, body))
+    return found
+
+
+def display_names():
+    names = {}
+    if os.path.exists(NAMES):
+        with open(NAMES, encoding="utf-8") as f:
+            for line in f:
+                line = line.split("#", 1)[0].strip()
+                if "=" in line:
+                    raw, shown = (part.strip() for part in line.split("=", 1))
+                    names[raw.lower()] = shown
+    return names
+
+
+def reds_string(text):
+    return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
+
+
+def main():
+    game = sys.argv[1] if len(sys.argv) > 1 else GAME
+    out = sys.argv[2] if len(sys.argv) > 2 else OUT
+    tweaks = os.path.join(game, "r6", "tweaks")
+    shown = display_names()
+    packs = {}
+    owner = {}
+    for root, _, files in os.walk(tweaks):
+        for file in sorted(files):
+            if not file.lower().endswith((".yaml", ".yml")):
+                continue
+            path = os.path.join(root, file)
+            parts = os.path.relpath(path, tweaks).split(os.sep)
+            raw = parts[0] if len(parts) > 1 else os.path.splitext(parts[0])[0]
+            pack = shown.get(raw.lower(), raw)
+            for record in records(path):
+                if record not in owner:
+                    owner[record] = pack
+                    packs.setdefault(pack, []).append(record)
+
+    # Prefix -> pack: the prefix most of a pack's records share.
+    names = {}
+    for pack, ids in packs.items():
+        counts = {}
+        for record in ids:
+            prefix = prefix_of(record)
+            counts[prefix] = counts.get(prefix, 0) + 1
+        for prefix, count in counts.items():
+            if count * 2 >= len(ids) and prefix not in names:
+                names[prefix] = pack
+    lines = [
+        "// Generated by tools/build_pack_index.py from r6/tweaks and tools/pack_names.txt.",
+        "// Known mod packs by item ID prefix; unknown prefixes show in capitals.",
+        "module EquipmentEx",
+        "",
+        "public class WardrobeTabsPackNames {",
+        "",
+        "    public func Name(prefix: String) -> String {",
+    ]
+    for prefix in sorted(names):
+        lines.append(f"        if Equals(prefix, {reds_string(prefix)}) {{ return {reds_string(names[prefix])}; }}")
+    lines += ['        return "";', "    }", "", "}", ""]
+    with open(out, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    print(f"{len(names)} known prefixes -> {os.path.relpath(out)}")
+    for prefix in sorted(names):
+        print(f"  {prefix:12s} {names[prefix]}")
+
+
+if __name__ == "__main__":
+    main()

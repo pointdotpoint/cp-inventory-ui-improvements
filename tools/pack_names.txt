@@ -1,0 +1,11 @@
+# Display names for mod packs, used by build_pack_index.py.
+# raw = Shown   (raw: the folder or file name under r6/tweaks, any case)
+yellingintothevoid = VOID
+Veegee = Veegee
+2BT = 2BT
+Dusty_MileenaHungryHipsterOutfit = Dusty
+axellysse_dawn_office_outfit = axellysse
+ntz - Caramel Outfit = ntz
+gabriela_basic_tank = gabriela
+kwek_head_glasses_01 = kwek
+koza_store = Koza
