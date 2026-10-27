@@ -41,11 +41,39 @@ a trailing "(…)" or a short " - …" tail is the colour, so "NIKE AIR JORDAN 4
 else the first matching one, with a dot per colour (named colour words are
 coloured, others grey; a ring marks the worn one). Clicking a dot equips that
 colour; hovering it shows its name. A WEARING tag marks worn cards.
+Resting the cursor on a card (or a colour dot) for 0.25 s tries the item on: it
+goes on the preview only, nothing is equipped, and the bar reads "TRYING ON: …"
+in cyan. Moving to another card swaps it after the same pause; moving off the
+cards, OUTFITS, a scrolled or refilled grid and closing the wardrobe put the real
+look back. Clicking equips the item as before.
+The camera follows the area: picking HEAD, BODY, ARMS, LEGS or FEET (tab, body
+column header or + tile, or a row in another area) moves it to that area's own
+camera setup: HEAD and BODY aim at the upper body (HEAD from farther back so the
+whole head fits), ARMS and LEGS at the middle of V, FEET at V's feet.
+V takes the pose of the matching vanilla inventory camera.
+Slots within the framed area leave it alone. The wardrobe opens full
+body, OUTFITS shows full body and BACK returns to the area framed before. The
+mouse wheel is still Equipment-EX's zoom; picking an area again re-frames it.
 
 The outfit bar along the bottom shows CURRENT LOOK ("SAVED AS …" when the worn
-items match a saved outfit), OUTFITS (n), which swaps the grid for the outfit
-list, and SAVE AS OUTFIT, which opens Equipment-EX's own dialog. There is no undo.
+items match a saved outfit) and OUTFITS (n), which swaps the grid for the outfits
+view; there the button reads BACK. There is no undo.
+The mod remembers the outfit the look came from (saved with the game). After a
+change the bar reads "TEST1 | EDITED | 2 CHANGES" (a change is a slot whose item
+is different, added or removed) with UPDATE (save the look over that outfit, no
+dialog) and REVERT (wear it as saved); its cell in the outfits view says EDITED.
+NO OUTFIT or deleting the outfit drops the link; wearing another outfit links it.
 The bar covers the bottom of the grid; the grid gets as much extra scroll room.
+
+The outfits view has SAVE OUTFIT (Equipment-EX's own dialog), NO OUTFIT (lit
+while no outfit is worn) and its own search box in the drawer header, and the
+saved outfits as a three-column grid: name, item count, a row of item icons (head
+to toe, up to seven, the last reading +N), a cyan bar and WEARING on
+the worn one. Clicking a cell wears the outfit; Equipment-EX's delete key asks to
+delete it. The star at the top right of each cell marks a favourite; favourites come
+first, each group in alphabetical order. Favourites are saved with the game.
+The cells replace Equipment-EX's one-column list and scroll with the mouse wheel.
+Saving an outfit that the search would hide clears the search.
 The grid sits on a 50% black backdrop.
 The selected slot, area and grouping last until the game is closed. Mouse only.
 
@@ -87,9 +115,12 @@ before installing scripts.
 Script compilation and binary serialization checks pass. The packed archive
 extracts byte-identically to the generated binary.
 
-Pending in-game: seven cards per row with readable names; body column rows and
-icons; clicking rows and picker chips; search and the equipped filter; SAVE AS
-OUTFIT and OUTFITS; equip and unequip updating the column; reopening.
+Pending in-game: the per-area camera (how each setup frames V in the wardrobe, V's pose per setup); seven cards per row with readable names; body column rows and
+icons; clicking rows and picker chips; search and the equipped filter; OUTFITS /
+BACK; the outfits view (scrolling, search, SAVE OUTFIT, NO OUTFIT, delete,
+favourites surviving a save and reload); edited outfits (change count, UPDATE,
+REVERT, the link surviving a reload); equip and unequip updating the column;
+reopening.
 
 Previous attempts resized the live scroll/grid hierarchy and blanked the grid;
 those changes remain removed.

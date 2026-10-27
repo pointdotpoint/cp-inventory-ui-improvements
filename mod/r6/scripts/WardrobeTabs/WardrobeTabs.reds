@@ -4,8 +4,10 @@
 // - Drawer (the item panel): a header with the selected slot's name, a subtitle, search,
 //   HEAD..FEET area tabs and GROUP COLOURS / EQUIPPED ONLY toggles; a sidebar left of the
 //   grid with the area's slots; the grid as seven-column named cards, one per item family when colours are grouped, with
-//   colour dots; and the outfit bar along the bottom (current look, OUTFITS, SAVE AS OUTFIT).
+//   colour dots; and the outfit bar along the bottom (current look, OUTFITS / BACK).
 //   Equipment-EX's slot headers and its own header row are hidden. Mouse only.
+// - Outfits view (OUTFITS): SAVE OUTFIT, NO OUTFIT and a search box in the drawer header, and
+//   the saved outfits as a three-column grid of cells, favourites (star) first.
 //
 // Two constraints shape this file:
 // - Equipment-EX's grid classes are module-private, so this file joins its module.
@@ -32,6 +34,51 @@ public abstract class WardrobeTabsConfig {
         }
         return "OTHER";
     }
+
+    // The vanilla equipment-area setup whose pose V takes for an area's camera. The vanilla
+    // setups themselves only hold two shots (0-7 full body, 8-11 upper body at 1.85), so the
+    // camera uses the mod's own setups below. Default is full body.
+    public static func AreaCamera(area: Int32) -> InventoryPaperdollZoomArea {
+        switch area {
+            case 0: return InventoryPaperdollZoomArea.Head;
+            case 1: return InventoryPaperdollZoomArea.OuterChest;
+            case 2: return InventoryPaperdollZoomArea.Cyberware;
+            case 3: return InventoryPaperdollZoomArea.Legs;
+            case 4: return InventoryPaperdollZoomArea.Feet;
+        }
+        return InventoryPaperdollZoomArea.Default;
+    }
+
+    // Each area's own camera setup: an aim point from the inventory preview room
+    // (empty_room_inventory.ent) and a camera distance (vanilla's upper-body shot is 1.85).
+    // UpperBody is 1.43 above the floor and FullBody 1.05. Head, Chest and Legs are bound to
+    // bones, but in the wardrobe they do not follow V's bones: Head aimed at V's feet (v25) and
+    // Legs at her feet 0.4 to the side (v23-v24, V pushed right), so they resolve to V's origin
+    // plus their offset. Head therefore serves as the feet point. Nothing sits above UpperBody,
+    // so HEAD frames from there, farther back.
+    public static func CameraSlot(area: Int32) -> CName {
+        switch area {
+            case 0: return n"UISlotPreview_UpperBody";
+            case 1: return n"UISlotPreview_UpperBody";
+            case 2: return n"UISlotPreview_FullBody";
+            case 3: return n"UISlotPreview_FullBody";
+            case 4: return n"UISlotPreview_Head";
+        }
+        return n"UISlotPreview_FullBody";
+    }
+
+    public static func CameraZoom(area: Int32) -> Float {
+        switch area {
+            case 0: return 1.45; // 1.1 cut the head off at the top
+            case 1: return 1.85;
+            case 2: return 1.85;
+            case 3: return 1.85;
+            case 4: return 2.2; // 1.6 showed one boot
+        }
+        return -1.0;
+    }
+
+    public static func CameraAreas() -> Int32 = 5;
 
     // Horizontal shift of the V preview: centred between the body column and the drawer
     // (-140 before the slot sidebar widened the drawer, minus half of GridLeft()).
@@ -90,9 +137,40 @@ public abstract class WardrobeTabsConfig {
     public static func ColourGrouping() -> Bool = false;
     // Watcher ticks (0.05 s each) the search text must stay unchanged before it filters.
     public static func SearchSettleTicks() -> Int32 = 3;
+    // Watcher ticks (0.05 s) a card is hovered before V tries its item on, and ticks with
+    // nothing hovered before the preview goes back (bridges the gaps between cards).
+    public static func TryOnTicks() -> Int32 = 5;
+    public static func TryOffTicks() -> Int32 = 2;
     public static func CardDots() -> Int32 = 6;
     // Dots sit under a one-line name and end 14 above the next row.
     public static func CardDotSize() -> Float = 18.0;
+
+    // Outfit cells, three to a row, inside Equipment-EX's outfit scroll area. Its slider takes
+    // the right edge of the 1352 wide host.
+    public static func OutfitColumns() -> Int32 = 3;
+    public static func OutfitCellWidth() -> Float = 410.0;
+    public static func OutfitCellHeight() -> Float = 172.0;
+    public static func OutfitGap() -> Float = 16.0;
+    // Item icons along the bottom of a cell, head to toe; the last slot reads +N when an
+    // outfit has more. Item icons are about 200 tall, scaled to the slot.
+    public static func OutfitIcons() -> Int32 = 7;
+    public static func OutfitIconSize() -> Float = 46.0;
+    public static func OutfitIconGap() -> Float = 6.0;
+    public static func OutfitIconTop() -> Float = 104.0;
+    // Visible height of the outfit grid, above the outfit bar, and the scroll per wheel notch.
+    public static func OutfitViewHeight() -> Float = WardrobeTabsConfig.ContainerHeight() - WardrobeTabsConfig.BarHeight() - 30.0;
+    public static func OutfitWheelStep() -> Float = 128.0;
+    // The scroll bar's x, right of the cells. The manager it sits in has no size of its own,
+    // so it is placed from the left.
+    public static func OutfitBarLeft() -> Float = WardrobeTabsConfig.ContainerWidth() - 40.0;
+
+    // Buttons after the area tabs, toggles, chip paging (0..9) and the chips: OUTFITS / BACK,
+    // UPDATE and REVERT in the outfit bar, then the outfits view's SAVE OUTFIT and NO OUTFIT.
+    public static func OutfitsButton() -> Int32 = 10 + WardrobeTabsConfig.ChipsPerPage();
+    public static func UpdateButton() -> Int32 = WardrobeTabsConfig.OutfitsButton() + 1;
+    public static func RevertButton() -> Int32 = WardrobeTabsConfig.OutfitsButton() + 2;
+    public static func SaveOutfitButton() -> Int32 = WardrobeTabsConfig.OutfitsButton() + 3;
+    public static func NoOutfitButton() -> Int32 = WardrobeTabsConfig.OutfitsButton() + 4;
 
     // Areas are the slotArea names declared in OutfitConfig.OutfitSlots().
     public static func TabOfArea(area: CName) -> Int32 {
@@ -256,6 +334,15 @@ public let m_wtArea: Int32;
 @addField(ViewManager)
 public let m_wtUngrouped: Bool;
 
+// Favourite outfits by name, saved with the game like the outfits themselves.
+@addField(OutfitSystem)
+public persistent let m_wtFavourites: array<CName>;
+
+// The outfit the current look came from: the last one worn exactly. Equipment-EX only knows an
+// outfit while the look matches it, so after an edit only this says which outfit was edited.
+@addField(OutfitSystem)
+public persistent let m_wtLinked: CName;
+
 // Area index + 1, resolved once per slot. 0 marks slot data the mod has not seen yet,
 // which is how a repopulated grid is recognised.
 @addField(InventoryGridSlotData)
@@ -388,9 +475,12 @@ public let m_wtSubtitle: wref<inkText>;
 @addField(WardrobeScreenController)
 public let m_wtClothingOnly: array<wref<inkWidget>>;
 
+@addField(WardrobeScreenController)
+public let m_wtHeader: wref<inkCompoundWidget>;
+
 // Buttons: area tabs (0..5), GROUP COLOURS (6), EQUIPPED ONLY (7), chip paging (8, 9),
-// slot chips (10..), SAVE AS OUTFIT and OUTFITS (last two). Each has a background, a
-// label and an optional count.
+// slot chips (10..), OUTFITS / BACK, SAVE OUTFIT and NO OUTFIT (WardrobeTabsConfig). Each
+// has a background, a label and an optional count.
 @addField(WardrobeScreenController)
 public let m_wtButtons: array<wref<inkCanvas>>;
 
@@ -416,6 +506,140 @@ public let m_wtLook: wref<inkText>;
 // The outfit bar sits in the grid container, or in the outfit list's host in OUTFITS.
 @addField(WardrobeScreenController)
 public let m_wtBar: wref<inkCanvas>;
+
+// Outfits view: header widgets shown only there, its search box, the outfits in cell order
+// with their item counts, and the cells (made as needed, kept while the screen is open).
+@addField(WardrobeScreenController)
+public let m_wtOutfitsOnly: array<wref<inkWidget>>;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitSearch: ref<HubTextInput>;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitQuery: String;
+
+// Hover try-on. The card's item display under the cursor (and a hovered colour's item) is
+// kept on Equipment-EX's ViewManager, which displays and screen can both reach; the screen's
+// watcher puts its item on the preview once it has been hovered for TryOnTicks().
+@addField(ViewManager)
+public let m_wtHoverCard: wref<InventoryItemDisplayController>;
+
+@addField(ViewManager)
+public let m_wtHoverDotItem: wref<UIInventoryItem>;
+
+// What the watcher last saw under the cursor, for how many ticks, and for how many ticks
+// nothing has been; the item on the preview and the slot it went into.
+@addField(WardrobeScreenController)
+public let m_wtTryHover: wref<UIInventoryItem>;
+
+@addField(WardrobeScreenController)
+public let m_wtTryCard: wref<InventoryItemDisplayController>;
+
+@addField(WardrobeScreenController)
+public let m_wtTryDotItem: wref<UIInventoryItem>;
+
+@addField(WardrobeScreenController)
+public let m_wtTryTicks: Int32;
+
+@addField(WardrobeScreenController)
+public let m_wtTryIdle: Int32;
+
+@addField(WardrobeScreenController)
+public let m_wtTrying: wref<UIInventoryItem>;
+
+@addField(WardrobeScreenController)
+public let m_wtTrySlot: TweakDBID;
+
+// Outfit names at the last fill, to tell a newly saved outfit.
+@addField(WardrobeScreenController)
+public let m_wtOutfitKnown: array<CName>;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitNames: array<CName>;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitParts: array<Int32>;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitContent: wref<inkCanvas>;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitEmpty: wref<inkText>;
+
+// How far the outfit grid is scrolled, how far it can be, and its scroll bar.
+@addField(WardrobeScreenController)
+public let m_wtOutfitScroll: Float;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitScrollMax: Float;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitTrack: wref<inkRectangle>;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitThumb: wref<inkRectangle>;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitCells: array<wref<inkCanvas>>;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitCellBgs: array<wref<inkRectangle>>;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitCellBars: array<wref<inkRectangle>>;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitCellNames: array<wref<inkText>>;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitCellInfos: array<wref<inkText>>;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitStars: array<wref<inkCanvas>>;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitStarIcons: array<wref<inkImage>>;
+
+@addField(WardrobeScreenController)
+public let m_wtStarHover: wref<inkWidget>;
+
+// The widget the last press started on (see OnWardrobePress).
+@addField(WardrobeScreenController)
+public let m_wtPressed: wref<inkWidget>;
+
+// OutfitIcons() per cell, in cell order: the icon slots, their images, the icon each shows
+// and the +N label (one per cell).
+@addField(WardrobeScreenController)
+public let m_wtOutfitIconSlots: array<wref<inkCanvas>>;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitIcons: array<wref<inkImage>>;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitIconPaths: array<String>;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitMores: array<wref<inkText>>;
+
+// What the outfit cells were filled from (search text and outfit names), and which outfit
+// was worn: the watcher refills them when either changes.
+@addField(WardrobeScreenController)
+public let m_wtOutfitSig: String;
+
+@addField(WardrobeScreenController)
+public let m_wtOutfitWorn: String;
+
+// Slots that differ from the linked outfit; -1 while the look matches it or nothing is linked.
+@addField(WardrobeScreenController)
+public let m_wtLinkChanges: Int32;
+
+// The area the preview camera was last moved to, plus one (0: full body, as the wardrobe
+// opens), and the one to go back to when OUTFITS closes.
+@addField(WardrobeScreenController)
+public let m_wtCameraArea: Int32;
+
+@addField(WardrobeScreenController)
+public let m_wtCameraResume: Int32;
 
 @wrapMethod(inkPreviewGameController)
 protected cb func OnInitialize() -> Bool {
@@ -644,7 +868,7 @@ protected cb func OnWardrobeDotClick(evt: ref<inkPointerEvent>) -> Bool {
     return true;
 }
 
-// Hovering a dot shows its colour's name in place of the family name.
+// Hovering a dot shows its colour's name in place of the family name, and tries that colour.
 @addMethod(VendorItemVirtualController)
 protected cb func OnWardrobeDotHoverOver(evt: ref<inkPointerEvent>) -> Bool {
     let family: wref<WardrobeTabsFamily> = this.WardrobeTabsCardFamily();
@@ -652,6 +876,10 @@ protected cb func OnWardrobeDotHoverOver(evt: ref<inkPointerEvent>) -> Bool {
     if IsDefined(family) && index >= 0 && index < ArraySize(family.variants) {
         let label: ref<inkText> = this.GetRootCompoundWidget().GetWidget(n"wardrobeCardName") as inkText;
         label.SetText(family.variants[index]);
+        let item: wref<InventoryGridItemData> = family.items[index];
+        if IsDefined(item) {
+            ViewManager.GetInstance(GetGameInstance()).m_wtHoverDotItem = item.Item;
+        }
     }
     return false;
 }
@@ -663,13 +891,54 @@ protected cb func OnWardrobeDotHoverOut(evt: ref<inkPointerEvent>) -> Bool {
         let label: ref<inkText> = this.GetRootCompoundWidget().GetWidget(n"wardrobeCardName") as inkText;
         label.SetText(family.name);
     }
+    ViewManager.GetInstance(GetGameInstance()).m_wtHoverDotItem = null;
     return false;
+}
+
+// Card hover for try-on, from the vanilla item display (the path Equipment-EX's tooltip
+// takes). Only displays inside a wardrobe card cell count.
+@addMethod(InventoryItemDisplayController)
+private func WardrobeTabsInCard() -> Bool {
+    let widget: wref<inkWidget> = this.GetRootWidget();
+    let depth: Int32 = 0;
+    while IsDefined(widget) && depth < 3 {
+        if Equals(widget.GetName(), n"wardrobeCardItem") {
+            return true;
+        }
+        widget = widget.GetParentWidget();
+        depth += 1;
+    }
+    return false;
+}
+
+@wrapMethod(InventoryItemDisplayController)
+protected cb func OnDisplayHoverOver(evt: ref<inkPointerEvent>) -> Bool {
+    let result: Bool = wrappedMethod(evt);
+    if this.WardrobeTabsInCard() {
+        ViewManager.GetInstance(GetGameInstance()).m_wtHoverCard = this;
+    }
+    return result;
+}
+
+@wrapMethod(InventoryItemDisplayController)
+protected cb func OnDisplayHoverOut(evt: ref<inkPointerEvent>) -> Bool {
+    let result: Bool = wrappedMethod(evt);
+    let view: ref<ViewManager> = ViewManager.GetInstance(GetGameInstance());
+    if IsDefined(view) && view.m_wtHoverCard == this {
+        view.m_wtHoverCard = null;
+    }
+    return result;
 }
 
 @wrapMethod(inkPreviewGameController)
 protected cb func OnUninitialize() -> Bool {
     let screen: ref<WardrobeScreenController> = this as WardrobeScreenController;
     if IsDefined(screen) {
+        // The menus' preview puppet outlives the wardrobe: never leave a tried item on it.
+        this.WardrobeTabsEndTryOn(screen);
+        let view: ref<ViewManager> = this.WardrobeTabsView();
+        view.m_wtHoverCard = null;
+        view.m_wtHoverDotItem = null;
         if IsDefined(screen.m_wtWatcher) {
             screen.m_wtWatcher.UnregisterFromAllCallbacks(inkanimEventType.OnEndLoop);
             screen.m_wtWatcher.Stop();
@@ -686,6 +955,9 @@ protected cb func OnUninitialize() -> Bool {
         ArrayClear(screen.m_wtGroupHeads);
         ArrayClear(screen.m_wtTiles);
         ArrayClear(screen.m_wtButtons);
+        ArrayClear(screen.m_wtOutfitsOnly);
+        ArrayClear(screen.m_wtOutfitCells);
+        ArrayClear(screen.m_wtOutfitStars);
     }
     wrappedMethod();
 }
@@ -728,6 +1000,7 @@ private func WardrobeTabsMakeButton(screen: ref<WardrobeScreenController>, paren
     button.childOrder = inkEChildOrder.Forward;
     button.SetInteractive(true);
     button.RegisterToCallback(n"OnRelease", this, n"OnWardrobeButtonClick");
+    button.RegisterToCallback(n"OnPress", this, n"OnWardrobePress");
     button.RegisterToCallback(n"OnHoverOver", this, n"OnWardrobeTabsHoverOver");
     button.RegisterToCallback(n"OnHoverOut", this, n"OnWardrobeTabsHoverOut");
     button.Reparent(parent);
@@ -836,6 +1109,7 @@ private func WardrobeTabsBuild(screen: ref<WardrobeScreenController>) -> Void {
     if IsDefined(grid) {
         this.WardrobeTabsBuildSidebar(screen, grid);
         this.WardrobeTabsBuildBar(screen, grid);
+        this.WardrobeTabsBuildOutfits(screen);
     }
     this.WardrobeTabsBuildBody(screen, wrapper);
 
@@ -853,7 +1127,7 @@ private func WardrobeTabsBuild(screen: ref<WardrobeScreenController>) -> Void {
         }
     }
     this.WardrobeTabsRefresh(screen);
-    ModLog(n"WardrobeTabs", "Body column and drawer v9 built");
+    ModLog(n"WardrobeTabs", "Body column and drawer v26 built (FEET aims at V's feet, HEAD from the upper body)");
 }
 
 // Header at the top of the item panel's header column, across sidebar and grid: title and
@@ -867,6 +1141,7 @@ private func WardrobeTabsBuildHeader(screen: ref<WardrobeScreenController>, head
     overlay.SetHAlign(inkEHorizontalAlign.Left);
     overlay.childOrder = inkEChildOrder.Forward;
     overlay.Reparent(header, 0);
+    screen.m_wtHeader = overlay;
     let accent: ref<inkRectangle> = new inkRectangle();
     accent.SetAnchor(inkEAnchor.TopFillHorizontaly);
     accent.SetSize(width, 4.0);
@@ -995,14 +1270,412 @@ private func WardrobeTabsBuildBar(screen: ref<WardrobeScreenController>, contain
     heading.SetMargin(new inkMargin(24.0, 18.0, 0.0, 0.0));
     heading.SetTintColor(new HDRColor(1.0, 0.86, 0.88, 1.0));
     heading.Reparent(bar);
-    let look: ref<inkText> = this.WardrobeTabsMakeText(26, 640.0);
+    let look: ref<inkText> = this.WardrobeTabsMakeText(26, 590.0);
     look.SetMargin(new inkMargin(24.0, 66.0, 0.0, 0.0));
     look.SetTintColor(new HDRColor(0.682, 0.231, 0.212, 1.0));
     look.Reparent(bar);
     screen.m_wtLook = look;
-    // OUTFITS, then SAVE AS OUTFIT: the last two buttons.
-    this.WardrobeTabsMakeButton(screen, bar, "OUTFITS", width - 380.0 - 280.0, 22.0, 260.0, 76.0);
-    this.WardrobeTabsMakeButton(screen, bar, "SAVE AS OUTFIT", width - 380.0, 22.0, 356.0, 76.0);
+    // OUTFITS, which reads BACK in the outfits view; saving is done there (SAVE OUTFIT).
+    this.WardrobeTabsMakeButton(screen, bar, "OUTFITS", width - 24.0 - 260.0, 22.0, 260.0, 76.0);
+    // Shown while the look is an edited outfit: save over it, or wear it as saved.
+    this.WardrobeTabsMakeButton(screen, bar, "UPDATE", width - 24.0 - 260.0 - 16.0 - 200.0, 22.0, 200.0, 76.0);
+    this.WardrobeTabsMakeButton(screen, bar, "REVERT", width - 24.0 - 260.0 - 32.0 - 400.0, 22.0, 200.0, 76.0);
+}
+
+// Outfits view: SAVE OUTFIT and NO OUTFIT in the header row the area tabs use, its own search
+// box where the item search sits, and a grid of outfit cells in Equipment-EX's outfit scroll
+// area in place of its one-column list. The list stays, hidden; its popups are still used.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsBuildOutfits(screen: ref<WardrobeScreenController>) -> Void {
+    ArrayClear(screen.m_wtOutfitsOnly);
+    let overlay: ref<inkCompoundWidget> = screen.m_wtHeader;
+    if IsDefined(overlay) {
+        ArrayPush(screen.m_wtOutfitsOnly, this.WardrobeTabsMakeButton(screen, overlay, "SAVE OUTFIT", 0.0, 148.0, 300.0, 62.0));
+        ArrayPush(screen.m_wtOutfitsOnly, this.WardrobeTabsMakeButton(screen, overlay, "NO OUTFIT", 310.0, 148.0, 300.0, 62.0));
+        let search: ref<HubTextInput> = HubTextInput.Create();
+        search.SetName(n"wardrobeOutfitSearch");
+        search.SetDefaultText(GetLocalizedTextByKey(n"UI-Wardrobe-SearchByName"));
+        search.SetLetterCase(textLetterCase.UpperCase);
+        search.SetMaxLength(24);
+        search.Reparent(overlay);
+        search.SetWidth(560.0);
+        let root: ref<inkWidget> = search.GetRootWidget();
+        root.SetAnchor(inkEAnchor.TopRight);
+        root.SetAnchorPoint(1.0, 0.0);
+        root.SetMargin(new inkMargin(0.0, 18.0, 110.0, 0.0));
+        ArrayPush(screen.m_wtOutfitsOnly, root);
+        screen.m_wtOutfitSearch = search;
+    }
+
+    // Equipment-EX's list goes; the cells get a scroll area of their own in the manager (so its
+    // hover tracking still sees the cursor). A cell canvas added beside the list in Equipment-EX's
+    // scroll area never showed: scroll areas have one content child.
+    let manager: ref<inkCompoundWidget> = screen.m_outfitManager.GetRootCompoundWidget();
+    if !IsDefined(manager) {
+        return;
+    }
+    let wrapper: ref<inkWidget> = manager.GetWidget(n"scroll_wrapper");
+    if IsDefined(wrapper) {
+        wrapper.SetAffectsLayoutWhenHidden(false);
+        wrapper.SetVisible(false);
+    }
+    let height: Float = WardrobeTabsConfig.OutfitViewHeight();
+    let viewport: ref<inkScrollArea> = new inkScrollArea();
+    viewport.SetName(n"wardrobeOutfitViewport");
+    viewport.SetAnchor(inkEAnchor.TopLeft);
+    viewport.SetSize(WardrobeTabsConfig.ContainerWidth(), height);
+    viewport.SetRenderTransformPivot(new Vector2(0.0, 0.0));
+    viewport.SetConstrainContentPosition(true);
+    viewport.SetUseInternalMask(true);
+    viewport.SetInteractive(true);
+    viewport.RegisterToCallback(n"OnRelative", this, n"OnWardrobeOutfitWheel");
+    viewport.Reparent(manager, 0);
+    // The only child of the scroll area, moved by WardrobeTabsScrollOutfits.
+    let content: ref<inkCanvas> = new inkCanvas();
+    content.SetName(n"wardrobeOutfitGrid");
+    content.SetAnchor(inkEAnchor.TopLeft);
+    content.SetRenderTransformPivot(new Vector2(0.0, 0.0));
+    content.childOrder = inkEChildOrder.Forward;
+    content.Reparent(viewport);
+    screen.m_wtOutfitContent = content;
+    // Scroll bar on the right, shown when the outfits overflow.
+    let track: ref<inkRectangle> = new inkRectangle();
+    track.SetAnchor(inkEAnchor.TopLeft);
+    track.SetSize(6.0, height);
+    track.SetMargin(new inkMargin(WardrobeTabsConfig.OutfitBarLeft(), 0.0, 0.0, 0.0));
+    track.SetTintColor(new HDRColor(0.486, 0.129, 0.204, 1.0));
+    track.SetOpacity(0.5);
+    track.SetInteractive(false);
+    track.Reparent(manager, 0);
+    screen.m_wtOutfitTrack = track;
+    let thumb: ref<inkRectangle> = new inkRectangle();
+    thumb.SetAnchor(inkEAnchor.TopLeft);
+    thumb.SetSize(6.0, height);
+    thumb.SetMargin(new inkMargin(WardrobeTabsConfig.OutfitBarLeft(), 0.0, 0.0, 0.0));
+    thumb.SetTintColor(new HDRColor(1.176, 0.381, 0.348, 1.0));
+    thumb.SetInteractive(false);
+    thumb.Reparent(manager, 0);
+    screen.m_wtOutfitThumb = thumb;
+    let empty: ref<inkText> = this.WardrobeTabsMakeText(30, 0.0);
+    empty.SetMargin(new inkMargin(8.0, 12.0, 0.0, 0.0));
+    empty.SetTintColor(new HDRColor(0.682, 0.231, 0.212, 1.0));
+    empty.Reparent(content);
+    screen.m_wtOutfitEmpty = empty;
+}
+
+// One outfit cell: name, item count, a bar while worn, the favourite star top right and a
+// row of item icons.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsMakeOutfitCell(screen: ref<WardrobeScreenController>) -> Void {
+    let width: Float = WardrobeTabsConfig.OutfitCellWidth();
+    let height: Float = WardrobeTabsConfig.OutfitCellHeight();
+    let cell: ref<inkCanvas> = new inkCanvas();
+    cell.SetAnchor(inkEAnchor.TopLeft);
+    cell.SetSize(width, height);
+    cell.childOrder = inkEChildOrder.Forward;
+    cell.SetInteractive(true);
+    cell.RegisterToCallback(n"OnRelease", this, n"OnWardrobeOutfitClick");
+    cell.RegisterToCallback(n"OnPress", this, n"OnWardrobePress");
+    cell.RegisterToCallback(n"OnHoverOver", this, n"OnWardrobeOutfitHoverOver");
+    cell.RegisterToCallback(n"OnHoverOut", this, n"OnWardrobeOutfitHoverOut");
+    cell.Reparent(screen.m_wtOutfitContent);
+    let bg: ref<inkRectangle> = this.WardrobeTabsMakeRect(new HDRColor(0.15, 0.035, 0.08, 1.0), 0.9);
+    bg.Reparent(cell);
+    let bar: ref<inkRectangle> = new inkRectangle();
+    bar.SetAnchor(inkEAnchor.BottomFillHorizontaly);
+    bar.SetSize(width, 5.0);
+    bar.SetTintColor(new HDRColor(0.369, 0.965, 1.0, 1.0));
+    bar.SetInteractive(false);
+    bar.Reparent(cell);
+    let name: ref<inkText> = this.WardrobeTabsMakeText(36, width - 110.0);
+    name.SetMargin(new inkMargin(24.0, 14.0, 0.0, 0.0));
+    name.Reparent(cell);
+    let info: ref<inkText> = this.WardrobeTabsMakeText(24, width - 110.0);
+    info.SetMargin(new inkMargin(24.0, 64.0, 0.0, 0.0));
+    info.Reparent(cell);
+    let star: ref<inkCanvas> = new inkCanvas();
+    star.SetAnchor(inkEAnchor.TopRight);
+    star.SetAnchorPoint(1.0, 0.0);
+    star.SetSize(72.0, 72.0);
+    star.SetMargin(new inkMargin(0.0, 14.0, 14.0, 0.0));
+    star.SetInteractive(true);
+    star.RegisterToCallback(n"OnRelease", this, n"OnWardrobeStarClick");
+    star.RegisterToCallback(n"OnPress", this, n"OnWardrobePress");
+    star.RegisterToCallback(n"OnHoverOver", this, n"OnWardrobeStarHoverOver");
+    star.RegisterToCallback(n"OnHoverOut", this, n"OnWardrobeStarHoverOut");
+    star.Reparent(cell);
+    // The ripperdoc's favourite star.
+    let icon: ref<inkImage> = new inkImage();
+    icon.SetAtlasResource(r"base\\gameplay\\gui\\fullscreen\\ripperdoc\\assets\\cw_bars_assets.inkatlas");
+    icon.SetTexturePart(n"fav_star");
+    icon.SetAnchor(inkEAnchor.Centered);
+    icon.SetAnchorPoint(0.5, 0.5);
+    icon.SetFitToContent(false);
+    icon.SetSize(44.0, 44.0);
+    icon.SetInteractive(false);
+    icon.Reparent(star);
+    let size: Float = WardrobeTabsConfig.OutfitIconSize();
+    let slot: Int32 = 0;
+    while slot < WardrobeTabsConfig.OutfitIcons() {
+        let holder: ref<inkCanvas> = new inkCanvas();
+        holder.SetAnchor(inkEAnchor.TopLeft);
+        holder.SetSize(size, size);
+        holder.SetMargin(new inkMargin(24.0 + Cast<Float>(slot) * (size + WardrobeTabsConfig.OutfitIconGap()), WardrobeTabsConfig.OutfitIconTop(), 0.0, 0.0));
+        holder.SetInteractive(false);
+        holder.Reparent(cell);
+        let back: ref<inkRectangle> = this.WardrobeTabsMakeRect(new HDRColor(0.045, 0.012, 0.025, 1.0), 0.7);
+        back.SetInteractive(false);
+        back.Reparent(holder);
+        let image: ref<inkImage> = new inkImage();
+        image.SetAnchor(inkEAnchor.Centered);
+        image.SetAnchorPoint(0.5, 0.5);
+        image.SetFitToContent(true);
+        image.SetScale(new Vector2(size / 200.0, size / 200.0));
+        image.SetInteractive(false);
+        image.Reparent(holder);
+        ArrayPush(screen.m_wtOutfitIconSlots, holder);
+        ArrayPush(screen.m_wtOutfitIcons, image);
+        ArrayPush(screen.m_wtOutfitIconPaths, "");
+        if slot == WardrobeTabsConfig.OutfitIcons() - 1 {
+            let more: ref<inkText> = this.WardrobeTabsMakeText(24, 0.0);
+            more.SetAnchor(inkEAnchor.Centered);
+            more.SetAnchorPoint(0.5, 0.5);
+            more.SetTintColor(new HDRColor(1.176, 0.381, 0.348, 1.0));
+            more.Reparent(holder);
+            ArrayPush(screen.m_wtOutfitMores, more);
+        }
+        slot += 1;
+    }
+    ArrayPush(screen.m_wtOutfitCells, cell);
+    ArrayPush(screen.m_wtOutfitCellBgs, bg);
+    ArrayPush(screen.m_wtOutfitCellBars, bar);
+    ArrayPush(screen.m_wtOutfitCellNames, name);
+    ArrayPush(screen.m_wtOutfitCellInfos, info);
+    ArrayPush(screen.m_wtOutfitStars, star);
+    ArrayPush(screen.m_wtOutfitStarIcons, icon);
+}
+
+// A cell's icon row: the outfit's items in Equipment-EX's slot order (head to toe), the last
+// slot reading +N when they do not all fit.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsFillOutfitIcons(screen: ref<WardrobeScreenController>, cell: Int32, parts: array<ref<OutfitPart>>) -> Void {
+    let slots: array<TweakDBID> = screen.m_outfitSystem.GetOutfitSlots();
+    let keys: array<Int32>;
+    let paths: array<String>;
+    for part in parts {
+        let key: Int32 = ArrayFindFirst(slots, part.GetSlotID());
+        if key < 0 {
+            key = ArraySize(slots);
+        }
+        let recordID: TweakDBID = ItemID.GetTDBID(part.GetItemID());
+        let record: ref<Item_Record> = TweakDBInterface.GetItemRecord(recordID);
+        let path: String = IsDefined(record) ? UIInventoryItemsManager.ResolveItemIconName(recordID, record, false) : "";
+        let at: Int32 = 0;
+        while at < ArraySize(keys) && keys[at] <= key {
+            at += 1;
+        }
+        ArrayInsert(keys, at, key);
+        ArrayInsert(paths, at, path);
+    }
+    let icons: Int32 = WardrobeTabsConfig.OutfitIcons();
+    let count: Int32 = ArraySize(paths);
+    let shown: Int32 = count > icons ? icons - 1 : count;
+    let slot: Int32 = 0;
+    while slot < icons {
+        let at: Int32 = cell * icons + slot;
+        let more: Bool = count > icons && slot == icons - 1;
+        screen.m_wtOutfitIconSlots[at].SetVisible(slot < shown || more);
+        let path: String = slot < shown ? paths[slot] : "";
+        if NotEquals(screen.m_wtOutfitIconPaths[at], path) {
+            screen.m_wtOutfitIconPaths[at] = path;
+            screen.m_wtOutfitIcons[at].SetVisible(NotEquals(path, ""));
+            if NotEquals(path, "") {
+                InkImageUtils.RequestSetImage(this, screen.m_wtOutfitIcons[at], path);
+            }
+        }
+        slot += 1;
+    }
+    screen.m_wtOutfitMores[cell].SetVisible(count > icons);
+    screen.m_wtOutfitMores[cell].SetText("+" + ToString(count - shown));
+}
+
+// Fills the outfit cells: favourites first, then the rest, each in Equipment-EX's
+// alphabetical order, narrowed by the search.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsShowOutfits(screen: ref<WardrobeScreenController>) -> Void {
+    if !IsDefined(screen.m_wtOutfitContent) {
+        return;
+    }
+    let all: array<CName> = screen.m_outfitSystem.GetOutfits();
+    let favourites: array<CName>;
+    let others: array<CName>;
+    for name in all {
+        if StrLen(screen.m_wtOutfitQuery) == 0 || StrContains(UTF8StrLower(NameToString(name)), screen.m_wtOutfitQuery) {
+            if ArrayContains(screen.m_outfitSystem.m_wtFavourites, name) {
+                ArrayPush(favourites, name);
+            } else {
+                ArrayPush(others, name);
+            }
+        }
+    }
+    ArrayClear(screen.m_wtOutfitNames);
+    ArrayClear(screen.m_wtOutfitParts);
+    for name in favourites {
+        ArrayPush(screen.m_wtOutfitNames, name);
+    }
+    for name in others {
+        ArrayPush(screen.m_wtOutfitNames, name);
+    }
+    let count: Int32 = ArraySize(screen.m_wtOutfitNames);
+    while ArraySize(screen.m_wtOutfitCells) < count {
+        this.WardrobeTabsMakeOutfitCell(screen);
+    }
+    let columns: Int32 = WardrobeTabsConfig.OutfitColumns();
+    let stepX: Float = WardrobeTabsConfig.OutfitCellWidth() + WardrobeTabsConfig.OutfitGap();
+    let stepY: Float = WardrobeTabsConfig.OutfitCellHeight() + WardrobeTabsConfig.OutfitGap();
+    let index: Int32 = 0;
+    while index < ArraySize(screen.m_wtOutfitCells) {
+        let cell: wref<inkCanvas> = screen.m_wtOutfitCells[index];
+        cell.SetVisible(index < count);
+        if index < count {
+            let name: CName = screen.m_wtOutfitNames[index];
+            cell.SetMargin(new inkMargin(Cast<Float>(index % columns) * stepX, Cast<Float>(index / columns) * stepY, 0.0, 0.0));
+            screen.m_wtOutfitCellNames[index].SetText(NameToString(name));
+            let parts: array<ref<OutfitPart>> = screen.m_outfitSystem.GetOutfitParts(name);
+            ArrayPush(screen.m_wtOutfitParts, ArraySize(parts));
+            this.WardrobeTabsFillOutfitIcons(screen, index, parts);
+        }
+        index += 1;
+    }
+    let rows: Int32 = (count + columns - 1) / columns;
+    let height: Float = MaxF(Cast<Float>(rows) * stepY, 60.0);
+    screen.m_wtOutfitContent.SetSize(Cast<Float>(columns) * stepX, height);
+    screen.m_wtOutfitEmpty.SetVisible(count == 0);
+    screen.m_wtOutfitEmpty.SetText(ArraySize(all) == 0 ? "NO SAVED OUTFITS YET: SAVE OUTFIT KEEPS WHAT V IS WEARING"
+        : "NO OUTFIT MATCHES \"" + screen.m_wtOutfitQuery + "\"");
+    screen.m_wtOutfitScrollMax = MaxF(height - WardrobeTabsConfig.OutfitViewHeight(), 0.0);
+    this.WardrobeTabsScrollOutfits(screen, screen.m_wtOutfitScroll);
+    ModLog(n"WardrobeTabs", "Outfits view: " + ToString(count) + " of " + ToString(ArraySize(all)) + " outfits in "
+        + ToString(rows) + " rows, " + ToString(ArraySize(screen.m_wtOutfitCells)) + " cells, content height " + FloatToString(height));
+}
+
+// Moves the outfit grid inside its scroll area and the scroll bar's thumb with it.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsScrollOutfits(screen: ref<WardrobeScreenController>, offset: Float) -> Void {
+    let max: Float = screen.m_wtOutfitScrollMax;
+    screen.m_wtOutfitScroll = MinF(MaxF(offset, 0.0), max);
+    screen.m_wtOutfitContent.SetTranslation(0.0, -screen.m_wtOutfitScroll);
+    let view: Float = WardrobeTabsConfig.OutfitViewHeight();
+    screen.m_wtOutfitTrack.SetVisible(max > 0.0);
+    screen.m_wtOutfitThumb.SetVisible(max > 0.0);
+    if max > 0.0 {
+        let thumb: Float = MaxF(view * view / (view + max), 60.0);
+        screen.m_wtOutfitThumb.SetHeight(thumb);
+        screen.m_wtOutfitThumb.SetMargin(new inkMargin(WardrobeTabsConfig.OutfitBarLeft(), (view - thumb) * screen.m_wtOutfitScroll / max, 0.0, 0.0));
+    }
+}
+
+// Mouse wheel over the outfit grid, as Equipment-EX reads it for the preview's zoom.
+@addMethod(inkPreviewGameController)
+protected cb func OnWardrobeOutfitWheel(evt: ref<inkPointerEvent>) -> Bool {
+    let screen: ref<WardrobeScreenController> = this as WardrobeScreenController;
+    if !IsDefined(screen) || !evt.IsAction(n"mouse_wheel") || evt.GetAxisData() == 0.0 {
+        return false;
+    }
+    let step: Float = WardrobeTabsConfig.OutfitWheelStep();
+    this.WardrobeTabsScrollOutfits(screen, screen.m_wtOutfitScroll + (evt.GetAxisData() > 0.0 ? -step : step));
+    return true;
+}
+
+// Hover, worn and favourite states of the filled cells.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsStyleOutfits(screen: ref<WardrobeScreenController>) -> Void {
+    let count: Int32 = Min(ArraySize(screen.m_wtOutfitNames), ArraySize(screen.m_wtOutfitCells));
+    let index: Int32 = 0;
+    while index < count {
+        let name: CName = screen.m_wtOutfitNames[index];
+        let worn: Bool = screen.m_outfitSystem.IsEquipped(name);
+        // The linked outfit after an edit: EDITED where WEARING would be, its bar dimmed.
+        let edited: Bool = screen.m_wtLinkChanges >= 0 && Equals(name, screen.m_outfitSystem.m_wtLinked);
+        let favourite: Bool = ArrayContains(screen.m_outfitSystem.m_wtFavourites, name);
+        let hovered: Bool = screen.m_wtHover == screen.m_wtOutfitCells[index];
+        screen.m_wtOutfitCellBgs[index].SetTintColor(hovered ? new HDRColor(0.30, 0.06, 0.08, 1.0) : new HDRColor(0.15, 0.035, 0.08, 1.0));
+        screen.m_wtOutfitCellBars[index].SetVisible(worn || edited);
+        screen.m_wtOutfitCellBars[index].SetOpacity(worn ? 1.0 : 0.4);
+        screen.m_wtOutfitCellNames[index].SetTintColor(worn ? new HDRColor(0.369, 0.965, 1.0, 1.0)
+            : (hovered ? new HDRColor(1.370, 0.444, 0.405, 1.0) : new HDRColor(1.176, 0.381, 0.348, 1.0)));
+        let parts: Int32 = screen.m_wtOutfitParts[index];
+        screen.m_wtOutfitCellInfos[index].SetText(ToString(parts) + (parts == 1 ? " ITEM" : " ITEMS") + (worn ? "  |  WEARING" : (edited ? "  |  EDITED" : "")));
+        screen.m_wtOutfitCellInfos[index].SetTintColor(worn ? new HDRColor(0.204, 0.569, 0.592, 1.0) : new HDRColor(0.682, 0.231, 0.212, 1.0));
+        let starHovered: Bool = screen.m_wtStarHover == screen.m_wtOutfitStars[index];
+        screen.m_wtOutfitStarIcons[index].SetTintColor(favourite ? new HDRColor(0.98, 0.84, 0.36, 1.0)
+            : (starHovered ? new HDRColor(1.370, 0.444, 0.405, 1.0) : new HDRColor(0.682, 0.231, 0.212, 1.0)));
+        screen.m_wtOutfitStarIcons[index].SetOpacity(favourite || starHovered ? 1.0 : 0.45);
+        index += 1;
+    }
+}
+
+// Polled in the outfits view: refills the cells when the search text or the saved outfits
+// change (Equipment-EX's save and delete popups), restyles them when the worn outfit changes.
+// A newly saved outfit the search would hide clears the search, so its cell shows.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsWatchOutfits(screen: ref<WardrobeScreenController>) -> Void {
+    let typed: String = IsDefined(screen.m_wtOutfitSearch) ? UTF8StrLower(screen.m_wtOutfitSearch.GetText()) : "";
+    let outfits: array<CName> = screen.m_outfitSystem.GetOutfits();
+    // Not on the view's first fill, where every name is unknown.
+    if StrLen(typed) > 0 && StrLen(screen.m_wtOutfitSig) > 0 {
+        for name in outfits {
+            if !ArrayContains(screen.m_wtOutfitKnown, name) && !StrContains(UTF8StrLower(NameToString(name)), typed) {
+                screen.m_wtOutfitSearch.SetText("");
+                typed = "";
+                break;
+            }
+        }
+    }
+    screen.m_wtOutfitKnown = outfits;
+    let sig: String = typed + "|";
+    let worn: String = screen.m_outfitSystem.IsActive() ? "+" : "-";
+    for name in outfits {
+        sig += NameToString(name) + ";";
+        if screen.m_outfitSystem.IsEquipped(name) {
+            worn += NameToString(name);
+        }
+    }
+    if NotEquals(sig, screen.m_wtOutfitSig) || NotEquals(worn, screen.m_wtOutfitWorn) {
+        // Overwriting an outfit changes its items and wears it, so a new worn outfit refills too.
+        screen.m_wtOutfitSig = sig;
+        screen.m_wtOutfitWorn = worn;
+        if NotEquals(typed, screen.m_wtOutfitQuery) {
+            screen.m_wtOutfitScroll = 0.0;
+        }
+        screen.m_wtOutfitQuery = typed;
+        this.WardrobeTabsShowOutfits(screen);
+        this.WardrobeTabsRedraw(screen);
+    }
+}
+
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsOutfitIndex(screen: ref<WardrobeScreenController>, target: wref<inkWidget>) -> Int32 {
+    let index: Int32 = 0;
+    while index < ArraySize(screen.m_wtOutfitNames) && index < ArraySize(screen.m_wtOutfitCells) {
+        if screen.m_wtOutfitCells[index] == target || screen.m_wtOutfitStars[index] == target {
+            return index;
+        }
+        index += 1;
+    }
+    return -1;
+}
+
+// As Equipment-EX's outfit list does: no outfit changes while its system is blocked.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsOutfitAccess(screen: ref<WardrobeScreenController>) -> Bool {
+    if screen.m_outfitSystem.IsBlocked() {
+        let notification: ref<UIMenuNotificationEvent> = new UIMenuNotificationEvent();
+        notification.m_notificationType = UIMenuNotificationType.InventoryActionBlocked;
+        this.QueueEvent(notification);
+        return false;
+    }
+    return true;
 }
 
 @addMethod(inkPreviewGameController)
@@ -1049,6 +1722,7 @@ private func WardrobeTabsBuildBody(screen: ref<WardrobeScreenController>, wrappe
         head.childOrder = inkEChildOrder.Forward;
         head.SetInteractive(true);
         head.RegisterToCallback(n"OnRelease", this, n"OnWardrobeGroupClick");
+        head.RegisterToCallback(n"OnPress", this, n"OnWardrobePress");
         head.RegisterToCallback(n"OnHoverOver", this, n"OnWardrobeTabsHoverOver");
         head.RegisterToCallback(n"OnHoverOut", this, n"OnWardrobeTabsHoverOut");
         head.Reparent(body);
@@ -1074,6 +1748,7 @@ private func WardrobeTabsBuildBody(screen: ref<WardrobeScreenController>, wrappe
             tile.childOrder = inkEChildOrder.Forward;
             tile.SetInteractive(true);
             tile.RegisterToCallback(n"OnRelease", this, n"OnWardrobeTileClick");
+            tile.RegisterToCallback(n"OnPress", this, n"OnWardrobePress");
             tile.RegisterToCallback(n"OnHoverOver", this, n"OnWardrobeTabsHoverOver");
             tile.RegisterToCallback(n"OnHoverOut", this, n"OnWardrobeTabsHoverOut");
             tile.Reparent(body);
@@ -1138,6 +1813,16 @@ private func WardrobeTabsRefresh(screen: ref<WardrobeScreenController>) -> Void 
         if IsDefined(widget) {
             widget.SetVisible(clothing);
         }
+    }
+    for widget in screen.m_wtOutfitsOnly {
+        if IsDefined(widget) {
+            widget.SetVisible(!clothing);
+        }
+    }
+    if !clothing {
+        // Filled now rather than on the next tick.
+        screen.m_wtOutfitSig = "";
+        this.WardrobeTabsWatchOutfits(screen);
     }
     if IsDefined(screen.m_wtGrid) {
         screen.m_wtGrid.SetVisible(clothing);
@@ -1502,10 +2187,12 @@ private func WardrobeTabsRepresentative(screen: ref<WardrobeScreenController>, f
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsRedraw(screen: ref<WardrobeScreenController>) -> Void {
     let selected: Int32 = this.WardrobeTabsSlotIndex(screen, this.WardrobeTabsView().m_wtSlot);
+    this.WardrobeTabsUpdateLink(screen);
     this.WardrobeTabsRedrawBody(screen, selected);
     this.WardrobeTabsRedrawHeader(screen, selected);
     this.WardrobeTabsRedrawButtons(screen, selected);
     this.WardrobeTabsRedrawLook(screen);
+    this.WardrobeTabsStyleOutfits(screen);
 }
 
 // HEAD to FEET always; OTHER only when something there is worn. Within a group, worn items
@@ -1626,7 +2313,8 @@ private func WardrobeTabsSetIcon(screen: ref<WardrobeScreenController>, tile: In
 }
 
 // Title: the slot, or OUTFITS. Subtitle: how many items (and colours when grouped), the
-// share matching a search or filter, and what is worn there.
+// share matching a search or filter, and what is worn there; for outfits, how many are
+// saved, favourite and matching.
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsRedrawHeader(screen: ref<WardrobeScreenController>, selected: Int32) -> Void {
     if !IsDefined(screen.m_wtTitle) {
@@ -1636,8 +2324,21 @@ private func WardrobeTabsRedrawHeader(screen: ref<WardrobeScreenController>, sel
     if view.m_wtOutfitsSection {
         let names: array<CName> = screen.m_outfitSystem.GetOutfits();
         let saved: Int32 = ArraySize(names);
+        let favourites: Int32 = 0;
+        for name in names {
+            if ArrayContains(screen.m_outfitSystem.m_wtFavourites, name) {
+                favourites += 1;
+            }
+        }
+        let summary: String = ToString(saved) + (saved == 1 ? " SAVED OUTFIT" : " SAVED OUTFITS");
+        if favourites > 0 {
+            summary += "  |  " + ToString(favourites) + (favourites == 1 ? " FAVOURITE" : " FAVOURITES");
+        }
+        if StrLen(screen.m_wtOutfitQuery) > 0 {
+            summary += "  |  " + ToString(ArraySize(screen.m_wtOutfitNames)) + " MATCH";
+        }
         screen.m_wtTitle.SetText("OUTFITS");
-        screen.m_wtSubtitle.SetText(ToString(saved) + (saved == 1 ? " SAVED OUTFIT" : " SAVED OUTFITS"));
+        screen.m_wtSubtitle.SetText(summary);
         return;
     }
     if selected < 0 {
@@ -1699,8 +2400,8 @@ private func WardrobeTabsStyleButton(screen: ref<WardrobeScreenController>, butt
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsRedrawButtons(screen: ref<WardrobeScreenController>, selected: Int32) -> Void {
     let buttons: Int32 = ArraySize(screen.m_wtButtons);
-    // Header, sidebar and bar buttons all exist only when the grid container was found.
-    if buttons < 10 + WardrobeTabsConfig.ChipsPerPage() + 2 {
+    // Header, sidebar, bar and outfits buttons all exist only when the grid container was found.
+    if buttons <= WardrobeTabsConfig.NoOutfitButton() {
         return;
     }
     let view: ref<ViewManager> = this.WardrobeTabsView();
@@ -1748,12 +2449,19 @@ private func WardrobeTabsRedrawButtons(screen: ref<WardrobeScreenController>, se
         }
         chip += 1;
     }
-    // Bar: OUTFITS (with the saved count) and SAVE AS OUTFIT.
-    let outfits: Int32 = buttons - 2;
+    // Bar: OUTFITS with the saved count, BACK in the outfits view. Outfits view: SAVE OUTFIT,
+    // and NO OUTFIT lit while no outfit is worn.
+    let outfits: Int32 = WardrobeTabsConfig.OutfitsButton();
     let saved: array<CName> = screen.m_outfitSystem.GetOutfits();
-    screen.m_wtButtonTexts[outfits].SetText("OUTFITS (" + ToString(ArraySize(saved)) + ")");
-    this.WardrobeTabsStyleButton(screen, outfits, !clothing);
-    this.WardrobeTabsStyleButton(screen, buttons - 1, false);
+    screen.m_wtButtonTexts[outfits].SetText(clothing ? "OUTFITS (" + ToString(ArraySize(saved)) + ")" : "BACK");
+    this.WardrobeTabsStyleButton(screen, outfits, false);
+    let edited: Bool = screen.m_wtLinkChanges >= 0;
+    screen.m_wtButtons[WardrobeTabsConfig.UpdateButton()].SetVisible(edited);
+    screen.m_wtButtons[WardrobeTabsConfig.RevertButton()].SetVisible(edited);
+    this.WardrobeTabsStyleButton(screen, WardrobeTabsConfig.UpdateButton(), false);
+    this.WardrobeTabsStyleButton(screen, WardrobeTabsConfig.RevertButton(), false);
+    this.WardrobeTabsStyleButton(screen, WardrobeTabsConfig.SaveOutfitButton(), false);
+    this.WardrobeTabsStyleButton(screen, WardrobeTabsConfig.NoOutfitButton(), !screen.m_outfitSystem.IsActive());
 }
 
 // Moves the chip page so the selected slot is on it.
@@ -1768,20 +2476,75 @@ private func WardrobeTabsRevealChip(screen: ref<WardrobeScreenController>) -> Vo
     }
 }
 
-// "Saved as <outfit>" when the worn items match a saved outfit.
+// Keeps the linked outfit and counts the slots that differ from it. A look that matches an
+// outfit links it (wearing, saving, UPDATE, REVERT all end that way); NO OUTFIT or deleting
+// the linked outfit clears the link.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsUpdateLink(screen: ref<WardrobeScreenController>) -> Void {
+    let system: ref<OutfitSystem> = screen.m_outfitSystem;
+    screen.m_wtLinkChanges = -1;
+    if !system.IsActive() {
+        system.m_wtLinked = n"";
+        return;
+    }
+    let outfits: array<CName> = system.GetOutfits();
+    if IsNameValid(system.m_wtLinked) && system.IsEquipped(system.m_wtLinked) {
+        return;
+    }
+    for outfit in outfits {
+        if system.IsEquipped(outfit) {
+            system.m_wtLinked = outfit;
+            return;
+        }
+    }
+    if !IsNameValid(system.m_wtLinked) || !ArrayContains(outfits, system.m_wtLinked) {
+        system.m_wtLinked = n"";
+        return;
+    }
+    // Saved items no longer worn are removed or replaced; a replaced one's slot is occupied,
+    // so it is not counted again among the worn items the outfit does not have.
+    let parts: array<ref<OutfitPart>> = system.GetOutfitParts(system.m_wtLinked);
+    let used: array<TweakDBID> = system.GetUsedSlots();
+    let missing: Int32 = 0;
+    let replaced: Int32 = 0;
+    let kept: Int32 = 0;
+    for part in parts {
+        if system.IsEquipped(part.GetItemID()) {
+            kept += 1;
+        } else {
+            missing += 1;
+            if system.IsOccupied(part.GetSlotID()) {
+                replaced += 1;
+            }
+        }
+    }
+    screen.m_wtLinkChanges = missing + Max(0, ArraySize(used) - kept - replaced);
+}
+
+// "Saved as <outfit>" when the worn items match a saved outfit, "<outfit> | edited" after a
+// change to the linked one.
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsRedrawLook(screen: ref<WardrobeScreenController>) -> Void {
     if !IsDefined(screen.m_wtLook) {
         return;
     }
-    let outfits: array<CName> = screen.m_outfitSystem.GetOutfits();
-    for outfit in outfits {
-        if screen.m_outfitSystem.IsEquipped(outfit) {
-            screen.m_wtLook.SetText("SAVED AS " + NameToString(outfit));
-            return;
-        }
+    let linked: CName = screen.m_outfitSystem.m_wtLinked;
+    let changes: Int32 = screen.m_wtLinkChanges;
+    let tried: wref<UIInventoryItem> = screen.m_wtTrying;
+    screen.m_wtLook.SetTintColor(IsDefined(tried) ? new HDRColor(0.369, 0.965, 1.0, 1.0) : new HDRColor(0.682, 0.231, 0.212, 1.0));
+    if IsDefined(tried) {
+        screen.m_wtLook.SetText("TRYING ON: " + WardrobeTabsConfig.CleanName(GetLocalizedText(tried.GetName())));
+    } else if changes > 0 {
+        screen.m_wtLook.SetText(NameToString(linked) + "  |  EDITED  |  " + ToString(changes) + (changes == 1 ? " CHANGE" : " CHANGES"));
+    } else if changes == 0 {
+        // Same items, reassigned slots: not the saved outfit, but nothing to count.
+        screen.m_wtLook.SetText(NameToString(linked) + "  |  EDITED");
+    } else if IsNameValid(linked) {
+        screen.m_wtLook.SetText("SAVED AS " + NameToString(linked));
+    } else {
+        let outfits: array<CName> = screen.m_outfitSystem.GetOutfits();
+        screen.m_wtLook.SetText(ArraySize(outfits) == 0 ? "NO SAVED OUTFITS YET" : "NOT SAVED AS AN OUTFIT");
     }
-    screen.m_wtLook.SetText(ArraySize(outfits) == 0 ? "NO SAVED OUTFITS YET" : "NOT SAVED AS AN OUTFIT");
 }
 
 // Selects a slot and shows its items from the top, switching to AVAILABLE CLOTHING.
@@ -1793,6 +2556,10 @@ private func WardrobeTabsSelect(screen: ref<WardrobeScreenController>, index: In
         this.WardrobeTabsRefresh(screen);
     }
     view.m_wtArea = screen.m_wtSlots[index].m_wtTab - 1;
+    // Slots in the framed area leave the camera alone; one in another area moves it.
+    if screen.m_wtCameraArea != view.m_wtArea + 1 {
+        this.WardrobeTabsCamera(screen, view.m_wtArea);
+    }
     let slotID: TweakDBID = screen.m_wtSlots[index].ItemData.SlotID;
     if slotID == view.m_wtSlot {
         this.WardrobeTabsRevealChip(screen);
@@ -1814,6 +2581,8 @@ private func WardrobeTabsSelectArea(screen: ref<WardrobeScreenController>, area:
         return;
     }
     screen.m_wtChipOffset = 0;
+    // Picking an area always frames it, also again after the wheel zoomed elsewhere.
+    this.WardrobeTabsCamera(screen, area);
     let selected: Int32 = this.WardrobeTabsSlotIndex(screen, view.m_wtSlot);
     if ArrayContains(slots, selected) && !view.m_wtOutfitsSection {
         view.m_wtArea = area;
@@ -1824,6 +2593,182 @@ private func WardrobeTabsSelectArea(screen: ref<WardrobeScreenController>, area:
     this.WardrobeTabsSelect(screen, slots[0]);
 }
 
+// Hover try-on, once per tick. A card hovered for TryOnTicks() puts its item on the preview
+// puppet only (Equipment-EX's EquipPuppetItem); moving to another card swaps it after the same
+// pause, and nothing hovered for TryOffTicks() puts the real look back. OUTFITS, a refilled
+// or scrolled grid (new data under the cursor) and an equipped item end it too.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsWatchTryOn(screen: ref<WardrobeScreenController>) -> Void {
+    let view: ref<ViewManager> = this.WardrobeTabsView();
+    let hovered: wref<UIInventoryItem>;
+    if !view.m_wtOutfitsSection {
+        if IsDefined(view.m_wtHoverDotItem) {
+            hovered = view.m_wtHoverDotItem;
+        } else if IsDefined(view.m_wtHoverCard) {
+            hovered = view.m_wtHoverCard.GetUIInventoryItem();
+        }
+    }
+    if IsDefined(hovered) && hovered.IsEquipped() {
+        hovered = null;
+    }
+    if hovered != screen.m_wtTryHover {
+        // Same display, other item: the grid scrolled or refilled under the cursor.
+        if IsDefined(hovered) && !IsDefined(view.m_wtHoverDotItem) && !IsDefined(screen.m_wtTryDotItem)
+            && view.m_wtHoverCard == screen.m_wtTryCard {
+            this.WardrobeTabsEndTryOn(screen);
+        }
+        screen.m_wtTryHover = hovered;
+        screen.m_wtTryTicks = 0;
+    } else if screen.m_wtTryTicks < 1000 {
+        screen.m_wtTryTicks += 1;
+    }
+    screen.m_wtTryCard = view.m_wtHoverCard;
+    screen.m_wtTryDotItem = view.m_wtHoverDotItem;
+    if !IsDefined(hovered) {
+        screen.m_wtTryIdle += 1;
+        // OUTFITS ends it at once; so does the tried item being equipped (clicked).
+        let tried: wref<UIInventoryItem> = screen.m_wtTrying;
+        let equipped: Bool = IsDefined(tried) && tried.IsEquipped();
+        if screen.m_wtTryIdle >= WardrobeTabsConfig.TryOffTicks() || view.m_wtOutfitsSection || equipped {
+            this.WardrobeTabsEndTryOn(screen);
+        }
+        return;
+    }
+    screen.m_wtTryIdle = 0;
+    if screen.m_wtTryTicks == WardrobeTabsConfig.TryOnTicks() && hovered != screen.m_wtTrying {
+        this.WardrobeTabsStartTryOn(screen, hovered);
+    }
+}
+
+// Moves the preview camera to an area's own setup (-1 or OTHER: vanilla's full body), with
+// the game's own transition. Equipment-EX's wheel zoom sends the same event to the same
+// preview.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsCamera(screen: ref<WardrobeScreenController>, area: Int32) -> Void {
+    let preview: wref<inkInventoryPuppetPreviewGameController> = PaperdollHelper.GetInstance(this.GetPlayerControlledObject().GetGame()).GetPreview();
+    if !IsDefined(preview) {
+        ModLog(n"WardrobeTabs", "Camera: no preview controller");
+        return;
+    }
+    let index: Int32 = EnumInt(InventoryPaperdollZoomArea.Default);
+    if area >= 0 && area < WardrobeTabsConfig.CameraAreas() {
+        if preview.m_wtFirstSetup > 0 {
+            index = preview.m_wtFirstSetup + area;
+        } else {
+            index = EnumInt(WardrobeTabsConfig.AreaCamera(area));
+            ModLog(n"WardrobeTabs", "Camera: setups not added at preview start, using vanilla setup");
+        }
+    }
+    let evt: ref<gameuiPuppetPreview_SetCameraSetupEvent> = new gameuiPuppetPreview_SetCameraSetupEvent();
+    evt.setupIndex = Cast<Uint32>(index);
+    preview.QueueEvent(evt);
+    screen.m_wtCameraArea = area >= 0 && area < WardrobeTabsConfig.CameraAreas() ? area + 1 : 0;
+    ModLog(n"WardrobeTabs", "Camera: " + WardrobeTabsConfig.AreaLabel(area) + " -> setup " + ToString(index) + " ("
+        + NameToString(WardrobeTabsConfig.CameraSlot(area)) + ", " + ToString(WardrobeTabsConfig.CameraZoom(area)) + ")");
+}
+
+// Index of the mod's first camera setup on V's preview (one per area, after vanilla's 12).
+// They are added when the preview starts, as the old PreviewZoom did: added later, on the
+// first area click (v20, v21), V vanished on every one of them.
+@addField(inkInventoryPuppetPreviewGameController)
+public let m_wtFirstSetup: Int32;
+
+@wrapMethod(inkInventoryPuppetPreviewGameController)
+protected cb func OnInitialize() -> Bool {
+    let result: Bool = wrappedMethod();
+    this.WardrobeTabsCameraSetups();
+    return result;
+}
+
+@addMethod(inkInventoryPuppetPreviewGameController)
+public func WardrobeTabsCameraSetups() -> Int32 {
+    if this.m_wtFirstSetup > 0 {
+        return this.m_wtFirstSetup;
+    }
+    let first: Int32 = ArraySize(this.cameraController.cameraSetup);
+    ArrayResize(this.cameraController.cameraSetup, first + WardrobeTabsConfig.CameraAreas());
+    let area: Int32 = 0;
+    while area < WardrobeTabsConfig.CameraAreas() {
+        let setup: gameuiPuppetPreviewCameraSetup;
+        setup.slotName = WardrobeTabsConfig.CameraSlot(area);
+        setup.cameraZoom = WardrobeTabsConfig.CameraZoom(area);
+        setup.interpolationTime = 0.5;
+        this.cameraController.cameraSetup[first + area] = setup;
+        area += 1;
+    }
+    this.m_wtFirstSetup = first;
+    ModLog(n"WardrobeTabs", "Camera: added setups " + ToString(first) + " to " + ToString(first + WardrobeTabsConfig.CameraAreas() - 1));
+    return first;
+}
+
+// The mod's setups have no InventoryPaperdollZoomArea: V takes the pose of the area's vanilla
+// setup while the camera uses the requested one (as the earlier PreviewZoom did).
+@wrapMethod(inkInventoryPuppetPreviewGameController)
+protected cb func OnSetCameraSetupEvent(index: Uint32, slotName: CName) -> Bool {
+    let first: Int32 = this.m_wtFirstSetup;
+    let at: Int32 = Cast<Int32>(index);
+    if first > 0 && at >= first && at < first + WardrobeTabsConfig.CameraAreas() {
+        return wrappedMethod(Cast<Uint32>(EnumInt(WardrobeTabsConfig.AreaCamera(at - first))), slotName);
+    }
+    return wrappedMethod(index, slotName);
+}
+
+// V on the wardrobe's preview. The screen's own GetGamePuppet() is empty: the preview is a
+// separate inkInventoryPuppetPreviewGameController, which Equipment-EX records on its
+// PaperdollHelper when it initializes.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsPreviewPuppet(screen: ref<WardrobeScreenController>) -> wref<gamePuppet> {
+    let preview: wref<inkInventoryPuppetPreviewGameController> = PaperdollHelper.GetInstance(this.GetPlayerControlledObject().GetGame()).GetPreview();
+    if IsDefined(preview) && IsDefined(preview.GetGamePuppet()) {
+        return preview.GetGamePuppet();
+    }
+    return screen.GetGamePuppet();
+}
+
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsStartTryOn(screen: ref<WardrobeScreenController>, item: wref<UIInventoryItem>) -> Void {
+    let name: String = WardrobeTabsConfig.CleanName(GetLocalizedText(item.GetName()));
+    let puppet: wref<gamePuppet> = this.WardrobeTabsPreviewPuppet(screen);
+    if !IsDefined(puppet) || screen.m_outfitSystem.IsBlocked() {
+        ModLog(n"WardrobeTabs", "Try-on skipped for " + name + (IsDefined(puppet) ? ": outfit system blocked" : ": no preview puppet"));
+        return;
+    }
+    let itemID: ItemID = item.GetID();
+    if !screen.m_outfitSystem.IsEquippable(itemID) {
+        ModLog(n"WardrobeTabs", "Try-on skipped for " + name + ": not equippable");
+        return;
+    }
+    let slotID: TweakDBID = screen.m_outfitSystem.GetItemSlot(itemID);
+    // Another slot was being tried: back to the real look first.
+    if IsDefined(screen.m_wtTrying) && screen.m_wtTrySlot != slotID {
+        this.WardrobeTabsEndTryOn(screen);
+    }
+    GameInstance.GetTransactionSystem(puppet.GetGame()).RemoveItemFromSlot(puppet, slotID);
+    screen.m_outfitSystem.EquipPuppetItem(puppet, itemID);
+    screen.m_wtTrying = item;
+    screen.m_wtTrySlot = slotID;
+    ModLog(n"WardrobeTabs", "Trying on " + name + " in " + TDBID.ToStringDEBUG(slotID));
+    this.WardrobeTabsRedrawLook(screen);
+}
+
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsEndTryOn(screen: ref<WardrobeScreenController>) -> Void {
+    if !IsDefined(screen.m_wtTrying) && !TDBID.IsValid(screen.m_wtTrySlot) {
+        return;
+    }
+    let puppet: wref<gamePuppet> = this.WardrobeTabsPreviewPuppet(screen);
+    if IsDefined(puppet) {
+        if screen.m_outfitSystem.IsActive() {
+            screen.m_outfitSystem.EquipPuppetOutfit(puppet);
+        } else {
+            GameInstance.GetTransactionSystem(puppet.GetGame()).RemoveItemFromSlot(puppet, screen.m_wtTrySlot);
+        }
+    }
+    screen.m_wtTrying = null;
+    screen.m_wtTrySlot = TDBID.None();
+    this.WardrobeTabsRedrawLook(screen);
+}
+
 @addMethod(inkPreviewGameController)
 protected cb func OnWardrobeTabsWatch(proxy: ref<inkAnimProxy>) -> Bool {
     let screen: ref<WardrobeScreenController> = this as WardrobeScreenController;
@@ -1832,6 +2777,10 @@ protected cb func OnWardrobeTabsWatch(proxy: ref<inkAnimProxy>) -> Bool {
     }
     if !screen.m_wtBuilt {
         this.WardrobeTabsBuild(screen);
+    }
+    this.WardrobeTabsWatchTryOn(screen);
+    if this.WardrobeTabsView().m_wtOutfitsSection {
+        this.WardrobeTabsWatchOutfits(screen);
     }
     // A freshly populated source starts with slot data this mod has not tagged yet. After
     // WardrobeTabsApply the source holds item data only, which never matches.
@@ -1920,12 +2869,36 @@ protected cb func OnWardrobeTabsVariant(evt: ref<WardrobeTabsVariantEvent>) -> B
 }
 
 // A worn item's tile opens its slot; the + tile and a group header show the area's slots.
+// A release only counts on the widget the press started on: Enter that confirms a popup on
+// press would otherwise land its release on the button under the cursor (SAVE OUTFIT, which
+// opened the popup again).
+@addMethod(inkPreviewGameController)
+protected cb func OnWardrobePress(evt: ref<inkPointerEvent>) -> Bool {
+    let screen: ref<WardrobeScreenController> = this as WardrobeScreenController;
+    if IsDefined(screen) {
+        screen.m_wtPressed = evt.GetTarget();
+    }
+    return false;
+}
+
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsPressedHere(screen: ref<WardrobeScreenController>, evt: ref<inkPointerEvent>) -> Bool {
+    if screen.m_wtPressed != evt.GetTarget() {
+        return false;
+    }
+    screen.m_wtPressed = null;
+    return true;
+}
+
 @addMethod(inkPreviewGameController)
 protected cb func OnWardrobeTileClick(evt: ref<inkPointerEvent>) -> Bool {
     let screen: ref<WardrobeScreenController> = this as WardrobeScreenController;
     // Middle mouse is vanilla's unequip_item action.
     let unequip: Bool = evt.IsAction(n"unequip_item");
     if !IsDefined(screen) || !evt.IsAction(n"click") && !unequip {
+        return false;
+    }
+    if !this.WardrobeTabsPressedHere(screen, evt) {
         return false;
     }
     let target: wref<inkWidget> = evt.GetCurrentTarget();
@@ -1967,6 +2940,9 @@ protected cb func OnWardrobeGroupClick(evt: ref<inkPointerEvent>) -> Bool {
     if !IsDefined(screen) || !evt.IsAction(n"click") {
         return false;
     }
+    if !this.WardrobeTabsPressedHere(screen, evt) {
+        return false;
+    }
     let target: wref<inkWidget> = evt.GetCurrentTarget();
     let group: Int32 = 0;
     while group < ArraySize(screen.m_wtGroupHeads) {
@@ -1984,6 +2960,9 @@ protected cb func OnWardrobeGroupClick(evt: ref<inkPointerEvent>) -> Bool {
 protected cb func OnWardrobeButtonClick(evt: ref<inkPointerEvent>) -> Bool {
     let screen: ref<WardrobeScreenController> = this as WardrobeScreenController;
     if !IsDefined(screen) || !evt.IsAction(n"click") {
+        return false;
+    }
+    if !this.WardrobeTabsPressedHere(screen, evt) {
         return false;
     }
     let target: wref<inkWidget> = evt.GetCurrentTarget();
@@ -2010,11 +2989,37 @@ protected cb func OnWardrobeButtonClick(evt: ref<inkPointerEvent>) -> Bool {
     } else if button == 8 || button == 9 {
         screen.m_wtChipOffset += (button == 8 ? -1 : 1) * WardrobeTabsConfig.ChipsPerPage();
         this.WardrobeTabsRedraw(screen);
-    } else if button == count - 2 {
+    } else if button == WardrobeTabsConfig.OutfitsButton() {
         view.m_wtOutfitsSection = !view.m_wtOutfitsSection;
+        // OUTFITS shows the whole look; BACK returns to the area framed before.
+        if view.m_wtOutfitsSection {
+            screen.m_wtCameraResume = screen.m_wtCameraArea;
+            this.WardrobeTabsCamera(screen, -1);
+        } else if screen.m_wtCameraResume > 0 {
+            this.WardrobeTabsCamera(screen, screen.m_wtCameraResume - 1);
+        }
         this.WardrobeTabsRefresh(screen);
-    } else if button == count - 1 {
-        screen.m_outfitManager.ShowSaveOutfitPopup();
+    } else if button == WardrobeTabsConfig.UpdateButton() {
+        let linked: CName = screen.m_outfitSystem.m_wtLinked;
+        if screen.m_wtLinkChanges >= 0 && this.WardrobeTabsOutfitAccess(screen) {
+            screen.m_outfitSystem.SaveOutfit(linked, true);
+            ModLog(n"WardrobeTabs", "Outfit " + NameToString(linked) + " updated from the current look");
+            this.WardrobeTabsRedraw(screen);
+        }
+    } else if button == WardrobeTabsConfig.RevertButton() {
+        let linked: CName = screen.m_outfitSystem.m_wtLinked;
+        if screen.m_wtLinkChanges >= 0 && this.WardrobeTabsOutfitAccess(screen) {
+            screen.m_outfitSystem.LoadOutfit(linked);
+        }
+    } else if button == WardrobeTabsConfig.SaveOutfitButton() {
+        if this.WardrobeTabsOutfitAccess(screen) {
+            ModLog(n"WardrobeTabs", "Save outfit popup opened");
+            screen.m_outfitManager.ShowSaveOutfitPopup();
+        }
+    } else if button == WardrobeTabsConfig.NoOutfitButton() {
+        if this.WardrobeTabsOutfitAccess(screen) && screen.m_outfitSystem.IsActive() {
+            screen.m_outfitSystem.Deactivate();
+        }
     } else {
         let chip: Int32 = button - 10;
         if chip >= 0 && chip < ArraySize(screen.m_wtChipSlots) {
@@ -2048,6 +3053,122 @@ protected cb func OnWardrobeTabsHoverOut(evt: ref<inkPointerEvent>) -> Bool {
     if screen.m_wtHover == target {
         screen.m_wtHover = null;
         this.WardrobeTabsRedraw(screen);
+    }
+    return false;
+}
+
+// Outfit cell: click wears the outfit; Equipment-EX's delete key (drop_item) asks to delete
+// it. A click on the cell's star is the star's alone.
+@addMethod(inkPreviewGameController)
+protected cb func OnWardrobeOutfitClick(evt: ref<inkPointerEvent>) -> Bool {
+    let screen: ref<WardrobeScreenController> = this as WardrobeScreenController;
+    if !IsDefined(screen) {
+        return false;
+    }
+    let index: Int32 = this.WardrobeTabsOutfitIndex(screen, evt.GetCurrentTarget());
+    if index < 0 || screen.m_wtOutfitStars[index] == evt.GetTarget() {
+        return false;
+    }
+    if !this.WardrobeTabsPressedHere(screen, evt) {
+        return false;
+    }
+    let name: CName = screen.m_wtOutfitNames[index];
+    if evt.IsAction(n"click") {
+        if this.WardrobeTabsOutfitAccess(screen) && !screen.m_outfitSystem.IsEquipped(name) {
+            this.PlaySound(n"Button", n"OnPress");
+            screen.m_outfitSystem.LoadOutfit(name);
+        }
+        return true;
+    }
+    if evt.IsAction(n"drop_item") {
+        if this.WardrobeTabsOutfitAccess(screen) {
+            screen.m_outfitManager.ShowDeleteOutfitPopup(name);
+        }
+        return true;
+    }
+    return false;
+}
+
+// Button hints as on Equipment-EX's outfit list.
+@addMethod(inkPreviewGameController)
+protected cb func OnWardrobeOutfitHoverOver(evt: ref<inkPointerEvent>) -> Bool {
+    let screen: ref<WardrobeScreenController> = this as WardrobeScreenController;
+    if !IsDefined(screen) {
+        return false;
+    }
+    let target: wref<inkWidget> = evt.GetCurrentTarget();
+    let index: Int32 = this.WardrobeTabsOutfitIndex(screen, target);
+    screen.m_wtHover = target;
+    screen.m_buttonHints.RemoveButtonHint(n"click");
+    screen.m_buttonHints.RemoveButtonHint(n"drop_item");
+    if index >= 0 {
+        screen.m_buttonHints.AddButtonHint(n"drop_item", GetLocalizedTextByKey(n"UI-Wardrobe-Deleteset"));
+        if !screen.m_outfitSystem.IsEquipped(screen.m_wtOutfitNames[index]) {
+            screen.m_buttonHints.AddButtonHint(n"click", GetLocalizedTextByKey(n"Gameplay-Devices-Interactions-Equip"));
+        }
+    }
+    this.WardrobeTabsStyleOutfits(screen);
+    return false;
+}
+
+@addMethod(inkPreviewGameController)
+protected cb func OnWardrobeOutfitHoverOut(evt: ref<inkPointerEvent>) -> Bool {
+    let screen: ref<WardrobeScreenController> = this as WardrobeScreenController;
+    if !IsDefined(screen) {
+        return false;
+    }
+    if screen.m_wtHover == evt.GetCurrentTarget() {
+        screen.m_wtHover = null;
+    }
+    screen.m_buttonHints.RemoveButtonHint(n"click");
+    screen.m_buttonHints.RemoveButtonHint(n"drop_item");
+    this.WardrobeTabsStyleOutfits(screen);
+    return false;
+}
+
+// Star: marks or unmarks the outfit as a favourite; favourites move to the front.
+@addMethod(inkPreviewGameController)
+protected cb func OnWardrobeStarClick(evt: ref<inkPointerEvent>) -> Bool {
+    let screen: ref<WardrobeScreenController> = this as WardrobeScreenController;
+    if !IsDefined(screen) || !evt.IsAction(n"click") {
+        return false;
+    }
+    let index: Int32 = this.WardrobeTabsOutfitIndex(screen, evt.GetCurrentTarget());
+    if index < 0 {
+        return false;
+    }
+    if !this.WardrobeTabsPressedHere(screen, evt) {
+        return false;
+    }
+    let name: CName = screen.m_wtOutfitNames[index];
+    if ArrayContains(screen.m_outfitSystem.m_wtFavourites, name) {
+        ArrayRemove(screen.m_outfitSystem.m_wtFavourites, name);
+    } else {
+        ArrayPush(screen.m_outfitSystem.m_wtFavourites, name);
+    }
+    this.PlaySound(n"Button", n"OnPress");
+    this.WardrobeTabsShowOutfits(screen);
+    this.WardrobeTabsRedraw(screen);
+    evt.Handle();
+    return true;
+}
+
+@addMethod(inkPreviewGameController)
+protected cb func OnWardrobeStarHoverOver(evt: ref<inkPointerEvent>) -> Bool {
+    let screen: ref<WardrobeScreenController> = this as WardrobeScreenController;
+    if IsDefined(screen) {
+        screen.m_wtStarHover = evt.GetCurrentTarget();
+        this.WardrobeTabsStyleOutfits(screen);
+    }
+    return false;
+}
+
+@addMethod(inkPreviewGameController)
+protected cb func OnWardrobeStarHoverOut(evt: ref<inkPointerEvent>) -> Bool {
+    let screen: ref<WardrobeScreenController> = this as WardrobeScreenController;
+    if IsDefined(screen) && screen.m_wtStarHover == evt.GetCurrentTarget() {
+        screen.m_wtStarHover = null;
+        this.WardrobeTabsStyleOutfits(screen);
     }
     return false;
 }

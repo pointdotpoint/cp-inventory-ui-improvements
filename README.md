@@ -6,7 +6,9 @@ written in redscript.
 - Body column left of V: one group per body area, a tile per worn item and a + tile.
 - Drawer on the right: title, search, HEAD / BODY / ARMS / LEGS / FEET tabs and EQUIPPED ONLY
   on top; the selected area's slots as a sidebar left of the grid; the slot's items as
-  seven-column named cards; an outfit bar with the current look, OUTFITS and SAVE AS OUTFIT.
+  seven-column named cards; an outfit bar with the current look and OUTFITS / BACK.
+- Outfits view: SAVE OUTFIT, NO OUTFIT and search on top; saved outfits as a three-column grid
+  with a favourite star on each cell, favourites first.
 
 See `mod/r6/scripts/WardrobeTabs/README.md` for details and `CLAUDE.md` for how it is built.
 
