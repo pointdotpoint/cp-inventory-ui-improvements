@@ -34,14 +34,8 @@ first slot with one is selected.
 
 Each item is its own card; a WEARING tag marks worn cards.
 
-Colour grouping is off (`WardrobeTabsConfig.ColourGrouping()`): item names follow too
-many patterns to guess families reliably. When on, GROUP COLOURS shows one card per item family, guessed from names:
-a trailing "(…)" or a short " - …" tail is the colour, so "NIKE AIR JORDAN 4
-(BLACK - BLUE)" groups under "NIKE AIR JORDAN 4". The card shows the worn colour,
-else the first matching one, with a dot per colour (named colour words are
-coloured, others grey; a ring marks the worn one). Clicking a dot equips that
-colour; hovering it shows its name. A WEARING tag marks worn cards.
-Resting the cursor on a card (or a colour dot) for 0.45 s tries the item on: it
+A WEARING tag marks worn cards.
+Resting the cursor on a card for 0.45 s tries the item on: it
 goes on the preview only, nothing is equipped, and the bar reads "TRYING ON: …"
 in cyan. Moving to another card swaps it after the same pause; moving off the
 cards, OUTFITS, a scrolled or refilled grid and closing the wardrobe put the real

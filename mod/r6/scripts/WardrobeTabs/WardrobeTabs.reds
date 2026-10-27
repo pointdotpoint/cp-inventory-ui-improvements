@@ -2,9 +2,9 @@
 // Requires Equipment-EX.
 // - Body column, left of V: one group per body area with a tile per worn item and a + tile.
 // - Drawer (the item panel): a header with the selected slot's name, a subtitle, search,
-//   HEAD..FEET area tabs and GROUP COLOURS / EQUIPPED ONLY toggles; a sidebar left of the
-//   grid with the area's slots; the grid as seven-column named cards, one per item family when colours are grouped, with
-//   colour dots; and the outfit bar along the bottom (current look, OUTFITS / BACK).
+//   HEAD..FEET area tabs, column buttons, PACK and EQUIPPED ONLY; a sidebar left of the
+//   grid with the area's slots; the grid as named cards, 4 to 7 per row; and the outfit bar
+//   along the bottom (current look, OUTFITS / BACK).
 //   Equipment-EX's slot headers and its own header row are hidden. Mouse only.
 // - Outfits view (OUTFITS): SAVE OUTFIT, NO OUTFIT and a search box in the drawer header, and
 //   the saved outfits as a three-column grid of cells, favourites (star) first.
@@ -80,6 +80,12 @@ public abstract class WardrobeTabsConfig {
 
     public static func CameraAreas() -> Int32 = 5;
 
+    // Release version, logged once per wardrobe opening.
+    public static func Version() -> String = "1.0.0";
+    // Routine log lines (try-ons, camera moves, refills, clicks) for development; failures and
+    // the opening line are always logged.
+    public static func Verbose() -> Bool = false;
+
     // The FEET aim point is V's feet, so the camera centres them. No aim point sits between
     // the feet and the hips, so the preview image moves down this far (ink units, of its 2000)
     // while FEET is framed, to put the feet in the lower part of the view.
@@ -134,7 +140,7 @@ public abstract class WardrobeTabsConfig {
     public static func GridLeft() -> Float = 356.0;
 
     // Card cells (wardrobe_tabs\gui\grid.inkwidget) are 192 x 216, seven to a row: the item
-    // display (224 x 202) scaled to 168 x 151.5, then the name and the colour dots.
+    // display (224 x 202) scaled to 168 x 151.5, then the name.
     // Measures for the seven-column cell; cells of other column counts (Root4..Root6 in the
     // archive) scale them by their width over 192 (WardrobeTabsCardScale).
     public static func CardArtScale() -> Float = 0.75;
@@ -142,9 +148,6 @@ public abstract class WardrobeTabsConfig {
     public static func CardArtWidth() -> Float = 168.0;
     public static func CardNameTop() -> Float = 160.0;
     public static func CardNameWidth() -> Float = 172.0;
-    // Colour grouping (one card per item family, colour dots, GROUP COLOURS toggle) is off:
-    // item names follow too many patterns to guess families reliably.
-    public static func ColourGrouping() -> Bool = false;
     // Watcher ticks (0.05 s each) the search text must stay unchanged before it filters.
     public static func SearchSettleTicks() -> Int32 = 3;
     // Watcher ticks (0.05 s) a card is hovered before V tries its item on (0.25 s pause plus a
@@ -152,9 +155,6 @@ public abstract class WardrobeTabsConfig {
     // hovered before the preview goes back (bridges the gaps between cards).
     public static func TryOnTicks() -> Int32 = 9;
     public static func TryOffTicks() -> Int32 = 2;
-    public static func CardDots() -> Int32 = 6;
-    // Dots sit under a one-line name and end 14 above the next row.
-    public static func CardDotSize() -> Float = 18.0;
 
     // Outfit cells, three to a row, inside Equipment-EX's outfit scroll area. Its slider takes
     // the right edge of the 1352 wide host.
@@ -242,102 +242,9 @@ public abstract class WardrobeTabsConfig {
         }
         return StrReplaceAll(StrBeforeLast(key, "_"), "_", " ") + " (" + StrAfterLast(key, "_") + ")";
     }
-
-    // Item families are guessed from names: a trailing "(...)" is the colour, as in
-    // "NIKE AIR JORDAN 4 (BLACK - BLUE)", else a short tail after the last " - ", as in
-    // "APOCALYPSE GLOVE (RIGHT) - BLACK". Anything else is a family of its own.
-    public static func FamilyName(name: String) -> String {
-        if StrEndsWith(name, ")") && StrFindLast(name, "(") > 0 {
-            return WardrobeTabsConfig.TrimEnd(StrBeforeLast(name, "("));
-        }
-        if StrFindLast(name, " - ") > 0 {
-            let tail: String = StrAfterLast(name, " - ");
-            if WardrobeTabsConfig.Words(tail) <= 3 {
-                return WardrobeTabsConfig.TrimEnd(StrBeforeLast(name, " - "));
-            }
-        }
-        return name;
-    }
-
-    public static func VariantName(name: String) -> String {
-        if StrEndsWith(name, ")") && StrFindLast(name, "(") > 0 {
-            let inner: String = StrAfterLast(name, "(");
-            return StrLeft(inner, StrLen(inner) - 1);
-        }
-        if StrFindLast(name, " - ") > 0 {
-            let tail: String = StrAfterLast(name, " - ");
-            if WardrobeTabsConfig.Words(tail) <= 3 {
-                return tail;
-            }
-        }
-        return name;
-    }
-
-    public static func Words(text: String) -> Int32 {
-        let count: Int32 = 1;
-        let rest: String = text;
-        while StrFindFirst(rest, " ") >= 0 {
-            rest = StrAfterFirst(rest, " ");
-            count += 1;
-        }
-        return count;
-    }
-
-    public static func TrimEnd(text: String) -> String {
-        let result: String = text;
-        while StrLen(result) > 0 && (StrEndsWith(result, " ") || StrEndsWith(result, "-")) {
-            result = StrLeft(result, StrLen(result) - 1);
-        }
-        return result;
-    }
-
-    // Dot colour from the first colour word in a variant name; grey when there is none.
-    public static func VariantColor(variant: String) -> HDRColor {
-        let text: String = UTF8StrLower(variant);
-        let best: Int32 = 1000000;
-        let color: HDRColor = new HDRColor(0.55, 0.52, 0.54, 1.0);
-        let at: Int32;
-        at = StrFindFirst(text, "black"); if at >= 0 && at < best { best = at; color = new HDRColor(0.10, 0.10, 0.11, 1.0); }
-        at = StrFindFirst(text, "white"); if at >= 0 && at < best { best = at; color = new HDRColor(0.92, 0.92, 0.92, 1.0); }
-        at = StrFindFirst(text, "red"); if at >= 0 && at < best { best = at; color = new HDRColor(0.80, 0.16, 0.18, 1.0); }
-        at = StrFindFirst(text, "blue"); if at >= 0 && at < best { best = at; color = new HDRColor(0.20, 0.40, 0.90, 1.0); }
-        at = StrFindFirst(text, "green"); if at >= 0 && at < best { best = at; color = new HDRColor(0.25, 0.75, 0.30, 1.0); }
-        at = StrFindFirst(text, "pink"); if at >= 0 && at < best { best = at; color = new HDRColor(0.95, 0.45, 0.70, 1.0); }
-        at = StrFindFirst(text, "purple"); if at >= 0 && at < best { best = at; color = new HDRColor(0.55, 0.30, 0.85, 1.0); }
-        at = StrFindFirst(text, "yellow"); if at >= 0 && at < best { best = at; color = new HDRColor(0.95, 0.85, 0.20, 1.0); }
-        at = StrFindFirst(text, "orange"); if at >= 0 && at < best { best = at; color = new HDRColor(0.95, 0.55, 0.15, 1.0); }
-        at = StrFindFirst(text, "gold"); if at >= 0 && at < best { best = at; color = new HDRColor(0.85, 0.68, 0.25, 1.0); }
-        at = StrFindFirst(text, "silver"); if at >= 0 && at < best { best = at; color = new HDRColor(0.78, 0.80, 0.84, 1.0); }
-        at = StrFindFirst(text, "chrome"); if at >= 0 && at < best { best = at; color = new HDRColor(0.78, 0.80, 0.84, 1.0); }
-        at = StrFindFirst(text, "grey"); if at >= 0 && at < best { best = at; color = new HDRColor(0.50, 0.50, 0.52, 1.0); }
-        at = StrFindFirst(text, "gray"); if at >= 0 && at < best { best = at; color = new HDRColor(0.50, 0.50, 0.52, 1.0); }
-        at = StrFindFirst(text, "brown"); if at >= 0 && at < best { best = at; color = new HDRColor(0.45, 0.28, 0.16, 1.0); }
-        at = StrFindFirst(text, "beige"); if at >= 0 && at < best { best = at; color = new HDRColor(0.85, 0.78, 0.64, 1.0); }
-        at = StrFindFirst(text, "cream"); if at >= 0 && at < best { best = at; color = new HDRColor(0.90, 0.86, 0.74, 1.0); }
-        at = StrFindFirst(text, "teal"); if at >= 0 && at < best { best = at; color = new HDRColor(0.16, 0.65, 0.63, 1.0); }
-        at = StrFindFirst(text, "cyan"); if at >= 0 && at < best { best = at; color = new HDRColor(0.30, 0.90, 0.95, 1.0); }
-        at = StrFindFirst(text, "camo"); if at >= 0 && at < best { best = at; color = new HDRColor(0.40, 0.44, 0.29, 1.0); }
-        at = StrFindFirst(text, "olive"); if at >= 0 && at < best { best = at; color = new HDRColor(0.40, 0.44, 0.29, 1.0); }
-        at = StrFindFirst(text, "navy"); if at >= 0 && at < best { best = at; color = new HDRColor(0.12, 0.16, 0.40, 1.0); }
-        return color;
-    }
 }
 
-// The items of one family in one slot, in Equipment-EX's order. Items point back with a weak
-// ref; the screen keeps families alive.
-public class WardrobeTabsFamily {
-    public let name: String;
-    public let items: array<wref<InventoryGridItemData>>;
-    public let variants: array<String>;
-    // Set while the grid shows this family as one card.
-    public let grouped: Bool;
-    public let stamp: Int32;
-}
 
-// Sent by a card's colour dot to the wardrobe screen.
-public class WardrobeTabsVariantEvent extends Event {
-    public let item: wref<InventoryGridItemData>;
-}
 
 // Kept on the view manager so the choices survive closing the wardrobe.
 @addField(ViewManager)
@@ -348,10 +255,6 @@ public let m_wtSlot: TweakDBID;
 
 @addField(ViewManager)
 public let m_wtArea: Int32;
-
-// Colours are grouped unless this is set.
-@addField(ViewManager)
-public let m_wtUngrouped: Bool;
 
 // Favourite outfits by name, saved with the game like the outfits themselves.
 @addField(OutfitSystem)
@@ -385,6 +288,12 @@ public func WardrobeTabsColumns() -> Int32 {
         return WardrobeTabsConfig.MaxColumns();
     }
     return columns;
+}
+
+public func WardrobeTabsDebug(text: String) -> Void {
+    if WardrobeTabsConfig.Verbose() {
+        ModLog(n"WardrobeTabs", text);
+    }
 }
 
 // A card cell's size relative to the seven-column one (192 wide).
@@ -510,20 +419,11 @@ public func WardrobeTabsIsBaseName(name: String) -> Bool {
 @addField(InventoryGridSlotData)
 public let m_wtTab: Int32;
 
-@addField(InventoryGridItemData)
-public let m_wtFamily: wref<WardrobeTabsFamily>;
-
 @addField(WardrobeScreenController)
 public let m_wtBuilt: Bool;
 
 @addField(WardrobeScreenController)
 public let m_wtAllItems: array<ref<IScriptable>>;
-
-@addField(WardrobeScreenController)
-public let m_wtFamilies: array<ref<WardrobeTabsFamily>>;
-
-@addField(WardrobeScreenController)
-public let m_wtStamp: Int32;
 
 @addField(WardrobeScreenController)
 public let m_wtWatcher: ref<inkAnimProxy>;
@@ -656,7 +556,7 @@ public let m_wtClothingOnly: array<wref<inkWidget>>;
 @addField(WardrobeScreenController)
 public let m_wtHeader: wref<inkCompoundWidget>;
 
-// Buttons: area tabs (0..5), GROUP COLOURS (6), EQUIPPED ONLY (7), chip paging (8, 9),
+// Buttons: area tabs (0..5), a hidden placeholder (6), EQUIPPED ONLY (7), chip paging (8, 9),
 // slot chips (10..), OUTFITS / BACK, SAVE OUTFIT and NO OUTFIT (WardrobeTabsConfig). Each
 // has a background, a label and an optional count.
 @addField(WardrobeScreenController)
@@ -717,9 +617,6 @@ public let m_wtOutfitQuery: String;
 @addField(ViewManager)
 public let m_wtHoverCard: wref<InventoryItemDisplayController>;
 
-@addField(ViewManager)
-public let m_wtHoverDotItem: wref<UIInventoryItem>;
-
 // What the watcher last saw under the cursor, for how many ticks, and for how many ticks
 // nothing has been; the item on the preview and the slot it went into.
 @addField(WardrobeScreenController)
@@ -727,9 +624,6 @@ public let m_wtTryHover: wref<UIInventoryItem>;
 
 @addField(WardrobeScreenController)
 public let m_wtTryCard: wref<InventoryItemDisplayController>;
-
-@addField(WardrobeScreenController)
-public let m_wtTryDotItem: wref<UIInventoryItem>;
 
 @addField(WardrobeScreenController)
 public let m_wtTryTicks: Int32;
@@ -888,7 +782,6 @@ private func WardrobeTabsSetColumns(screen: ref<WardrobeScreenController>, colum
     this.WardrobeTabsEndTryOn(screen);
     let view: ref<ViewManager> = this.WardrobeTabsView();
     view.m_wtHoverCard = null;
-    view.m_wtHoverDotItem = null;
     let grid: ref<inkWidget> = this.WardrobeTabsSpawnGrid(area, columns);
     let controller: ref<inkVirtualGridController> = IsDefined(grid) ? grid.GetController() as inkVirtualGridController : null;
     if !IsDefined(controller) {
@@ -906,7 +799,7 @@ private func WardrobeTabsSetColumns(screen: ref<WardrobeScreenController>, colum
     controller.SetClassifier(screen.m_inventoryGridTemplateClassifier);
     controller.SetSource(screen.m_inventoryGridDataView);
     this.WardrobeTabsApply(screen, true);
-    ModLog(n"WardrobeTabs", "Columns: " + ToString(columns));
+    WardrobeTabsDebug("Columns: " + ToString(columns));
 }
 
 // Install before Equipment-EX captures the grid controller and binds its data source.
@@ -926,7 +819,7 @@ private func WardrobeTabsInstallGrid() -> Void {
     let grid: ref<inkWidget> = this.WardrobeTabsSpawnGrid(area, columns);
     if IsDefined(grid) && IsDefined(grid.GetController() as inkVirtualGridController) {
         area.RemoveChild(original);
-        ModLog(n"WardrobeTabs", "Card grid v4 installed before data binding (" + ToString(columns) + " columns)");
+        WardrobeTabsDebug("Card grid v4 installed before data binding (" + ToString(columns) + " columns)");
     } else {
         ModLog(n"WardrobeTabs", "Card grid spawn failed; retaining original grid");
         if IsDefined(grid) {
@@ -951,22 +844,13 @@ protected cb func OnSpawned(widget: ref<inkWidget>, userData: ref<IScriptable>) 
     return wrappedMethod(widget, userData);
 }
 
-// Card cells are recycled while scrolling: name, WEARING tag and dots follow the data.
+// Card cells are recycled while scrolling: name, WEARING, NEW and pack labels follow the data.
 @wrapMethod(VendorItemVirtualController)
 public final func OnDataChanged(value: Variant) -> Void {
     wrappedMethod(value);
     if IsDefined(this as InventoryGridItemController) && Equals(this.GetRootWidget().GetName(), n"wardrobeCardItem") {
         this.WardrobeTabsDecorateCard();
     }
-}
-
-@addMethod(VendorItemVirtualController)
-private func WardrobeTabsCardFamily() -> wref<WardrobeTabsFamily> {
-    let data: ref<InventoryGridItemData> = this.m_newData as InventoryGridItemData;
-    if !IsDefined(data) || !IsDefined(data.m_wtFamily) || !data.m_wtFamily.grouped || ArraySize(data.m_wtFamily.items) < 2 {
-        return null;
-    }
-    return data.m_wtFamily;
 }
 
 @addMethod(VendorItemVirtualController)
@@ -1055,152 +939,28 @@ private func WardrobeTabsDecorateCard() -> Void {
         packText.SetTintColor(new HDRColor(0.92, 0.62, 0.56, 0.85));
         packText.SetInteractive(false);
         packText.Reparent(root);
-
-        let dots: ref<inkCanvas> = new inkCanvas();
-        dots.SetName(n"wardrobeCardDots");
-        dots.SetAnchor(inkEAnchor.TopLeft);
-        dots.SetSize(WardrobeTabsConfig.CardNameWidth() * k, 24.0);
-        dots.SetMargin(new inkMargin(left, WardrobeTabsConfig.CardNameTop() * k + 26.0 * t, 0.0, 0.0));
-        dots.childOrder = inkEChildOrder.Forward;
-        dots.Reparent(root);
-        let index: Int32 = 0;
-        while index < WardrobeTabsConfig.CardDots() {
-            let dot: ref<inkCanvas> = new inkCanvas();
-            dot.SetAnchor(inkEAnchor.TopLeft);
-            dot.SetSize(WardrobeTabsConfig.CardDotSize(), WardrobeTabsConfig.CardDotSize());
-            dot.SetMargin(new inkMargin(Cast<Float>(index) * (WardrobeTabsConfig.CardDotSize() + 6.0), 0.0, 0.0, 0.0));
-            dot.childOrder = inkEChildOrder.Forward;
-            dot.SetInteractive(true);
-            dot.RegisterToCallback(n"OnRelease", this, n"OnWardrobeDotClick");
-            dot.RegisterToCallback(n"OnHoverOver", this, n"OnWardrobeDotHoverOver");
-            dot.RegisterToCallback(n"OnHoverOut", this, n"OnWardrobeDotHoverOut");
-            dot.Reparent(dots);
-            let ring: ref<inkRectangle> = new inkRectangle();
-            ring.SetAnchor(inkEAnchor.Fill);
-            ring.SetTintColor(new HDRColor(0.369, 0.965, 1.0, 1.0));
-            ring.SetInteractive(false);
-            ring.Reparent(dot);
-            let fill: ref<inkRectangle> = new inkRectangle();
-            fill.SetAnchor(inkEAnchor.Fill);
-            fill.SetMargin(new inkMargin(3.0, 3.0, 3.0, 3.0));
-            fill.SetInteractive(false);
-            fill.Reparent(dot);
-            index += 1;
-        }
-        let more: ref<inkText> = new inkText();
-        more.SetFontFamily("base\\gameplay\\gui\\fonts\\raj\\raj.inkfontfamily");
-        more.SetFontSize(16);
-        more.SetAnchor(inkEAnchor.TopLeft);
-        more.SetMargin(new inkMargin(Cast<Float>(WardrobeTabsConfig.CardDots()) * (WardrobeTabsConfig.CardDotSize() + 6.0), -2.0, 0.0, 0.0));
-        more.SetTintColor(new HDRColor(0.682, 0.231, 0.212, 1.0));
-        more.SetInteractive(false);
-        more.Reparent(dots);
     }
     let tag: ref<inkWidget> = root.GetWidget(n"wardrobeCardTag");
     let newTag: ref<inkWidget> = root.GetWidget(n"wardrobeCardNew");
     let packText: ref<inkText> = root.GetWidget(n"wardrobeCardPack") as inkText;
-    let dots: ref<inkCompoundWidget> = root.GetWidget(n"wardrobeCardDots") as inkCompoundWidget;
     let data: ref<InventoryGridItemData> = this.m_newData as InventoryGridItemData;
     if !IsDefined(data) {
         label.SetText("");
         packText.SetText("");
         tag.SetVisible(false);
         newTag.SetVisible(false);
-        dots.SetVisible(false);
         return;
     }
-    let family: wref<WardrobeTabsFamily> = this.WardrobeTabsCardFamily();
     let wearing: Bool = data.Item.IsEquipped();
     let fresh: Bool = WardrobeTabsIsNew(data.Item.GetID());
-    if IsDefined(family) {
-        for item in family.items {
-            if IsDefined(item) && item.Item.IsEquipped() {
-                wearing = true;
-            }
-            if IsDefined(item) && WardrobeTabsIsNew(item.Item.GetID()) {
-                fresh = true;
-            }
-        }
-    }
     tag.SetVisible(wearing);
     newTag.SetVisible(fresh && !wearing);
     let pack: wref<WardrobeTabsPack> = WardrobeTabsPackOf(data.Item.GetID());
     packText.SetText(IsDefined(pack) ? pack.name : "");
-    label.SetText(IsDefined(family) ? family.name : WardrobeTabsConfig.ItemName(data));
-    label.SetWrapping(!IsDefined(family), WardrobeTabsConfig.CardNameWidth() * k);
-    label.SetSize(WardrobeTabsConfig.CardNameWidth() * k, (IsDefined(family) ? 24.0 : 50.0) * t);
+    label.SetText(WardrobeTabsConfig.ItemName(data));
+    label.SetWrapping(true, WardrobeTabsConfig.CardNameWidth() * k);
+    label.SetSize(WardrobeTabsConfig.CardNameWidth() * k, 50.0 * t);
     label.SetTintColor(wearing ? new HDRColor(0.369, 0.965, 1.0, 1.0) : new HDRColor(1.176, 0.381, 0.348, 1.0));
-    dots.SetVisible(IsDefined(family));
-    if IsDefined(family) {
-        let count: Int32 = ArraySize(family.items);
-        let index: Int32 = 0;
-        while index < WardrobeTabsConfig.CardDots() {
-            let dot: ref<inkCompoundWidget> = dots.GetWidgetByIndex(index) as inkCompoundWidget;
-            dot.SetVisible(index < count);
-            if index < count {
-                let item: wref<InventoryGridItemData> = family.items[index];
-                dot.GetWidgetByIndex(0).SetVisible(IsDefined(item) && item.Item.IsEquipped());
-                dot.GetWidgetByIndex(1).SetTintColor(WardrobeTabsConfig.VariantColor(family.variants[index]));
-            }
-            index += 1;
-        }
-        let more: ref<inkText> = dots.GetWidgetByIndex(WardrobeTabsConfig.CardDots()) as inkText;
-        more.SetText(count > WardrobeTabsConfig.CardDots() ? "+" + ToString(count - WardrobeTabsConfig.CardDots()) : "");
-    }
-}
-
-@addMethod(VendorItemVirtualController)
-private func WardrobeTabsDotIndex(target: wref<inkWidget>) -> Int32 {
-    let dots: ref<inkCompoundWidget> = this.GetRootCompoundWidget().GetWidget(n"wardrobeCardDots") as inkCompoundWidget;
-    let index: Int32 = 0;
-    while index < WardrobeTabsConfig.CardDots() {
-        if dots.GetWidgetByIndex(index) == target {
-            return index;
-        }
-        index += 1;
-    }
-    return -1;
-}
-
-@addMethod(VendorItemVirtualController)
-protected cb func OnWardrobeDotClick(evt: ref<inkPointerEvent>) -> Bool {
-    let family: wref<WardrobeTabsFamily> = this.WardrobeTabsCardFamily();
-    let index: Int32 = this.WardrobeTabsDotIndex(evt.GetCurrentTarget());
-    if !evt.IsAction(n"click") || !IsDefined(family) || index < 0 || index >= ArraySize(family.items) {
-        return false;
-    }
-    let request: ref<WardrobeTabsVariantEvent> = new WardrobeTabsVariantEvent();
-    request.item = family.items[index];
-    this.QueueEvent(request);
-    evt.Handle();
-    return true;
-}
-
-// Hovering a dot shows its colour's name in place of the family name, and tries that colour.
-@addMethod(VendorItemVirtualController)
-protected cb func OnWardrobeDotHoverOver(evt: ref<inkPointerEvent>) -> Bool {
-    let family: wref<WardrobeTabsFamily> = this.WardrobeTabsCardFamily();
-    let index: Int32 = this.WardrobeTabsDotIndex(evt.GetCurrentTarget());
-    if IsDefined(family) && index >= 0 && index < ArraySize(family.variants) {
-        let label: ref<inkText> = this.GetRootCompoundWidget().GetWidget(n"wardrobeCardName") as inkText;
-        label.SetText(family.variants[index]);
-        let item: wref<InventoryGridItemData> = family.items[index];
-        if IsDefined(item) {
-            ViewManager.GetInstance(GetGameInstance()).m_wtHoverDotItem = item.Item;
-        }
-    }
-    return false;
-}
-
-@addMethod(VendorItemVirtualController)
-protected cb func OnWardrobeDotHoverOut(evt: ref<inkPointerEvent>) -> Bool {
-    let family: wref<WardrobeTabsFamily> = this.WardrobeTabsCardFamily();
-    if IsDefined(family) {
-        let label: ref<inkText> = this.GetRootCompoundWidget().GetWidget(n"wardrobeCardName") as inkText;
-        label.SetText(family.name);
-    }
-    ViewManager.GetInstance(GetGameInstance()).m_wtHoverDotItem = null;
-    return false;
 }
 
 // Card hover for try-on, from the vanilla item display (the path Equipment-EX's tooltip
@@ -1269,7 +1029,6 @@ protected cb func OnUninitialize() -> Bool {
         this.WardrobeTabsEndTryOn(screen);
         let view: ref<ViewManager> = this.WardrobeTabsView();
         view.m_wtHoverCard = null;
-        view.m_wtHoverDotItem = null;
         if IsDefined(screen.m_wtWatcher) {
             screen.m_wtWatcher.UnregisterFromAllCallbacks(inkanimEventType.OnEndLoop);
             screen.m_wtWatcher.Stop();
@@ -1281,7 +1040,6 @@ protected cb func OnUninitialize() -> Bool {
         ArrayClear(screen.m_wtWornNames);
         ArrayClear(screen.m_wtWornIcons);
         ArrayClear(screen.m_wtWornRecords);
-        ArrayClear(screen.m_wtFamilies);
         ArrayClear(screen.m_wtClothingOnly);
         ArrayClear(screen.m_wtGroupHeads);
         ArrayClear(screen.m_wtTiles);
@@ -1473,7 +1231,8 @@ private func WardrobeTabsBuild(screen: ref<WardrobeScreenController>) -> Void {
         }
     }
     this.WardrobeTabsRefresh(screen);
-    ModLog(n"WardrobeTabs", "Body column and drawer v38 built (packs detected in game; columns " + ToString(WardrobeTabsColumns()) + "; Mod Settings: hover try-on " + ToString(screen.m_wtSettings.hoverTryOn) + ", area camera " + ToString(screen.m_wtSettings.areaCamera) + ")");
+    ModLog(n"WardrobeTabs", "WardrobeTabs " + WardrobeTabsConfig.Version() + " ready (" + ToString(WardrobeTabsColumns()) + " columns; hover try-on "
+        + ToString(screen.m_wtSettings.hoverTryOn) + ", area camera " + ToString(screen.m_wtSettings.areaCamera) + ")");
 }
 
 // Header at the top of the item panel's header column, across sidebar and grid: title and
@@ -1542,17 +1301,12 @@ private func WardrobeTabsBuildHeader(screen: ref<WardrobeScreenController>, head
         ArrayPush(screen.m_wtClothingOnly, tab);
         area += 1;
     }
-    // Kept as button 6 so the indices below stay put; hidden while grouping is off.
-    let groupColours: ref<inkCanvas> = this.WardrobeTabsMakeButton(screen, overlay, "GROUP COLOURS", width - 620.0, 148.0, 300.0, 62.0);
-    if WardrobeTabsConfig.ColourGrouping() {
-        ArrayPush(screen.m_wtClothingOnly, groupColours);
-    } else {
-        groupColours.SetVisible(false);
-    }
+    // Button 6 is a hidden placeholder (it was GROUP COLOURS) so the indices below stay put.
+    this.WardrobeTabsMakeButton(screen, overlay, "", 0.0, 0.0, 1.0, 1.0).SetVisible(false);
     ArrayPush(screen.m_wtClothingOnly, this.WardrobeTabsMakeButton(screen, overlay, "EQUIPPED ONLY", width - 310.0, 148.0, 300.0, 62.0));
 }
 
-// PACK (button PackButton()) in the drawer header where GROUP COLOURS would be, and its list
+// PACK (button PackButton()) in the drawer header, left of EQUIPPED ONLY, and its list
 // of rows, the grid container's first child so it draws over the cards and takes their
 // clicks. Rows are pooled: ALL, BASE GAME, then each pack with owned items.
 @addMethod(inkPreviewGameController)
@@ -1739,7 +1493,7 @@ private func WardrobeTabsCountPacks(screen: ref<WardrobeScreenController>) -> Vo
             summary += " " + pack.name + " (" + pack.prefix + ") " + ToString(pack.count) + ";";
         }
     }
-    ModLog(n"WardrobeTabs", "Packs: " + ToString(list.baseCount) + " base-game items;" + summary);
+    WardrobeTabsDebug("Packs: " + ToString(list.baseCount) + " base-game items;" + summary);
 }
 
 @addMethod(inkPreviewGameController)
@@ -2175,7 +1929,7 @@ private func WardrobeTabsShowOutfits(screen: ref<WardrobeScreenController>) -> V
         : "NO OUTFIT MATCHES \"" + screen.m_wtOutfitQuery + "\"");
     screen.m_wtOutfitScrollMax = MaxF(height - WardrobeTabsConfig.OutfitViewHeight(), 0.0);
     this.WardrobeTabsScrollOutfits(screen, screen.m_wtOutfitScroll);
-    ModLog(n"WardrobeTabs", "Outfits view: " + ToString(count) + " of " + ToString(ArraySize(all)) + " outfits in "
+    WardrobeTabsDebug("Outfits view: " + ToString(count) + " of " + ToString(ArraySize(all)) + " outfits in "
         + ToString(rows) + " rows, " + ToString(ArraySize(screen.m_wtOutfitCells)) + " cells, content height " + FloatToString(height));
 }
 
@@ -2507,7 +2261,7 @@ private func WardrobeTabsScanNew(screen: ref<WardrobeScreenController>) -> Void 
         set.Insert(TDBID.ToNumber(record), mark);
     }
     this.WardrobeTabsView().m_wtNewSet = set;
-    ModLog(n"WardrobeTabs", "NEW tags: " + ToString(ArraySize(owned)) + " owned items, " + ToString(added) + " not seen before"
+    WardrobeTabsDebug("NEW tags: " + ToString(ArraySize(owned)) + " owned items, " + ToString(added) + " not seen before"
         + (ready ? ", " + ToString(tagged) + " tagged" : " (first scan: recorded, none tagged)")
         + "; " + ToString(ArraySize(system.m_wtNewItems)) + " NEW, " + ToString(ArraySize(system.m_wtSeen)) + " seen");
 }
@@ -2551,7 +2305,6 @@ private func WardrobeTabsClearNew(screen: ref<WardrobeScreenController>, itemID:
 private func WardrobeTabsCapture(screen: ref<WardrobeScreenController>) -> Void {
     screen.m_wtAllItems = screen.m_inventoryGridDataSource.GetArray();
     ArrayClear(screen.m_wtSlots);
-    ArrayClear(screen.m_wtFamilies);
     for entry in screen.m_wtAllItems {
         let slot: ref<InventoryGridSlotData> = entry as InventoryGridSlotData;
         if IsDefined(slot) {
@@ -2661,7 +2414,7 @@ private func WardrobeTabsUpdateWorn(screen: ref<WardrobeScreenController>) -> Bo
                 if IsDefined(added) {
                     screen.m_wtWorn[at] = added;
                     ArrayPush(listed, recordID);
-                    ModLog(n"WardrobeTabs", screen.m_wtSlots[at].ItemData.CategoryName + ": worn item added to the item list: " + WardrobeTabsConfig.ItemName(added));
+                    WardrobeTabsDebug(screen.m_wtSlots[at].ItemData.CategoryName + ": worn item added to the item list: " + WardrobeTabsConfig.ItemName(added));
                 } else if at < 0 || IsDefined(screen.m_wtWorn[at]) {
                     ModLog(n"WardrobeTabs", "Worn item without a slot row: " + TDBID.ToStringDEBUG(recordID) + " in " + TDBID.ToStringDEBUG(slotID));
                 } else {
@@ -2696,7 +2449,7 @@ private func WardrobeTabsUpdateWorn(screen: ref<WardrobeScreenController>) -> Bo
     }
     screen.m_wtWornSig = sig;
     if StrLen(log) > 0 {
-        ModLog(n"WardrobeTabs", "Worn items not in the item lists, shown from their slots: " + log);
+        WardrobeTabsDebug("Worn items not in the item lists, shown from their slots: " + log);
     }
     return true;
 }
@@ -2809,37 +2562,21 @@ private func WardrobeTabsFiltering(screen: ref<WardrobeScreenController>) -> Boo
     return screen.m_wtEquippedOnly || NotEquals(screen.m_wtQuery, "") || this.WardrobeTabsView().m_wtPackChoice != 0;
 }
 
-// Shows the selected slot's items in the grid: every item, or one card per family with
-// the worn colour (else the first matching one) standing for the rest. Excluding the slot
-// data drops its header; clearing IsCollapsed keeps its items visible whatever Equipment-EX
+// Shows the selected slot's items in the grid, those matching any search or filter. Excluding
+// the slot data drops its header; clearing IsCollapsed keeps its items visible whatever Equipment-EX
 // remembers for it. Without a scroll reset the position is kept across the rebuild.
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsApply(screen: ref<WardrobeScreenController>, resetScroll: Bool) -> Void {
     let view: ref<ViewManager> = this.WardrobeTabsView();
     let index: Int32 = this.WardrobeTabsSlotIndex(screen, view.m_wtSlot);
-    let grouped: Bool = WardrobeTabsConfig.ColourGrouping() && !view.m_wtUngrouped;
     let kept: array<ref<IScriptable>>;
-    screen.m_wtStamp += 1;
     if index >= 0 {
         let slot: ref<InventoryGridSlotData> = screen.m_wtSlots[index];
         slot.IsCollapsed = false;
-        if grouped {
-            this.WardrobeTabsBuildFamilies(screen, slot);
-        }
         let filtering: Bool = this.WardrobeTabsFiltering(screen);
         for child in slot.Children {
-            let family: wref<WardrobeTabsFamily> = child.m_wtFamily;
-            if filtering && !this.WardrobeTabsMatches(screen, child) {
-                // Filtered out: neither shown nor standing for its family.
-            } else if !grouped || !IsDefined(family) || ArraySize(family.items) < 2 {
-                if IsDefined(family) { family.grouped = false; }
+            if !filtering || this.WardrobeTabsMatches(screen, child) {
                 ArrayPush(kept, child);
-            } else {
-                if family.stamp != screen.m_wtStamp {
-                    family.stamp = screen.m_wtStamp;
-                    family.grouped = true;
-                    ArrayPush(kept, this.WardrobeTabsRepresentative(screen, family));
-                }
             }
         }
     }
@@ -2852,57 +2589,6 @@ private func WardrobeTabsApply(screen: ref<WardrobeScreenController>, resetScrol
         screen.m_inventoryScrollController.SetScrollPosition(0.0);
     }
     this.WardrobeTabsRedraw(screen);
-}
-
-// Sorts one slot's items into families, from the names they have now. Only the shown slot
-// needs families; other slots' items keep stale links that nothing reads.
-@addMethod(inkPreviewGameController)
-private func WardrobeTabsBuildFamilies(screen: ref<WardrobeScreenController>, slot: ref<InventoryGridSlotData>) -> Void {
-    ArrayClear(screen.m_wtFamilies);
-    let families: ref<inkHashMap> = new inkHashMap();
-    let largest: Int32 = 0;
-    let example: String = "";
-    for child in slot.Children {
-        let name: String = WardrobeTabsConfig.ItemName(child);
-        let familyName: String = WardrobeTabsConfig.FamilyName(name);
-        let key: Uint64 = NameToHash(StringToName(UTF8StrLower(familyName)));
-        let family: ref<WardrobeTabsFamily> = families.Get(key) as WardrobeTabsFamily;
-        if !IsDefined(family) {
-            family = new WardrobeTabsFamily();
-            family.name = familyName;
-            families.Insert(key, family);
-            ArrayPush(screen.m_wtFamilies, family);
-        }
-        ArrayPush(family.items, child);
-        ArrayPush(family.variants, WardrobeTabsConfig.VariantName(name));
-        child.m_wtFamily = family;
-        if ArraySize(family.items) > largest {
-            largest = ArraySize(family.items);
-            example = familyName;
-        }
-    }
-    ModLog(n"WardrobeTabs", slot.ItemData.CategoryName + ": " + ToString(ArraySize(slot.Children)) + " items in "
-        + ToString(ArraySize(screen.m_wtFamilies)) + " families; largest \"" + example + "\" (" + ToString(largest) + ")");
-}
-
-@addMethod(inkPreviewGameController)
-private func WardrobeTabsRepresentative(screen: ref<WardrobeScreenController>, family: wref<WardrobeTabsFamily>) -> ref<InventoryGridItemData> {
-    let first: ref<InventoryGridItemData>;
-    for item in family.items {
-        if IsDefined(item) && this.WardrobeTabsMatches(screen, item) {
-            if item.Item.IsEquipped() {
-                return item;
-            }
-            if !IsDefined(first) {
-                first = item;
-            }
-        }
-    }
-    if IsDefined(first) {
-        return first;
-    }
-    let fallback: ref<InventoryGridItemData> = family.items[0];
-    return fallback;
 }
 
 @addMethod(inkPreviewGameController)
@@ -3070,20 +2756,7 @@ private func WardrobeTabsRedrawHeader(screen: ref<WardrobeScreenController>, sel
     let slot: ref<InventoryGridSlotData> = screen.m_wtSlots[selected];
     screen.m_wtTitle.SetText(slot.ItemData.CategoryName);
     let total: Int32 = ArraySize(slot.Children);
-    let text: String;
-    if WardrobeTabsConfig.ColourGrouping() && !view.m_wtUngrouped {
-        screen.m_wtStamp += 1;
-        let families: Int32 = 0;
-        for child in slot.Children {
-            if IsDefined(child.m_wtFamily) && child.m_wtFamily.stamp != screen.m_wtStamp {
-                child.m_wtFamily.stamp = screen.m_wtStamp;
-                families += 1;
-            }
-        }
-        text = ToString(families) + " ITEMS IN " + ToString(total) + " COLOURS";
-    } else {
-        text = ToString(total) + " ITEMS";
-    }
+    let text: String = ToString(total) + " ITEMS";
     if this.WardrobeTabsFiltering(screen) {
         text += "  |  " + ToString(screen.m_wtMatches[selected]) + " MATCH";
     }
@@ -3157,7 +2830,6 @@ private func WardrobeTabsRedrawButtons(screen: ref<WardrobeScreenController>, se
         screen.m_wtButtonNews[area].SetVisible(fresh);
         area += 1;
     }
-    this.WardrobeTabsStyleButton(screen, 6, !view.m_wtUngrouped);
     this.WardrobeTabsStyleButton(screen, 7, screen.m_wtEquippedOnly);
     // Chips: one page of the area's slots, PREVIOUS / NEXT when there is more.
     let slots: array<Int32> = this.WardrobeTabsAreaSlots(screen, view.m_wtArea);
@@ -3351,9 +3023,7 @@ private func WardrobeTabsWatchTryOn(screen: ref<WardrobeScreenController>) -> Vo
     let view: ref<ViewManager> = this.WardrobeTabsView();
     let hovered: wref<UIInventoryItem>;
     if !view.m_wtOutfitsSection {
-        if IsDefined(view.m_wtHoverDotItem) {
-            hovered = view.m_wtHoverDotItem;
-        } else if IsDefined(view.m_wtHoverCard) {
+        if IsDefined(view.m_wtHoverCard) {
             hovered = view.m_wtHoverCard.GetUIInventoryItem();
         }
     }
@@ -3362,8 +3032,7 @@ private func WardrobeTabsWatchTryOn(screen: ref<WardrobeScreenController>) -> Vo
     }
     if hovered != screen.m_wtTryHover {
         // Same display, other item: the grid scrolled or refilled under the cursor.
-        if IsDefined(hovered) && !IsDefined(view.m_wtHoverDotItem) && !IsDefined(screen.m_wtTryDotItem)
-            && view.m_wtHoverCard == screen.m_wtTryCard {
+        if IsDefined(hovered) && view.m_wtHoverCard == screen.m_wtTryCard {
             this.WardrobeTabsEndTryOn(screen);
         }
         screen.m_wtTryHover = hovered;
@@ -3373,7 +3042,6 @@ private func WardrobeTabsWatchTryOn(screen: ref<WardrobeScreenController>) -> Vo
         screen.m_wtTryTicks += 1;
     }
     screen.m_wtTryCard = view.m_wtHoverCard;
-    screen.m_wtTryDotItem = view.m_wtHoverDotItem;
     if !IsDefined(hovered) {
         screen.m_wtTryIdle += 1;
         // OUTFITS ends it at once; so does the tried item being equipped (clicked).
@@ -3395,7 +3063,7 @@ private func WardrobeTabsWatchTryOn(screen: ref<WardrobeScreenController>) -> Vo
         }
         if !IsDefined(screen.m_wtSettings) || screen.m_wtSettings.hoverTryOn {
             let paused: Float = EngineTime.ToFloat(GameInstance.GetEngineTime(this.GetPlayerControlledObject().GetGame())) - screen.m_wtTryStart;
-            ModLog(n"WardrobeTabs", "Hover pause before try-on: " + FloatToStringPrec(paused, 2) + " s");
+            WardrobeTabsDebug("Hover pause before try-on: " + FloatToStringPrec(paused, 2) + " s");
             this.WardrobeTabsStartTryOn(screen, hovered);
         }
     }
@@ -3436,7 +3104,7 @@ private func WardrobeTabsWatchLift(screen: ref<WardrobeScreenController>) -> Voi
     definition.AddInterpolator(move);
     screen.m_wtLiftAnim = image.PlayAnimation(definition);
     screen.m_wtLift = lift;
-    ModLog(n"WardrobeTabs", "Preview image moved down " + FloatToStringPrec(lift, 0));
+    WardrobeTabsDebug("Preview image moved down " + FloatToStringPrec(lift, 0));
 }
 
 // Moves the preview camera to an area's own setup (-1 or OTHER: vanilla's full body), with
@@ -3466,7 +3134,7 @@ private func WardrobeTabsCamera(screen: ref<WardrobeScreenController>, area: Int
     evt.setupIndex = Cast<Uint32>(index);
     preview.QueueEvent(evt);
     screen.m_wtCameraArea = area >= 0 && area < WardrobeTabsConfig.CameraAreas() ? area + 1 : 0;
-    ModLog(n"WardrobeTabs", "Camera: " + WardrobeTabsConfig.AreaLabel(area) + " -> setup " + ToString(index) + " ("
+    WardrobeTabsDebug("Camera: " + WardrobeTabsConfig.AreaLabel(area) + " -> setup " + ToString(index) + " ("
         + NameToString(WardrobeTabsConfig.CameraSlot(area)) + ", " + ToString(WardrobeTabsConfig.CameraZoom(area)) + ")");
 }
 
@@ -3504,7 +3172,7 @@ public func WardrobeTabsCameraSetups() -> Int32 {
         area += 1;
     }
     this.m_wtFirstSetup = first;
-    ModLog(n"WardrobeTabs", "Camera: added setups " + ToString(first) + " to " + ToString(first + WardrobeTabsConfig.CameraAreas() - 1));
+    WardrobeTabsDebug("Camera: added setups " + ToString(first) + " to " + ToString(first + WardrobeTabsConfig.CameraAreas() - 1));
     return first;
 }
 
@@ -3538,12 +3206,12 @@ private func WardrobeTabsStartTryOn(screen: ref<WardrobeScreenController>, item:
     let name: String = WardrobeTabsConfig.CleanName(GetLocalizedText(item.GetName()));
     let puppet: wref<gamePuppet> = this.WardrobeTabsPreviewPuppet(screen);
     if !IsDefined(puppet) || screen.m_outfitSystem.IsBlocked() {
-        ModLog(n"WardrobeTabs", "Try-on skipped for " + name + (IsDefined(puppet) ? ": outfit system blocked" : ": no preview puppet"));
+        WardrobeTabsDebug("Try-on skipped for " + name + (IsDefined(puppet) ? ": outfit system blocked" : ": no preview puppet"));
         return;
     }
     let itemID: ItemID = item.GetID();
     if !screen.m_outfitSystem.IsEquippable(itemID) {
-        ModLog(n"WardrobeTabs", "Try-on skipped for " + name + ": not equippable");
+        WardrobeTabsDebug("Try-on skipped for " + name + ": not equippable");
         return;
     }
     let slotID: TweakDBID = screen.m_outfitSystem.GetItemSlot(itemID);
@@ -3555,7 +3223,7 @@ private func WardrobeTabsStartTryOn(screen: ref<WardrobeScreenController>, item:
     screen.m_outfitSystem.EquipPuppetItem(puppet, itemID);
     screen.m_wtTrying = item;
     screen.m_wtTrySlot = slotID;
-    ModLog(n"WardrobeTabs", "Trying on " + name + " in " + TDBID.ToStringDEBUG(slotID));
+    WardrobeTabsDebug("Trying on " + name + " in " + TDBID.ToStringDEBUG(slotID));
     this.WardrobeTabsRedrawLook(screen);
 }
 
@@ -3661,21 +3329,6 @@ private func WardrobeTabsFilterChanged(screen: ref<WardrobeScreenController>) ->
     }
     this.WardrobeTabsRevealChip(screen);
     this.WardrobeTabsApply(screen, true);
-}
-
-// Colour dot on a card: equip that colour.
-@addMethod(inkPreviewGameController)
-protected cb func OnWardrobeTabsVariant(evt: ref<WardrobeTabsVariantEvent>) -> Bool {
-    let screen: ref<WardrobeScreenController> = this as WardrobeScreenController;
-    if !IsDefined(screen) || !IsDefined(evt.item) || screen.m_outfitSystem.IsBlocked() {
-        return false;
-    }
-    let itemID: ItemID = evt.item.Item.GetID();
-    if !screen.m_outfitSystem.IsEquipped(itemID) {
-        this.PlaySound(n"Button", n"OnPress");
-        screen.m_outfitSystem.EquipItem(itemID);
-    }
-    return true;
 }
 
 // A worn item's tile opens its slot; the + tile and a group header show the area's slots.
@@ -3788,9 +3441,6 @@ protected cb func OnWardrobeButtonClick(evt: ref<inkPointerEvent>) -> Bool {
     let view: ref<ViewManager> = this.WardrobeTabsView();
     if button <= WardrobeTabsConfig.OtherTab() {
         this.WardrobeTabsSelectArea(screen, button);
-    } else if button == 6 && WardrobeTabsConfig.ColourGrouping() {
-        view.m_wtUngrouped = !view.m_wtUngrouped;
-        this.WardrobeTabsApply(screen, true);
     } else if button == 7 {
         // As Equipment-EX's own filter icons do; the watcher sees the change.
         let category: ItemFilterCategory = screen.m_wtEquippedOnly ? ItemFilterCategory.AllItems : ItemFilterCategory.Clothes;
@@ -3813,7 +3463,7 @@ protected cb func OnWardrobeButtonClick(evt: ref<inkPointerEvent>) -> Bool {
         let linked: CName = screen.m_outfitSystem.m_wtLinked;
         if screen.m_wtLinkChanges >= 0 && this.WardrobeTabsOutfitAccess(screen) {
             screen.m_outfitSystem.SaveOutfit(linked, true);
-            ModLog(n"WardrobeTabs", "Outfit " + NameToString(linked) + " updated from the current look");
+            WardrobeTabsDebug("Outfit " + NameToString(linked) + " updated from the current look");
             this.WardrobeTabsRedraw(screen);
         }
     } else if button == WardrobeTabsConfig.RevertButton() {
@@ -3823,7 +3473,7 @@ protected cb func OnWardrobeButtonClick(evt: ref<inkPointerEvent>) -> Bool {
         }
     } else if button == WardrobeTabsConfig.SaveOutfitButton() {
         if this.WardrobeTabsOutfitAccess(screen) {
-            ModLog(n"WardrobeTabs", "Save outfit popup opened");
+            WardrobeTabsDebug("Save outfit popup opened");
             screen.m_outfitManager.ShowSaveOutfitPopup();
         }
     } else if button == WardrobeTabsConfig.NoOutfitButton() {
@@ -3844,7 +3494,7 @@ protected cb func OnWardrobeButtonClick(evt: ref<inkPointerEvent>) -> Bool {
         screen.m_wtPackOpen = false;
         if row < ArraySize(screen.m_wtPackRowChoice) && screen.m_wtPackRowChoice[row] != view.m_wtPackChoice {
             view.m_wtPackChoice = screen.m_wtPackRowChoice[row];
-            ModLog(n"WardrobeTabs", "Pack filter: " + this.WardrobeTabsPackChoiceName(view.m_wtPackChoice));
+            WardrobeTabsDebug("Pack filter: " + this.WardrobeTabsPackChoiceName(view.m_wtPackChoice));
             this.WardrobeTabsFilterChanged(screen);
         } else {
             this.WardrobeTabsRedraw(screen);
@@ -3913,7 +3563,11 @@ protected cb func OnWardrobeOutfitClick(evt: ref<inkPointerEvent>) -> Bool {
         if this.WardrobeTabsOutfitAccess(screen) && !screen.m_outfitSystem.IsEquipped(name) {
             this.PlaySound(n"Button", n"OnPress");
             let loaded: Bool = screen.m_outfitSystem.LoadOutfit(name);
-            ModLog(n"WardrobeTabs", "Outfit " + NameToString(name) + (loaded ? " put on" : " could not be put on"));
+            if loaded {
+                WardrobeTabsDebug("Outfit " + NameToString(name) + " put on");
+            } else {
+                ModLog(n"WardrobeTabs", "Outfit " + NameToString(name) + " could not be put on");
+            }
         }
         return true;
     }

@@ -14,3 +14,6 @@ __pycache__/
 
 # Playwright MCP screenshots and snapshots
 .playwright-mcp/
+
+# Release builds
+/dist/
