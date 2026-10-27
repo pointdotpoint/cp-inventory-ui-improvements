@@ -41,11 +41,17 @@ a trailing "(…)" or a short " - …" tail is the colour, so "NIKE AIR JORDAN 4
 else the first matching one, with a dot per colour (named colour words are
 coloured, others grey; a ring marks the worn one). Clicking a dot equips that
 colour; hovering it shows its name. A WEARING tag marks worn cards.
-Resting the cursor on a card (or a colour dot) for 0.25 s tries the item on: it
+Resting the cursor on a card (or a colour dot) for 0.45 s tries the item on: it
 goes on the preview only, nothing is equipped, and the bar reads "TRYING ON: …"
 in cyan. Moving to another card swaps it after the same pause; moving off the
 cards, OUTFITS, a scrolled or refilled grid and closing the wardrobe put the real
 look back. Clicking equips the item as before.
+A yellow NEW tag marks clothing V did not own the last time the wardrobe opened
+(inventory, stash or wardrobe store, whatever the item source); slot rows and
+area tabs holding one get a yellow dot. The tag goes once the card is hovered
+long enough to try the item on, or the item is equipped. The first opening with
+this build only records what V owns, so nothing is tagged until later. Both
+lists are saved with the game.
 The camera follows the area: picking HEAD, BODY, ARMS, LEGS or FEET (tab, body
 column header or + tile, or a row in another area) moves it to that area's own
 camera setup: HEAD and BODY aim at the upper body (HEAD from farther back so the
