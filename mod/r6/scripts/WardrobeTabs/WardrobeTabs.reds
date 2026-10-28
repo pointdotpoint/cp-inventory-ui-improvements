@@ -366,7 +366,7 @@ public func WardrobeTabsPackOf(itemID: ItemID) -> wref<WardrobeTabsPack> {
 
 public func WardrobeTabsDetectPack(list: ref<WardrobeTabsPackList>, record: TweakDBID) -> ref<WardrobeTabsPack> {
     let item: ref<Item_Record> = TweakDBInterface.GetItemRecord(record);
-    if !IsDefined(item) || WardrobeTabsIsBaseName(NameToString(item.DisplayName())) {
+    if !IsDefined(item) {
         return list.baseMark;
     }
     let id: String = TDBID.ToStringDEBUG(record);
@@ -382,25 +382,30 @@ public func WardrobeTabsDetectPack(list: ref<WardrobeTabsPackList>, record: Twea
     if StrLen(prefix) == 0 {
         return list.baseMark;
     }
+    // A prefix on the known pack list is a mod whatever its name looks like.
+    let known: String = list.names.Name(prefix);
+    if StrLen(known) == 0 && WardrobeTabsIsBaseName(LocKeyToString(item.DisplayName())) {
+        return list.baseMark;
+    }
     for pack in list.packs {
         if Equals(pack.prefix, prefix) {
             return pack;
         }
     }
-    let name: String = list.names.Name(prefix);
-    let pack: ref<WardrobeTabsPack> = WardrobeTabsPack.Create(StrLen(name) > 0 ? name : StrUpper(prefix));
+    let pack: ref<WardrobeTabsPack> = WardrobeTabsPack.Create(StrLen(known) > 0 ? known : StrUpper(prefix));
     pack.prefix = prefix;
     ArrayPush(list.packs, pack);
     return pack;
 }
 
-// "LocKey#" and digits only (or no name at all): a base-game name. Mods use their own keys,
-// including "LocKey#" followed by text.
+// A base-game name: no name, or "LocKey#" with a short number. Base-game keys are small
+// numbers; mods name items with text keys (harley_jacket_black_name), which TweakXL stores
+// as a 64-bit hash, so LocKeyToString gives them 10 digits or more, or the text itself.
 public func WardrobeTabsIsBaseName(name: String) -> Bool {
     if StrLen(name) == 0 || Equals(name, "None") {
         return true;
     }
-    if !StrBeginsWith(name, "LocKey#") || StrLen(name) == 7 {
+    if !StrBeginsWith(name, "LocKey#") || StrLen(name) == 7 || StrLen(name) > 7 + 9 {
         return false;
     }
     let index: Int32 = 7;
@@ -1231,7 +1236,9 @@ private func WardrobeTabsBuild(screen: ref<WardrobeScreenController>) -> Void {
         }
     }
     this.WardrobeTabsRefresh(screen);
-    ModLog(n"WardrobeTabs", "WardrobeTabs " + WardrobeTabsConfig.Version() + " ready (" + ToString(WardrobeTabsColumns()) + " columns; hover try-on "
+    let packList: ref<WardrobeTabsPackList> = ViewManager.GetInstance(GetGameInstance()).m_wtPackList;
+    let packCount: Int32 = IsDefined(packList) ? ArraySize(packList.packs) : 0;
+    ModLog(n"WardrobeTabs", "WardrobeTabs " + WardrobeTabsConfig.Version() + " ready (" + ToString(packCount) + " mod packs; " + ToString(WardrobeTabsColumns()) + " columns; hover try-on "
         + ToString(screen.m_wtSettings.hoverTryOn) + ", area camera " + ToString(screen.m_wtSettings.areaCamera) + ")");
 }
 
