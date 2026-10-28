@@ -1238,7 +1238,7 @@ private func WardrobeTabsBuild(screen: ref<WardrobeScreenController>) -> Void {
     this.WardrobeTabsRefresh(screen);
     let packList: ref<WardrobeTabsPackList> = ViewManager.GetInstance(GetGameInstance()).m_wtPackList;
     let packCount: Int32 = IsDefined(packList) ? ArraySize(packList.packs) : 0;
-    ModLog(n"WardrobeTabs", "WardrobeTabs " + WardrobeTabsConfig.Version() + " ready (" + ToString(packCount) + " mod packs; " + ToString(WardrobeTabsColumns()) + " columns; hover try-on "
+    ModLog(n"WardrobeTabs", "Wardrobe UI Improvements " + WardrobeTabsConfig.Version() + " ready (" + ToString(packCount) + " mod packs; " + ToString(WardrobeTabsColumns()) + " columns; hover try-on "
         + ToString(screen.m_wtSettings.hoverTryOn) + ", area camera " + ToString(screen.m_wtSettings.areaCamera) + ")");
 }
 

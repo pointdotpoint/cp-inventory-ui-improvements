@@ -118,7 +118,7 @@ The grid switches at once and the choice is saved with the game.
 
 ## Settings
 
-With Mod Settings installed, Settings > Mods > Wardrobe Tabs has two switches, both
+With Mod Settings installed, Settings > Mods > Wardrobe UI Improvements has two switches, both
 on by default: "Preview items on hover" (off: resting on a card still clears its NEW
 tag but tries nothing on) and "Move camera to the selected area" (off: the camera
 only moves with Equipment-EX's wheel zoom). Changes apply the next time the

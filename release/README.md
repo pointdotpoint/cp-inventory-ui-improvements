@@ -1,4 +1,4 @@
-# Wardrobe Tabs
+# Wardrobe UI Improvements
 
 A redesign of the Equipment-EX wardrobe screen for Cyberpunk 2077.
 
@@ -42,7 +42,7 @@ folder that holds `bin`, `archive` and `r6`). Open the wardrobe the way Equipmen
 
 ## Settings
 
-With Mod Settings installed, Settings > Mods > Wardrobe Tabs has two switches, both on by
+With Mod Settings installed, Settings > Mods > Wardrobe UI Improvements has two switches, both on by
 default:
 
 - **Preview items on hover**

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Builds the player download: dist/WardrobeTabs-<version>.zip, laid out like the game folder.
+# Builds the player download: dist/WardrobeUIImprovements-<version>.zip, laid out like the game folder.
 # The version comes from WardrobeTabsConfig.Version(); release/README.md becomes the README
 # players get. Runs the minimal compile check first and refuses to package a failing build.
 # Usage: tools/build-release.sh
@@ -20,7 +20,7 @@ cp "$SCRIPTS"/*.reds "$STAGE/r6/scripts/WardrobeTabs/"
 cp "$PROJECT/release/README.md" "$STAGE/r6/scripts/WardrobeTabs/README.md"
 
 mkdir -p "$PROJECT/dist"
-OUT="$PROJECT/dist/WardrobeTabs-$VERSION.zip"
+OUT="$PROJECT/dist/WardrobeUIImprovements-$VERSION.zip"
 rm -f "$OUT"
 (cd "$STAGE" && python3 -I -c '
 import os, sys, zipfile

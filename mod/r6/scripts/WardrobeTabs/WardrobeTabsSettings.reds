@@ -4,14 +4,14 @@
 module EquipmentEx
 
 public class WardrobeTabsSettings {
-    @runtimeProperty("ModSettings.mod", "Wardrobe Tabs")
+    @runtimeProperty("ModSettings.mod", "Wardrobe UI Improvements")
     @runtimeProperty("ModSettings.category", "Wardrobe")
     @runtimeProperty("ModSettings.category.order", "0")
     @runtimeProperty("ModSettings.displayName", "Preview items on hover")
     @runtimeProperty("ModSettings.description", "Resting the cursor on an item card puts it on V in the preview until the cursor moves off.")
     public let hoverTryOn: Bool = true;
 
-    @runtimeProperty("ModSettings.mod", "Wardrobe Tabs")
+    @runtimeProperty("ModSettings.mod", "Wardrobe UI Improvements")
     @runtimeProperty("ModSettings.category", "Wardrobe")
     @runtimeProperty("ModSettings.category.order", "0")
     @runtimeProperty("ModSettings.displayName", "Move camera to the selected area")
