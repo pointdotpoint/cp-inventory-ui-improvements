@@ -45,7 +45,7 @@ Reference sources:
 
 - `mod/`: the shippable files, mirroring the game folder (`r6/scripts/WardrobeTabs`, `archive/pc/mod/WardrobeTabs.archive`).
 - `tools/`: the compile check, the card grid builder, the pack name generator and the release builder.
-- `release/README.md`: the README players get in the zip (the one under `mod/` is for development).
+- `release/README.md`: the README players get in the zip (the one under `mod/` is for development); `release/THIRD_PARTY_NOTICES.txt` (Equipment-EX's MIT notice, for the grid layouts built from its wardrobe layout) ships next to it.
 - `prototype/wardrobe-mockups/`: the HTML mockups layout B comes from.
 
 ## Architecture

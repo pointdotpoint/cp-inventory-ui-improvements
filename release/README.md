@@ -63,3 +63,7 @@ Changes apply the next time the wardrobe opens.
 ## Credits
 
 Built on Equipment-EX by psiberx, with Codeware, ArchiveXL and TweakXL.
+
+The card grid layouts in `WardrobeTabs.archive` are built from Equipment-EX's wardrobe layout,
+used under the MIT License (Copyright (c) 2022 Pavel Siberx). The full notice is in
+`THIRD_PARTY_NOTICES.txt` next to this README.

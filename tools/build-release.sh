@@ -18,6 +18,7 @@ mkdir -p "$STAGE/archive/pc/mod" "$STAGE/r6/scripts/WardrobeTabs"
 cp "$PROJECT/mod/archive/pc/mod/WardrobeTabs.archive" "$STAGE/archive/pc/mod/"
 cp "$SCRIPTS"/*.reds "$STAGE/r6/scripts/WardrobeTabs/"
 cp "$PROJECT/release/README.md" "$STAGE/r6/scripts/WardrobeTabs/README.md"
+cp "$PROJECT/release/THIRD_PARTY_NOTICES.txt" "$STAGE/r6/scripts/WardrobeTabs/"
 
 mkdir -p "$PROJECT/dist"
 OUT="$PROJECT/dist/WardrobeUIImprovements-$VERSION.zip"
