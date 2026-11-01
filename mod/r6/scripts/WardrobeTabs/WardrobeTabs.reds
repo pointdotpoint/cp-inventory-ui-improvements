@@ -156,10 +156,12 @@ public abstract class WardrobeTabsConfig {
     public static func TryOnTicks() -> Int32 = 9;
     public static func TryOffTicks() -> Int32 = 2;
 
-    // Outfit cells, three to a row, inside Equipment-EX's outfit scroll area. Its slider takes
-    // the right edge of the 1352 wide host.
-    public static func OutfitColumns() -> Int32 = 3;
-    public static func OutfitCellWidth() -> Float = 410.0;
+    // Outfit cells, four to a row, in the outfit list's host, which also takes the slot
+    // sidebar's column (the grid container's width plus GridLeft()). The drawn scroll bar
+    // takes the host's right edge.
+    public static func OutfitsWidth() -> Float = WardrobeTabsConfig.ContainerWidth() + WardrobeTabsConfig.GridLeft();
+    public static func OutfitColumns() -> Int32 = 4;
+    public static func OutfitCellWidth() -> Float = 396.0;
     public static func OutfitCellHeight() -> Float = 172.0;
     public static func OutfitGap() -> Float = 16.0;
     // Item icons along the bottom of a cell, head to toe; the last slot reads +N when an
@@ -173,7 +175,7 @@ public abstract class WardrobeTabsConfig {
     public static func OutfitWheelStep() -> Float = 128.0;
     // The scroll bar's x, right of the cells. The manager it sits in has no size of its own,
     // so it is placed from the left.
-    public static func OutfitBarLeft() -> Float = WardrobeTabsConfig.ContainerWidth() - 40.0;
+    public static func OutfitBarLeft() -> Float = WardrobeTabsConfig.OutfitsWidth() - 40.0;
 
     // Buttons after the area tabs, toggles, chip paging (0..9) and the chips: OUTFITS / BACK,
     // UPDATE and REVERT in the outfit bar, then the outfits view's SAVE OUTFIT and NO OUTFIT.
@@ -186,6 +188,8 @@ public abstract class WardrobeTabsConfig {
     public static func PackButton() -> Int32 = WardrobeTabsConfig.OutfitsButton() + 5;
     public static func PackRows() -> Int32 = 20;
     public static func PackRowHeight() -> Float = 52.0;
+    // Rows the PACK list moves per mouse wheel notch.
+    public static func PackWheelRows() -> Int32 = 3;
     // The column buttons 4 5 6 7, after the pack list's rows.
     public static func ColumnButton(columns: Int32) -> Int32 = WardrobeTabsConfig.PackButton() + 1 + WardrobeTabsConfig.PackRows() + columns - WardrobeTabsConfig.MinColumns();
     public static func MinColumns() -> Int32 = 4;
@@ -506,6 +510,17 @@ public let m_wtPackMenu: wref<inkCanvas>;
 
 @addField(WardrobeScreenController)
 public let m_wtPackRowChoice: array<Int32>;
+
+// The PACK list scrolls: the first choice shown in the top row (-1 when the list has just
+// opened: WardrobeTabsRedrawPacks then scrolls the chosen pack into view), and its scroll bar.
+@addField(WardrobeScreenController)
+public let m_wtPackScroll: Int32;
+
+@addField(WardrobeScreenController)
+public let m_wtPackTrack: wref<inkRectangle>;
+
+@addField(WardrobeScreenController)
+public let m_wtPackThumb: wref<inkRectangle>;
 
 @addField(WardrobeScreenController)
 public let m_wtEquippedOnly: Bool;
@@ -1177,11 +1192,11 @@ private func WardrobeTabsBuild(screen: ref<WardrobeScreenController>) -> Void {
     // Host for the outfit list, occupying the grid's place in the panel.
     let host: ref<inkCanvas> = new inkCanvas();
     host.SetName(n"wardrobeOutfitsHost");
-    host.SetSize(WardrobeTabsConfig.ContainerWidth(), WardrobeTabsConfig.ContainerHeight());
+    host.SetSize(WardrobeTabsConfig.OutfitsWidth(), WardrobeTabsConfig.ContainerHeight());
     host.SetHAlign(inkEHorizontalAlign.Left);
     host.SetVAlign(inkEVerticalAlign.Fill);
-    // Lined up with the grid; the sidebar's column stays empty in OUTFITS.
-    host.SetMargin(new inkMargin(WardrobeTabsConfig.GridLeft(), 8.0, 0.0, 204.0));
+    // The grid container's place, the sidebar's column included: OUTFITS has no sidebar.
+    host.SetMargin(new inkMargin(0.0, 8.0, 0.0, 204.0));
     host.SetAffectsLayoutWhenHidden(false);
     host.childOrder = inkEChildOrder.Backward;
     host.Reparent(panel);
@@ -1339,11 +1354,33 @@ private func WardrobeTabsBuildPacks(screen: ref<WardrobeScreenController>, conta
     menu.SetMargin(new inkMargin(0.0, 0.0, 300.0, 0.0));
     menu.childOrder = inkEChildOrder.Forward;
     menu.SetVisible(false);
+    menu.SetInteractive(true);
+    menu.RegisterToCallback(n"OnRelative", this, n"OnWardrobePackWheel");
     menu.Reparent(container, 0);
     let back: ref<inkRectangle> = this.WardrobeTabsMakeRect(new HDRColor(0.03, 0.02, 0.03, 1.0), 0.94);
     back.SetName(n"wardrobePackListBack");
     back.Reparent(menu);
     screen.m_wtPackMenu = menu;
+    // Scroll bar in the gap right of the rows, shown when there are more choices than rows.
+    let track: ref<inkRectangle> = new inkRectangle();
+    track.SetAnchor(inkEAnchor.TopLeft);
+    track.SetSize(5.0, 0.0);
+    track.SetMargin(new inkMargin(312.0, 8.0, 0.0, 0.0));
+    track.SetTintColor(new HDRColor(0.486, 0.129, 0.204, 1.0));
+    track.SetOpacity(0.5);
+    track.SetInteractive(false);
+    track.SetVisible(false);
+    track.Reparent(menu);
+    screen.m_wtPackTrack = track;
+    let thumb: ref<inkRectangle> = new inkRectangle();
+    thumb.SetAnchor(inkEAnchor.TopLeft);
+    thumb.SetSize(5.0, 0.0);
+    thumb.SetMargin(new inkMargin(312.0, 8.0, 0.0, 0.0));
+    thumb.SetTintColor(new HDRColor(1.176, 0.381, 0.348, 1.0));
+    thumb.SetInteractive(false);
+    thumb.SetVisible(false);
+    thumb.Reparent(menu);
+    screen.m_wtPackThumb = thumb;
     let row: Int32 = 0;
     while row < rows {
         this.WardrobeTabsMakeButton(screen, menu, "", 10.0, 8.0 + Cast<Float>(row) * (height + 4.0), 300.0, height);
@@ -1550,17 +1587,29 @@ private func WardrobeTabsRedrawPacks(screen: ref<WardrobeScreenController>) -> V
         }
         index += 1;
     }
-    if ArraySize(screen.m_wtPackRowChoice) > rows {
-        ArrayResize(screen.m_wtPackRowChoice, rows);
+    // More choices than rows: the rows show a window from m_wtPackScroll on.
+    let size: Int32 = ArraySize(screen.m_wtPackRowChoice);
+    let maxScroll: Int32 = Max(size - rows, 0);
+    if screen.m_wtPackScroll < 0 {
+        let chosen: Int32 = 0;
+        let find: Int32 = 0;
+        while find < size {
+            if screen.m_wtPackRowChoice[find] == view.m_wtPackChoice {
+                chosen = find;
+            }
+            find += 1;
+        }
+        screen.m_wtPackScroll = chosen < rows ? 0 : chosen - rows / 2;
     }
+    screen.m_wtPackScroll = Min(Max(screen.m_wtPackScroll, 0), maxScroll);
     let row: Int32 = 0;
     while row < rows {
         let at: Int32 = button + 1 + row;
-        let used: Bool = row < ArraySize(screen.m_wtPackRowChoice);
+        let used: Bool = screen.m_wtPackScroll + row < size;
         screen.m_wtButtons[at].SetVisible(used);
         screen.m_wtButtonNews[at].SetVisible(false);
         if used {
-            let choice: Int32 = screen.m_wtPackRowChoice[row];
+            let choice: Int32 = screen.m_wtPackRowChoice[screen.m_wtPackScroll + row];
             let count: Int32 = choice == 0 ? total : (choice == 1 ? list.baseCount : list.packs[choice - 2].count);
             screen.m_wtButtonTexts[at].SetText(this.WardrobeTabsPackChoiceName(choice));
             screen.m_wtButtonCounts[at].SetText(ToString(count));
@@ -1568,9 +1617,34 @@ private func WardrobeTabsRedrawPacks(screen: ref<WardrobeScreenController>) -> V
         }
         row += 1;
     }
+    let shown: Int32 = Min(size, rows);
+    let listHeight: Float = Cast<Float>(shown) * (WardrobeTabsConfig.PackRowHeight() + 4.0) - 4.0;
     if IsDefined(screen.m_wtPackMenu) {
-        screen.m_wtPackMenu.SetHeight(Cast<Float>(ArraySize(screen.m_wtPackRowChoice)) * (WardrobeTabsConfig.PackRowHeight() + 4.0) + 12.0);
+        screen.m_wtPackMenu.SetHeight(listHeight + 16.0);
     }
+    if IsDefined(screen.m_wtPackTrack) && IsDefined(screen.m_wtPackThumb) {
+        screen.m_wtPackTrack.SetVisible(maxScroll > 0);
+        screen.m_wtPackThumb.SetVisible(maxScroll > 0);
+        if maxScroll > 0 {
+            let thumb: Float = MaxF(listHeight * Cast<Float>(rows) / Cast<Float>(size), 40.0);
+            screen.m_wtPackTrack.SetHeight(listHeight);
+            screen.m_wtPackThumb.SetHeight(thumb);
+            screen.m_wtPackThumb.SetMargin(new inkMargin(312.0, 8.0 + (listHeight - thumb) * Cast<Float>(screen.m_wtPackScroll) / Cast<Float>(maxScroll), 0.0, 0.0));
+        }
+    }
+}
+
+// Mouse wheel over the PACK list, read like the outfit grid's.
+@addMethod(inkPreviewGameController)
+protected cb func OnWardrobePackWheel(evt: ref<inkPointerEvent>) -> Bool {
+    let screen: ref<WardrobeScreenController> = this as WardrobeScreenController;
+    if !IsDefined(screen) || !evt.IsAction(n"mouse_wheel") || evt.GetAxisData() == 0.0 {
+        return false;
+    }
+    let step: Int32 = WardrobeTabsConfig.PackWheelRows();
+    screen.m_wtPackScroll = Max(screen.m_wtPackScroll + (evt.GetAxisData() > 0.0 ? -step : step), 0);
+    this.WardrobeTabsRedrawPacks(screen);
+    return true;
 }
 
 @addMethod(inkPreviewGameController)
@@ -1704,7 +1778,7 @@ private func WardrobeTabsBuildOutfits(screen: ref<WardrobeScreenController>) -> 
     let viewport: ref<inkScrollArea> = new inkScrollArea();
     viewport.SetName(n"wardrobeOutfitViewport");
     viewport.SetAnchor(inkEAnchor.TopLeft);
-    viewport.SetSize(WardrobeTabsConfig.ContainerWidth(), height);
+    viewport.SetSize(WardrobeTabsConfig.OutfitsWidth(), height);
     viewport.SetRenderTransformPivot(new Vector2(0.0, 0.0));
     viewport.SetConstrainContentPosition(true);
     viewport.SetUseInternalMask(true);
@@ -2214,9 +2288,9 @@ private func WardrobeTabsRefresh(screen: ref<WardrobeScreenController>) -> Void 
     if IsDefined(screen.m_wtBar) {
         let target: ref<inkCompoundWidget> = (clothing ? screen.m_wtGrid : screen.m_wtOutfitsHost) as inkCompoundWidget;
         if IsDefined(target) && screen.m_wtBar.GetParentWidget() != target {
+            // Both start with the sidebar's column; the bar keeps its GridLeft() margin, so it
+            // stays in place.
             screen.m_wtBar.Reparent(target, 0);
-            // The grid container starts with the sidebar's column; the host is already past it.
-            screen.m_wtBar.SetMargin(new inkMargin(clothing ? WardrobeTabsConfig.GridLeft() : 0.0, 0.0, 0.0, 0.0));
         }
     }
     this.WardrobeTabsRedraw(screen);
@@ -3489,6 +3563,7 @@ protected cb func OnWardrobeButtonClick(evt: ref<inkPointerEvent>) -> Bool {
         }
     } else if button == WardrobeTabsConfig.PackButton() {
         screen.m_wtPackOpen = !screen.m_wtPackOpen;
+        screen.m_wtPackScroll = -1;
         this.WardrobeTabsRedraw(screen);
     } else if button >= WardrobeTabsConfig.ColumnButton(WardrobeTabsConfig.MinColumns()) {
         let columns: Int32 = WardrobeTabsConfig.MinColumns() + button - WardrobeTabsConfig.ColumnButton(WardrobeTabsConfig.MinColumns());
@@ -3497,7 +3572,7 @@ protected cb func OnWardrobeButtonClick(evt: ref<inkPointerEvent>) -> Bool {
         }
         this.WardrobeTabsRedraw(screen);
     } else if button > WardrobeTabsConfig.PackButton() {
-        let row: Int32 = button - WardrobeTabsConfig.PackButton() - 1;
+        let row: Int32 = screen.m_wtPackScroll + button - WardrobeTabsConfig.PackButton() - 1;
         screen.m_wtPackOpen = false;
         if row < ArraySize(screen.m_wtPackRowChoice) && screen.m_wtPackRowChoice[row] != view.m_wtPackChoice {
             view.m_wtPackChoice = screen.m_wtPackRowChoice[row];

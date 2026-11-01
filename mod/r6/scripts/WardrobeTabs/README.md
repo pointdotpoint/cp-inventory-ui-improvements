@@ -76,7 +76,7 @@ The bar covers the bottom of the grid; the grid gets as much extra scroll room.
 
 The outfits view has SAVE OUTFIT (Equipment-EX's own dialog), NO OUTFIT (lit
 while no outfit is worn) and its own search box in the drawer header, and the
-saved outfits as a three-column grid: name, item count, a row of item icons (head
+saved outfits as a four-column grid (across the slot sidebar's column too): name, item count, a row of item icons (head
 to toe, up to seven, the last reading +N), a cyan bar and WEARING on
 the worn one. Clicking a cell wears the outfit; Equipment-EX's delete key asks to
 delete it. The star at the top right of each cell marks a favourite; favourites come
