@@ -1,0 +1,72 @@
+# Wardrobe UI Improvements: Korean texts (kr-kr).
+# Machine translation, not yet reviewed by a native speaker. Corrections welcome: send an override
+# file (same format) to the mod author. Format and how it's used: the header of en-us.yaml.
+
+# Body areas: area tabs and body column groups.
+WUI_Loc.kr-kr.Area-Head: "머리"
+WUI_Loc.kr-kr.Area-Body: "몸통"
+WUI_Loc.kr-kr.Area-Arms: "팔"
+WUI_Loc.kr-kr.Area-Legs: "다리"
+WUI_Loc.kr-kr.Area-Feet: "발"
+WUI_Loc.kr-kr.Area-Other: "기타"
+
+# Body column: heading, count of worn items.
+WUI_Loc.kr-kr.Body-Wearing: "착용 중"
+WUI_Loc.kr-kr.Body-NothingWorn: "착용 없음"
+WUI_Loc.kr-kr.Body-Worn: "{0}개 착용"
+
+# Item cards: new item tag, worn item tag.
+WUI_Loc.kr-kr.Card-New: "신규"
+WUI_Loc.kr-kr.Status-Wearing: "착용 중"
+WUI_Loc.kr-kr.Status-Edited: "편집됨"
+
+# Drawer header buttons.
+WUI_Loc.kr-kr.Header-EquippedOnly: "장착 아이템만"
+WUI_Loc.kr-kr.Header-Pack: "팩: {0}"
+WUI_Loc.kr-kr.Pack-All: "전체"
+WUI_Loc.kr-kr.Pack-BaseGame: "기본 게임"
+
+# Drawer header subtitle.
+WUI_Loc.kr-kr.Count-Items-One: "아이템 {0}개"
+WUI_Loc.kr-kr.Count-Items-Many: "아이템 {0}개"
+WUI_Loc.kr-kr.Count-Match: "{0}개 일치"
+WUI_Loc.kr-kr.Header-WearingItem: "착용 중: {0}"
+
+# Outfits view: header title and subtitle.
+WUI_Loc.kr-kr.Header-Outfits: "복장"
+WUI_Loc.kr-kr.Count-SavedOutfits-One: "저장된 복장 {0}개"
+WUI_Loc.kr-kr.Count-SavedOutfits-Many: "저장된 복장 {0}개"
+WUI_Loc.kr-kr.Count-Favourites-One: "즐겨찾기 {0}개"
+WUI_Loc.kr-kr.Count-Favourites-Many: "즐겨찾기 {0}개"
+
+# Slot sidebar paging buttons.
+WUI_Loc.kr-kr.Sidebar-Previous: "이전"
+WUI_Loc.kr-kr.Sidebar-Next: "다음"
+
+# Outfit bar along the bottom of the drawer.
+WUI_Loc.kr-kr.Bar-CurrentLook: "현재 외형"
+WUI_Loc.kr-kr.Bar-Outfits: "복장 ({0})"
+WUI_Loc.kr-kr.Bar-Back: "뒤로"
+WUI_Loc.kr-kr.Bar-Update: "업데이트"
+WUI_Loc.kr-kr.Bar-Revert: "되돌리기"
+
+# Outfit bar status line: {0} is an item or outfit name.
+WUI_Loc.kr-kr.Look-TryingOn: "입어 보는 중: {0}"
+WUI_Loc.kr-kr.Look-SavedAs: "{0}(으)로 저장됨"
+WUI_Loc.kr-kr.Look-Changes-One: "변경 {0}건"
+WUI_Loc.kr-kr.Look-Changes-Many: "변경 {0}건"
+WUI_Loc.kr-kr.Look-NoOutfitsYet: "아직 저장된 복장 없음"
+WUI_Loc.kr-kr.Look-NotSaved: "복장으로 저장되지 않음"
+
+# Outfits view buttons and empty-list messages ({0} is the search text).
+WUI_Loc.kr-kr.Outfits-Save: "복장 저장"
+WUI_Loc.kr-kr.Outfits-None: "복장 없음"
+WUI_Loc.kr-kr.Outfits-Empty: "아직 저장된 복장 없음: 복장 저장을 누르면 V가 입고 있는 옷이 저장됩니다"
+WUI_Loc.kr-kr.Outfits-NoMatch: "\"{0}\"와(과) 일치하는 복장 없음"
+
+# Mod Settings.
+WUI_Loc.kr-kr.Settings-Category: "옷장"
+WUI_Loc.kr-kr.Settings-HoverTryOn: "마우스를 올리면 아이템 미리 보기"
+WUI_Loc.kr-kr.Settings-HoverTryOn-Desc: "아이템 카드에 커서를 올려 두면 커서가 벗어날 때까지 미리 보기의 V에게 해당 아이템을 입힙니다."
+WUI_Loc.kr-kr.Settings-AreaCamera: "선택한 부위로 카메라 이동"
+WUI_Loc.kr-kr.Settings-AreaCamera-Desc: "머리, 몸통, 팔, 다리, 발을 선택하면 V의 해당 부위를 비추고, 복장에서는 전신을 보여 줍니다."

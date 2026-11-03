@@ -1,0 +1,72 @@
+# Wardrobe UI Improvements: Thai texts (th-th).
+# Machine translation, not yet reviewed by a native speaker. Corrections welcome: send an override
+# file (same format) to the mod author. Format and how it's used: the header of en-us.yaml.
+
+# Body areas: area tabs (room: 6 letters) and body column groups.
+WUI_Loc.th-th.Area-Head: "ศีรษะ"
+WUI_Loc.th-th.Area-Body: "ลำตัว"
+WUI_Loc.th-th.Area-Arms: "แขน"
+WUI_Loc.th-th.Area-Legs: "ขา"
+WUI_Loc.th-th.Area-Feet: "เท้า"
+WUI_Loc.th-th.Area-Other: "อื่นๆ"
+
+# Body column.
+WUI_Loc.th-th.Body-Wearing: "ที่สวมอยู่"
+WUI_Loc.th-th.Body-NothingWorn: "ไม่ได้สวมอะไร"
+WUI_Loc.th-th.Body-Worn: "สวม {0} ชิ้น"
+
+# Item cards.
+WUI_Loc.th-th.Card-New: "ใหม่"
+WUI_Loc.th-th.Status-Wearing: "สวมอยู่"
+WUI_Loc.th-th.Status-Edited: "แก้ไขแล้ว"
+
+# Drawer header buttons.
+WUI_Loc.th-th.Header-EquippedOnly: "เฉพาะที่สวมอยู่"
+WUI_Loc.th-th.Header-Pack: "แพ็ก: {0}"
+WUI_Loc.th-th.Pack-All: "ทั้งหมด"
+WUI_Loc.th-th.Pack-BaseGame: "เกมหลัก"
+
+# Drawer header subtitle.
+WUI_Loc.th-th.Count-Items-One: "{0} ชิ้น"
+WUI_Loc.th-th.Count-Items-Many: "{0} ชิ้น"
+WUI_Loc.th-th.Count-Match: "ตรงกัน {0}"
+WUI_Loc.th-th.Header-WearingItem: "กำลังสวม {0}"
+
+# Outfits view: header title and subtitle.
+WUI_Loc.th-th.Header-Outfits: "ชุด"
+WUI_Loc.th-th.Count-SavedOutfits-One: "บันทึกไว้ {0} ชุด"
+WUI_Loc.th-th.Count-SavedOutfits-Many: "บันทึกไว้ {0} ชุด"
+WUI_Loc.th-th.Count-Favourites-One: "รายการโปรด {0}"
+WUI_Loc.th-th.Count-Favourites-Many: "รายการโปรด {0}"
+
+# Slot sidebar paging buttons (room: 8 letters).
+WUI_Loc.th-th.Sidebar-Previous: "ก่อนหน้า"
+WUI_Loc.th-th.Sidebar-Next: "ถัดไป"
+
+# Outfit bar (room: OUTFITS 12 with the count; BACK 12; UPDATE and REVERT 10).
+WUI_Loc.th-th.Bar-CurrentLook: "ลุคปัจจุบัน"
+WUI_Loc.th-th.Bar-Outfits: "ชุด ({0})"
+WUI_Loc.th-th.Bar-Back: "กลับ"
+WUI_Loc.th-th.Bar-Update: "อัปเดต"
+WUI_Loc.th-th.Bar-Revert: "คืนค่า"
+
+# Outfit bar status line.
+WUI_Loc.th-th.Look-TryingOn: "กำลังลอง: {0}"
+WUI_Loc.th-th.Look-SavedAs: "บันทึกเป็น {0}"
+WUI_Loc.th-th.Look-Changes-One: "เปลี่ยน {0} จุด"
+WUI_Loc.th-th.Look-Changes-Many: "เปลี่ยน {0} จุด"
+WUI_Loc.th-th.Look-NoOutfitsYet: "ยังไม่มีชุดที่บันทึกไว้"
+WUI_Loc.th-th.Look-NotSaved: "ยังไม่ได้บันทึกเป็นชุด"
+
+# Outfits view buttons (room: 18 letters) and empty-list messages.
+WUI_Loc.th-th.Outfits-Save: "บันทึกชุด"
+WUI_Loc.th-th.Outfits-None: "ไม่ใช้ชุด"
+WUI_Loc.th-th.Outfits-Empty: "ยังไม่มีชุดที่บันทึกไว้: \"บันทึกชุด\" จะเก็บสิ่งที่ V สวมอยู่"
+WUI_Loc.th-th.Outfits-NoMatch: "ไม่มีชุดที่ตรงกับ \"{0}\""
+
+# Mod Settings (the mod's name stays English).
+WUI_Loc.th-th.Settings-Category: "ตู้เสื้อผ้า"
+WUI_Loc.th-th.Settings-HoverTryOn: "ลองไอเท็มเมื่อชี้เมาส์"
+WUI_Loc.th-th.Settings-HoverTryOn-Desc: "เมื่อวางเคอร์เซอร์ค้างไว้บนการ์ดไอเท็ม V จะสวมไอเท็มนั้นในภาพตัวอย่างจนกว่าเคอร์เซอร์จะเลื่อนออก"
+WUI_Loc.th-th.Settings-AreaCamera: "เลื่อนกล้องไปยังส่วนที่เลือก"
+WUI_Loc.th-th.Settings-AreaCamera-Desc: "การเลือก ศีรษะ ลำตัว แขน ขา หรือ เท้า จะจัดกล้องไปที่ส่วนนั้นของ V ส่วน ชุด จะแสดงทั้งตัว"

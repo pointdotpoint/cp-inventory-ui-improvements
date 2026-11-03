@@ -26,13 +26,13 @@ public abstract class WardrobeTabsConfig {
     // function came back empty at runtime when indexed.
     public static func AreaLabel(area: Int32) -> String {
         switch area {
-            case 0: return "HEAD";
-            case 1: return "BODY";
-            case 2: return "ARMS";
-            case 3: return "LEGS";
-            case 4: return "FEET";
+            case 0: return WardrobeTabsText(n"WUI-Area-Head");
+            case 1: return WardrobeTabsText(n"WUI-Area-Body");
+            case 2: return WardrobeTabsText(n"WUI-Area-Arms");
+            case 3: return WardrobeTabsText(n"WUI-Area-Legs");
+            case 4: return WardrobeTabsText(n"WUI-Area-Feet");
         }
-        return "OTHER";
+        return WardrobeTabsText(n"WUI-Area-Other");
     }
 
     // The vanilla equipment-area setup whose pose V takes for an area's camera. The vanilla
@@ -914,7 +914,7 @@ private func WardrobeTabsDecorateCard() -> Void {
         tagText.SetFontFamily("base\\gameplay\\gui\\fonts\\raj\\raj.inkfontfamily");
         tagText.SetLetterCase(textLetterCase.UpperCase);
         tagText.SetFontSize(Cast<Int32>(16.0 * t));
-        tagText.SetText("WEARING");
+        tagText.SetText(WardrobeTabsText(n"WUI-Status-Wearing"));
         tagText.SetAnchor(inkEAnchor.Centered);
         tagText.SetAnchorPoint(0.5, 0.5);
         tagText.SetTintColor(new HDRColor(0.02, 0.03, 0.04, 1.0));
@@ -938,7 +938,7 @@ private func WardrobeTabsDecorateCard() -> Void {
         newText.SetFontFamily("base\\gameplay\\gui\\fonts\\raj\\raj.inkfontfamily");
         newText.SetLetterCase(textLetterCase.UpperCase);
         newText.SetFontSize(Cast<Int32>(20.0 * t));
-        newText.SetText("NEW");
+        newText.SetText(WardrobeTabsText(n"WUI-Card-New"));
         newText.SetAnchor(inkEAnchor.Centered);
         newText.SetAnchorPoint(0.5, 0.5);
         newText.SetTintColor(new HDRColor(0.02, 0.03, 0.04, 1.0));
@@ -1152,6 +1152,11 @@ private func WardrobeTabsMakeButton(screen: ref<WardrobeScreenController>, paren
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsBuild(screen: ref<WardrobeScreenController>) -> Void {
     screen.m_wtBuilt = true;
+    // The game's language and the player's text overrides, read once per opening.
+    let loc: ref<WardrobeTabsLocService> = WardrobeTabsLocService.Get();
+    if IsDefined(loc) {
+        loc.Refresh();
+    }
     screen.m_wtSettings = new WardrobeTabsSettings();
     let panel: ref<inkCompoundWidget> = this.GetChildWidgetByPath(n"wrapper/wrapper/vendorPanel") as inkCompoundWidget;
     let wrapper: ref<inkCompoundWidget> = this.GetChildWidgetByPath(n"wrapper") as inkCompoundWidget;
@@ -1325,7 +1330,7 @@ private func WardrobeTabsBuildHeader(screen: ref<WardrobeScreenController>, head
     }
     // Button 6 is a hidden placeholder (it was GROUP COLOURS) so the indices below stay put.
     this.WardrobeTabsMakeButton(screen, overlay, "", 0.0, 0.0, 1.0, 1.0).SetVisible(false);
-    ArrayPush(screen.m_wtClothingOnly, this.WardrobeTabsMakeButton(screen, overlay, "EQUIPPED ONLY", width - 310.0, 148.0, 300.0, 62.0));
+    ArrayPush(screen.m_wtClothingOnly, this.WardrobeTabsMakeButton(screen, overlay, WardrobeTabsText(n"WUI-Header-EquippedOnly"), width - 310.0, 148.0, 300.0, 62.0));
 }
 
 // PACK (button PackButton()) in the drawer header, left of EQUIPPED ONLY, and its list
@@ -1336,7 +1341,7 @@ private func WardrobeTabsBuildPacks(screen: ref<WardrobeScreenController>, conta
     this.WardrobeTabsPacks();
     let width: Float = WardrobeTabsConfig.PanelWidth() + WardrobeTabsConfig.GridLeft();
     if IsDefined(screen.m_wtHeader) {
-        let pack: ref<inkCanvas> = this.WardrobeTabsMakeButton(screen, screen.m_wtHeader, "PACK: ALL", width - 610.0, 148.0, 290.0, 62.0);
+        let pack: ref<inkCanvas> = this.WardrobeTabsMakeButton(screen, screen.m_wtHeader, WardrobeTabsTextF(n"WUI-Header-Pack", [WardrobeTabsText(n"WUI-Pack-All")]), width - 610.0, 148.0, 290.0, 62.0);
         let text: wref<inkText> = screen.m_wtButtonTexts[ArraySize(screen.m_wtButtonTexts) - 1];
         text.SetFitToContent(false);
         text.SetSize(266.0, 34.0);
@@ -1544,12 +1549,12 @@ private func WardrobeTabsCountPacks(screen: ref<WardrobeScreenController>) -> Vo
 private func WardrobeTabsPackChoiceName(choice: Int32) -> String {
     let list: ref<WardrobeTabsPackList> = this.WardrobeTabsPacks();
     if choice == 1 {
-        return "BASE GAME";
+        return WardrobeTabsText(n"WUI-Pack-BaseGame");
     }
     if choice >= 2 && choice - 2 < ArraySize(list.packs) {
         return list.packs[choice - 2].name;
     }
-    return "ALL";
+    return WardrobeTabsText(n"WUI-Pack-All");
 }
 
 @addMethod(inkPreviewGameController)
@@ -1561,7 +1566,7 @@ private func WardrobeTabsRedrawPacks(screen: ref<WardrobeScreenController>) -> V
     }
     let view: ref<ViewManager> = this.WardrobeTabsView();
     let list: ref<WardrobeTabsPackList> = this.WardrobeTabsPacks();
-    screen.m_wtButtonTexts[button].SetText("PACK: " + this.WardrobeTabsPackChoiceName(view.m_wtPackChoice));
+    screen.m_wtButtonTexts[button].SetText(WardrobeTabsTextF(n"WUI-Header-Pack", [this.WardrobeTabsPackChoiceName(view.m_wtPackChoice)]));
     this.WardrobeTabsStyleButton(screen, button, view.m_wtPackChoice != 0 || screen.m_wtPackOpen);
     let open: Bool = screen.m_wtPackOpen && !view.m_wtOutfitsSection;
     if IsDefined(screen.m_wtPackMenu) {
@@ -1678,8 +1683,8 @@ private func WardrobeTabsBuildSidebar(screen: ref<WardrobeScreenController>, con
     sidebar.childOrder = inkEChildOrder.Forward;
     sidebar.Reparent(container, 0);
     let half: Float = (width - WardrobeTabsConfig.ChipGap()) / 2.0;
-    this.WardrobeTabsMakeButton(screen, sidebar, "PREVIOUS", 0.0, paging, half, height);
-    this.WardrobeTabsMakeButton(screen, sidebar, "NEXT", width - half, paging, half, height);
+    this.WardrobeTabsMakeButton(screen, sidebar, WardrobeTabsText(n"WUI-Sidebar-Previous"), 0.0, paging, half, height);
+    this.WardrobeTabsMakeButton(screen, sidebar, WardrobeTabsText(n"WUI-Sidebar-Next"), width - half, paging, half, height);
     let chip: Int32 = 0;
     while chip < chips {
         this.WardrobeTabsMakeButton(screen, sidebar, "", 0.0, Cast<Float>(chip) * step, width, height);
@@ -1721,7 +1726,7 @@ private func WardrobeTabsBuildBar(screen: ref<WardrobeScreenController>, contain
     line.SetInteractive(false);
     line.Reparent(bar);
     let heading: ref<inkText> = this.WardrobeTabsMakeText(34, 0.0);
-    heading.SetText("CURRENT LOOK");
+    heading.SetText(WardrobeTabsText(n"WUI-Bar-CurrentLook"));
     heading.SetMargin(new inkMargin(24.0, 18.0, 0.0, 0.0));
     heading.SetTintColor(new HDRColor(1.0, 0.86, 0.88, 1.0));
     heading.Reparent(bar);
@@ -1731,10 +1736,10 @@ private func WardrobeTabsBuildBar(screen: ref<WardrobeScreenController>, contain
     look.Reparent(bar);
     screen.m_wtLook = look;
     // OUTFITS, which reads BACK in the outfits view; saving is done there (SAVE OUTFIT).
-    this.WardrobeTabsMakeButton(screen, bar, "OUTFITS", width - 24.0 - 260.0, 22.0, 260.0, 76.0);
+    this.WardrobeTabsMakeButton(screen, bar, WardrobeTabsTextF(n"WUI-Bar-Outfits", ["0"]), width - 24.0 - 260.0, 22.0, 260.0, 76.0);
     // Shown while the look is an edited outfit: save over it, or wear it as saved.
-    this.WardrobeTabsMakeButton(screen, bar, "UPDATE", width - 24.0 - 260.0 - 16.0 - 200.0, 22.0, 200.0, 76.0);
-    this.WardrobeTabsMakeButton(screen, bar, "REVERT", width - 24.0 - 260.0 - 32.0 - 400.0, 22.0, 200.0, 76.0);
+    this.WardrobeTabsMakeButton(screen, bar, WardrobeTabsText(n"WUI-Bar-Update"), width - 24.0 - 260.0 - 16.0 - 200.0, 22.0, 200.0, 76.0);
+    this.WardrobeTabsMakeButton(screen, bar, WardrobeTabsText(n"WUI-Bar-Revert"), width - 24.0 - 260.0 - 32.0 - 400.0, 22.0, 200.0, 76.0);
 }
 
 // Outfits view: SAVE OUTFIT and NO OUTFIT in the header row the area tabs use, its own search
@@ -1745,8 +1750,8 @@ private func WardrobeTabsBuildOutfits(screen: ref<WardrobeScreenController>) -> 
     ArrayClear(screen.m_wtOutfitsOnly);
     let overlay: ref<inkCompoundWidget> = screen.m_wtHeader;
     if IsDefined(overlay) {
-        ArrayPush(screen.m_wtOutfitsOnly, this.WardrobeTabsMakeButton(screen, overlay, "SAVE OUTFIT", 0.0, 148.0, 300.0, 62.0));
-        ArrayPush(screen.m_wtOutfitsOnly, this.WardrobeTabsMakeButton(screen, overlay, "NO OUTFIT", 310.0, 148.0, 300.0, 62.0));
+        ArrayPush(screen.m_wtOutfitsOnly, this.WardrobeTabsMakeButton(screen, overlay, WardrobeTabsText(n"WUI-Outfits-Save"), 0.0, 148.0, 300.0, 62.0));
+        ArrayPush(screen.m_wtOutfitsOnly, this.WardrobeTabsMakeButton(screen, overlay, WardrobeTabsText(n"WUI-Outfits-None"), 310.0, 148.0, 300.0, 62.0));
         let search: ref<HubTextInput> = HubTextInput.Create();
         search.SetName(n"wardrobeOutfitSearch");
         search.SetDefaultText(GetLocalizedTextByKey(n"UI-Wardrobe-SearchByName"));
@@ -2006,8 +2011,8 @@ private func WardrobeTabsShowOutfits(screen: ref<WardrobeScreenController>) -> V
     let height: Float = MaxF(Cast<Float>(rows) * stepY, 60.0);
     screen.m_wtOutfitContent.SetSize(Cast<Float>(columns) * stepX, height);
     screen.m_wtOutfitEmpty.SetVisible(count == 0);
-    screen.m_wtOutfitEmpty.SetText(ArraySize(all) == 0 ? "NO SAVED OUTFITS YET: SAVE OUTFIT KEEPS WHAT V IS WEARING"
-        : "NO OUTFIT MATCHES \"" + screen.m_wtOutfitQuery + "\"");
+    screen.m_wtOutfitEmpty.SetText(ArraySize(all) == 0 ? WardrobeTabsText(n"WUI-Outfits-Empty")
+        : WardrobeTabsTextF(n"WUI-Outfits-NoMatch", [screen.m_wtOutfitQuery]));
     screen.m_wtOutfitScrollMax = MaxF(height - WardrobeTabsConfig.OutfitViewHeight(), 0.0);
     this.WardrobeTabsScrollOutfits(screen, screen.m_wtOutfitScroll);
     WardrobeTabsDebug("Outfits view: " + ToString(count) + " of " + ToString(ArraySize(all)) + " outfits in "
@@ -2060,7 +2065,7 @@ private func WardrobeTabsStyleOutfits(screen: ref<WardrobeScreenController>) -> 
         screen.m_wtOutfitCellNames[index].SetTintColor(worn ? new HDRColor(0.369, 0.965, 1.0, 1.0)
             : (hovered ? new HDRColor(1.370, 0.444, 0.405, 1.0) : new HDRColor(1.176, 0.381, 0.348, 1.0)));
         let parts: Int32 = screen.m_wtOutfitParts[index];
-        screen.m_wtOutfitCellInfos[index].SetText(ToString(parts) + (parts == 1 ? " ITEM" : " ITEMS") + (worn ? "  |  WEARING" : (edited ? "  |  EDITED" : "")));
+        screen.m_wtOutfitCellInfos[index].SetText(WardrobeTabsCount("WUI-Count-Items", parts) + (worn ? "  |  " + WardrobeTabsText(n"WUI-Status-Wearing") : (edited ? "  |  " + WardrobeTabsText(n"WUI-Status-Edited") : "")));
         screen.m_wtOutfitCellInfos[index].SetTintColor(worn ? new HDRColor(0.204, 0.569, 0.592, 1.0) : new HDRColor(0.682, 0.231, 0.212, 1.0));
         let starHovered: Bool = screen.m_wtStarHover == screen.m_wtOutfitStars[index];
         screen.m_wtOutfitStarIcons[index].SetTintColor(favourite ? new HDRColor(0.98, 0.84, 0.36, 1.0)
@@ -2145,7 +2150,7 @@ private func WardrobeTabsBuildBody(screen: ref<WardrobeScreenController>, wrappe
     body.Reparent(wrapper, 0);
 
     let label: ref<inkText> = this.WardrobeTabsMakeText(32, 0.0);
-    label.SetText("WEARING");
+    label.SetText(WardrobeTabsText(n"WUI-Body-Wearing"));
     label.SetTintColor(new HDRColor(0.682, 0.231, 0.212, 1.0));
     label.Reparent(body);
     // Guide line beside the groups, as on the inventory's clothing column.
@@ -2726,7 +2731,7 @@ private func WardrobeTabsRedrawBody(screen: ref<WardrobeScreenController>, selec
             head.SetMargin(new inkMargin(0.0, y, 0.0, 0.0));
             screen.m_wtGroupLabels[group].SetTintColor(screen.m_wtHover == head ? activeRed : red);
             let count: Int32 = ArraySize(worn);
-            screen.m_wtGroupCounts[group].SetText(count == 0 ? "NOTHING WORN" : ToString(count) + " WORN");
+            screen.m_wtGroupCounts[group].SetText(count == 0 ? WardrobeTabsText(n"WUI-Body-NothingWorn") : WardrobeTabsTextF(n"WUI-Body-Worn", [ToString(count)]));
             screen.m_wtGroupCounts[group].SetTintColor(mildRed);
             // Detail line: the hovered tile's slot and item, else the worn slots' names.
             let detail: String = "";
@@ -2818,14 +2823,14 @@ private func WardrobeTabsRedrawHeader(screen: ref<WardrobeScreenController>, sel
                 favourites += 1;
             }
         }
-        let summary: String = ToString(saved) + (saved == 1 ? " SAVED OUTFIT" : " SAVED OUTFITS");
+        let summary: String = WardrobeTabsCount("WUI-Count-SavedOutfits", saved);
         if favourites > 0 {
-            summary += "  |  " + ToString(favourites) + (favourites == 1 ? " FAVOURITE" : " FAVOURITES");
+            summary += "  |  " + WardrobeTabsCount("WUI-Count-Favourites", favourites);
         }
         if StrLen(screen.m_wtOutfitQuery) > 0 {
-            summary += "  |  " + ToString(ArraySize(screen.m_wtOutfitNames)) + " MATCH";
+            summary += "  |  " + WardrobeTabsTextF(n"WUI-Count-Match", [ToString(ArraySize(screen.m_wtOutfitNames))]);
         }
-        screen.m_wtTitle.SetText("OUTFITS");
+        screen.m_wtTitle.SetText(WardrobeTabsText(n"WUI-Header-Outfits"));
         screen.m_wtSubtitle.SetText(summary);
         return;
     }
@@ -2837,12 +2842,12 @@ private func WardrobeTabsRedrawHeader(screen: ref<WardrobeScreenController>, sel
     let slot: ref<InventoryGridSlotData> = screen.m_wtSlots[selected];
     screen.m_wtTitle.SetText(slot.ItemData.CategoryName);
     let total: Int32 = ArraySize(slot.Children);
-    let text: String = ToString(total) + " ITEMS";
+    let text: String = WardrobeTabsCount("WUI-Count-Items", total);
     if this.WardrobeTabsFiltering(screen) {
-        text += "  |  " + ToString(screen.m_wtMatches[selected]) + " MATCH";
+        text += "  |  " + WardrobeTabsTextF(n"WUI-Count-Match", [ToString(screen.m_wtMatches[selected])]);
     }
     if this.WardrobeTabsIsWorn(screen, selected) {
-        text += "  |  WEARING " + this.WardrobeTabsWornName(screen, selected);
+        text += "  |  " + WardrobeTabsTextF(n"WUI-Header-WearingItem", [this.WardrobeTabsWornName(screen, selected)]);
     }
     screen.m_wtSubtitle.SetText(text);
 }
@@ -2949,7 +2954,7 @@ private func WardrobeTabsRedrawButtons(screen: ref<WardrobeScreenController>, se
     // and NO OUTFIT lit while no outfit is worn.
     let outfits: Int32 = WardrobeTabsConfig.OutfitsButton();
     let saved: array<CName> = screen.m_outfitSystem.GetOutfits();
-    screen.m_wtButtonTexts[outfits].SetText(clothing ? "OUTFITS (" + ToString(ArraySize(saved)) + ")" : "BACK");
+    screen.m_wtButtonTexts[outfits].SetText(clothing ? WardrobeTabsTextF(n"WUI-Bar-Outfits", [ToString(ArraySize(saved))]) : WardrobeTabsText(n"WUI-Bar-Back"));
     this.WardrobeTabsStyleButton(screen, outfits, false);
     let edited: Bool = screen.m_wtLinkChanges >= 0;
     screen.m_wtButtons[WardrobeTabsConfig.UpdateButton()].SetVisible(edited);
@@ -3035,17 +3040,17 @@ private func WardrobeTabsRedrawLook(screen: ref<WardrobeScreenController>) -> Vo
     let tried: wref<UIInventoryItem> = screen.m_wtTrying;
     screen.m_wtLook.SetTintColor(IsDefined(tried) ? new HDRColor(0.369, 0.965, 1.0, 1.0) : new HDRColor(0.682, 0.231, 0.212, 1.0));
     if IsDefined(tried) {
-        screen.m_wtLook.SetText("TRYING ON: " + WardrobeTabsConfig.CleanName(GetLocalizedText(tried.GetName())));
+        screen.m_wtLook.SetText(WardrobeTabsTextF(n"WUI-Look-TryingOn", [WardrobeTabsConfig.CleanName(GetLocalizedText(tried.GetName()))]));
     } else if changes > 0 {
-        screen.m_wtLook.SetText(NameToString(linked) + "  |  EDITED  |  " + ToString(changes) + (changes == 1 ? " CHANGE" : " CHANGES"));
+        screen.m_wtLook.SetText(NameToString(linked) + "  |  " + WardrobeTabsText(n"WUI-Status-Edited") + "  |  " + WardrobeTabsCount("WUI-Look-Changes", changes));
     } else if changes == 0 {
         // Same items, reassigned slots: not the saved outfit, but nothing to count.
-        screen.m_wtLook.SetText(NameToString(linked) + "  |  EDITED");
+        screen.m_wtLook.SetText(NameToString(linked) + "  |  " + WardrobeTabsText(n"WUI-Status-Edited"));
     } else if IsNameValid(linked) {
-        screen.m_wtLook.SetText("SAVED AS " + NameToString(linked));
+        screen.m_wtLook.SetText(WardrobeTabsTextF(n"WUI-Look-SavedAs", [NameToString(linked)]));
     } else {
         let outfits: array<CName> = screen.m_outfitSystem.GetOutfits();
-        screen.m_wtLook.SetText(ArraySize(outfits) == 0 ? "NO SAVED OUTFITS YET" : "NOT SAVED AS AN OUTFIT");
+        screen.m_wtLook.SetText(ArraySize(outfits) == 0 ? WardrobeTabsText(n"WUI-Look-NoOutfitsYet") : WardrobeTabsText(n"WUI-Look-NotSaved"));
     }
 }
 

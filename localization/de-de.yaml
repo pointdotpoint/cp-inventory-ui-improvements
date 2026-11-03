@@ -1,0 +1,72 @@
+# Wardrobe UI Improvements: German texts (de-de).
+# Machine translation, not yet reviewed by a native speaker. Corrections welcome: send an override
+# file (same format) to the mod author. Format and how it's used: the header of en-us.yaml.
+
+# Body areas: area tabs and body column groups.
+WUI_Loc.de-de.Area-Head: "KOPF"
+WUI_Loc.de-de.Area-Body: "KÖRPER"
+WUI_Loc.de-de.Area-Arms: "ARME"
+WUI_Loc.de-de.Area-Legs: "BEINE"
+WUI_Loc.de-de.Area-Feet: "FÜSSE"
+WUI_Loc.de-de.Area-Other: "ANDERE"
+
+# Body column: heading and worn count per group.
+WUI_Loc.de-de.Body-Wearing: "GETRAGEN"
+WUI_Loc.de-de.Body-NothingWorn: "NICHTS GETRAGEN"
+WUI_Loc.de-de.Body-Worn: "{0} GETRAGEN"
+
+# Item cards and outfit tags.
+WUI_Loc.de-de.Card-New: "NEU"
+WUI_Loc.de-de.Status-Wearing: "GETRAGEN"
+WUI_Loc.de-de.Status-Edited: "GEÄNDERT"
+
+# Drawer header buttons.
+WUI_Loc.de-de.Header-EquippedOnly: "NUR AUSGERÜSTETE"
+WUI_Loc.de-de.Header-Pack: "PAKET: {0}"
+WUI_Loc.de-de.Pack-All: "ALLE"
+WUI_Loc.de-de.Pack-BaseGame: "HAUPTSPIEL"
+
+# Drawer header subtitle.
+WUI_Loc.de-de.Count-Items-One: "{0} GEGENSTAND"
+WUI_Loc.de-de.Count-Items-Many: "{0} GEGENSTÄNDE"
+WUI_Loc.de-de.Count-Match: "{0} TREFFER"
+WUI_Loc.de-de.Header-WearingItem: "TRÄGT {0}"
+
+# Outfits view: header title and subtitle.
+WUI_Loc.de-de.Header-Outfits: "OUTFITS"
+WUI_Loc.de-de.Count-SavedOutfits-One: "{0} GESPEICHERTES OUTFIT"
+WUI_Loc.de-de.Count-SavedOutfits-Many: "{0} GESPEICHERTE OUTFITS"
+WUI_Loc.de-de.Count-Favourites-One: "{0} FAVORIT"
+WUI_Loc.de-de.Count-Favourites-Many: "{0} FAVORITEN"
+
+# Slot sidebar paging buttons.
+WUI_Loc.de-de.Sidebar-Previous: "ZURÜCK"
+WUI_Loc.de-de.Sidebar-Next: "WEITER"
+
+# Outfit bar along the bottom of the drawer.
+WUI_Loc.de-de.Bar-CurrentLook: "AKTUELLER LOOK"
+WUI_Loc.de-de.Bar-Outfits: "OUTFITS ({0})"
+WUI_Loc.de-de.Bar-Back: "ZURÜCK"
+WUI_Loc.de-de.Bar-Update: "SPEICHERN"
+WUI_Loc.de-de.Bar-Revert: "VERWERFEN"
+
+# Outfit bar status line.
+WUI_Loc.de-de.Look-TryingOn: "ANPROBE: {0}"
+WUI_Loc.de-de.Look-SavedAs: "GESPEICHERT ALS {0}"
+WUI_Loc.de-de.Look-Changes-One: "{0} ÄNDERUNG"
+WUI_Loc.de-de.Look-Changes-Many: "{0} ÄNDERUNGEN"
+WUI_Loc.de-de.Look-NoOutfitsYet: "NOCH KEINE OUTFITS GESPEICHERT"
+WUI_Loc.de-de.Look-NotSaved: "NICHT ALS OUTFIT GESPEICHERT"
+
+# Outfits view buttons and empty-list messages.
+WUI_Loc.de-de.Outfits-Save: "OUTFIT SPEICHERN"
+WUI_Loc.de-de.Outfits-None: "KEIN OUTFIT"
+WUI_Loc.de-de.Outfits-Empty: "NOCH KEINE OUTFITS GESPEICHERT: OUTFIT SPEICHERN BEHÄLT, WAS V TRÄGT"
+WUI_Loc.de-de.Outfits-NoMatch: "KEIN OUTFIT PASST ZU \"{0}\""
+
+# Mod Settings.
+WUI_Loc.de-de.Settings-Category: "Kleiderschrank"
+WUI_Loc.de-de.Settings-HoverTryOn: "Gegenstände beim Überfahren anprobieren"
+WUI_Loc.de-de.Settings-HoverTryOn-Desc: "Ruht der Mauszeiger auf einer Gegenstandskarte, trägt V den Gegenstand in der Vorschau, bis der Zeiger weiterbewegt wird."
+WUI_Loc.de-de.Settings-AreaCamera: "Kamera auf den gewählten Bereich richten"
+WUI_Loc.de-de.Settings-AreaCamera-Desc: "Die Wahl von KOPF, KÖRPER, ARME, BEINE oder FÜSSE rückt diesen Teil von V ins Bild; OUTFITS zeigt den ganzen Körper."

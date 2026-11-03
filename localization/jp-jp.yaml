@@ -1,0 +1,72 @@
+# Wardrobe UI Improvements: Japanese texts (jp-jp).
+# Machine translation, not yet reviewed by a native speaker. Corrections welcome: send an override
+# file (same format) to the mod author. Format and how it's used: the header of en-us.yaml.
+
+# Body areas: area tabs and body column groups.
+WUI_Loc.jp-jp.Area-Head: "頭部"
+WUI_Loc.jp-jp.Area-Body: "胴体"
+WUI_Loc.jp-jp.Area-Arms: "腕"
+WUI_Loc.jp-jp.Area-Legs: "脚部"
+WUI_Loc.jp-jp.Area-Feet: "足元"
+WUI_Loc.jp-jp.Area-Other: "その他"
+
+# Body column: heading, count of worn items.
+WUI_Loc.jp-jp.Body-Wearing: "着用中"
+WUI_Loc.jp-jp.Body-NothingWorn: "着用なし"
+WUI_Loc.jp-jp.Body-Worn: "{0}点着用"
+
+# Item cards: new item tag, worn item tag.
+WUI_Loc.jp-jp.Card-New: "NEW"
+WUI_Loc.jp-jp.Status-Wearing: "着用中"
+WUI_Loc.jp-jp.Status-Edited: "編集済み"
+
+# Drawer header buttons.
+WUI_Loc.jp-jp.Header-EquippedOnly: "装備中のみ"
+WUI_Loc.jp-jp.Header-Pack: "パック: {0}"
+WUI_Loc.jp-jp.Pack-All: "すべて"
+WUI_Loc.jp-jp.Pack-BaseGame: "本編"
+
+# Drawer header subtitle.
+WUI_Loc.jp-jp.Count-Items-One: "アイテム{0}点"
+WUI_Loc.jp-jp.Count-Items-Many: "アイテム{0}点"
+WUI_Loc.jp-jp.Count-Match: "{0}件一致"
+WUI_Loc.jp-jp.Header-WearingItem: "着用中: {0}"
+
+# Outfits view: header title and subtitle.
+WUI_Loc.jp-jp.Header-Outfits: "コーデ"
+WUI_Loc.jp-jp.Count-SavedOutfits-One: "保存済みコーデ{0}件"
+WUI_Loc.jp-jp.Count-SavedOutfits-Many: "保存済みコーデ{0}件"
+WUI_Loc.jp-jp.Count-Favourites-One: "お気に入り{0}件"
+WUI_Loc.jp-jp.Count-Favourites-Many: "お気に入り{0}件"
+
+# Slot sidebar paging buttons.
+WUI_Loc.jp-jp.Sidebar-Previous: "前へ"
+WUI_Loc.jp-jp.Sidebar-Next: "次へ"
+
+# Outfit bar along the bottom of the drawer.
+WUI_Loc.jp-jp.Bar-CurrentLook: "現在の見た目"
+WUI_Loc.jp-jp.Bar-Outfits: "コーデ ({0})"
+WUI_Loc.jp-jp.Bar-Back: "戻る"
+WUI_Loc.jp-jp.Bar-Update: "更新"
+WUI_Loc.jp-jp.Bar-Revert: "元に戻す"
+
+# Outfit bar status line: {0} is an item or outfit name.
+WUI_Loc.jp-jp.Look-TryingOn: "試着中: {0}"
+WUI_Loc.jp-jp.Look-SavedAs: "保存済み: {0}"
+WUI_Loc.jp-jp.Look-Changes-One: "変更{0}件"
+WUI_Loc.jp-jp.Look-Changes-Many: "変更{0}件"
+WUI_Loc.jp-jp.Look-NoOutfitsYet: "保存済みコーデなし"
+WUI_Loc.jp-jp.Look-NotSaved: "コーデとして未保存"
+
+# Outfits view buttons and empty-list messages ({0} is the search text).
+WUI_Loc.jp-jp.Outfits-Save: "コーデを保存"
+WUI_Loc.jp-jp.Outfits-None: "コーデなし"
+WUI_Loc.jp-jp.Outfits-Empty: "保存済みコーデなし: 「コーデを保存」でVが今着ている服を保存できる"
+WUI_Loc.jp-jp.Outfits-NoMatch: "「{0}」に一致するコーデなし"
+
+# Mod Settings.
+WUI_Loc.jp-jp.Settings-Category: "ワードローブ"
+WUI_Loc.jp-jp.Settings-HoverTryOn: "ホバーでアイテムをプレビュー"
+WUI_Loc.jp-jp.Settings-HoverTryOn-Desc: "アイテムカードにカーソルを合わせると、カーソルが離れるまでプレビューのVにそのアイテムを着せる。"
+WUI_Loc.jp-jp.Settings-AreaCamera: "選択した部位にカメラを移動"
+WUI_Loc.jp-jp.Settings-AreaCamera-Desc: "頭部、胴体、腕、脚部、足元を選ぶとVのその部分を映す。コーデでは全身を表示。"

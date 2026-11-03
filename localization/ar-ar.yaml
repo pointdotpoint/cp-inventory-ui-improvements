@@ -1,0 +1,72 @@
+# Wardrobe UI Improvements: Arabic texts (ar-ar).
+# Machine translation, not yet reviewed by a native speaker. Corrections welcome: send an override
+# file (same format) to the mod author. Format and how it's used: the header of en-us.yaml.
+
+# Body areas: area tabs (room: 6 letters) and body column groups.
+WUI_Loc.ar-ar.Area-Head: "الرأس"
+WUI_Loc.ar-ar.Area-Body: "الجسم"
+WUI_Loc.ar-ar.Area-Arms: "الذراعان"
+WUI_Loc.ar-ar.Area-Legs: "الساقان"
+WUI_Loc.ar-ar.Area-Feet: "القدمان"
+WUI_Loc.ar-ar.Area-Other: "أخرى"
+
+# Body column.
+WUI_Loc.ar-ar.Body-Wearing: "الملبوس"
+WUI_Loc.ar-ar.Body-NothingWorn: "لا شيء ملبوس"
+WUI_Loc.ar-ar.Body-Worn: "ملبوس: {0}"
+
+# Item cards.
+WUI_Loc.ar-ar.Card-New: "جديد"
+WUI_Loc.ar-ar.Status-Wearing: "ملبوس"
+WUI_Loc.ar-ar.Status-Edited: "معدّل"
+
+# Drawer header buttons.
+WUI_Loc.ar-ar.Header-EquippedOnly: "الملبوس فقط"
+WUI_Loc.ar-ar.Header-Pack: "الحزمة: {0}"
+WUI_Loc.ar-ar.Pack-All: "الكل"
+WUI_Loc.ar-ar.Pack-BaseGame: "اللعبة الأساسية"
+
+# Drawer header subtitle.
+WUI_Loc.ar-ar.Count-Items-One: "العناصر: {0}"
+WUI_Loc.ar-ar.Count-Items-Many: "العناصر: {0}"
+WUI_Loc.ar-ar.Count-Match: "المطابقة: {0}"
+WUI_Loc.ar-ar.Header-WearingItem: "يرتدي: {0}"
+
+# Outfits view: header title and subtitle.
+WUI_Loc.ar-ar.Header-Outfits: "الأزياء"
+WUI_Loc.ar-ar.Count-SavedOutfits-One: "الأزياء المحفوظة: {0}"
+WUI_Loc.ar-ar.Count-SavedOutfits-Many: "الأزياء المحفوظة: {0}"
+WUI_Loc.ar-ar.Count-Favourites-One: "المفضلة: {0}"
+WUI_Loc.ar-ar.Count-Favourites-Many: "المفضلة: {0}"
+
+# Slot sidebar paging buttons (room: 8 letters).
+WUI_Loc.ar-ar.Sidebar-Previous: "السابق"
+WUI_Loc.ar-ar.Sidebar-Next: "التالي"
+
+# Outfit bar (room: OUTFITS 12 with the count; BACK 12; UPDATE and REVERT 10).
+WUI_Loc.ar-ar.Bar-CurrentLook: "المظهر الحالي"
+WUI_Loc.ar-ar.Bar-Outfits: "الأزياء ({0})"
+WUI_Loc.ar-ar.Bar-Back: "رجوع"
+WUI_Loc.ar-ar.Bar-Update: "تحديث"
+WUI_Loc.ar-ar.Bar-Revert: "استعادة"
+
+# Outfit bar status line.
+WUI_Loc.ar-ar.Look-TryingOn: "تجربة: {0}"
+WUI_Loc.ar-ar.Look-SavedAs: "محفوظ باسم {0}"
+WUI_Loc.ar-ar.Look-Changes-One: "التغييرات: {0}"
+WUI_Loc.ar-ar.Look-Changes-Many: "التغييرات: {0}"
+WUI_Loc.ar-ar.Look-NoOutfitsYet: "لا توجد أزياء محفوظة بعد"
+WUI_Loc.ar-ar.Look-NotSaved: "غير محفوظ كزي"
+
+# Outfits view buttons (room: 18 letters) and empty-list messages.
+WUI_Loc.ar-ar.Outfits-Save: "حفظ الزي"
+WUI_Loc.ar-ar.Outfits-None: "بلا زي"
+WUI_Loc.ar-ar.Outfits-Empty: "لا توجد أزياء محفوظة بعد: \"حفظ الزي\" يحفظ ما يرتديه V"
+WUI_Loc.ar-ar.Outfits-NoMatch: "لا يوجد زي يطابق \"{0}\""
+
+# Mod Settings (the mod's name stays English).
+WUI_Loc.ar-ar.Settings-Category: "خزانة الملابس"
+WUI_Loc.ar-ar.Settings-HoverTryOn: "معاينة العناصر عند التمرير"
+WUI_Loc.ar-ar.Settings-HoverTryOn-Desc: "إبقاء المؤشر على بطاقة عنصر يُلبسه لـ V في المعاينة حتى يبتعد المؤشر عنها."
+WUI_Loc.ar-ar.Settings-AreaCamera: "تحريك الكاميرا إلى المنطقة المحددة"
+WUI_Loc.ar-ar.Settings-AreaCamera-Desc: "اختيار الرأس أو الجسم أو الذراعان أو الساقان أو القدمان يضع ذلك الجزء من V في الإطار؛ وتعرض الأزياء الجسم كاملاً."

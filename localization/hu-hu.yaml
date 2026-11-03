@@ -1,0 +1,72 @@
+# Wardrobe UI Improvements: Hungarian texts (hu-hu).
+# Machine translation, not yet reviewed by a native speaker. Corrections welcome: send an override
+# file (same format) to the mod author. Format and how it's used: the header of en-us.yaml.
+
+# Body areas: area tabs (room: 6 letters) and body column groups.
+WUI_Loc.hu-hu.Area-Head: "FEJ"
+WUI_Loc.hu-hu.Area-Body: "TÖRZS"
+WUI_Loc.hu-hu.Area-Arms: "KAROK"
+WUI_Loc.hu-hu.Area-Legs: "LÁBAK"
+WUI_Loc.hu-hu.Area-Feet: "LÁBFEJ"
+WUI_Loc.hu-hu.Area-Other: "EGYÉB"
+
+# Body column: heading and each group's count of worn items.
+WUI_Loc.hu-hu.Body-Wearing: "VISELT"
+WUI_Loc.hu-hu.Body-NothingWorn: "NINCS RAJTA SEMMI"
+WUI_Loc.hu-hu.Body-Worn: "{0} VISELT"
+
+# Item cards.
+WUI_Loc.hu-hu.Card-New: "ÚJ"
+WUI_Loc.hu-hu.Status-Wearing: "VISELVE"
+WUI_Loc.hu-hu.Status-Edited: "MÓDOSÍTVA"
+
+# Drawer header buttons (room: 18 letters; PACK 16 with the pack name).
+WUI_Loc.hu-hu.Header-EquippedOnly: "CSAK A VISELTEK"
+WUI_Loc.hu-hu.Header-Pack: "CSOMAG: {0}"
+WUI_Loc.hu-hu.Pack-All: "MIND"
+WUI_Loc.hu-hu.Pack-BaseGame: "ALAPJÁTÉK"
+
+# Drawer header subtitle (Hungarian keeps the noun singular after a number).
+WUI_Loc.hu-hu.Count-Items-One: "{0} TÁRGY"
+WUI_Loc.hu-hu.Count-Items-Many: "{0} TÁRGY"
+WUI_Loc.hu-hu.Count-Match: "{0} TALÁLAT"
+WUI_Loc.hu-hu.Header-WearingItem: "VISELVE: {0}"
+
+# Outfits view: header title and subtitle.
+WUI_Loc.hu-hu.Header-Outfits: "ÖLTÖZÉKEK"
+WUI_Loc.hu-hu.Count-SavedOutfits-One: "{0} MENTETT ÖLTÖZÉK"
+WUI_Loc.hu-hu.Count-SavedOutfits-Many: "{0} MENTETT ÖLTÖZÉK"
+WUI_Loc.hu-hu.Count-Favourites-One: "{0} KEDVENC"
+WUI_Loc.hu-hu.Count-Favourites-Many: "{0} KEDVENC"
+
+# Slot sidebar paging buttons (room: 8 letters).
+WUI_Loc.hu-hu.Sidebar-Previous: "ELŐZŐ"
+WUI_Loc.hu-hu.Sidebar-Next: "TOVÁBB"
+
+# Outfit bar (room: OUTFITS 12 letters with the count; BACK 12; UPDATE and REVERT 10).
+WUI_Loc.hu-hu.Bar-CurrentLook: "JELENLEGI KINÉZET"
+WUI_Loc.hu-hu.Bar-Outfits: "ÖLTÖZÉK ({0})"
+WUI_Loc.hu-hu.Bar-Back: "VISSZA"
+WUI_Loc.hu-hu.Bar-Update: "FRISSÍTÉS"
+WUI_Loc.hu-hu.Bar-Revert: "ELVETÉS"
+
+# Outfit bar status line: {0} is an item or outfit name.
+WUI_Loc.hu-hu.Look-TryingOn: "FELPRÓBÁLVA: {0}"
+WUI_Loc.hu-hu.Look-SavedAs: "MENTVE: {0}"
+WUI_Loc.hu-hu.Look-Changes-One: "{0} VÁLTOZÁS"
+WUI_Loc.hu-hu.Look-Changes-Many: "{0} VÁLTOZÁS"
+WUI_Loc.hu-hu.Look-NoOutfitsYet: "MÉG NINCS MENTETT ÖLTÖZÉK"
+WUI_Loc.hu-hu.Look-NotSaved: "NINCS ÖLTÖZÉKKÉNT MENTVE"
+
+# Outfits view buttons (room: 18 letters) and empty-list messages.
+WUI_Loc.hu-hu.Outfits-Save: "ÖLTÖZÉK MENTÉSE"
+WUI_Loc.hu-hu.Outfits-None: "NINCS ÖLTÖZÉK"
+WUI_Loc.hu-hu.Outfits-Empty: "MÉG NINCS MENTETT ÖLTÖZÉK: AZ ÖLTÖZÉK MENTÉSE MEGŐRZI, AMIT V VISEL"
+WUI_Loc.hu-hu.Outfits-NoMatch: "NINCS ÖLTÖZÉK ERRE: \"{0}\""
+
+# Mod Settings (WardrobeTabsSettings.reds).
+WUI_Loc.hu-hu.Settings-Category: "Gardrób"
+WUI_Loc.hu-hu.Settings-HoverTryOn: "Tárgyak előnézete rámutatáskor"
+WUI_Loc.hu-hu.Settings-HoverTryOn-Desc: "Ha a kurzor egy tárgykártyán pihen, V az előnézetben felveszi a tárgyat, amíg a kurzor el nem mozdul róla."
+WUI_Loc.hu-hu.Settings-AreaCamera: "Kamera a kiválasztott testrészre"
+WUI_Loc.hu-hu.Settings-AreaCamera-Desc: "A FEJ, TÖRZS, KAROK, LÁBAK vagy LÁBFEJ kiválasztása V adott részét mutatja; az ÖLTÖZÉKEK az egész testet."

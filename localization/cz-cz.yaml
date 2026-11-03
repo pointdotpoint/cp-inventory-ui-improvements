@@ -1,0 +1,72 @@
+# Wardrobe UI Improvements: Czech texts (cz-cz).
+# Machine translation, not yet reviewed by a native speaker. Corrections welcome: send an override
+# file (same format) to the mod author. Format and how it's used: the header of en-us.yaml.
+
+# Body areas: area tabs (room: 6 letters) and body column groups.
+WUI_Loc.cz-cz.Area-Head: "HLAVA"
+WUI_Loc.cz-cz.Area-Body: "TĚLO"
+WUI_Loc.cz-cz.Area-Arms: "RUCE"
+WUI_Loc.cz-cz.Area-Legs: "NOHY"
+WUI_Loc.cz-cz.Area-Feet: "OBUV"
+WUI_Loc.cz-cz.Area-Other: "JINÉ"
+
+# Body column: heading and each group's count of worn items.
+WUI_Loc.cz-cz.Body-Wearing: "NA SOBĚ"
+WUI_Loc.cz-cz.Body-NothingWorn: "NIC NA SOBĚ"
+WUI_Loc.cz-cz.Body-Worn: "NA SOBĚ: {0}"
+
+# Item cards.
+WUI_Loc.cz-cz.Card-New: "NOVÉ"
+WUI_Loc.cz-cz.Status-Wearing: "NA SOBĚ"
+WUI_Loc.cz-cz.Status-Edited: "UPRAVENO"
+
+# Drawer header buttons (room: 18 letters; PACK 16 with the pack name).
+WUI_Loc.cz-cz.Header-EquippedOnly: "JEN NA SOBĚ"
+WUI_Loc.cz-cz.Header-Pack: "BALÍK: {0}"
+WUI_Loc.cz-cz.Pack-All: "VŠE"
+WUI_Loc.cz-cz.Pack-BaseGame: "ZÁKLADNÍ HRA"
+
+# Drawer header subtitle.
+WUI_Loc.cz-cz.Count-Items-One: "{0} PŘEDMĚT"
+WUI_Loc.cz-cz.Count-Items-Many: "PŘEDMĚTY: {0}"
+WUI_Loc.cz-cz.Count-Match: "SHODY: {0}"
+WUI_Loc.cz-cz.Header-WearingItem: "NA SOBĚ: {0}"
+
+# Outfits view: header title and subtitle.
+WUI_Loc.cz-cz.Header-Outfits: "OBLEKY"
+WUI_Loc.cz-cz.Count-SavedOutfits-One: "{0} ULOŽENÝ OBLEK"
+WUI_Loc.cz-cz.Count-SavedOutfits-Many: "ULOŽENÉ OBLEKY: {0}"
+WUI_Loc.cz-cz.Count-Favourites-One: "{0} OBLÍBENÝ"
+WUI_Loc.cz-cz.Count-Favourites-Many: "OBLÍBENÉ: {0}"
+
+# Slot sidebar paging buttons (room: 8 letters).
+WUI_Loc.cz-cz.Sidebar-Previous: "PŘEDCH."
+WUI_Loc.cz-cz.Sidebar-Next: "DALŠÍ"
+
+# Outfit bar (room: OUTFITS 12 letters with the count; BACK 12; UPDATE and REVERT 10).
+WUI_Loc.cz-cz.Bar-CurrentLook: "AKTUÁLNÍ VZHLED"
+WUI_Loc.cz-cz.Bar-Outfits: "OBLEKY ({0})"
+WUI_Loc.cz-cz.Bar-Back: "ZPĚT"
+WUI_Loc.cz-cz.Bar-Update: "PŘEPSAT"
+WUI_Loc.cz-cz.Bar-Revert: "VRÁTIT"
+
+# Outfit bar status line: {0} is an item or outfit name.
+WUI_Loc.cz-cz.Look-TryingOn: "ZKOUŠENÍ: {0}"
+WUI_Loc.cz-cz.Look-SavedAs: "ULOŽENO JAKO {0}"
+WUI_Loc.cz-cz.Look-Changes-One: "{0} ZMĚNA"
+WUI_Loc.cz-cz.Look-Changes-Many: "ZMĚNY: {0}"
+WUI_Loc.cz-cz.Look-NoOutfitsYet: "ZATÍM ŽÁDNÉ ULOŽENÉ OBLEKY"
+WUI_Loc.cz-cz.Look-NotSaved: "NEULOŽENO JAKO OBLEK"
+
+# Outfits view buttons (room: 18 letters) and empty-list messages.
+WUI_Loc.cz-cz.Outfits-Save: "ULOŽIT OBLEK"
+WUI_Loc.cz-cz.Outfits-None: "BEZ OBLEKU"
+WUI_Loc.cz-cz.Outfits-Empty: "ZATÍM ŽÁDNÉ ULOŽENÉ OBLEKY: ULOŽIT OBLEK ULOŽÍ TO, CO MÁ V NA SOBĚ"
+WUI_Loc.cz-cz.Outfits-NoMatch: "ŽÁDNÝ OBLEK NEODPOVÍDÁ \"{0}\""
+
+# Mod Settings (WardrobeTabsSettings.reds).
+WUI_Loc.cz-cz.Settings-Category: "Šatník"
+WUI_Loc.cz-cz.Settings-HoverTryOn: "Náhled předmětů při najetí myší"
+WUI_Loc.cz-cz.Settings-HoverTryOn-Desc: "Když kurzor spočine na kartě předmětu, V si ho v náhledu oblékne, dokud kurzor z karty neodjede."
+WUI_Loc.cz-cz.Settings-AreaCamera: "Zaměřit kameru na vybranou oblast"
+WUI_Loc.cz-cz.Settings-AreaCamera-Desc: "Volba HLAVA, TĚLO, RUCE, NOHY nebo OBUV zabere danou část V; OBLEKY ukážou celé tělo."

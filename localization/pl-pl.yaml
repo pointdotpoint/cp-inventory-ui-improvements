@@ -1,0 +1,72 @@
+# Wardrobe UI Improvements: Polish texts (pl-pl).
+# Machine translation, not yet reviewed by a native speaker. Corrections welcome: send an override
+# file (same format) to the mod author. Format and how it's used: the header of en-us.yaml.
+
+# Body areas: area tabs (room: 6 letters) and body column groups.
+WUI_Loc.pl-pl.Area-Head: "GŁOWA"
+WUI_Loc.pl-pl.Area-Body: "TUŁÓW"
+WUI_Loc.pl-pl.Area-Arms: "RĘCE"
+WUI_Loc.pl-pl.Area-Legs: "NOGI"
+WUI_Loc.pl-pl.Area-Feet: "STOPY"
+WUI_Loc.pl-pl.Area-Other: "INNE"
+
+# Body column: heading and each group's count of worn items.
+WUI_Loc.pl-pl.Body-Wearing: "NA SOBIE"
+WUI_Loc.pl-pl.Body-NothingWorn: "NIC NIE ZAŁOŻONO"
+WUI_Loc.pl-pl.Body-Worn: "ZAŁOŻONE: {0}"
+
+# Item cards.
+WUI_Loc.pl-pl.Card-New: "NOWY"
+WUI_Loc.pl-pl.Status-Wearing: "NA SOBIE"
+WUI_Loc.pl-pl.Status-Edited: "ZMIENIONY"
+
+# Drawer header buttons (room: 18 letters; PACK 16 with the pack name).
+WUI_Loc.pl-pl.Header-EquippedOnly: "TYLKO ZAŁOŻONE"
+WUI_Loc.pl-pl.Header-Pack: "PAKIET: {0}"
+WUI_Loc.pl-pl.Pack-All: "WSZYSTKIE"
+WUI_Loc.pl-pl.Pack-BaseGame: "GRA BAZOWA"
+
+# Drawer header subtitle.
+WUI_Loc.pl-pl.Count-Items-One: "{0} PRZEDMIOT"
+WUI_Loc.pl-pl.Count-Items-Many: "PRZEDMIOTY: {0}"
+WUI_Loc.pl-pl.Count-Match: "PASUJĄCE: {0}"
+WUI_Loc.pl-pl.Header-WearingItem: "NA SOBIE: {0}"
+
+# Outfits view: header title and subtitle.
+WUI_Loc.pl-pl.Header-Outfits: "STROJE"
+WUI_Loc.pl-pl.Count-SavedOutfits-One: "{0} ZAPISANY STRÓJ"
+WUI_Loc.pl-pl.Count-SavedOutfits-Many: "ZAPISANE STROJE: {0}"
+WUI_Loc.pl-pl.Count-Favourites-One: "{0} ULUBIONY"
+WUI_Loc.pl-pl.Count-Favourites-Many: "ULUBIONE: {0}"
+
+# Slot sidebar paging buttons (room: 8 letters).
+WUI_Loc.pl-pl.Sidebar-Previous: "WSTECZ"
+WUI_Loc.pl-pl.Sidebar-Next: "DALEJ"
+
+# Outfit bar (room: OUTFITS 12 letters with the count; BACK 12; UPDATE and REVERT 10).
+WUI_Loc.pl-pl.Bar-CurrentLook: "OBECNY WYGLĄD"
+WUI_Loc.pl-pl.Bar-Outfits: "STROJE ({0})"
+WUI_Loc.pl-pl.Bar-Back: "POWRÓT"
+WUI_Loc.pl-pl.Bar-Update: "AKTUALIZUJ"
+WUI_Loc.pl-pl.Bar-Revert: "COFNIJ"
+
+# Outfit bar status line: {0} is an item or outfit name.
+WUI_Loc.pl-pl.Look-TryingOn: "PRZYMIARKA: {0}"
+WUI_Loc.pl-pl.Look-SavedAs: "ZAPISANO JAKO {0}"
+WUI_Loc.pl-pl.Look-Changes-One: "{0} ZMIANA"
+WUI_Loc.pl-pl.Look-Changes-Many: "ZMIANY: {0}"
+WUI_Loc.pl-pl.Look-NoOutfitsYet: "BRAK ZAPISANYCH STROJÓW"
+WUI_Loc.pl-pl.Look-NotSaved: "NIE ZAPISANO JAKO STRÓJ"
+
+# Outfits view buttons (room: 18 letters) and empty-list messages.
+WUI_Loc.pl-pl.Outfits-Save: "ZAPISZ STRÓJ"
+WUI_Loc.pl-pl.Outfits-None: "BEZ STROJU"
+WUI_Loc.pl-pl.Outfits-Empty: "BRAK ZAPISANYCH STROJÓW: ZAPISZ STRÓJ ZACHOWUJE TO, CO V MA NA SOBIE"
+WUI_Loc.pl-pl.Outfits-NoMatch: "ŻADEN STRÓJ NIE PASUJE DO „{0}”"
+
+# Mod Settings (WardrobeTabsSettings.reds).
+WUI_Loc.pl-pl.Settings-Category: "Garderoba"
+WUI_Loc.pl-pl.Settings-HoverTryOn: "Podgląd przedmiotów po najechaniu"
+WUI_Loc.pl-pl.Settings-HoverTryOn-Desc: "Gdy kursor zatrzyma się na karcie przedmiotu, V zakłada go w podglądzie, dopóki kursor z niej nie zjedzie."
+WUI_Loc.pl-pl.Settings-AreaCamera: "Kamera na wybraną część ciała"
+WUI_Loc.pl-pl.Settings-AreaCamera-Desc: "Wybranie GŁOWA, TUŁÓW, RĘCE, NOGI lub STOPY kadruje tę część V; STROJE pokazują całą postać."

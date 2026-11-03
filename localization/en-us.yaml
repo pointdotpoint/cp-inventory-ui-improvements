@@ -1,0 +1,85 @@
+# Wardrobe UI Improvements: English texts, the list of every name.
+# Format (the same as a player's override file, a TweakXL flat per text):
+#   WUI_Loc.<lang>.<Name>: "text"
+# {0}, {1}... are filled in by the mod; a translation keeps the same ones.
+# tools/gen_localization.py turns these files into WardrobeTabsLocalizationTexts.reds.
+#
+# Adding a shipped translation: copy this file to <lang>.yaml (a game language code, e.g. de-de),
+# replace "en-us" with that code on every line and translate the quoted texts; leave out any
+# line you don't translate (it shows English). A player's override file in this format can be
+# copied in as it is. Then run tools/gen_localization.py. How players use these lines without
+# touching the mod: the comment at the top of WardrobeTabsLocalization.reds.
+#
+# The game shows every label in capitals. "Room" notes give the space a label has in Latin
+# letters (CJK characters take about twice the width each); a longer text spills past its button.
+
+# Body areas: area tabs (room: 6 letters, plus " (12)" while searching) and body column groups.
+WUI_Loc.en-us.Area-Head: "HEAD"
+WUI_Loc.en-us.Area-Body: "BODY"
+WUI_Loc.en-us.Area-Arms: "ARMS"
+WUI_Loc.en-us.Area-Legs: "LEGS"
+WUI_Loc.en-us.Area-Feet: "FEET"
+WUI_Loc.en-us.Area-Other: "OTHER"
+
+# Body column, left of V: its heading, and each group's count of worn items.
+WUI_Loc.en-us.Body-Wearing: "WEARING"
+WUI_Loc.en-us.Body-NothingWorn: "NOTHING WORN"
+WUI_Loc.en-us.Body-Worn: "{0} WORN"
+
+# Item cards: tag on a newly owned item, tag on the worn item.
+WUI_Loc.en-us.Card-New: "NEW"
+WUI_Loc.en-us.Status-Wearing: "WEARING"
+WUI_Loc.en-us.Status-Edited: "EDITED"
+
+# Drawer header buttons (room: EQUIPPED ONLY 18 letters; PACK 16 letters with the pack name).
+WUI_Loc.en-us.Header-EquippedOnly: "EQUIPPED ONLY"
+WUI_Loc.en-us.Header-Pack: "PACK: {0}"
+WUI_Loc.en-us.Pack-All: "ALL"
+WUI_Loc.en-us.Pack-BaseGame: "BASE GAME"
+
+# Drawer header subtitle, e.g. "12 ITEMS  |  3 MATCH  |  WEARING <item name>".
+WUI_Loc.en-us.Count-Items-One: "{0} ITEM"
+WUI_Loc.en-us.Count-Items-Many: "{0} ITEMS"
+WUI_Loc.en-us.Count-Match: "{0} MATCH"
+WUI_Loc.en-us.Header-WearingItem: "WEARING {0}"
+
+# Outfits view: header title and subtitle, e.g. "5 SAVED OUTFITS  |  2 FAVOURITES".
+WUI_Loc.en-us.Header-Outfits: "OUTFITS"
+WUI_Loc.en-us.Count-SavedOutfits-One: "{0} SAVED OUTFIT"
+WUI_Loc.en-us.Count-SavedOutfits-Many: "{0} SAVED OUTFITS"
+WUI_Loc.en-us.Count-Favourites-One: "{0} FAVOURITE"
+WUI_Loc.en-us.Count-Favourites-Many: "{0} FAVOURITES"
+
+# Slot sidebar paging buttons (room: 8 letters).
+WUI_Loc.en-us.Sidebar-Previous: "PREVIOUS"
+WUI_Loc.en-us.Sidebar-Next: "NEXT"
+
+# Outfit bar along the bottom of the drawer (room: OUTFITS 12 letters with the count;
+# BACK 12; UPDATE and REVERT 10).
+WUI_Loc.en-us.Bar-CurrentLook: "CURRENT LOOK"
+WUI_Loc.en-us.Bar-Outfits: "OUTFITS ({0})"
+WUI_Loc.en-us.Bar-Back: "BACK"
+WUI_Loc.en-us.Bar-Update: "UPDATE"
+WUI_Loc.en-us.Bar-Revert: "REVERT"
+
+# Outfit bar status line: {0} is an item or outfit name.
+WUI_Loc.en-us.Look-TryingOn: "TRYING ON: {0}"
+WUI_Loc.en-us.Look-SavedAs: "SAVED AS {0}"
+WUI_Loc.en-us.Look-Changes-One: "{0} CHANGE"
+WUI_Loc.en-us.Look-Changes-Many: "{0} CHANGES"
+WUI_Loc.en-us.Look-NoOutfitsYet: "NO SAVED OUTFITS YET"
+WUI_Loc.en-us.Look-NotSaved: "NOT SAVED AS AN OUTFIT"
+
+# Outfits view buttons (room: 18 letters) and empty-list messages ({0} is the search text).
+WUI_Loc.en-us.Outfits-Save: "SAVE OUTFIT"
+WUI_Loc.en-us.Outfits-None: "NO OUTFIT"
+WUI_Loc.en-us.Outfits-Empty: "NO SAVED OUTFITS YET: SAVE OUTFIT KEEPS WHAT V IS WEARING"
+WUI_Loc.en-us.Outfits-NoMatch: "NO OUTFIT MATCHES \"{0}\""
+
+# Mod Settings (WardrobeTabsSettings.reds). The mod's name stays English in the shipped translations.
+WUI_Loc.en-us.Settings-Mod: "Wardrobe UI Improvements"
+WUI_Loc.en-us.Settings-Category: "Wardrobe"
+WUI_Loc.en-us.Settings-HoverTryOn: "Preview items on hover"
+WUI_Loc.en-us.Settings-HoverTryOn-Desc: "Resting the cursor on an item card puts it on V in the preview until the cursor moves off."
+WUI_Loc.en-us.Settings-AreaCamera: "Move camera to the selected area"
+WUI_Loc.en-us.Settings-AreaCamera-Desc: "Picking HEAD, BODY, ARMS, LEGS or FEET frames that part of V; OUTFITS shows the whole body."

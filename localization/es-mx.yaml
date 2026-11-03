@@ -1,0 +1,73 @@
+# Wardrobe UI Improvements: Spanish (Latin America) texts (es-mx).
+# Machine translation, not yet reviewed by a native speaker. Corrections welcome: send an override
+# file (same format) to the mod author. Format and how it's used: the header of en-us.yaml.
+# Based on es-es.yaml with Latin American wording (CONJUNTO for outfit, USAR for wearing).
+
+# Body areas: area tabs and body column groups.
+WUI_Loc.es-mx.Area-Head: "CABEZA"
+WUI_Loc.es-mx.Area-Body: "CUERPO"
+WUI_Loc.es-mx.Area-Arms: "BRAZOS"
+WUI_Loc.es-mx.Area-Legs: "PIERNAS"
+WUI_Loc.es-mx.Area-Feet: "PIES"
+WUI_Loc.es-mx.Area-Other: "OTROS"
+
+# Body column: heading and worn count per group.
+WUI_Loc.es-mx.Body-Wearing: "USANDO"
+WUI_Loc.es-mx.Body-NothingWorn: "NADA EN USO"
+WUI_Loc.es-mx.Body-Worn: "EN USO: {0}"
+
+# Item cards and outfit tags.
+WUI_Loc.es-mx.Card-New: "NUEVO"
+WUI_Loc.es-mx.Status-Wearing: "EN USO"
+WUI_Loc.es-mx.Status-Edited: "EDITADO"
+
+# Drawer header buttons.
+WUI_Loc.es-mx.Header-EquippedOnly: "SOLO EQUIPADOS"
+WUI_Loc.es-mx.Header-Pack: "PACK: {0}"
+WUI_Loc.es-mx.Pack-All: "TODOS"
+WUI_Loc.es-mx.Pack-BaseGame: "JUEGO BASE"
+
+# Drawer header subtitle.
+WUI_Loc.es-mx.Count-Items-One: "{0} OBJETO"
+WUI_Loc.es-mx.Count-Items-Many: "{0} OBJETOS"
+WUI_Loc.es-mx.Count-Match: "COINCIDENCIAS: {0}"
+WUI_Loc.es-mx.Header-WearingItem: "USANDO: {0}"
+
+# Outfits view: header title and subtitle.
+WUI_Loc.es-mx.Header-Outfits: "CONJUNTOS"
+WUI_Loc.es-mx.Count-SavedOutfits-One: "{0} CONJUNTO GUARDADO"
+WUI_Loc.es-mx.Count-SavedOutfits-Many: "{0} CONJUNTOS GUARDADOS"
+WUI_Loc.es-mx.Count-Favourites-One: "{0} FAVORITO"
+WUI_Loc.es-mx.Count-Favourites-Many: "{0} FAVORITOS"
+
+# Slot sidebar paging buttons.
+WUI_Loc.es-mx.Sidebar-Previous: "ANTERIOR"
+WUI_Loc.es-mx.Sidebar-Next: "PRÓXIMO"
+
+# Outfit bar along the bottom of the drawer.
+WUI_Loc.es-mx.Bar-CurrentLook: "CONJUNTO ACTUAL"
+WUI_Loc.es-mx.Bar-Outfits: "CONJUNTOS ({0})"
+WUI_Loc.es-mx.Bar-Back: "VOLVER"
+WUI_Loc.es-mx.Bar-Update: "ACTUALIZAR"
+WUI_Loc.es-mx.Bar-Revert: "REVERTIR"
+
+# Outfit bar status line.
+WUI_Loc.es-mx.Look-TryingOn: "PROBANDO: {0}"
+WUI_Loc.es-mx.Look-SavedAs: "GUARDADO COMO {0}"
+WUI_Loc.es-mx.Look-Changes-One: "{0} CAMBIO"
+WUI_Loc.es-mx.Look-Changes-Many: "{0} CAMBIOS"
+WUI_Loc.es-mx.Look-NoOutfitsYet: "TODAVÍA NO HAY CONJUNTOS GUARDADOS"
+WUI_Loc.es-mx.Look-NotSaved: "NO GUARDADO COMO CONJUNTO"
+
+# Outfits view buttons and empty-list messages.
+WUI_Loc.es-mx.Outfits-Save: "GUARDAR CONJUNTO"
+WUI_Loc.es-mx.Outfits-None: "SIN CONJUNTO"
+WUI_Loc.es-mx.Outfits-Empty: "TODAVÍA NO HAY CONJUNTOS GUARDADOS: GUARDAR CONJUNTO CONSERVA LO QUE V ESTÁ USANDO"
+WUI_Loc.es-mx.Outfits-NoMatch: "NINGÚN CONJUNTO COINCIDE CON \"{0}\""
+
+# Mod Settings.
+WUI_Loc.es-mx.Settings-Category: "Guardarropa"
+WUI_Loc.es-mx.Settings-HoverTryOn: "Probar objetos al pasar el cursor"
+WUI_Loc.es-mx.Settings-HoverTryOn-Desc: "Al dejar el cursor sobre la tarjeta de un objeto, V lo usa en la vista previa hasta que el cursor se retira."
+WUI_Loc.es-mx.Settings-AreaCamera: "Mover la cámara a la zona seleccionada"
+WUI_Loc.es-mx.Settings-AreaCamera-Desc: "Elegir CABEZA, CUERPO, BRAZOS, PIERNAS o PIES encuadra esa parte de V; CONJUNTOS muestra el cuerpo completo."

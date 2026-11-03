@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Builds the player download: dist/WardrobeUIImprovements-<version>.zip, laid out like the game folder.
 # The version comes from WardrobeTabsConfig.Version(); release/README.md becomes the README
-# players get. Runs the minimal compile check first and refuses to package a failing build.
+# players get. Checks the generated texts are current, runs the minimal compile check first and
+# refuses to package a failing build.
 # Usage: tools/build-release.sh
 set -euo pipefail
 
@@ -10,6 +11,7 @@ SCRIPTS="$PROJECT/mod/r6/scripts/WardrobeTabs"
 VERSION="$(sed -n 's/.*func Version() -> String = "\([^"]*\)".*/\1/p' "$SCRIPTS/WardrobeTabs.reds")"
 [ -n "$VERSION" ] || { echo "No Version() in WardrobeTabs.reds"; exit 1; }
 
+python3 "$PROJECT/tools/gen_localization.py" --check
 "$PROJECT/tools/compile-check.sh" --minimal
 
 STAGE="$(mktemp -d)"

@@ -1,0 +1,72 @@
+# Wardrobe UI Improvements: Simplified Chinese texts (zh-cn).
+# Machine translation, not yet reviewed by a native speaker. Corrections welcome: send an override
+# file (same format) to the mod author. Format and how it's used: the header of en-us.yaml.
+
+# Body areas: area tabs and body column groups.
+WUI_Loc.zh-cn.Area-Head: "头部"
+WUI_Loc.zh-cn.Area-Body: "躯干"
+WUI_Loc.zh-cn.Area-Arms: "手臂"
+WUI_Loc.zh-cn.Area-Legs: "腿部"
+WUI_Loc.zh-cn.Area-Feet: "脚部"
+WUI_Loc.zh-cn.Area-Other: "其他"
+
+# Body column: heading, count of worn items.
+WUI_Loc.zh-cn.Body-Wearing: "穿戴中"
+WUI_Loc.zh-cn.Body-NothingWorn: "未穿戴"
+WUI_Loc.zh-cn.Body-Worn: "已穿戴 {0} 件"
+
+# Item cards: new item tag, worn item tag.
+WUI_Loc.zh-cn.Card-New: "新"
+WUI_Loc.zh-cn.Status-Wearing: "穿戴中"
+WUI_Loc.zh-cn.Status-Edited: "已编辑"
+
+# Drawer header buttons.
+WUI_Loc.zh-cn.Header-EquippedOnly: "仅显示已装备"
+WUI_Loc.zh-cn.Header-Pack: "包: {0}"
+WUI_Loc.zh-cn.Pack-All: "全部"
+WUI_Loc.zh-cn.Pack-BaseGame: "原版游戏"
+
+# Drawer header subtitle.
+WUI_Loc.zh-cn.Count-Items-One: "{0} 件物品"
+WUI_Loc.zh-cn.Count-Items-Many: "{0} 件物品"
+WUI_Loc.zh-cn.Count-Match: "{0} 个匹配"
+WUI_Loc.zh-cn.Header-WearingItem: "穿戴中: {0}"
+
+# Outfits view: header title and subtitle.
+WUI_Loc.zh-cn.Header-Outfits: "着装"
+WUI_Loc.zh-cn.Count-SavedOutfits-One: "{0} 套已保存着装"
+WUI_Loc.zh-cn.Count-SavedOutfits-Many: "{0} 套已保存着装"
+WUI_Loc.zh-cn.Count-Favourites-One: "{0} 个收藏"
+WUI_Loc.zh-cn.Count-Favourites-Many: "{0} 个收藏"
+
+# Slot sidebar paging buttons.
+WUI_Loc.zh-cn.Sidebar-Previous: "上一页"
+WUI_Loc.zh-cn.Sidebar-Next: "下一页"
+
+# Outfit bar along the bottom of the drawer.
+WUI_Loc.zh-cn.Bar-CurrentLook: "当前造型"
+WUI_Loc.zh-cn.Bar-Outfits: "着装 ({0})"
+WUI_Loc.zh-cn.Bar-Back: "返回"
+WUI_Loc.zh-cn.Bar-Update: "更新"
+WUI_Loc.zh-cn.Bar-Revert: "还原"
+
+# Outfit bar status line: {0} is an item or outfit name.
+WUI_Loc.zh-cn.Look-TryingOn: "试穿中: {0}"
+WUI_Loc.zh-cn.Look-SavedAs: "已保存为 {0}"
+WUI_Loc.zh-cn.Look-Changes-One: "{0} 处更改"
+WUI_Loc.zh-cn.Look-Changes-Many: "{0} 处更改"
+WUI_Loc.zh-cn.Look-NoOutfitsYet: "尚无已保存的着装"
+WUI_Loc.zh-cn.Look-NotSaved: "未保存为着装"
+
+# Outfits view buttons and empty-list messages ({0} is the search text).
+WUI_Loc.zh-cn.Outfits-Save: "保存着装"
+WUI_Loc.zh-cn.Outfits-None: "无着装"
+WUI_Loc.zh-cn.Outfits-Empty: "尚无已保存的着装: “保存着装”会保存 V 当前的穿着"
+WUI_Loc.zh-cn.Outfits-NoMatch: "没有与“{0}”匹配的着装"
+
+# Mod Settings.
+WUI_Loc.zh-cn.Settings-Category: "衣柜"
+WUI_Loc.zh-cn.Settings-HoverTryOn: "悬停时预览物品"
+WUI_Loc.zh-cn.Settings-HoverTryOn-Desc: "将光标停留在物品卡片上，预览中的 V 会穿上该物品，直到光标移开。"
+WUI_Loc.zh-cn.Settings-AreaCamera: "将镜头移至所选部位"
+WUI_Loc.zh-cn.Settings-AreaCamera-Desc: "选择头部、躯干、手臂、腿部或脚部时，镜头会对准 V 的相应部位；着装界面显示全身。"

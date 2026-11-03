@@ -53,12 +53,42 @@ Changes apply the next time the wardrobe opens.
 ## Good to know
 
 - Mouse and keyboard only. There is no controller navigation yet.
-- Labels are in English.
+- The mod's labels follow the game's language. Every language the game offers is included;
+  the non-English texts are machine translations, so corrections are welcome. Slot, item and
+  outfit names come from the game, Equipment-EX and the clothing mods.
 - Pack names come from item IDs. A pack the mod doesn't know shows as its ID prefix in
   capitals, for example YV for VOID.
 - Favourites, the last worn outfit, NEW tags and the column choice are stored in your save.
   To uninstall, delete `r6/scripts/WardrobeTabs` and `archive/pc/mod/WardrobeTabs.archive`.
   Saves made with the mod keep a little unused data.
+
+## Changing or translating labels
+
+Any label can be changed for one language without editing the mod's files (TweakXL does it):
+
+1. Create a file in the game folder, for example
+   `r6/tweaks/WUI_MyLabels/de-de.yaml` (any folder and file name ending in `.yaml`). Save it as
+   UTF-8, without tabs.
+2. Add one line per label you want to change:
+   ```yaml
+   WUI_Loc.de-de.Bar-Revert: "ZURÜCK"
+   WUI_Loc.de-de.Area-Feet: "SCHUHE"
+   ```
+   - The part after the language code is the label's name. All names and their English are in
+     `r6/scripts/WardrobeTabs/WardrobeTabsLocalizationTexts.reds`
+     (`this.Text("WUI-<Name>", "English")`; leave out the `WUI-`).
+   - Language codes: `ar-ar`, `cz-cz`, `de-de`, `en-us`, `es-es`, `es-mx`, `fr-fr`, `hu-hu`,
+     `it-it`, `jp-jp`, `kr-kr`, `pl-pl`, `pt-br`, `ru-ru`, `th-th`, `tr-tr`, `ua-ua`, `zh-cn`,
+     `zh-tw`. Use `en-us` to change the English.
+   - If the original text holds `{0}`, keep it: the mod puts a number or a name there.
+   - Labels you leave out keep the mod's own text.
+3. Restart the game.
+
+The wardrobe shows your labels the next time it opens. The Mod Settings menu shows them only
+after switching the game's language once (to any language and back). A mistake in the file
+makes TweakXL skip that file only; the error is in `red4ext/plugins/TweakXL/`'s log. The full
+instructions are at the top of `r6/scripts/WardrobeTabs/WardrobeTabsLocalization.reds`. Send a
+corrected translation to the mod author and it can ship with the mod as it is.
 
 ## Credits
 

@@ -1,0 +1,72 @@
+# Wardrobe UI Improvements: Turkish texts (tr-tr).
+# Machine translation, not yet reviewed by a native speaker. Corrections welcome: send an override
+# file (same format) to the mod author. Format and how it's used: the header of en-us.yaml.
+
+# Body areas: area tabs (room: 6 letters) and body column groups.
+WUI_Loc.tr-tr.Area-Head: "BAŞ"
+WUI_Loc.tr-tr.Area-Body: "GÖVDE"
+WUI_Loc.tr-tr.Area-Arms: "KOL"
+WUI_Loc.tr-tr.Area-Legs: "BACAK"
+WUI_Loc.tr-tr.Area-Feet: "AYAK"
+WUI_Loc.tr-tr.Area-Other: "DİĞER"
+
+# Body column: heading and each group's count of worn items.
+WUI_Loc.tr-tr.Body-Wearing: "GİYİLEN"
+WUI_Loc.tr-tr.Body-NothingWorn: "GİYİLİ BİR ŞEY YOK"
+WUI_Loc.tr-tr.Body-Worn: "{0} GİYİLİ"
+
+# Item cards.
+WUI_Loc.tr-tr.Card-New: "YENİ"
+WUI_Loc.tr-tr.Status-Wearing: "GİYİLİ"
+WUI_Loc.tr-tr.Status-Edited: "DÜZENLENDİ"
+
+# Drawer header buttons (room: 18 letters; PACK 16 with the pack name).
+WUI_Loc.tr-tr.Header-EquippedOnly: "SADECE GİYİLENLER"
+WUI_Loc.tr-tr.Header-Pack: "PAKET: {0}"
+WUI_Loc.tr-tr.Pack-All: "TÜMÜ"
+WUI_Loc.tr-tr.Pack-BaseGame: "ANA OYUN"
+
+# Drawer header subtitle (Turkish keeps the noun singular after a number).
+WUI_Loc.tr-tr.Count-Items-One: "{0} EŞYA"
+WUI_Loc.tr-tr.Count-Items-Many: "{0} EŞYA"
+WUI_Loc.tr-tr.Count-Match: "{0} EŞLEŞME"
+WUI_Loc.tr-tr.Header-WearingItem: "GİYİLEN: {0}"
+
+# Outfits view: header title and subtitle.
+WUI_Loc.tr-tr.Header-Outfits: "KIYAFETLER"
+WUI_Loc.tr-tr.Count-SavedOutfits-One: "{0} KAYITLI KIYAFET"
+WUI_Loc.tr-tr.Count-SavedOutfits-Many: "{0} KAYITLI KIYAFET"
+WUI_Loc.tr-tr.Count-Favourites-One: "{0} FAVORİ"
+WUI_Loc.tr-tr.Count-Favourites-Many: "{0} FAVORİ"
+
+# Slot sidebar paging buttons (room: 8 letters).
+WUI_Loc.tr-tr.Sidebar-Previous: "ÖNCEKİ"
+WUI_Loc.tr-tr.Sidebar-Next: "SONRAKİ"
+
+# Outfit bar (room: OUTFITS 12 letters with the count; BACK 12; UPDATE and REVERT 10).
+WUI_Loc.tr-tr.Bar-CurrentLook: "MEVCUT GÖRÜNÜM"
+WUI_Loc.tr-tr.Bar-Outfits: "KIYAFET ({0})"
+WUI_Loc.tr-tr.Bar-Back: "GERİ"
+WUI_Loc.tr-tr.Bar-Update: "GÜNCELLE"
+WUI_Loc.tr-tr.Bar-Revert: "GERİ AL"
+
+# Outfit bar status line: {0} is an item or outfit name.
+WUI_Loc.tr-tr.Look-TryingOn: "DENENİYOR: {0}"
+WUI_Loc.tr-tr.Look-SavedAs: "{0} OLARAK KAYDEDİLDİ"
+WUI_Loc.tr-tr.Look-Changes-One: "{0} DEĞİŞİKLİK"
+WUI_Loc.tr-tr.Look-Changes-Many: "{0} DEĞİŞİKLİK"
+WUI_Loc.tr-tr.Look-NoOutfitsYet: "HENÜZ KAYITLI KIYAFET YOK"
+WUI_Loc.tr-tr.Look-NotSaved: "KIYAFET OLARAK KAYDEDİLMEDİ"
+
+# Outfits view buttons (room: 18 letters) and empty-list messages.
+WUI_Loc.tr-tr.Outfits-Save: "KIYAFETİ KAYDET"
+WUI_Loc.tr-tr.Outfits-None: "KIYAFET YOK"
+WUI_Loc.tr-tr.Outfits-Empty: "HENÜZ KAYITLI KIYAFET YOK: KIYAFETİ KAYDET, V'NİN GİYDİKLERİNİ SAKLAR"
+WUI_Loc.tr-tr.Outfits-NoMatch: "\"{0}\" İLE EŞLEŞEN KIYAFET YOK"
+
+# Mod Settings (WardrobeTabsSettings.reds).
+WUI_Loc.tr-tr.Settings-Category: "Gardırop"
+WUI_Loc.tr-tr.Settings-HoverTryOn: "Üzerine gelince eşyayı önizle"
+WUI_Loc.tr-tr.Settings-HoverTryOn-Desc: "İmleç bir eşya kartında durduğunda, imleç karttan ayrılana kadar eşya önizlemede V'nin üzerinde gösterilir."
+WUI_Loc.tr-tr.Settings-AreaCamera: "Kamerayı seçilen bölgeye taşı"
+WUI_Loc.tr-tr.Settings-AreaCamera-Desc: "BAŞ, GÖVDE, KOL, BACAK veya AYAK seçmek V'nin o kısmını kadraja alır; KIYAFETLER tüm vücudu gösterir."

@@ -1,0 +1,72 @@
+# Wardrobe UI Improvements: French texts (fr-fr).
+# Machine translation, not yet reviewed by a native speaker. Corrections welcome: send an override
+# file (same format) to the mod author. Format and how it's used: the header of en-us.yaml.
+
+# Body areas: area tabs and body column groups.
+WUI_Loc.fr-fr.Area-Head: "TÊTE"
+WUI_Loc.fr-fr.Area-Body: "CORPS"
+WUI_Loc.fr-fr.Area-Arms: "BRAS"
+WUI_Loc.fr-fr.Area-Legs: "JAMBES"
+WUI_Loc.fr-fr.Area-Feet: "PIEDS"
+WUI_Loc.fr-fr.Area-Other: "AUTRE"
+
+# Body column: heading and worn count per group.
+WUI_Loc.fr-fr.Body-Wearing: "PORTÉ"
+WUI_Loc.fr-fr.Body-NothingWorn: "RIEN DE PORTÉ"
+WUI_Loc.fr-fr.Body-Worn: "PORTÉS : {0}"
+
+# Item cards and outfit tags.
+WUI_Loc.fr-fr.Card-New: "NOUVEAU"
+WUI_Loc.fr-fr.Status-Wearing: "PORTÉE"
+WUI_Loc.fr-fr.Status-Edited: "MODIFIÉE"
+
+# Drawer header buttons.
+WUI_Loc.fr-fr.Header-EquippedOnly: "ÉQUIPÉS SEULEMENT"
+WUI_Loc.fr-fr.Header-Pack: "PACK : {0}"
+WUI_Loc.fr-fr.Pack-All: "TOUS"
+WUI_Loc.fr-fr.Pack-BaseGame: "JEU DE BASE"
+
+# Drawer header subtitle.
+WUI_Loc.fr-fr.Count-Items-One: "{0} OBJET"
+WUI_Loc.fr-fr.Count-Items-Many: "{0} OBJETS"
+WUI_Loc.fr-fr.Count-Match: "RÉSULTATS : {0}"
+WUI_Loc.fr-fr.Header-WearingItem: "PORTÉ : {0}"
+
+# Outfits view: header title and subtitle.
+WUI_Loc.fr-fr.Header-Outfits: "TENUES"
+WUI_Loc.fr-fr.Count-SavedOutfits-One: "{0} TENUE ENREGISTRÉE"
+WUI_Loc.fr-fr.Count-SavedOutfits-Many: "{0} TENUES ENREGISTRÉES"
+WUI_Loc.fr-fr.Count-Favourites-One: "{0} FAVORI"
+WUI_Loc.fr-fr.Count-Favourites-Many: "{0} FAVORIS"
+
+# Slot sidebar paging buttons.
+WUI_Loc.fr-fr.Sidebar-Previous: "PRÉCÉD."
+WUI_Loc.fr-fr.Sidebar-Next: "SUIVANT"
+
+# Outfit bar along the bottom of the drawer.
+WUI_Loc.fr-fr.Bar-CurrentLook: "TENUE ACTUELLE"
+WUI_Loc.fr-fr.Bar-Outfits: "TENUES ({0})"
+WUI_Loc.fr-fr.Bar-Back: "RETOUR"
+WUI_Loc.fr-fr.Bar-Update: "ACTUALISER"
+WUI_Loc.fr-fr.Bar-Revert: "RÉTABLIR"
+
+# Outfit bar status line.
+WUI_Loc.fr-fr.Look-TryingOn: "ESSAYAGE : {0}"
+WUI_Loc.fr-fr.Look-SavedAs: "ENREGISTRÉE SOUS {0}"
+WUI_Loc.fr-fr.Look-Changes-One: "{0} MODIFICATION"
+WUI_Loc.fr-fr.Look-Changes-Many: "{0} MODIFICATIONS"
+WUI_Loc.fr-fr.Look-NoOutfitsYet: "AUCUNE TENUE ENREGISTRÉE"
+WUI_Loc.fr-fr.Look-NotSaved: "NON ENREGISTRÉE COMME TENUE"
+
+# Outfits view buttons and empty-list messages.
+WUI_Loc.fr-fr.Outfits-Save: "ENREGISTRER TENUE"
+WUI_Loc.fr-fr.Outfits-None: "AUCUNE TENUE"
+WUI_Loc.fr-fr.Outfits-Empty: "AUCUNE TENUE ENREGISTRÉE : ENREGISTRER TENUE CONSERVE CE QUE V PORTE"
+WUI_Loc.fr-fr.Outfits-NoMatch: "AUCUNE TENUE NE CORRESPOND À \"{0}\""
+
+# Mod Settings.
+WUI_Loc.fr-fr.Settings-Category: "Garde-robe"
+WUI_Loc.fr-fr.Settings-HoverTryOn: "Essayer les objets au survol"
+WUI_Loc.fr-fr.Settings-HoverTryOn-Desc: "Laisser le curseur sur la carte d'un objet le fait porter à V dans l'aperçu jusqu'à ce que le curseur s'en éloigne."
+WUI_Loc.fr-fr.Settings-AreaCamera: "Cadrer la caméra sur la zone choisie"
+WUI_Loc.fr-fr.Settings-AreaCamera-Desc: "Choisir TÊTE, CORPS, BRAS, JAMBES ou PIEDS cadre cette partie de V ; TENUES montre le corps entier."

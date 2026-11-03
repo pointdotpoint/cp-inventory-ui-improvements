@@ -1,0 +1,72 @@
+# Wardrobe UI Improvements: Spanish texts (es-es).
+# Machine translation, not yet reviewed by a native speaker. Corrections welcome: send an override
+# file (same format) to the mod author. Format and how it's used: the header of en-us.yaml.
+
+# Body areas: area tabs and body column groups.
+WUI_Loc.es-es.Area-Head: "CABEZA"
+WUI_Loc.es-es.Area-Body: "CUERPO"
+WUI_Loc.es-es.Area-Arms: "BRAZOS"
+WUI_Loc.es-es.Area-Legs: "PIERNAS"
+WUI_Loc.es-es.Area-Feet: "PIES"
+WUI_Loc.es-es.Area-Other: "OTROS"
+
+# Body column: heading and worn count per group.
+WUI_Loc.es-es.Body-Wearing: "LLEVA PUESTO"
+WUI_Loc.es-es.Body-NothingWorn: "NADA PUESTO"
+WUI_Loc.es-es.Body-Worn: "PUESTOS: {0}"
+
+# Item cards and outfit tags.
+WUI_Loc.es-es.Card-New: "NUEVO"
+WUI_Loc.es-es.Status-Wearing: "PUESTO"
+WUI_Loc.es-es.Status-Edited: "EDITADO"
+
+# Drawer header buttons.
+WUI_Loc.es-es.Header-EquippedOnly: "SOLO EQUIPADOS"
+WUI_Loc.es-es.Header-Pack: "PACK: {0}"
+WUI_Loc.es-es.Pack-All: "TODOS"
+WUI_Loc.es-es.Pack-BaseGame: "JUEGO BASE"
+
+# Drawer header subtitle.
+WUI_Loc.es-es.Count-Items-One: "{0} OBJETO"
+WUI_Loc.es-es.Count-Items-Many: "{0} OBJETOS"
+WUI_Loc.es-es.Count-Match: "COINCIDENCIAS: {0}"
+WUI_Loc.es-es.Header-WearingItem: "PUESTO: {0}"
+
+# Outfits view: header title and subtitle.
+WUI_Loc.es-es.Header-Outfits: "ATUENDOS"
+WUI_Loc.es-es.Count-SavedOutfits-One: "{0} ATUENDO GUARDADO"
+WUI_Loc.es-es.Count-SavedOutfits-Many: "{0} ATUENDOS GUARDADOS"
+WUI_Loc.es-es.Count-Favourites-One: "{0} FAVORITO"
+WUI_Loc.es-es.Count-Favourites-Many: "{0} FAVORITOS"
+
+# Slot sidebar paging buttons.
+WUI_Loc.es-es.Sidebar-Previous: "ANTERIOR"
+WUI_Loc.es-es.Sidebar-Next: "PRÓXIMO"
+
+# Outfit bar along the bottom of the drawer.
+WUI_Loc.es-es.Bar-CurrentLook: "ATUENDO ACTUAL"
+WUI_Loc.es-es.Bar-Outfits: "ATUENDOS ({0})"
+WUI_Loc.es-es.Bar-Back: "VOLVER"
+WUI_Loc.es-es.Bar-Update: "ACTUALIZAR"
+WUI_Loc.es-es.Bar-Revert: "REVERTIR"
+
+# Outfit bar status line.
+WUI_Loc.es-es.Look-TryingOn: "PROBANDO: {0}"
+WUI_Loc.es-es.Look-SavedAs: "GUARDADO COMO {0}"
+WUI_Loc.es-es.Look-Changes-One: "{0} CAMBIO"
+WUI_Loc.es-es.Look-Changes-Many: "{0} CAMBIOS"
+WUI_Loc.es-es.Look-NoOutfitsYet: "AÚN NO HAY ATUENDOS GUARDADOS"
+WUI_Loc.es-es.Look-NotSaved: "NO GUARDADO COMO ATUENDO"
+
+# Outfits view buttons and empty-list messages.
+WUI_Loc.es-es.Outfits-Save: "GUARDAR ATUENDO"
+WUI_Loc.es-es.Outfits-None: "SIN ATUENDO"
+WUI_Loc.es-es.Outfits-Empty: "AÚN NO HAY ATUENDOS GUARDADOS: GUARDAR ATUENDO CONSERVA LO QUE LLEVA V"
+WUI_Loc.es-es.Outfits-NoMatch: "NINGÚN ATUENDO COINCIDE CON \"{0}\""
+
+# Mod Settings.
+WUI_Loc.es-es.Settings-Category: "Armario"
+WUI_Loc.es-es.Settings-HoverTryOn: "Probar objetos al pasar el cursor"
+WUI_Loc.es-es.Settings-HoverTryOn-Desc: "Al dejar el cursor sobre la tarjeta de un objeto, V lo lleva puesto en la vista previa hasta que el cursor se aparta."
+WUI_Loc.es-es.Settings-AreaCamera: "Mover la cámara a la zona seleccionada"
+WUI_Loc.es-es.Settings-AreaCamera-Desc: "Elegir CABEZA, CUERPO, BRAZOS, PIERNAS o PIES encuadra esa parte de V; ATUENDOS muestra el cuerpo entero."

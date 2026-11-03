@@ -1,0 +1,72 @@
+# Wardrobe UI Improvements: Ukrainian texts (ua-ua).
+# Machine translation, not yet reviewed by a native speaker. Corrections welcome: send an override
+# file (same format) to the mod author. Format and how it's used: the header of en-us.yaml.
+
+# Body areas: area tabs (room: 6 letters) and body column groups.
+WUI_Loc.ua-ua.Area-Head: "ГОЛОВА"
+WUI_Loc.ua-ua.Area-Body: "ТІЛО"
+WUI_Loc.ua-ua.Area-Arms: "РУКИ"
+WUI_Loc.ua-ua.Area-Legs: "НОГИ"
+WUI_Loc.ua-ua.Area-Feet: "СТОПИ"
+WUI_Loc.ua-ua.Area-Other: "ІНШЕ"
+
+# Body column.
+WUI_Loc.ua-ua.Body-Wearing: "ВДЯГНЕНО"
+WUI_Loc.ua-ua.Body-NothingWorn: "НІЧОГО НЕ ВДЯГНЕНО"
+WUI_Loc.ua-ua.Body-Worn: "ВДЯГНЕНО: {0}"
+
+# Item cards.
+WUI_Loc.ua-ua.Card-New: "НОВЕ"
+WUI_Loc.ua-ua.Status-Wearing: "ВДЯГНЕНО"
+WUI_Loc.ua-ua.Status-Edited: "ЗМІНЕНО"
+
+# Drawer header buttons.
+WUI_Loc.ua-ua.Header-EquippedOnly: "ЛИШЕ ВДЯГНЕНЕ"
+WUI_Loc.ua-ua.Header-Pack: "ПАК: {0}"
+WUI_Loc.ua-ua.Pack-All: "ВСІ"
+WUI_Loc.ua-ua.Pack-BaseGame: "ОСНОВНА ГРА"
+
+# Drawer header subtitle.
+WUI_Loc.ua-ua.Count-Items-One: "{0} ПРЕДМЕТ"
+WUI_Loc.ua-ua.Count-Items-Many: "ПРЕДМЕТИ: {0}"
+WUI_Loc.ua-ua.Count-Match: "ЗНАЙДЕНО: {0}"
+WUI_Loc.ua-ua.Header-WearingItem: "ВДЯГНЕНО: {0}"
+
+# Outfits view: header title and subtitle.
+WUI_Loc.ua-ua.Header-Outfits: "ВБРАННЯ"
+WUI_Loc.ua-ua.Count-SavedOutfits-One: "{0} ЗБЕРЕЖЕНЕ ВБРАННЯ"
+WUI_Loc.ua-ua.Count-SavedOutfits-Many: "ЗБЕРЕЖЕНІ ВБРАННЯ: {0}"
+WUI_Loc.ua-ua.Count-Favourites-One: "{0} В ОБРАНОМУ"
+WUI_Loc.ua-ua.Count-Favourites-Many: "{0} В ОБРАНОМУ"
+
+# Slot sidebar paging buttons (room: 8 letters).
+WUI_Loc.ua-ua.Sidebar-Previous: "НАЗАД"
+WUI_Loc.ua-ua.Sidebar-Next: "ДАЛІ"
+
+# Outfit bar (room: OUTFITS 12 with the count; BACK 12; UPDATE and REVERT 10).
+WUI_Loc.ua-ua.Bar-CurrentLook: "ПОТОЧНИЙ ОБРАЗ"
+WUI_Loc.ua-ua.Bar-Outfits: "ВБРАННЯ ({0})"
+WUI_Loc.ua-ua.Bar-Back: "НАЗАД"
+WUI_Loc.ua-ua.Bar-Update: "ОНОВИТИ"
+WUI_Loc.ua-ua.Bar-Revert: "ВІДНОВИТИ"
+
+# Outfit bar status line.
+WUI_Loc.ua-ua.Look-TryingOn: "ПРИМІРКА: {0}"
+WUI_Loc.ua-ua.Look-SavedAs: "ЗБЕРЕЖЕНО ЯК {0}"
+WUI_Loc.ua-ua.Look-Changes-One: "{0} ЗМІНА"
+WUI_Loc.ua-ua.Look-Changes-Many: "ЗМІНИ: {0}"
+WUI_Loc.ua-ua.Look-NoOutfitsYet: "ЩЕ НЕМАЄ ЗБЕРЕЖЕНИХ ВБРАНЬ"
+WUI_Loc.ua-ua.Look-NotSaved: "НЕ ЗБЕРЕЖЕНО ЯК ВБРАННЯ"
+
+# Outfits view buttons (room: 18 letters) and empty-list messages.
+WUI_Loc.ua-ua.Outfits-Save: "ЗБЕРЕГТИ ВБРАННЯ"
+WUI_Loc.ua-ua.Outfits-None: "БЕЗ ВБРАННЯ"
+WUI_Loc.ua-ua.Outfits-Empty: "ЩЕ НЕМАЄ ЗБЕРЕЖЕНИХ ВБРАНЬ: «ЗБЕРЕГТИ ВБРАННЯ» ЗАПАМ'ЯТОВУЄ, ЩО ВДЯГНЕНО НА V"
+WUI_Loc.ua-ua.Outfits-NoMatch: "НЕМАЄ ВБРАНЬ ЗА ЗАПИТОМ «{0}»"
+
+# Mod Settings (the mod's name stays English).
+WUI_Loc.ua-ua.Settings-Category: "Гардероб"
+WUI_Loc.ua-ua.Settings-HoverTryOn: "Приміряти предмети при наведенні"
+WUI_Loc.ua-ua.Settings-HoverTryOn-Desc: "Якщо затримати курсор на картці предмета, V приміряє його в попередньому перегляді, доки курсор не залишить картку."
+WUI_Loc.ua-ua.Settings-AreaCamera: "Наводити камеру на вибрану ділянку"
+WUI_Loc.ua-ua.Settings-AreaCamera-Desc: "Вибір ГОЛОВА, ТІЛО, РУКИ, НОГИ або СТОПИ показує в кадрі цю частину V; у ВБРАННІ видно все тіло."

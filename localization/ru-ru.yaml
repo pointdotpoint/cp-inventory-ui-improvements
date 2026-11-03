@@ -1,0 +1,72 @@
+# Wardrobe UI Improvements: Russian texts (ru-ru).
+# Machine translation, not yet reviewed by a native speaker. Corrections welcome: send an override
+# file (same format) to the mod author. Format and how it's used: the header of en-us.yaml.
+
+# Body areas: area tabs (room: 6 letters) and body column groups.
+WUI_Loc.ru-ru.Area-Head: "ГОЛОВА"
+WUI_Loc.ru-ru.Area-Body: "ТЕЛО"
+WUI_Loc.ru-ru.Area-Arms: "РУКИ"
+WUI_Loc.ru-ru.Area-Legs: "НОГИ"
+WUI_Loc.ru-ru.Area-Feet: "СТОПЫ"
+WUI_Loc.ru-ru.Area-Other: "ПРОЧЕЕ"
+
+# Body column.
+WUI_Loc.ru-ru.Body-Wearing: "НАДЕТО"
+WUI_Loc.ru-ru.Body-NothingWorn: "НИЧЕГО НЕ НАДЕТО"
+WUI_Loc.ru-ru.Body-Worn: "НАДЕТО: {0}"
+
+# Item cards.
+WUI_Loc.ru-ru.Card-New: "НОВОЕ"
+WUI_Loc.ru-ru.Status-Wearing: "НАДЕТО"
+WUI_Loc.ru-ru.Status-Edited: "ИЗМЕНЕНО"
+
+# Drawer header buttons.
+WUI_Loc.ru-ru.Header-EquippedOnly: "ТОЛЬКО НАДЕТОЕ"
+WUI_Loc.ru-ru.Header-Pack: "ПАК: {0}"
+WUI_Loc.ru-ru.Pack-All: "ВСЕ"
+WUI_Loc.ru-ru.Pack-BaseGame: "ОСНОВНАЯ ИГРА"
+
+# Drawer header subtitle.
+WUI_Loc.ru-ru.Count-Items-One: "{0} ПРЕДМЕТ"
+WUI_Loc.ru-ru.Count-Items-Many: "ПРЕДМЕТЫ: {0}"
+WUI_Loc.ru-ru.Count-Match: "НАЙДЕНО: {0}"
+WUI_Loc.ru-ru.Header-WearingItem: "НАДЕТО: {0}"
+
+# Outfits view: header title and subtitle.
+WUI_Loc.ru-ru.Header-Outfits: "НАРЯДЫ"
+WUI_Loc.ru-ru.Count-SavedOutfits-One: "{0} СОХРАНЁННЫЙ НАРЯД"
+WUI_Loc.ru-ru.Count-SavedOutfits-Many: "СОХРАНЁННЫЕ НАРЯДЫ: {0}"
+WUI_Loc.ru-ru.Count-Favourites-One: "{0} В ИЗБРАННОМ"
+WUI_Loc.ru-ru.Count-Favourites-Many: "{0} В ИЗБРАННОМ"
+
+# Slot sidebar paging buttons (room: 8 letters).
+WUI_Loc.ru-ru.Sidebar-Previous: "НАЗАД"
+WUI_Loc.ru-ru.Sidebar-Next: "ДАЛЕЕ"
+
+# Outfit bar (room: OUTFITS 12 with the count; BACK 12; UPDATE and REVERT 10).
+WUI_Loc.ru-ru.Bar-CurrentLook: "ТЕКУЩИЙ ОБРАЗ"
+WUI_Loc.ru-ru.Bar-Outfits: "НАРЯДЫ ({0})"
+WUI_Loc.ru-ru.Bar-Back: "НАЗАД"
+WUI_Loc.ru-ru.Bar-Update: "ОБНОВИТЬ"
+WUI_Loc.ru-ru.Bar-Revert: "ВЕРНУТЬ"
+
+# Outfit bar status line.
+WUI_Loc.ru-ru.Look-TryingOn: "ПРИМЕРКА: {0}"
+WUI_Loc.ru-ru.Look-SavedAs: "СОХРАНЕНО КАК {0}"
+WUI_Loc.ru-ru.Look-Changes-One: "{0} ИЗМЕНЕНИЕ"
+WUI_Loc.ru-ru.Look-Changes-Many: "ИЗМЕНЕНИЯ: {0}"
+WUI_Loc.ru-ru.Look-NoOutfitsYet: "ПОКА НЕТ СОХРАНЁННЫХ НАРЯДОВ"
+WUI_Loc.ru-ru.Look-NotSaved: "НЕ СОХРАНЁН КАК НАРЯД"
+
+# Outfits view buttons (room: 18 letters) and empty-list messages.
+WUI_Loc.ru-ru.Outfits-Save: "СОХРАНИТЬ НАРЯД"
+WUI_Loc.ru-ru.Outfits-None: "БЕЗ НАРЯДА"
+WUI_Loc.ru-ru.Outfits-Empty: "ПОКА НЕТ СОХРАНЁННЫХ НАРЯДОВ: «СОХРАНИТЬ НАРЯД» ЗАПОМИНАЕТ, ЧТО НАДЕТО НА V"
+WUI_Loc.ru-ru.Outfits-NoMatch: "НЕТ НАРЯДОВ ПО ЗАПРОСУ «{0}»"
+
+# Mod Settings (the mod's name stays English).
+WUI_Loc.ru-ru.Settings-Category: "Гардероб"
+WUI_Loc.ru-ru.Settings-HoverTryOn: "Примерка при наведении"
+WUI_Loc.ru-ru.Settings-HoverTryOn-Desc: "Если задержать курсор на карточке предмета, V примеряет его в окне предпросмотра, пока курсор не уйдёт с карточки."
+WUI_Loc.ru-ru.Settings-AreaCamera: "Наводить камеру на выбранную область"
+WUI_Loc.ru-ru.Settings-AreaCamera-Desc: "При выборе ГОЛОВА, ТЕЛО, РУКИ, НОГИ или СТОПЫ в кадре оказывается эта часть V; НАРЯДЫ показывают всё тело."

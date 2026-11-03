@@ -124,6 +124,17 @@ tag but tries nothing on) and "Move camera to the selected area" (off: the camer
 only moves with Equipment-EX's wheel zoom). Changes apply the next time the
 wardrobe opens. Without Mod Settings both stay on.
 
+## Texts
+
+Every label the mod draws follows the game's language. The texts live in
+`localization/<lang>.yaml` (TweakXL flats `WUI_Loc.<lang>.<Name>: "text"`, the same format
+players use for override files); `tools/gen_localization.py` turns them into
+`WardrobeTabsLocalizationTexts.reds`. `WardrobeTabsLocalization.reds` puts them into the game's
+text table through a Codeware localization provider and resolves them in the wardrobe
+(`WardrobeTabsText`, `WardrobeTabsTextF`, `WardrobeTabsCount`): the player's TweakXL line for
+the language, then the shipped translation, then English. Its header tells players how to
+override a label. Slot names come from Equipment-EX, item and outfit names from the game and mods.
+
 ## Rebuild
 
 To add readable names for newly met packs, regenerate the known pack names from

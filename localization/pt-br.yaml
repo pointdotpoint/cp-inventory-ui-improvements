@@ -1,0 +1,72 @@
+# Wardrobe UI Improvements: Brazilian Portuguese texts (pt-br).
+# Machine translation, not yet reviewed by a native speaker. Corrections welcome: send an override
+# file (same format) to the mod author. Format and how it's used: the header of en-us.yaml.
+
+# Body areas: area tabs and body column groups.
+WUI_Loc.pt-br.Area-Head: "CABEÇA"
+WUI_Loc.pt-br.Area-Body: "CORPO"
+WUI_Loc.pt-br.Area-Arms: "BRAÇOS"
+WUI_Loc.pt-br.Area-Legs: "PERNAS"
+WUI_Loc.pt-br.Area-Feet: "PÉS"
+WUI_Loc.pt-br.Area-Other: "OUTROS"
+
+# Body column: heading and worn count per group.
+WUI_Loc.pt-br.Body-Wearing: "VESTINDO"
+WUI_Loc.pt-br.Body-NothingWorn: "NADA EM USO"
+WUI_Loc.pt-br.Body-Worn: "EM USO: {0}"
+
+# Item cards and outfit tags.
+WUI_Loc.pt-br.Card-New: "NOVO"
+WUI_Loc.pt-br.Status-Wearing: "EM USO"
+WUI_Loc.pt-br.Status-Edited: "EDITADO"
+
+# Drawer header buttons.
+WUI_Loc.pt-br.Header-EquippedOnly: "APENAS EQUIPADOS"
+WUI_Loc.pt-br.Header-Pack: "PACK: {0}"
+WUI_Loc.pt-br.Pack-All: "TODOS"
+WUI_Loc.pt-br.Pack-BaseGame: "JOGO BASE"
+
+# Drawer header subtitle.
+WUI_Loc.pt-br.Count-Items-One: "{0} ITEM"
+WUI_Loc.pt-br.Count-Items-Many: "{0} ITENS"
+WUI_Loc.pt-br.Count-Match: "RESULTADOS: {0}"
+WUI_Loc.pt-br.Header-WearingItem: "VESTINDO {0}"
+
+# Outfits view: header title and subtitle.
+WUI_Loc.pt-br.Header-Outfits: "TRAJES"
+WUI_Loc.pt-br.Count-SavedOutfits-One: "{0} TRAJE SALVO"
+WUI_Loc.pt-br.Count-SavedOutfits-Many: "{0} TRAJES SALVOS"
+WUI_Loc.pt-br.Count-Favourites-One: "{0} FAVORITO"
+WUI_Loc.pt-br.Count-Favourites-Many: "{0} FAVORITOS"
+
+# Slot sidebar paging buttons.
+WUI_Loc.pt-br.Sidebar-Previous: "ANTERIOR"
+WUI_Loc.pt-br.Sidebar-Next: "PRÓXIMO"
+
+# Outfit bar along the bottom of the drawer.
+WUI_Loc.pt-br.Bar-CurrentLook: "VISUAL ATUAL"
+WUI_Loc.pt-br.Bar-Outfits: "TRAJES ({0})"
+WUI_Loc.pt-br.Bar-Back: "VOLTAR"
+WUI_Loc.pt-br.Bar-Update: "ATUALIZAR"
+WUI_Loc.pt-br.Bar-Revert: "REVERTER"
+
+# Outfit bar status line.
+WUI_Loc.pt-br.Look-TryingOn: "PROVANDO: {0}"
+WUI_Loc.pt-br.Look-SavedAs: "SALVO COMO {0}"
+WUI_Loc.pt-br.Look-Changes-One: "{0} ALTERAÇÃO"
+WUI_Loc.pt-br.Look-Changes-Many: "{0} ALTERAÇÕES"
+WUI_Loc.pt-br.Look-NoOutfitsYet: "NENHUM TRAJE SALVO AINDA"
+WUI_Loc.pt-br.Look-NotSaved: "NÃO SALVO COMO TRAJE"
+
+# Outfits view buttons and empty-list messages.
+WUI_Loc.pt-br.Outfits-Save: "SALVAR TRAJE"
+WUI_Loc.pt-br.Outfits-None: "SEM TRAJE"
+WUI_Loc.pt-br.Outfits-Empty: "NENHUM TRAJE SALVO AINDA: SALVAR TRAJE GUARDA O QUE V ESTÁ VESTINDO"
+WUI_Loc.pt-br.Outfits-NoMatch: "NENHUM TRAJE CORRESPONDE A \"{0}\""
+
+# Mod Settings.
+WUI_Loc.pt-br.Settings-Category: "Guarda-roupa"
+WUI_Loc.pt-br.Settings-HoverTryOn: "Provar itens ao passar o cursor"
+WUI_Loc.pt-br.Settings-HoverTryOn-Desc: "Deixar o cursor sobre o cartão de um item faz V vesti-lo na prévia até o cursor sair."
+WUI_Loc.pt-br.Settings-AreaCamera: "Mover a câmera para a área selecionada"
+WUI_Loc.pt-br.Settings-AreaCamera-Desc: "Escolher CABEÇA, CORPO, BRAÇOS, PERNAS ou PÉS enquadra essa parte de V; TRAJES mostra o corpo inteiro."

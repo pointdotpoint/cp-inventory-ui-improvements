@@ -1,0 +1,72 @@
+# Wardrobe UI Improvements: Italian texts (it-it).
+# Machine translation, not yet reviewed by a native speaker. Corrections welcome: send an override
+# file (same format) to the mod author. Format and how it's used: the header of en-us.yaml.
+
+# Body areas: area tabs and body column groups.
+WUI_Loc.it-it.Area-Head: "TESTA"
+WUI_Loc.it-it.Area-Body: "CORPO"
+WUI_Loc.it-it.Area-Arms: "BRACCIA"
+WUI_Loc.it-it.Area-Legs: "GAMBE"
+WUI_Loc.it-it.Area-Feet: "PIEDI"
+WUI_Loc.it-it.Area-Other: "ALTRO"
+
+# Body column: heading and worn count per group.
+WUI_Loc.it-it.Body-Wearing: "INDOSSATI"
+WUI_Loc.it-it.Body-NothingWorn: "NIENTE INDOSSATO"
+WUI_Loc.it-it.Body-Worn: "INDOSSATI: {0}"
+
+# Item cards and outfit tags.
+WUI_Loc.it-it.Card-New: "NUOVO"
+WUI_Loc.it-it.Status-Wearing: "INDOSSATO"
+WUI_Loc.it-it.Status-Edited: "MODIFICATO"
+
+# Drawer header buttons.
+WUI_Loc.it-it.Header-EquippedOnly: "SOLO EQUIPAGGIATI"
+WUI_Loc.it-it.Header-Pack: "PACK: {0}"
+WUI_Loc.it-it.Pack-All: "TUTTI"
+WUI_Loc.it-it.Pack-BaseGame: "GIOCO BASE"
+
+# Drawer header subtitle.
+WUI_Loc.it-it.Count-Items-One: "{0} OGGETTO"
+WUI_Loc.it-it.Count-Items-Many: "{0} OGGETTI"
+WUI_Loc.it-it.Count-Match: "RISULTATI: {0}"
+WUI_Loc.it-it.Header-WearingItem: "INDOSSA {0}"
+
+# Outfits view: header title and subtitle.
+WUI_Loc.it-it.Header-Outfits: "ABITI"
+WUI_Loc.it-it.Count-SavedOutfits-One: "{0} ABITO SALVATO"
+WUI_Loc.it-it.Count-SavedOutfits-Many: "{0} ABITI SALVATI"
+WUI_Loc.it-it.Count-Favourites-One: "{0} PREFERITO"
+WUI_Loc.it-it.Count-Favourites-Many: "{0} PREFERITI"
+
+# Slot sidebar paging buttons.
+WUI_Loc.it-it.Sidebar-Previous: "INDIETRO"
+WUI_Loc.it-it.Sidebar-Next: "AVANTI"
+
+# Outfit bar along the bottom of the drawer.
+WUI_Loc.it-it.Bar-CurrentLook: "LOOK ATTUALE"
+WUI_Loc.it-it.Bar-Outfits: "ABITI ({0})"
+WUI_Loc.it-it.Bar-Back: "INDIETRO"
+WUI_Loc.it-it.Bar-Update: "AGGIORNA"
+WUI_Loc.it-it.Bar-Revert: "RIPRISTINA"
+
+# Outfit bar status line.
+WUI_Loc.it-it.Look-TryingOn: "IN PROVA: {0}"
+WUI_Loc.it-it.Look-SavedAs: "SALVATO COME {0}"
+WUI_Loc.it-it.Look-Changes-One: "{0} MODIFICA"
+WUI_Loc.it-it.Look-Changes-Many: "{0} MODIFICHE"
+WUI_Loc.it-it.Look-NoOutfitsYet: "NESSUN ABITO ANCORA SALVATO"
+WUI_Loc.it-it.Look-NotSaved: "NON SALVATO COME ABITO"
+
+# Outfits view buttons and empty-list messages.
+WUI_Loc.it-it.Outfits-Save: "SALVA ABITO"
+WUI_Loc.it-it.Outfits-None: "NESSUN ABITO"
+WUI_Loc.it-it.Outfits-Empty: "NESSUN ABITO ANCORA SALVATO: SALVA ABITO CONSERVA CIÒ CHE V INDOSSA"
+WUI_Loc.it-it.Outfits-NoMatch: "NESSUN ABITO CORRISPONDE A \"{0}\""
+
+# Mod Settings.
+WUI_Loc.it-it.Settings-Category: "Guardaroba"
+WUI_Loc.it-it.Settings-HoverTryOn: "Prova gli oggetti al passaggio del cursore"
+WUI_Loc.it-it.Settings-HoverTryOn-Desc: "Lasciando il cursore su una scheda oggetto, V lo indossa nell'anteprima finché il cursore non si sposta."
+WUI_Loc.it-it.Settings-AreaCamera: "Sposta la visuale sulla zona selezionata"
+WUI_Loc.it-it.Settings-AreaCamera-Desc: "Scegliere TESTA, CORPO, BRACCIA, GAMBE o PIEDI inquadra quella parte di V; ABITI mostra il corpo intero."
