@@ -21,7 +21,8 @@ WUI_Loc.ru-ru.Status-Wearing: "НАДЕТО"
 WUI_Loc.ru-ru.Status-Edited: "ИЗМЕНЕНО"
 
 # Drawer header buttons.
-WUI_Loc.ru-ru.Header-EquippedOnly: "ТОЛЬКО НАДЕТОЕ"
+WUI_Loc.ru-ru.Header-EquippedOnly: "НАДЕТОЕ"
+WUI_Loc.ru-ru.Header-NewOnly: "НОВОЕ"
 WUI_Loc.ru-ru.Header-Pack: "ПАК: {0}"
 WUI_Loc.ru-ru.Pack-All: "ВСЕ"
 WUI_Loc.ru-ru.Pack-BaseGame: "ОСНОВНАЯ ИГРА"
@@ -63,6 +64,11 @@ WUI_Loc.ru-ru.Outfits-Save: "СОХРАНИТЬ НАРЯД"
 WUI_Loc.ru-ru.Outfits-None: "БЕЗ НАРЯДА"
 WUI_Loc.ru-ru.Outfits-Empty: "ПОКА НЕТ СОХРАНЁННЫХ НАРЯДОВ: «СОХРАНИТЬ НАРЯД» ЗАПОМИНАЕТ, ЧТО НАДЕТО НА V"
 WUI_Loc.ru-ru.Outfits-NoMatch: "НЕТ НАРЯДОВ ПО ЗАПРОСУ «{0}»"
+WUI_Loc.ru-ru.Outfits-Sort: "ПОРЯДОК: {0}"
+WUI_Loc.ru-ru.Sort-AZ: "А-Я"
+WUI_Loc.ru-ru.Sort-Newest: "НОВЫЕ"
+WUI_Loc.ru-ru.Sort-Oldest: "СТАРЫЕ"
+WUI_Loc.ru-ru.Outfit-Playtime: "{0} Ч {1} МИН"
 
 # Mod Settings (the mod's name stays English).
 WUI_Loc.ru-ru.Settings-Category: "Гардероб"

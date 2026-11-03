@@ -21,7 +21,8 @@ WUI_Loc.it-it.Status-Wearing: "INDOSSATO"
 WUI_Loc.it-it.Status-Edited: "MODIFICATO"
 
 # Drawer header buttons.
-WUI_Loc.it-it.Header-EquippedOnly: "SOLO EQUIPAGGIATI"
+WUI_Loc.it-it.Header-EquippedOnly: "INDOSSATI"
+WUI_Loc.it-it.Header-NewOnly: "NUOVI"
 WUI_Loc.it-it.Header-Pack: "PACK: {0}"
 WUI_Loc.it-it.Pack-All: "TUTTI"
 WUI_Loc.it-it.Pack-BaseGame: "GIOCO BASE"
@@ -63,6 +64,11 @@ WUI_Loc.it-it.Outfits-Save: "SALVA ABITO"
 WUI_Loc.it-it.Outfits-None: "NESSUN ABITO"
 WUI_Loc.it-it.Outfits-Empty: "NESSUN ABITO ANCORA SALVATO: SALVA ABITO CONSERVA CIÒ CHE V INDOSSA"
 WUI_Loc.it-it.Outfits-NoMatch: "NESSUN ABITO CORRISPONDE A \"{0}\""
+WUI_Loc.it-it.Outfits-Sort: "ORDINE: {0}"
+WUI_Loc.it-it.Sort-AZ: "A-Z"
+WUI_Loc.it-it.Sort-Newest: "RECENTI"
+WUI_Loc.it-it.Sort-Oldest: "MENO RECENTI"
+WUI_Loc.it-it.Outfit-Playtime: "{0} H {1} MIN"
 
 # Mod Settings.
 WUI_Loc.it-it.Settings-Category: "Guardaroba"

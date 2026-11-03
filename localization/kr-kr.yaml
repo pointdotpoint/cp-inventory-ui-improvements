@@ -21,7 +21,8 @@ WUI_Loc.kr-kr.Status-Wearing: "착용 중"
 WUI_Loc.kr-kr.Status-Edited: "편집됨"
 
 # Drawer header buttons.
-WUI_Loc.kr-kr.Header-EquippedOnly: "장착 아이템만"
+WUI_Loc.kr-kr.Header-EquippedOnly: "장착"
+WUI_Loc.kr-kr.Header-NewOnly: "신규"
 WUI_Loc.kr-kr.Header-Pack: "팩: {0}"
 WUI_Loc.kr-kr.Pack-All: "전체"
 WUI_Loc.kr-kr.Pack-BaseGame: "기본 게임"
@@ -63,6 +64,11 @@ WUI_Loc.kr-kr.Outfits-Save: "복장 저장"
 WUI_Loc.kr-kr.Outfits-None: "복장 없음"
 WUI_Loc.kr-kr.Outfits-Empty: "아직 저장된 복장 없음: 복장 저장을 누르면 V가 입고 있는 옷이 저장됩니다"
 WUI_Loc.kr-kr.Outfits-NoMatch: "\"{0}\"와(과) 일치하는 복장 없음"
+WUI_Loc.kr-kr.Outfits-Sort: "정렬: {0}"
+WUI_Loc.kr-kr.Sort-AZ: "이름순"
+WUI_Loc.kr-kr.Sort-Newest: "최신순"
+WUI_Loc.kr-kr.Sort-Oldest: "오래된순"
+WUI_Loc.kr-kr.Outfit-Playtime: "{0}시간 {1}분"
 
 # Mod Settings.
 WUI_Loc.kr-kr.Settings-Category: "옷장"

@@ -75,12 +75,13 @@ NO OUTFIT or deleting the outfit drops the link; wearing another outfit links it
 The bar covers the bottom of the grid; the grid gets as much extra scroll room.
 
 The outfits view has SAVE OUTFIT (Equipment-EX's own dialog), NO OUTFIT (lit
-while no outfit is worn) and its own search box in the drawer header, and the
-saved outfits as a four-column grid (across the slot sidebar's column too): name, item count, a row of item icons (head
+while no outfit is worn), SORT (A-Z, newest, oldest; saved with the game) and its own search box in the drawer header, and the
+saved outfits as a four-column grid (across the slot sidebar's column too): name, item count, the
+playtime it was created at (Equipment-EX's stamp; UPDATE keeps it), a row of item icons (head
 to toe, up to seven, the last reading +N), a cyan bar and WEARING on
 the worn one. Clicking a cell wears the outfit; Equipment-EX's delete key asks to
 delete it. The star at the top right of each cell marks a favourite; favourites come
-first, each group in alphabetical order. Favourites are saved with the game.
+first, each group in the SORT order. Favourites are saved with the game.
 The cells replace Equipment-EX's one-column list and scroll with the mouse wheel.
 Saving an outfit that the search would hide clears the search.
 The grid sits on a 50% black backdrop.
@@ -107,7 +108,7 @@ which grid was installed. This confirms initialization, not visible rendering.
 
 An X at the right end of the search box (item search in the wardrobe, outfit search
 in OUTFITS) clears it; it shows only while the box holds text.
-While a search, EQUIPPED ONLY or a pack filter is active, each area tab shows how
+While a search, EQUIPPED, NEW or a pack filter is active, each area tab shows how
 many items in that area match, e.g. LEGS (8); areas with no match dim.
 
 ## Columns

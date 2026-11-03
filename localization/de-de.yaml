@@ -21,7 +21,8 @@ WUI_Loc.de-de.Status-Wearing: "GETRAGEN"
 WUI_Loc.de-de.Status-Edited: "GEÄNDERT"
 
 # Drawer header buttons.
-WUI_Loc.de-de.Header-EquippedOnly: "NUR AUSGERÜSTETE"
+WUI_Loc.de-de.Header-EquippedOnly: "GETRAGEN"
+WUI_Loc.de-de.Header-NewOnly: "NEU"
 WUI_Loc.de-de.Header-Pack: "PAKET: {0}"
 WUI_Loc.de-de.Pack-All: "ALLE"
 WUI_Loc.de-de.Pack-BaseGame: "HAUPTSPIEL"
@@ -63,6 +64,11 @@ WUI_Loc.de-de.Outfits-Save: "OUTFIT SPEICHERN"
 WUI_Loc.de-de.Outfits-None: "KEIN OUTFIT"
 WUI_Loc.de-de.Outfits-Empty: "NOCH KEINE OUTFITS GESPEICHERT: OUTFIT SPEICHERN BEHÄLT, WAS V TRÄGT"
 WUI_Loc.de-de.Outfits-NoMatch: "KEIN OUTFIT PASST ZU \"{0}\""
+WUI_Loc.de-de.Outfits-Sort: "SORTIEREN: {0}"
+WUI_Loc.de-de.Sort-AZ: "A-Z"
+WUI_Loc.de-de.Sort-Newest: "NEUESTE"
+WUI_Loc.de-de.Sort-Oldest: "ÄLTESTE"
+WUI_Loc.de-de.Outfit-Playtime: "{0} STD. {1} MIN."
 
 # Mod Settings.
 WUI_Loc.de-de.Settings-Category: "Kleiderschrank"

@@ -26,6 +26,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
             "Status-Wearing",
             "Status-Edited",
             "Header-EquippedOnly",
+            "Header-NewOnly",
             "Header-Pack",
             "Pack-All",
             "Pack-BaseGame",
@@ -55,6 +56,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
             "Outfits-None",
             "Outfits-Empty",
             "Outfits-NoMatch",
+            "Outfits-Sort",
+            "Sort-AZ",
+            "Sort-Newest",
+            "Sort-Oldest",
+            "Outfit-Playtime",
             "Settings-Mod",
             "Settings-Category",
             "Settings-HoverTryOn",
@@ -78,7 +84,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "NEW");
         this.Text("WUI-Status-Wearing", "WEARING");
         this.Text("WUI-Status-Edited", "EDITED");
-        this.Text("WUI-Header-EquippedOnly", "EQUIPPED ONLY");
+        this.Text("WUI-Header-EquippedOnly", "EQUIPPED");
+        this.Text("WUI-Header-NewOnly", "NEW");
         this.Text("WUI-Header-Pack", "PACK: {0}");
         this.Text("WUI-Pack-All", "ALL");
         this.Text("WUI-Pack-BaseGame", "BASE GAME");
@@ -108,6 +115,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "NO OUTFIT");
         this.Text("WUI-Outfits-Empty", "NO SAVED OUTFITS YET: SAVE OUTFIT KEEPS WHAT V IS WEARING");
         this.Text("WUI-Outfits-NoMatch", "NO OUTFIT MATCHES \"{0}\"");
+        this.Text("WUI-Outfits-Sort", "SORT: {0}");
+        this.Text("WUI-Sort-AZ", "A-Z");
+        this.Text("WUI-Sort-Newest", "NEWEST");
+        this.Text("WUI-Sort-Oldest", "OLDEST");
+        this.Text("WUI-Outfit-Playtime", "{0}H {1}M");
         this.Text("WUI-Settings-Mod", "Wardrobe UI Improvements");
         this.Text("WUI-Settings-Category", "Wardrobe");
         this.Text("WUI-Settings-HoverTryOn", "Preview items on hover");
@@ -129,7 +141,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "جديد");
         this.Text("WUI-Status-Wearing", "ملبوس");
         this.Text("WUI-Status-Edited", "معدّل");
-        this.Text("WUI-Header-EquippedOnly", "الملبوس فقط");
+        this.Text("WUI-Header-EquippedOnly", "الملبوس");
+        this.Text("WUI-Header-NewOnly", "الجديد");
         this.Text("WUI-Header-Pack", "الحزمة: {0}");
         this.Text("WUI-Pack-All", "الكل");
         this.Text("WUI-Pack-BaseGame", "اللعبة الأساسية");
@@ -159,6 +172,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "بلا زي");
         this.Text("WUI-Outfits-Empty", "لا توجد أزياء محفوظة بعد: \"حفظ الزي\" يحفظ ما يرتديه V");
         this.Text("WUI-Outfits-NoMatch", "لا يوجد زي يطابق \"{0}\"");
+        this.Text("WUI-Outfits-Sort", "الترتيب: {0}");
+        this.Text("WUI-Sort-AZ", "أ-ي");
+        this.Text("WUI-Sort-Newest", "الأحدث");
+        this.Text("WUI-Sort-Oldest", "الأقدم");
+        this.Text("WUI-Outfit-Playtime", "{0} س {1} د");
         this.Text("WUI-Settings-Category", "خزانة الملابس");
         this.Text("WUI-Settings-HoverTryOn", "معاينة العناصر عند التمرير");
         this.Text("WUI-Settings-HoverTryOn-Desc", "إبقاء المؤشر على بطاقة عنصر يُلبسه لـ V في المعاينة حتى يبتعد المؤشر عنها.");
@@ -179,7 +197,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "NOVÉ");
         this.Text("WUI-Status-Wearing", "NA SOBĚ");
         this.Text("WUI-Status-Edited", "UPRAVENO");
-        this.Text("WUI-Header-EquippedOnly", "JEN NA SOBĚ");
+        this.Text("WUI-Header-EquippedOnly", "NA SOBĚ");
+        this.Text("WUI-Header-NewOnly", "NOVÉ");
         this.Text("WUI-Header-Pack", "BALÍK: {0}");
         this.Text("WUI-Pack-All", "VŠE");
         this.Text("WUI-Pack-BaseGame", "ZÁKLADNÍ HRA");
@@ -209,6 +228,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "BEZ OBLEKU");
         this.Text("WUI-Outfits-Empty", "ZATÍM ŽÁDNÉ ULOŽENÉ OBLEKY: ULOŽIT OBLEK ULOŽÍ TO, CO MÁ V NA SOBĚ");
         this.Text("WUI-Outfits-NoMatch", "ŽÁDNÝ OBLEK NEODPOVÍDÁ \"{0}\"");
+        this.Text("WUI-Outfits-Sort", "ŘADIT: {0}");
+        this.Text("WUI-Sort-AZ", "A-Z");
+        this.Text("WUI-Sort-Newest", "NEJNOVĚJŠÍ");
+        this.Text("WUI-Sort-Oldest", "NEJSTARŠÍ");
+        this.Text("WUI-Outfit-Playtime", "{0} H {1} MIN");
         this.Text("WUI-Settings-Category", "Šatník");
         this.Text("WUI-Settings-HoverTryOn", "Náhled předmětů při najetí myší");
         this.Text("WUI-Settings-HoverTryOn-Desc", "Když kurzor spočine na kartě předmětu, V si ho v náhledu oblékne, dokud kurzor z karty neodjede.");
@@ -229,7 +253,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "NEU");
         this.Text("WUI-Status-Wearing", "GETRAGEN");
         this.Text("WUI-Status-Edited", "GEÄNDERT");
-        this.Text("WUI-Header-EquippedOnly", "NUR AUSGERÜSTETE");
+        this.Text("WUI-Header-EquippedOnly", "GETRAGEN");
+        this.Text("WUI-Header-NewOnly", "NEU");
         this.Text("WUI-Header-Pack", "PAKET: {0}");
         this.Text("WUI-Pack-All", "ALLE");
         this.Text("WUI-Pack-BaseGame", "HAUPTSPIEL");
@@ -259,6 +284,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "KEIN OUTFIT");
         this.Text("WUI-Outfits-Empty", "NOCH KEINE OUTFITS GESPEICHERT: OUTFIT SPEICHERN BEHÄLT, WAS V TRÄGT");
         this.Text("WUI-Outfits-NoMatch", "KEIN OUTFIT PASST ZU \"{0}\"");
+        this.Text("WUI-Outfits-Sort", "SORTIEREN: {0}");
+        this.Text("WUI-Sort-AZ", "A-Z");
+        this.Text("WUI-Sort-Newest", "NEUESTE");
+        this.Text("WUI-Sort-Oldest", "ÄLTESTE");
+        this.Text("WUI-Outfit-Playtime", "{0} STD. {1} MIN.");
         this.Text("WUI-Settings-Category", "Kleiderschrank");
         this.Text("WUI-Settings-HoverTryOn", "Gegenstände beim Überfahren anprobieren");
         this.Text("WUI-Settings-HoverTryOn-Desc", "Ruht der Mauszeiger auf einer Gegenstandskarte, trägt V den Gegenstand in der Vorschau, bis der Zeiger weiterbewegt wird.");
@@ -279,7 +309,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "NUEVO");
         this.Text("WUI-Status-Wearing", "PUESTO");
         this.Text("WUI-Status-Edited", "EDITADO");
-        this.Text("WUI-Header-EquippedOnly", "SOLO EQUIPADOS");
+        this.Text("WUI-Header-EquippedOnly", "EQUIPADOS");
+        this.Text("WUI-Header-NewOnly", "NUEVOS");
         this.Text("WUI-Header-Pack", "PACK: {0}");
         this.Text("WUI-Pack-All", "TODOS");
         this.Text("WUI-Pack-BaseGame", "JUEGO BASE");
@@ -309,6 +340,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "SIN ATUENDO");
         this.Text("WUI-Outfits-Empty", "AÚN NO HAY ATUENDOS GUARDADOS: GUARDAR ATUENDO CONSERVA LO QUE LLEVA V");
         this.Text("WUI-Outfits-NoMatch", "NINGÚN ATUENDO COINCIDE CON \"{0}\"");
+        this.Text("WUI-Outfits-Sort", "ORDEN: {0}");
+        this.Text("WUI-Sort-AZ", "A-Z");
+        this.Text("WUI-Sort-Newest", "RECIENTES");
+        this.Text("WUI-Sort-Oldest", "ANTIGUOS");
+        this.Text("WUI-Outfit-Playtime", "{0} H {1} MIN");
         this.Text("WUI-Settings-Category", "Armario");
         this.Text("WUI-Settings-HoverTryOn", "Probar objetos al pasar el cursor");
         this.Text("WUI-Settings-HoverTryOn-Desc", "Al dejar el cursor sobre la tarjeta de un objeto, V lo lleva puesto en la vista previa hasta que el cursor se aparta.");
@@ -329,7 +365,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "NUEVO");
         this.Text("WUI-Status-Wearing", "EN USO");
         this.Text("WUI-Status-Edited", "EDITADO");
-        this.Text("WUI-Header-EquippedOnly", "SOLO EQUIPADOS");
+        this.Text("WUI-Header-EquippedOnly", "EQUIPADOS");
+        this.Text("WUI-Header-NewOnly", "NUEVOS");
         this.Text("WUI-Header-Pack", "PACK: {0}");
         this.Text("WUI-Pack-All", "TODOS");
         this.Text("WUI-Pack-BaseGame", "JUEGO BASE");
@@ -359,6 +396,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "SIN CONJUNTO");
         this.Text("WUI-Outfits-Empty", "TODAVÍA NO HAY CONJUNTOS GUARDADOS: GUARDAR CONJUNTO CONSERVA LO QUE V ESTÁ USANDO");
         this.Text("WUI-Outfits-NoMatch", "NINGÚN CONJUNTO COINCIDE CON \"{0}\"");
+        this.Text("WUI-Outfits-Sort", "ORDEN: {0}");
+        this.Text("WUI-Sort-AZ", "A-Z");
+        this.Text("WUI-Sort-Newest", "RECIENTES");
+        this.Text("WUI-Sort-Oldest", "ANTIGUOS");
+        this.Text("WUI-Outfit-Playtime", "{0} H {1} MIN");
         this.Text("WUI-Settings-Category", "Guardarropa");
         this.Text("WUI-Settings-HoverTryOn", "Probar objetos al pasar el cursor");
         this.Text("WUI-Settings-HoverTryOn-Desc", "Al dejar el cursor sobre la tarjeta de un objeto, V lo usa en la vista previa hasta que el cursor se retira.");
@@ -379,7 +421,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "NOUVEAU");
         this.Text("WUI-Status-Wearing", "PORTÉE");
         this.Text("WUI-Status-Edited", "MODIFIÉE");
-        this.Text("WUI-Header-EquippedOnly", "ÉQUIPÉS SEULEMENT");
+        this.Text("WUI-Header-EquippedOnly", "ÉQUIPÉS");
+        this.Text("WUI-Header-NewOnly", "NOUVEAUX");
         this.Text("WUI-Header-Pack", "PACK : {0}");
         this.Text("WUI-Pack-All", "TOUS");
         this.Text("WUI-Pack-BaseGame", "JEU DE BASE");
@@ -409,6 +452,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "AUCUNE TENUE");
         this.Text("WUI-Outfits-Empty", "AUCUNE TENUE ENREGISTRÉE : ENREGISTRER TENUE CONSERVE CE QUE V PORTE");
         this.Text("WUI-Outfits-NoMatch", "AUCUNE TENUE NE CORRESPOND À \"{0}\"");
+        this.Text("WUI-Outfits-Sort", "TRI : {0}");
+        this.Text("WUI-Sort-AZ", "A-Z");
+        this.Text("WUI-Sort-Newest", "RÉCENTES");
+        this.Text("WUI-Sort-Oldest", "ANCIENNES");
+        this.Text("WUI-Outfit-Playtime", "{0} H {1} MIN");
         this.Text("WUI-Settings-Category", "Garde-robe");
         this.Text("WUI-Settings-HoverTryOn", "Essayer les objets au survol");
         this.Text("WUI-Settings-HoverTryOn-Desc", "Laisser le curseur sur la carte d'un objet le fait porter à V dans l'aperçu jusqu'à ce que le curseur s'en éloigne.");
@@ -429,7 +477,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "ÚJ");
         this.Text("WUI-Status-Wearing", "VISELVE");
         this.Text("WUI-Status-Edited", "MÓDOSÍTVA");
-        this.Text("WUI-Header-EquippedOnly", "CSAK A VISELTEK");
+        this.Text("WUI-Header-EquippedOnly", "VISELT");
+        this.Text("WUI-Header-NewOnly", "ÚJ");
         this.Text("WUI-Header-Pack", "CSOMAG: {0}");
         this.Text("WUI-Pack-All", "MIND");
         this.Text("WUI-Pack-BaseGame", "ALAPJÁTÉK");
@@ -459,6 +508,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "NINCS ÖLTÖZÉK");
         this.Text("WUI-Outfits-Empty", "MÉG NINCS MENTETT ÖLTÖZÉK: AZ ÖLTÖZÉK MENTÉSE MEGŐRZI, AMIT V VISEL");
         this.Text("WUI-Outfits-NoMatch", "NINCS ÖLTÖZÉK ERRE: \"{0}\"");
+        this.Text("WUI-Outfits-Sort", "RENDEZÉS: {0}");
+        this.Text("WUI-Sort-AZ", "A-Z");
+        this.Text("WUI-Sort-Newest", "LEGÚJABB");
+        this.Text("WUI-Sort-Oldest", "LEGRÉGEBBI");
+        this.Text("WUI-Outfit-Playtime", "{0} Ó {1} P");
         this.Text("WUI-Settings-Category", "Gardrób");
         this.Text("WUI-Settings-HoverTryOn", "Tárgyak előnézete rámutatáskor");
         this.Text("WUI-Settings-HoverTryOn-Desc", "Ha a kurzor egy tárgykártyán pihen, V az előnézetben felveszi a tárgyat, amíg a kurzor el nem mozdul róla.");
@@ -479,7 +533,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "NUOVO");
         this.Text("WUI-Status-Wearing", "INDOSSATO");
         this.Text("WUI-Status-Edited", "MODIFICATO");
-        this.Text("WUI-Header-EquippedOnly", "SOLO EQUIPAGGIATI");
+        this.Text("WUI-Header-EquippedOnly", "INDOSSATI");
+        this.Text("WUI-Header-NewOnly", "NUOVI");
         this.Text("WUI-Header-Pack", "PACK: {0}");
         this.Text("WUI-Pack-All", "TUTTI");
         this.Text("WUI-Pack-BaseGame", "GIOCO BASE");
@@ -509,6 +564,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "NESSUN ABITO");
         this.Text("WUI-Outfits-Empty", "NESSUN ABITO ANCORA SALVATO: SALVA ABITO CONSERVA CIÒ CHE V INDOSSA");
         this.Text("WUI-Outfits-NoMatch", "NESSUN ABITO CORRISPONDE A \"{0}\"");
+        this.Text("WUI-Outfits-Sort", "ORDINE: {0}");
+        this.Text("WUI-Sort-AZ", "A-Z");
+        this.Text("WUI-Sort-Newest", "RECENTI");
+        this.Text("WUI-Sort-Oldest", "MENO RECENTI");
+        this.Text("WUI-Outfit-Playtime", "{0} H {1} MIN");
         this.Text("WUI-Settings-Category", "Guardaroba");
         this.Text("WUI-Settings-HoverTryOn", "Prova gli oggetti al passaggio del cursore");
         this.Text("WUI-Settings-HoverTryOn-Desc", "Lasciando il cursore su una scheda oggetto, V lo indossa nell'anteprima finché il cursore non si sposta.");
@@ -529,7 +589,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "NEW");
         this.Text("WUI-Status-Wearing", "着用中");
         this.Text("WUI-Status-Edited", "編集済み");
-        this.Text("WUI-Header-EquippedOnly", "装備中のみ");
+        this.Text("WUI-Header-EquippedOnly", "装備中");
+        this.Text("WUI-Header-NewOnly", "新着");
         this.Text("WUI-Header-Pack", "パック: {0}");
         this.Text("WUI-Pack-All", "すべて");
         this.Text("WUI-Pack-BaseGame", "本編");
@@ -559,6 +620,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "コーデなし");
         this.Text("WUI-Outfits-Empty", "保存済みコーデなし: 「コーデを保存」でVが今着ている服を保存できる");
         this.Text("WUI-Outfits-NoMatch", "「{0}」に一致するコーデなし");
+        this.Text("WUI-Outfits-Sort", "並び順: {0}");
+        this.Text("WUI-Sort-AZ", "名前順");
+        this.Text("WUI-Sort-Newest", "新しい順");
+        this.Text("WUI-Sort-Oldest", "古い順");
+        this.Text("WUI-Outfit-Playtime", "{0}時間{1}分");
         this.Text("WUI-Settings-Category", "ワードローブ");
         this.Text("WUI-Settings-HoverTryOn", "ホバーでアイテムをプレビュー");
         this.Text("WUI-Settings-HoverTryOn-Desc", "アイテムカードにカーソルを合わせると、カーソルが離れるまでプレビューのVにそのアイテムを着せる。");
@@ -579,7 +645,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "신규");
         this.Text("WUI-Status-Wearing", "착용 중");
         this.Text("WUI-Status-Edited", "편집됨");
-        this.Text("WUI-Header-EquippedOnly", "장착 아이템만");
+        this.Text("WUI-Header-EquippedOnly", "장착");
+        this.Text("WUI-Header-NewOnly", "신규");
         this.Text("WUI-Header-Pack", "팩: {0}");
         this.Text("WUI-Pack-All", "전체");
         this.Text("WUI-Pack-BaseGame", "기본 게임");
@@ -609,6 +676,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "복장 없음");
         this.Text("WUI-Outfits-Empty", "아직 저장된 복장 없음: 복장 저장을 누르면 V가 입고 있는 옷이 저장됩니다");
         this.Text("WUI-Outfits-NoMatch", "\"{0}\"와(과) 일치하는 복장 없음");
+        this.Text("WUI-Outfits-Sort", "정렬: {0}");
+        this.Text("WUI-Sort-AZ", "이름순");
+        this.Text("WUI-Sort-Newest", "최신순");
+        this.Text("WUI-Sort-Oldest", "오래된순");
+        this.Text("WUI-Outfit-Playtime", "{0}시간 {1}분");
         this.Text("WUI-Settings-Category", "옷장");
         this.Text("WUI-Settings-HoverTryOn", "마우스를 올리면 아이템 미리 보기");
         this.Text("WUI-Settings-HoverTryOn-Desc", "아이템 카드에 커서를 올려 두면 커서가 벗어날 때까지 미리 보기의 V에게 해당 아이템을 입힙니다.");
@@ -629,7 +701,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "NOWY");
         this.Text("WUI-Status-Wearing", "NA SOBIE");
         this.Text("WUI-Status-Edited", "ZMIENIONY");
-        this.Text("WUI-Header-EquippedOnly", "TYLKO ZAŁOŻONE");
+        this.Text("WUI-Header-EquippedOnly", "ZAŁOŻONE");
+        this.Text("WUI-Header-NewOnly", "NOWE");
         this.Text("WUI-Header-Pack", "PAKIET: {0}");
         this.Text("WUI-Pack-All", "WSZYSTKIE");
         this.Text("WUI-Pack-BaseGame", "GRA BAZOWA");
@@ -659,6 +732,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "BEZ STROJU");
         this.Text("WUI-Outfits-Empty", "BRAK ZAPISANYCH STROJÓW: ZAPISZ STRÓJ ZACHOWUJE TO, CO V MA NA SOBIE");
         this.Text("WUI-Outfits-NoMatch", "ŻADEN STRÓJ NIE PASUJE DO „{0}”");
+        this.Text("WUI-Outfits-Sort", "SORTUJ: {0}");
+        this.Text("WUI-Sort-AZ", "A-Z");
+        this.Text("WUI-Sort-Newest", "NAJNOWSZE");
+        this.Text("WUI-Sort-Oldest", "NAJSTARSZE");
+        this.Text("WUI-Outfit-Playtime", "{0} GODZ. {1} MIN");
         this.Text("WUI-Settings-Category", "Garderoba");
         this.Text("WUI-Settings-HoverTryOn", "Podgląd przedmiotów po najechaniu");
         this.Text("WUI-Settings-HoverTryOn-Desc", "Gdy kursor zatrzyma się na karcie przedmiotu, V zakłada go w podglądzie, dopóki kursor z niej nie zjedzie.");
@@ -679,7 +757,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "NOVO");
         this.Text("WUI-Status-Wearing", "EM USO");
         this.Text("WUI-Status-Edited", "EDITADO");
-        this.Text("WUI-Header-EquippedOnly", "APENAS EQUIPADOS");
+        this.Text("WUI-Header-EquippedOnly", "EQUIPADOS");
+        this.Text("WUI-Header-NewOnly", "NOVOS");
         this.Text("WUI-Header-Pack", "PACK: {0}");
         this.Text("WUI-Pack-All", "TODOS");
         this.Text("WUI-Pack-BaseGame", "JOGO BASE");
@@ -709,6 +788,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "SEM TRAJE");
         this.Text("WUI-Outfits-Empty", "NENHUM TRAJE SALVO AINDA: SALVAR TRAJE GUARDA O QUE V ESTÁ VESTINDO");
         this.Text("WUI-Outfits-NoMatch", "NENHUM TRAJE CORRESPONDE A \"{0}\"");
+        this.Text("WUI-Outfits-Sort", "ORDEM: {0}");
+        this.Text("WUI-Sort-AZ", "A-Z");
+        this.Text("WUI-Sort-Newest", "RECENTES");
+        this.Text("WUI-Sort-Oldest", "ANTIGOS");
+        this.Text("WUI-Outfit-Playtime", "{0}H {1}MIN");
         this.Text("WUI-Settings-Category", "Guarda-roupa");
         this.Text("WUI-Settings-HoverTryOn", "Provar itens ao passar o cursor");
         this.Text("WUI-Settings-HoverTryOn-Desc", "Deixar o cursor sobre o cartão de um item faz V vesti-lo na prévia até o cursor sair.");
@@ -729,7 +813,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "НОВОЕ");
         this.Text("WUI-Status-Wearing", "НАДЕТО");
         this.Text("WUI-Status-Edited", "ИЗМЕНЕНО");
-        this.Text("WUI-Header-EquippedOnly", "ТОЛЬКО НАДЕТОЕ");
+        this.Text("WUI-Header-EquippedOnly", "НАДЕТОЕ");
+        this.Text("WUI-Header-NewOnly", "НОВОЕ");
         this.Text("WUI-Header-Pack", "ПАК: {0}");
         this.Text("WUI-Pack-All", "ВСЕ");
         this.Text("WUI-Pack-BaseGame", "ОСНОВНАЯ ИГРА");
@@ -759,6 +844,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "БЕЗ НАРЯДА");
         this.Text("WUI-Outfits-Empty", "ПОКА НЕТ СОХРАНЁННЫХ НАРЯДОВ: «СОХРАНИТЬ НАРЯД» ЗАПОМИНАЕТ, ЧТО НАДЕТО НА V");
         this.Text("WUI-Outfits-NoMatch", "НЕТ НАРЯДОВ ПО ЗАПРОСУ «{0}»");
+        this.Text("WUI-Outfits-Sort", "ПОРЯДОК: {0}");
+        this.Text("WUI-Sort-AZ", "А-Я");
+        this.Text("WUI-Sort-Newest", "НОВЫЕ");
+        this.Text("WUI-Sort-Oldest", "СТАРЫЕ");
+        this.Text("WUI-Outfit-Playtime", "{0} Ч {1} МИН");
         this.Text("WUI-Settings-Category", "Гардероб");
         this.Text("WUI-Settings-HoverTryOn", "Примерка при наведении");
         this.Text("WUI-Settings-HoverTryOn-Desc", "Если задержать курсор на карточке предмета, V примеряет его в окне предпросмотра, пока курсор не уйдёт с карточки.");
@@ -779,7 +869,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "ใหม่");
         this.Text("WUI-Status-Wearing", "สวมอยู่");
         this.Text("WUI-Status-Edited", "แก้ไขแล้ว");
-        this.Text("WUI-Header-EquippedOnly", "เฉพาะที่สวมอยู่");
+        this.Text("WUI-Header-EquippedOnly", "ที่สวมอยู่");
+        this.Text("WUI-Header-NewOnly", "ใหม่");
         this.Text("WUI-Header-Pack", "แพ็ก: {0}");
         this.Text("WUI-Pack-All", "ทั้งหมด");
         this.Text("WUI-Pack-BaseGame", "เกมหลัก");
@@ -809,6 +900,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "ไม่ใช้ชุด");
         this.Text("WUI-Outfits-Empty", "ยังไม่มีชุดที่บันทึกไว้: \"บันทึกชุด\" จะเก็บสิ่งที่ V สวมอยู่");
         this.Text("WUI-Outfits-NoMatch", "ไม่มีชุดที่ตรงกับ \"{0}\"");
+        this.Text("WUI-Outfits-Sort", "เรียง: {0}");
+        this.Text("WUI-Sort-AZ", "ก-ฮ");
+        this.Text("WUI-Sort-Newest", "ใหม่สุด");
+        this.Text("WUI-Sort-Oldest", "เก่าสุด");
+        this.Text("WUI-Outfit-Playtime", "{0} ชม. {1} นาที");
         this.Text("WUI-Settings-Category", "ตู้เสื้อผ้า");
         this.Text("WUI-Settings-HoverTryOn", "ลองไอเท็มเมื่อชี้เมาส์");
         this.Text("WUI-Settings-HoverTryOn-Desc", "เมื่อวางเคอร์เซอร์ค้างไว้บนการ์ดไอเท็ม V จะสวมไอเท็มนั้นในภาพตัวอย่างจนกว่าเคอร์เซอร์จะเลื่อนออก");
@@ -829,7 +925,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "YENİ");
         this.Text("WUI-Status-Wearing", "GİYİLİ");
         this.Text("WUI-Status-Edited", "DÜZENLENDİ");
-        this.Text("WUI-Header-EquippedOnly", "SADECE GİYİLENLER");
+        this.Text("WUI-Header-EquippedOnly", "GİYİLENLER");
+        this.Text("WUI-Header-NewOnly", "YENİ");
         this.Text("WUI-Header-Pack", "PAKET: {0}");
         this.Text("WUI-Pack-All", "TÜMÜ");
         this.Text("WUI-Pack-BaseGame", "ANA OYUN");
@@ -859,6 +956,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "KIYAFET YOK");
         this.Text("WUI-Outfits-Empty", "HENÜZ KAYITLI KIYAFET YOK: KIYAFETİ KAYDET, V'NİN GİYDİKLERİNİ SAKLAR");
         this.Text("WUI-Outfits-NoMatch", "\"{0}\" İLE EŞLEŞEN KIYAFET YOK");
+        this.Text("WUI-Outfits-Sort", "SIRALA: {0}");
+        this.Text("WUI-Sort-AZ", "A-Z");
+        this.Text("WUI-Sort-Newest", "EN YENİ");
+        this.Text("WUI-Sort-Oldest", "EN ESKİ");
+        this.Text("WUI-Outfit-Playtime", "{0} SA {1} DK");
         this.Text("WUI-Settings-Category", "Gardırop");
         this.Text("WUI-Settings-HoverTryOn", "Üzerine gelince eşyayı önizle");
         this.Text("WUI-Settings-HoverTryOn-Desc", "İmleç bir eşya kartında durduğunda, imleç karttan ayrılana kadar eşya önizlemede V'nin üzerinde gösterilir.");
@@ -879,7 +981,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "НОВЕ");
         this.Text("WUI-Status-Wearing", "ВДЯГНЕНО");
         this.Text("WUI-Status-Edited", "ЗМІНЕНО");
-        this.Text("WUI-Header-EquippedOnly", "ЛИШЕ ВДЯГНЕНЕ");
+        this.Text("WUI-Header-EquippedOnly", "ВДЯГНЕНЕ");
+        this.Text("WUI-Header-NewOnly", "НОВЕ");
         this.Text("WUI-Header-Pack", "ПАК: {0}");
         this.Text("WUI-Pack-All", "ВСІ");
         this.Text("WUI-Pack-BaseGame", "ОСНОВНА ГРА");
@@ -909,6 +1012,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "БЕЗ ВБРАННЯ");
         this.Text("WUI-Outfits-Empty", "ЩЕ НЕМАЄ ЗБЕРЕЖЕНИХ ВБРАНЬ: «ЗБЕРЕГТИ ВБРАННЯ» ЗАПАМ'ЯТОВУЄ, ЩО ВДЯГНЕНО НА V");
         this.Text("WUI-Outfits-NoMatch", "НЕМАЄ ВБРАНЬ ЗА ЗАПИТОМ «{0}»");
+        this.Text("WUI-Outfits-Sort", "ПОРЯДОК: {0}");
+        this.Text("WUI-Sort-AZ", "А-Я");
+        this.Text("WUI-Sort-Newest", "НОВІ");
+        this.Text("WUI-Sort-Oldest", "СТАРІ");
+        this.Text("WUI-Outfit-Playtime", "{0} ГОД {1} ХВ");
         this.Text("WUI-Settings-Category", "Гардероб");
         this.Text("WUI-Settings-HoverTryOn", "Приміряти предмети при наведенні");
         this.Text("WUI-Settings-HoverTryOn-Desc", "Якщо затримати курсор на картці предмета, V приміряє його в попередньому перегляді, доки курсор не залишить картку.");
@@ -929,7 +1037,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "新");
         this.Text("WUI-Status-Wearing", "穿戴中");
         this.Text("WUI-Status-Edited", "已编辑");
-        this.Text("WUI-Header-EquippedOnly", "仅显示已装备");
+        this.Text("WUI-Header-EquippedOnly", "已装备");
+        this.Text("WUI-Header-NewOnly", "新");
         this.Text("WUI-Header-Pack", "包: {0}");
         this.Text("WUI-Pack-All", "全部");
         this.Text("WUI-Pack-BaseGame", "原版游戏");
@@ -959,6 +1068,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "无着装");
         this.Text("WUI-Outfits-Empty", "尚无已保存的着装: “保存着装”会保存 V 当前的穿着");
         this.Text("WUI-Outfits-NoMatch", "没有与“{0}”匹配的着装");
+        this.Text("WUI-Outfits-Sort", "排序：{0}");
+        this.Text("WUI-Sort-AZ", "名称");
+        this.Text("WUI-Sort-Newest", "最新");
+        this.Text("WUI-Sort-Oldest", "最早");
+        this.Text("WUI-Outfit-Playtime", "{0}小时{1}分");
         this.Text("WUI-Settings-Category", "衣柜");
         this.Text("WUI-Settings-HoverTryOn", "悬停时预览物品");
         this.Text("WUI-Settings-HoverTryOn-Desc", "将光标停留在物品卡片上，预览中的 V 会穿上该物品，直到光标移开。");
@@ -979,7 +1093,8 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Card-New", "新增");
         this.Text("WUI-Status-Wearing", "穿戴中");
         this.Text("WUI-Status-Edited", "已編輯");
-        this.Text("WUI-Header-EquippedOnly", "僅顯示已裝備");
+        this.Text("WUI-Header-EquippedOnly", "已裝備");
+        this.Text("WUI-Header-NewOnly", "新增");
         this.Text("WUI-Header-Pack", "包: {0}");
         this.Text("WUI-Pack-All", "全部");
         this.Text("WUI-Pack-BaseGame", "原版遊戲");
@@ -1009,6 +1124,11 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Outfits-None", "無服裝");
         this.Text("WUI-Outfits-Empty", "尚無已儲存的服裝: 「儲存服裝」會保存 V 目前的穿著");
         this.Text("WUI-Outfits-NoMatch", "沒有符合「{0}」的服裝");
+        this.Text("WUI-Outfits-Sort", "排序：{0}");
+        this.Text("WUI-Sort-AZ", "名稱");
+        this.Text("WUI-Sort-Newest", "最新");
+        this.Text("WUI-Sort-Oldest", "最早");
+        this.Text("WUI-Outfit-Playtime", "{0}小時{1}分");
         this.Text("WUI-Settings-Category", "衣櫃");
         this.Text("WUI-Settings-HoverTryOn", "游標停留時預覽物品");
         this.Text("WUI-Settings-HoverTryOn-Desc", "將游標停在物品卡片上，預覽中的 V 會穿上該物品，直到游標移開。");

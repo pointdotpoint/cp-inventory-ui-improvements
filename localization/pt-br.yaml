@@ -21,7 +21,8 @@ WUI_Loc.pt-br.Status-Wearing: "EM USO"
 WUI_Loc.pt-br.Status-Edited: "EDITADO"
 
 # Drawer header buttons.
-WUI_Loc.pt-br.Header-EquippedOnly: "APENAS EQUIPADOS"
+WUI_Loc.pt-br.Header-EquippedOnly: "EQUIPADOS"
+WUI_Loc.pt-br.Header-NewOnly: "NOVOS"
 WUI_Loc.pt-br.Header-Pack: "PACK: {0}"
 WUI_Loc.pt-br.Pack-All: "TODOS"
 WUI_Loc.pt-br.Pack-BaseGame: "JOGO BASE"
@@ -63,6 +64,11 @@ WUI_Loc.pt-br.Outfits-Save: "SALVAR TRAJE"
 WUI_Loc.pt-br.Outfits-None: "SEM TRAJE"
 WUI_Loc.pt-br.Outfits-Empty: "NENHUM TRAJE SALVO AINDA: SALVAR TRAJE GUARDA O QUE V ESTÁ VESTINDO"
 WUI_Loc.pt-br.Outfits-NoMatch: "NENHUM TRAJE CORRESPONDE A \"{0}\""
+WUI_Loc.pt-br.Outfits-Sort: "ORDEM: {0}"
+WUI_Loc.pt-br.Sort-AZ: "A-Z"
+WUI_Loc.pt-br.Sort-Newest: "RECENTES"
+WUI_Loc.pt-br.Sort-Oldest: "ANTIGOS"
+WUI_Loc.pt-br.Outfit-Playtime: "{0}H {1}MIN"
 
 # Mod Settings.
 WUI_Loc.pt-br.Settings-Category: "Guarda-roupa"

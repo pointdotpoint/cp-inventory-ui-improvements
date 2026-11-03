@@ -21,7 +21,8 @@ WUI_Loc.ar-ar.Status-Wearing: "ملبوس"
 WUI_Loc.ar-ar.Status-Edited: "معدّل"
 
 # Drawer header buttons.
-WUI_Loc.ar-ar.Header-EquippedOnly: "الملبوس فقط"
+WUI_Loc.ar-ar.Header-EquippedOnly: "الملبوس"
+WUI_Loc.ar-ar.Header-NewOnly: "الجديد"
 WUI_Loc.ar-ar.Header-Pack: "الحزمة: {0}"
 WUI_Loc.ar-ar.Pack-All: "الكل"
 WUI_Loc.ar-ar.Pack-BaseGame: "اللعبة الأساسية"
@@ -63,6 +64,11 @@ WUI_Loc.ar-ar.Outfits-Save: "حفظ الزي"
 WUI_Loc.ar-ar.Outfits-None: "بلا زي"
 WUI_Loc.ar-ar.Outfits-Empty: "لا توجد أزياء محفوظة بعد: \"حفظ الزي\" يحفظ ما يرتديه V"
 WUI_Loc.ar-ar.Outfits-NoMatch: "لا يوجد زي يطابق \"{0}\""
+WUI_Loc.ar-ar.Outfits-Sort: "الترتيب: {0}"
+WUI_Loc.ar-ar.Sort-AZ: "أ-ي"
+WUI_Loc.ar-ar.Sort-Newest: "الأحدث"
+WUI_Loc.ar-ar.Sort-Oldest: "الأقدم"
+WUI_Loc.ar-ar.Outfit-Playtime: "{0} س {1} د"
 
 # Mod Settings (the mod's name stays English).
 WUI_Loc.ar-ar.Settings-Category: "خزانة الملابس"

@@ -18,9 +18,11 @@ A redesign of the Equipment-EX wardrobe screen for Cyberpunk 2077.
   so are the slots and tabs that hold them.
 - **Mod packs**: each card names the clothing mod its item comes from, and PACK filters the
   grid to one pack. Packs are detected automatically.
-- **Outfits**: a four-column grid with item icons, search and favourites. After you change
+- **Outfits**: a four-column grid with item icons, search and favourites. Each outfit shows
+  the playtime it was created at, and SORT orders them A-Z, newest or oldest first
+  (favourites stay on top). After you change
   a saved look, UPDATE saves the change and REVERT puts the outfit back.
-- **EQUIPPED ONLY** shows only what V is wearing.
+- **EQUIPPED** shows only what V is wearing; **NEW** shows only items tagged NEW.
 
 ## Requirements
 

@@ -21,7 +21,8 @@ WUI_Loc.hu-hu.Status-Wearing: "VISELVE"
 WUI_Loc.hu-hu.Status-Edited: "MÓDOSÍTVA"
 
 # Drawer header buttons (room: 18 letters; PACK 16 with the pack name).
-WUI_Loc.hu-hu.Header-EquippedOnly: "CSAK A VISELTEK"
+WUI_Loc.hu-hu.Header-EquippedOnly: "VISELT"
+WUI_Loc.hu-hu.Header-NewOnly: "ÚJ"
 WUI_Loc.hu-hu.Header-Pack: "CSOMAG: {0}"
 WUI_Loc.hu-hu.Pack-All: "MIND"
 WUI_Loc.hu-hu.Pack-BaseGame: "ALAPJÁTÉK"
@@ -63,6 +64,11 @@ WUI_Loc.hu-hu.Outfits-Save: "ÖLTÖZÉK MENTÉSE"
 WUI_Loc.hu-hu.Outfits-None: "NINCS ÖLTÖZÉK"
 WUI_Loc.hu-hu.Outfits-Empty: "MÉG NINCS MENTETT ÖLTÖZÉK: AZ ÖLTÖZÉK MENTÉSE MEGŐRZI, AMIT V VISEL"
 WUI_Loc.hu-hu.Outfits-NoMatch: "NINCS ÖLTÖZÉK ERRE: \"{0}\""
+WUI_Loc.hu-hu.Outfits-Sort: "RENDEZÉS: {0}"
+WUI_Loc.hu-hu.Sort-AZ: "A-Z"
+WUI_Loc.hu-hu.Sort-Newest: "LEGÚJABB"
+WUI_Loc.hu-hu.Sort-Oldest: "LEGRÉGEBBI"
+WUI_Loc.hu-hu.Outfit-Playtime: "{0} Ó {1} P"
 
 # Mod Settings (WardrobeTabsSettings.reds).
 WUI_Loc.hu-hu.Settings-Category: "Gardrób"

@@ -21,7 +21,8 @@ WUI_Loc.tr-tr.Status-Wearing: "GİYİLİ"
 WUI_Loc.tr-tr.Status-Edited: "DÜZENLENDİ"
 
 # Drawer header buttons (room: 18 letters; PACK 16 with the pack name).
-WUI_Loc.tr-tr.Header-EquippedOnly: "SADECE GİYİLENLER"
+WUI_Loc.tr-tr.Header-EquippedOnly: "GİYİLENLER"
+WUI_Loc.tr-tr.Header-NewOnly: "YENİ"
 WUI_Loc.tr-tr.Header-Pack: "PAKET: {0}"
 WUI_Loc.tr-tr.Pack-All: "TÜMÜ"
 WUI_Loc.tr-tr.Pack-BaseGame: "ANA OYUN"
@@ -63,6 +64,11 @@ WUI_Loc.tr-tr.Outfits-Save: "KIYAFETİ KAYDET"
 WUI_Loc.tr-tr.Outfits-None: "KIYAFET YOK"
 WUI_Loc.tr-tr.Outfits-Empty: "HENÜZ KAYITLI KIYAFET YOK: KIYAFETİ KAYDET, V'NİN GİYDİKLERİNİ SAKLAR"
 WUI_Loc.tr-tr.Outfits-NoMatch: "\"{0}\" İLE EŞLEŞEN KIYAFET YOK"
+WUI_Loc.tr-tr.Outfits-Sort: "SIRALA: {0}"
+WUI_Loc.tr-tr.Sort-AZ: "A-Z"
+WUI_Loc.tr-tr.Sort-Newest: "EN YENİ"
+WUI_Loc.tr-tr.Sort-Oldest: "EN ESKİ"
+WUI_Loc.tr-tr.Outfit-Playtime: "{0} SA {1} DK"
 
 # Mod Settings (WardrobeTabsSettings.reds).
 WUI_Loc.tr-tr.Settings-Category: "Gardırop"

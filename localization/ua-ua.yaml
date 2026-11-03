@@ -21,7 +21,8 @@ WUI_Loc.ua-ua.Status-Wearing: "ВДЯГНЕНО"
 WUI_Loc.ua-ua.Status-Edited: "ЗМІНЕНО"
 
 # Drawer header buttons.
-WUI_Loc.ua-ua.Header-EquippedOnly: "ЛИШЕ ВДЯГНЕНЕ"
+WUI_Loc.ua-ua.Header-EquippedOnly: "ВДЯГНЕНЕ"
+WUI_Loc.ua-ua.Header-NewOnly: "НОВЕ"
 WUI_Loc.ua-ua.Header-Pack: "ПАК: {0}"
 WUI_Loc.ua-ua.Pack-All: "ВСІ"
 WUI_Loc.ua-ua.Pack-BaseGame: "ОСНОВНА ГРА"
@@ -63,6 +64,11 @@ WUI_Loc.ua-ua.Outfits-Save: "ЗБЕРЕГТИ ВБРАННЯ"
 WUI_Loc.ua-ua.Outfits-None: "БЕЗ ВБРАННЯ"
 WUI_Loc.ua-ua.Outfits-Empty: "ЩЕ НЕМАЄ ЗБЕРЕЖЕНИХ ВБРАНЬ: «ЗБЕРЕГТИ ВБРАННЯ» ЗАПАМ'ЯТОВУЄ, ЩО ВДЯГНЕНО НА V"
 WUI_Loc.ua-ua.Outfits-NoMatch: "НЕМАЄ ВБРАНЬ ЗА ЗАПИТОМ «{0}»"
+WUI_Loc.ua-ua.Outfits-Sort: "ПОРЯДОК: {0}"
+WUI_Loc.ua-ua.Sort-AZ: "А-Я"
+WUI_Loc.ua-ua.Sort-Newest: "НОВІ"
+WUI_Loc.ua-ua.Sort-Oldest: "СТАРІ"
+WUI_Loc.ua-ua.Outfit-Playtime: "{0} ГОД {1} ХВ"
 
 # Mod Settings (the mod's name stays English).
 WUI_Loc.ua-ua.Settings-Category: "Гардероб"

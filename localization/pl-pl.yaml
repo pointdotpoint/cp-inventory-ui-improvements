@@ -21,7 +21,8 @@ WUI_Loc.pl-pl.Status-Wearing: "NA SOBIE"
 WUI_Loc.pl-pl.Status-Edited: "ZMIENIONY"
 
 # Drawer header buttons (room: 18 letters; PACK 16 with the pack name).
-WUI_Loc.pl-pl.Header-EquippedOnly: "TYLKO ZAŁOŻONE"
+WUI_Loc.pl-pl.Header-EquippedOnly: "ZAŁOŻONE"
+WUI_Loc.pl-pl.Header-NewOnly: "NOWE"
 WUI_Loc.pl-pl.Header-Pack: "PAKIET: {0}"
 WUI_Loc.pl-pl.Pack-All: "WSZYSTKIE"
 WUI_Loc.pl-pl.Pack-BaseGame: "GRA BAZOWA"
@@ -63,6 +64,11 @@ WUI_Loc.pl-pl.Outfits-Save: "ZAPISZ STRÓJ"
 WUI_Loc.pl-pl.Outfits-None: "BEZ STROJU"
 WUI_Loc.pl-pl.Outfits-Empty: "BRAK ZAPISANYCH STROJÓW: ZAPISZ STRÓJ ZACHOWUJE TO, CO V MA NA SOBIE"
 WUI_Loc.pl-pl.Outfits-NoMatch: "ŻADEN STRÓJ NIE PASUJE DO „{0}”"
+WUI_Loc.pl-pl.Outfits-Sort: "SORTUJ: {0}"
+WUI_Loc.pl-pl.Sort-AZ: "A-Z"
+WUI_Loc.pl-pl.Sort-Newest: "NAJNOWSZE"
+WUI_Loc.pl-pl.Sort-Oldest: "NAJSTARSZE"
+WUI_Loc.pl-pl.Outfit-Playtime: "{0} GODZ. {1} MIN"
 
 # Mod Settings (WardrobeTabsSettings.reds).
 WUI_Loc.pl-pl.Settings-Category: "Garderoba"

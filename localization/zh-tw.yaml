@@ -21,7 +21,8 @@ WUI_Loc.zh-tw.Status-Wearing: "穿戴中"
 WUI_Loc.zh-tw.Status-Edited: "已編輯"
 
 # Drawer header buttons.
-WUI_Loc.zh-tw.Header-EquippedOnly: "僅顯示已裝備"
+WUI_Loc.zh-tw.Header-EquippedOnly: "已裝備"
+WUI_Loc.zh-tw.Header-NewOnly: "新增"
 WUI_Loc.zh-tw.Header-Pack: "包: {0}"
 WUI_Loc.zh-tw.Pack-All: "全部"
 WUI_Loc.zh-tw.Pack-BaseGame: "原版遊戲"
@@ -63,6 +64,11 @@ WUI_Loc.zh-tw.Outfits-Save: "儲存服裝"
 WUI_Loc.zh-tw.Outfits-None: "無服裝"
 WUI_Loc.zh-tw.Outfits-Empty: "尚無已儲存的服裝: 「儲存服裝」會保存 V 目前的穿著"
 WUI_Loc.zh-tw.Outfits-NoMatch: "沒有符合「{0}」的服裝"
+WUI_Loc.zh-tw.Outfits-Sort: "排序：{0}"
+WUI_Loc.zh-tw.Sort-AZ: "名稱"
+WUI_Loc.zh-tw.Sort-Newest: "最新"
+WUI_Loc.zh-tw.Sort-Oldest: "最早"
+WUI_Loc.zh-tw.Outfit-Playtime: "{0}小時{1}分"
 
 # Mod Settings.
 WUI_Loc.zh-tw.Settings-Category: "衣櫃"

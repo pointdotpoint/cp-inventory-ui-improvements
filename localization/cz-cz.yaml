@@ -21,7 +21,8 @@ WUI_Loc.cz-cz.Status-Wearing: "NA SOBĚ"
 WUI_Loc.cz-cz.Status-Edited: "UPRAVENO"
 
 # Drawer header buttons (room: 18 letters; PACK 16 with the pack name).
-WUI_Loc.cz-cz.Header-EquippedOnly: "JEN NA SOBĚ"
+WUI_Loc.cz-cz.Header-EquippedOnly: "NA SOBĚ"
+WUI_Loc.cz-cz.Header-NewOnly: "NOVÉ"
 WUI_Loc.cz-cz.Header-Pack: "BALÍK: {0}"
 WUI_Loc.cz-cz.Pack-All: "VŠE"
 WUI_Loc.cz-cz.Pack-BaseGame: "ZÁKLADNÍ HRA"
@@ -63,6 +64,11 @@ WUI_Loc.cz-cz.Outfits-Save: "ULOŽIT OBLEK"
 WUI_Loc.cz-cz.Outfits-None: "BEZ OBLEKU"
 WUI_Loc.cz-cz.Outfits-Empty: "ZATÍM ŽÁDNÉ ULOŽENÉ OBLEKY: ULOŽIT OBLEK ULOŽÍ TO, CO MÁ V NA SOBĚ"
 WUI_Loc.cz-cz.Outfits-NoMatch: "ŽÁDNÝ OBLEK NEODPOVÍDÁ \"{0}\""
+WUI_Loc.cz-cz.Outfits-Sort: "ŘADIT: {0}"
+WUI_Loc.cz-cz.Sort-AZ: "A-Z"
+WUI_Loc.cz-cz.Sort-Newest: "NEJNOVĚJŠÍ"
+WUI_Loc.cz-cz.Sort-Oldest: "NEJSTARŠÍ"
+WUI_Loc.cz-cz.Outfit-Playtime: "{0} H {1} MIN"
 
 # Mod Settings (WardrobeTabsSettings.reds).
 WUI_Loc.cz-cz.Settings-Category: "Šatník"

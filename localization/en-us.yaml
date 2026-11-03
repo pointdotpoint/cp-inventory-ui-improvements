@@ -31,8 +31,10 @@ WUI_Loc.en-us.Card-New: "NEW"
 WUI_Loc.en-us.Status-Wearing: "WEARING"
 WUI_Loc.en-us.Status-Edited: "EDITED"
 
-# Drawer header buttons (room: EQUIPPED ONLY 18 letters; PACK 16 letters with the pack name).
-WUI_Loc.en-us.Header-EquippedOnly: "EQUIPPED ONLY"
+# Drawer header buttons (room: EQUIPPED, the filter showing only worn items, 10 letters; NEW,
+# the filter showing only items tagged NEW, 6 letters; PACK 16 letters with the pack name).
+WUI_Loc.en-us.Header-EquippedOnly: "EQUIPPED"
+WUI_Loc.en-us.Header-NewOnly: "NEW"
 WUI_Loc.en-us.Header-Pack: "PACK: {0}"
 WUI_Loc.en-us.Pack-All: "ALL"
 WUI_Loc.en-us.Pack-BaseGame: "BASE GAME"
@@ -75,6 +77,13 @@ WUI_Loc.en-us.Outfits-Save: "SAVE OUTFIT"
 WUI_Loc.en-us.Outfits-None: "NO OUTFIT"
 WUI_Loc.en-us.Outfits-Empty: "NO SAVED OUTFITS YET: SAVE OUTFIT KEEPS WHAT V IS WEARING"
 WUI_Loc.en-us.Outfits-NoMatch: "NO OUTFIT MATCHES \"{0}\""
+# Outfits view SORT button (room: 18 letters with the order) and its orders; each outfit
+# cell's creation time, in hours and minutes of playtime (room: 8 letters).
+WUI_Loc.en-us.Outfits-Sort: "SORT: {0}"
+WUI_Loc.en-us.Sort-AZ: "A-Z"
+WUI_Loc.en-us.Sort-Newest: "NEWEST"
+WUI_Loc.en-us.Sort-Oldest: "OLDEST"
+WUI_Loc.en-us.Outfit-Playtime: "{0}H {1}M"
 
 # Mod Settings (WardrobeTabsSettings.reds). The mod's name stays English in the shipped translations.
 WUI_Loc.en-us.Settings-Mod: "Wardrobe UI Improvements"

@@ -21,7 +21,8 @@ WUI_Loc.fr-fr.Status-Wearing: "PORTÉE"
 WUI_Loc.fr-fr.Status-Edited: "MODIFIÉE"
 
 # Drawer header buttons.
-WUI_Loc.fr-fr.Header-EquippedOnly: "ÉQUIPÉS SEULEMENT"
+WUI_Loc.fr-fr.Header-EquippedOnly: "ÉQUIPÉS"
+WUI_Loc.fr-fr.Header-NewOnly: "NOUVEAUX"
 WUI_Loc.fr-fr.Header-Pack: "PACK : {0}"
 WUI_Loc.fr-fr.Pack-All: "TOUS"
 WUI_Loc.fr-fr.Pack-BaseGame: "JEU DE BASE"
@@ -63,6 +64,11 @@ WUI_Loc.fr-fr.Outfits-Save: "ENREGISTRER TENUE"
 WUI_Loc.fr-fr.Outfits-None: "AUCUNE TENUE"
 WUI_Loc.fr-fr.Outfits-Empty: "AUCUNE TENUE ENREGISTRÉE : ENREGISTRER TENUE CONSERVE CE QUE V PORTE"
 WUI_Loc.fr-fr.Outfits-NoMatch: "AUCUNE TENUE NE CORRESPOND À \"{0}\""
+WUI_Loc.fr-fr.Outfits-Sort: "TRI : {0}"
+WUI_Loc.fr-fr.Sort-AZ: "A-Z"
+WUI_Loc.fr-fr.Sort-Newest: "RÉCENTES"
+WUI_Loc.fr-fr.Sort-Oldest: "ANCIENNES"
+WUI_Loc.fr-fr.Outfit-Playtime: "{0} H {1} MIN"
 
 # Mod Settings.
 WUI_Loc.fr-fr.Settings-Category: "Garde-robe"

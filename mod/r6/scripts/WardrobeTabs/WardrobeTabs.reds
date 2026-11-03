@@ -2,7 +2,7 @@
 // Requires Equipment-EX.
 // - Body column, left of V: one group per body area with a tile per worn item and a + tile.
 // - Drawer (the item panel): a header with the selected slot's name, a subtitle, search,
-//   HEAD..FEET area tabs, column buttons, PACK and EQUIPPED ONLY; a sidebar left of the
+//   HEAD..FEET area tabs, column buttons, PACK, EQUIPPED and NEW; a sidebar left of the
 //   grid with the area's slots; the grid as named cards, 4 to 7 per row; and the outfit bar
 //   along the bottom (current look, OUTFITS / BACK).
 //   Equipment-EX's slot headers and its own header row are hidden. Mouse only.
@@ -192,6 +192,10 @@ public abstract class WardrobeTabsConfig {
     public static func PackWheelRows() -> Int32 = 3;
     // The column buttons 4 5 6 7, after the pack list's rows.
     public static func ColumnButton(columns: Int32) -> Int32 = WardrobeTabsConfig.PackButton() + 1 + WardrobeTabsConfig.PackRows() + columns - WardrobeTabsConfig.MinColumns();
+    // NEW (show only items tagged NEW), right of EQUIPPED, after the column buttons.
+    public static func NewOnlyButton() -> Int32 = WardrobeTabsConfig.ColumnButton(WardrobeTabsConfig.MaxColumns()) + 1;
+    // SORT in the outfits view's header, after NEW: A-Z, newest, oldest (OutfitSystem.m_wtOutfitSort).
+    public static func SortButton() -> Int32 = WardrobeTabsConfig.NewOnlyButton() + 1;
     public static func MinColumns() -> Int32 = 4;
     public static func MaxColumns() -> Int32 = 7;
 
@@ -284,6 +288,10 @@ public persistent let m_wtSeenReady: Bool;
 // Card grid columns picked with the 4 5 6 7 buttons (0: never picked, seven).
 @addField(OutfitSystem)
 public persistent let m_wtColumns: Int32;
+
+// Outfits view order picked with SORT: 0 A-Z (Equipment-EX's order), 1 newest, 2 oldest first.
+@addField(OutfitSystem)
+public persistent let m_wtOutfitSort: Int32;
 
 public func WardrobeTabsColumns() -> Int32 {
     let system: ref<OutfitSystem> = OutfitSystem.GetInstance(GetGameInstance());
@@ -525,6 +533,14 @@ public let m_wtPackThumb: wref<inkRectangle>;
 @addField(WardrobeScreenController)
 public let m_wtEquippedOnly: Bool;
 
+// NEW: only items that were NEW when it was switched on (m_wtNewOnlySet, keyed like
+// ViewManager.m_wtNewSet), so a card whose tag clears on hover stays listed.
+@addField(WardrobeScreenController)
+public let m_wtNewOnly: Bool;
+
+@addField(WardrobeScreenController)
+public let m_wtNewOnlySet: ref<inkHashMap>;
+
 @addField(WardrobeScreenController)
 public let m_wtHover: wref<inkWidget>;
 
@@ -576,8 +592,8 @@ public let m_wtClothingOnly: array<wref<inkWidget>>;
 @addField(WardrobeScreenController)
 public let m_wtHeader: wref<inkCompoundWidget>;
 
-// Buttons: area tabs (0..5), a hidden placeholder (6), EQUIPPED ONLY (7), chip paging (8, 9),
-// slot chips (10..), OUTFITS / BACK, SAVE OUTFIT and NO OUTFIT (WardrobeTabsConfig). Each
+// Buttons: area tabs (0..5), a hidden placeholder (6), EQUIPPED (7), chip paging (8, 9),
+// slot chips (10..), OUTFITS / BACK, SAVE OUTFIT, NO OUTFIT, PACK and its rows, 4..7, NEW (WardrobeTabsConfig). Each
 // has a background, a label and an optional count.
 @addField(WardrobeScreenController)
 public let m_wtButtons: array<wref<inkCanvas>>;
@@ -681,6 +697,10 @@ public let m_wtOutfitNames: array<CName>;
 
 @addField(WardrobeScreenController)
 public let m_wtOutfitParts: array<Int32>;
+
+// Each shown outfit's creation stamp (Equipment-EX's playtime in seconds), as m_wtOutfitNames.
+@addField(WardrobeScreenController)
+public let m_wtOutfitStamps: array<Float>;
 
 @addField(WardrobeScreenController)
 public let m_wtOutfitContent: wref<inkCanvas>;
@@ -1330,10 +1350,10 @@ private func WardrobeTabsBuildHeader(screen: ref<WardrobeScreenController>, head
     }
     // Button 6 is a hidden placeholder (it was GROUP COLOURS) so the indices below stay put.
     this.WardrobeTabsMakeButton(screen, overlay, "", 0.0, 0.0, 1.0, 1.0).SetVisible(false);
-    ArrayPush(screen.m_wtClothingOnly, this.WardrobeTabsMakeButton(screen, overlay, WardrobeTabsText(n"WUI-Header-EquippedOnly"), width - 310.0, 148.0, 300.0, 62.0));
+    ArrayPush(screen.m_wtClothingOnly, this.WardrobeTabsMakeButton(screen, overlay, WardrobeTabsText(n"WUI-Header-EquippedOnly"), width - 310.0, 148.0, 175.0, 62.0));
 }
 
-// PACK (button PackButton()) in the drawer header, left of EQUIPPED ONLY, and its list
+// PACK (button PackButton()) in the drawer header, left of EQUIPPED, and its list
 // of rows, the grid container's first child so it draws over the cards and takes their
 // clicks. Rows are pooled: ALL, BASE GAME, then each pack with owned items.
 @addMethod(inkPreviewGameController)
@@ -1407,6 +1427,10 @@ private func WardrobeTabsBuildPacks(screen: ref<WardrobeScreenController>, conta
             ArrayPush(screen.m_wtClothingOnly, this.WardrobeTabsMakeButton(screen, screen.m_wtHeader, ToString(columns), x, 148.0, 48.0, 62.0));
             columns += 1;
         }
+        // NEW (NewOnlyButton()), right of EQUIPPED (button 7).
+        ArrayPush(screen.m_wtClothingOnly, this.WardrobeTabsMakeButton(screen, screen.m_wtHeader, WardrobeTabsText(n"WUI-Header-NewOnly"), width - 125.0, 148.0, 115.0, 62.0));
+        // SORT (SortButton()), in the outfits view right of NO OUTFIT; its label is set per redraw.
+        ArrayPush(screen.m_wtOutfitsOnly, this.WardrobeTabsMakeButton(screen, screen.m_wtHeader, "", 620.0, 148.0, 300.0, 62.0));
     }
 }
 
@@ -1850,14 +1874,15 @@ private func WardrobeTabsMakeOutfitCell(screen: ref<WardrobeScreenController>) -
     let name: ref<inkText> = this.WardrobeTabsMakeText(36, width - 110.0);
     name.SetMargin(new inkMargin(24.0, 14.0, 0.0, 0.0));
     name.Reparent(cell);
-    let info: ref<inkText> = this.WardrobeTabsMakeText(24, width - 110.0);
+    // Under the star's lower edge, so it can run almost the cell's width (count, created, status).
+    let info: ref<inkText> = this.WardrobeTabsMakeText(24, width - 48.0);
     info.SetMargin(new inkMargin(24.0, 64.0, 0.0, 0.0));
     info.Reparent(cell);
     let star: ref<inkCanvas> = new inkCanvas();
     star.SetAnchor(inkEAnchor.TopRight);
     star.SetAnchorPoint(1.0, 0.0);
-    star.SetSize(72.0, 72.0);
-    star.SetMargin(new inkMargin(0.0, 14.0, 14.0, 0.0));
+    star.SetSize(60.0, 60.0);
+    star.SetMargin(new inkMargin(0.0, 8.0, 14.0, 0.0));
     star.SetInteractive(true);
     star.RegisterToCallback(n"OnRelease", this, n"OnWardrobeStarClick");
     star.RegisterToCallback(n"OnPress", this, n"OnWardrobePress");
@@ -1959,8 +1984,8 @@ private func WardrobeTabsFillOutfitIcons(screen: ref<WardrobeScreenController>, 
     screen.m_wtOutfitMores[cell].SetText("+" + ToString(count - shown));
 }
 
-// Fills the outfit cells: favourites first, then the rest, each in Equipment-EX's
-// alphabetical order, narrowed by the search.
+// Fills the outfit cells: favourites first, then the rest, each in the SORT order
+// (WardrobeTabsAppendSorted), narrowed by the search.
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsShowOutfits(screen: ref<WardrobeScreenController>) -> Void {
     if !IsDefined(screen.m_wtOutfitContent) {
@@ -1980,12 +2005,9 @@ private func WardrobeTabsShowOutfits(screen: ref<WardrobeScreenController>) -> V
     }
     ArrayClear(screen.m_wtOutfitNames);
     ArrayClear(screen.m_wtOutfitParts);
-    for name in favourites {
-        ArrayPush(screen.m_wtOutfitNames, name);
-    }
-    for name in others {
-        ArrayPush(screen.m_wtOutfitNames, name);
-    }
+    ArrayClear(screen.m_wtOutfitStamps);
+    this.WardrobeTabsAppendSorted(screen, favourites);
+    this.WardrobeTabsAppendSorted(screen, others);
     let count: Int32 = ArraySize(screen.m_wtOutfitNames);
     while ArraySize(screen.m_wtOutfitCells) < count {
         this.WardrobeTabsMakeOutfitCell(screen);
@@ -2017,6 +2039,64 @@ private func WardrobeTabsShowOutfits(screen: ref<WardrobeScreenController>) -> V
     this.WardrobeTabsScrollOutfits(screen, screen.m_wtOutfitScroll);
     WardrobeTabsDebug("Outfits view: " + ToString(count) + " of " + ToString(ArraySize(all)) + " outfits in "
         + ToString(rows) + " rows, " + ToString(ArraySize(screen.m_wtOutfitCells)) + " cells, content height " + FloatToString(height));
+}
+
+// Appends names to m_wtOutfitNames (and their stamps to m_wtOutfitStamps) in the SORT order:
+// as given (Equipment-EX's alphabetical order), or by creation stamp, newest or oldest first.
+// Ties keep the alphabetical order.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsAppendSorted(screen: ref<WardrobeScreenController>, names: array<CName>) -> Void {
+    let sort: Int32 = screen.m_outfitSystem.m_wtOutfitSort;
+    let sorted: array<CName>;
+    let stamps: array<Float>;
+    for name in names {
+        let stamp: Float = this.WardrobeTabsOutfitStamp(screen, name);
+        let at: Int32 = ArraySize(sorted);
+        if sort == 1 || sort == 2 {
+            at = 0;
+            while at < ArraySize(sorted) && (sort == 1 ? stamps[at] >= stamp : stamps[at] <= stamp) {
+                at += 1;
+            }
+        }
+        ArrayInsert(sorted, at, name);
+        ArrayInsert(stamps, at, stamp);
+    }
+    let index: Int32 = 0;
+    while index < ArraySize(sorted) {
+        ArrayPush(screen.m_wtOutfitNames, sorted[index]);
+        ArrayPush(screen.m_wtOutfitStamps, stamps[index]);
+        index += 1;
+    }
+}
+
+// The playtime (seconds) Equipment-EX stamped an outfit with when it was created; an UPDATE
+// keeps it. 0 when unknown. Read from Equipment-EX's private state: redscript doesn't enforce
+// field visibility and Equipment-EX has no getter.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsOutfitStamp(screen: ref<WardrobeScreenController>, name: CName) -> Float {
+    let state: ref<OutfitState> = screen.m_outfitSystem.m_state;
+    if !IsDefined(state) {
+        return 0.0;
+    }
+    let outfit: ref<OutfitSet> = state.GetOutfit(name);
+    return IsDefined(outfit) ? outfit.m_timestamp : 0.0;
+}
+
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsSortName(sort: Int32) -> String {
+    if sort == 1 {
+        return WardrobeTabsText(n"WUI-Sort-Newest");
+    }
+    if sort == 2 {
+        return WardrobeTabsText(n"WUI-Sort-Oldest");
+    }
+    return WardrobeTabsText(n"WUI-Sort-AZ");
+}
+
+// Playtime in seconds as hours and minutes, e.g. "52H 10M".
+public func WardrobeTabsPlaytime(seconds: Float) -> String {
+    let minutes: Int32 = Cast<Int32>(seconds / 60.0);
+    return WardrobeTabsTextF(n"WUI-Outfit-Playtime", [ToString(minutes / 60), ToString(minutes % 60)]);
 }
 
 // Moves the outfit grid inside its scroll area and the scroll bar's thumb with it.
@@ -2065,7 +2145,18 @@ private func WardrobeTabsStyleOutfits(screen: ref<WardrobeScreenController>) -> 
         screen.m_wtOutfitCellNames[index].SetTintColor(worn ? new HDRColor(0.369, 0.965, 1.0, 1.0)
             : (hovered ? new HDRColor(1.370, 0.444, 0.405, 1.0) : new HDRColor(1.176, 0.381, 0.348, 1.0)));
         let parts: Int32 = screen.m_wtOutfitParts[index];
-        screen.m_wtOutfitCellInfos[index].SetText(WardrobeTabsCount("WUI-Count-Items", parts) + (worn ? "  |  " + WardrobeTabsText(n"WUI-Status-Wearing") : (edited ? "  |  " + WardrobeTabsText(n"WUI-Status-Edited") : "")));
+        // Item count, the playtime it was created at, then WEARING or EDITED.
+        let info: String = WardrobeTabsCount("WUI-Count-Items", parts);
+        let stamp: Float = index < ArraySize(screen.m_wtOutfitStamps) ? screen.m_wtOutfitStamps[index] : 0.0;
+        if stamp > 0.0 {
+            info += " | " + WardrobeTabsPlaytime(stamp);
+        }
+        if worn {
+            info += " | " + WardrobeTabsText(n"WUI-Status-Wearing");
+        } else if edited {
+            info += " | " + WardrobeTabsText(n"WUI-Status-Edited");
+        }
+        screen.m_wtOutfitCellInfos[index].SetText(info);
         screen.m_wtOutfitCellInfos[index].SetTintColor(worn ? new HDRColor(0.204, 0.569, 0.592, 1.0) : new HDRColor(0.682, 0.231, 0.212, 1.0));
         let starHovered: Bool = screen.m_wtStarHover == screen.m_wtOutfitStars[index];
         screen.m_wtOutfitStarIcons[index].SetTintColor(favourite ? new HDRColor(0.98, 0.84, 0.36, 1.0)
@@ -2484,7 +2575,7 @@ private func WardrobeTabsUpdateWorn(screen: ref<WardrobeScreenController>) -> Bo
                 let at: Int32 = this.WardrobeTabsSlotIndex(screen, slotID);
                 // The real item is in the inventory, the stash or the wardrobe store under
                 // another source; added to its slot's list, it shows in the grid as worn and
-                // passes EQUIPPED ONLY like a listed one.
+                // passes EQUIPPED like a listed one.
                 let added: ref<InventoryGridItemData>;
                 if at >= 0 && !IsDefined(screen.m_wtWorn[at]) {
                     if !gathered {
@@ -2607,6 +2698,9 @@ private func WardrobeTabsMatches(screen: ref<WardrobeScreenController>, item: re
     if screen.m_wtEquippedOnly && !item.Item.IsEquipped() {
         return false;
     }
+    if screen.m_wtNewOnly && (!IsDefined(screen.m_wtNewOnlySet) || !screen.m_wtNewOnlySet.KeyExist(TDBID.ToNumber(ItemID.GetTDBID(item.Item.GetID())))) {
+        return false;
+    }
     if !this.WardrobeTabsPackPasses(item) {
         return false;
     }
@@ -2645,7 +2739,7 @@ private func WardrobeTabsUpdateMatches(screen: ref<WardrobeScreenController>) ->
 
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsFiltering(screen: ref<WardrobeScreenController>) -> Bool {
-    return screen.m_wtEquippedOnly || NotEquals(screen.m_wtQuery, "") || this.WardrobeTabsView().m_wtPackChoice != 0;
+    return screen.m_wtEquippedOnly || screen.m_wtNewOnly || NotEquals(screen.m_wtQuery, "") || this.WardrobeTabsView().m_wtPackChoice != 0;
 }
 
 // Shows the selected slot's items in the grid, those matching any search or filter. Excluding
@@ -2917,6 +3011,18 @@ private func WardrobeTabsRedrawButtons(screen: ref<WardrobeScreenController>, se
         area += 1;
     }
     this.WardrobeTabsStyleButton(screen, 7, screen.m_wtEquippedOnly);
+    let sort: Int32 = WardrobeTabsConfig.SortButton();
+    if sort < buttons {
+        screen.m_wtButtonTexts[sort].SetText(WardrobeTabsTextF(n"WUI-Outfits-Sort", [this.WardrobeTabsSortName(screen.m_outfitSystem.m_wtOutfitSort)]));
+        this.WardrobeTabsStyleButton(screen, sort, false);
+    }
+    let newOnly: Int32 = WardrobeTabsConfig.NewOnlyButton();
+    if newOnly < buttons {
+        this.WardrobeTabsStyleButton(screen, newOnly, screen.m_wtNewOnly);
+        // Dimmed while nothing is NEW (it can still be switched off).
+        let newItems: array<TweakDBID> = screen.m_outfitSystem.m_wtNewItems;
+        screen.m_wtButtons[newOnly].SetOpacity(screen.m_wtNewOnly || ArraySize(newItems) > 0 ? 1.0 : 0.4);
+    }
     // Chips: one page of the area's slots, PREVIOUS / NEXT when there is more.
     let slots: array<Int32> = this.WardrobeTabsAreaSlots(screen, view.m_wtArea);
     let perPage: Int32 = WardrobeTabsConfig.ChipsPerPage();
@@ -3393,7 +3499,39 @@ protected cb func OnWardrobeTabsWatch(proxy: ref<inkAnimProxy>) -> Bool {
     return true;
 }
 
-// Search text, EQUIPPED ONLY or the pack filter changed. The mod filters the grid itself in
+// NEW on: the items NEW right now are kept in m_wtNewOnlySet, so hovering a card (which clears
+// its tag) doesn't drop it from the grid. Does nothing while off with no NEW items. Switching it
+// on switches EQUIPPED off, and EQUIPPED switches it off (button 7).
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsToggleNewOnly(screen: ref<WardrobeScreenController>) -> Void {
+    let newItems: array<TweakDBID> = screen.m_outfitSystem.m_wtNewItems;
+    if !screen.m_wtNewOnly && ArraySize(newItems) == 0 {
+        return;
+    }
+    screen.m_wtNewOnly = !screen.m_wtNewOnly;
+    let set: ref<inkHashMap> = new inkHashMap();
+    if screen.m_wtNewOnly {
+        let mark: ref<WardrobeTabsMark> = new WardrobeTabsMark();
+        for record in newItems {
+            let key: Uint64 = TDBID.ToNumber(record);
+            if !set.KeyExist(key) {
+                set.Insert(key, mark);
+            }
+        }
+    }
+    screen.m_wtNewOnlySet = set;
+    // NEW and EQUIPPED exclude each other: NEW switches EQUIPPED off. m_wtEquippedOnly is set
+    // too, so the watcher sees no change and the one FilterChanged below covers both.
+    if screen.m_wtNewOnly && screen.m_wtEquippedOnly {
+        screen.m_inventoryGridDataView.SetFilterType(ItemFilterCategory.AllItems);
+        screen.m_inventoryGridDataView.UpdateView();
+        screen.m_wtEquippedOnly = false;
+    }
+    WardrobeTabsDebug("NEW filter " + (screen.m_wtNewOnly ? "on: " + ToString(ArraySize(newItems)) + " items" : "off"));
+    this.WardrobeTabsFilterChanged(screen);
+}
+
+// Search text, EQUIPPED, NEW or the pack filter changed. The mod filters the grid itself in
 // WardrobeTabsApply (Equipment-EX's name search would hide pack-name matches), so its view
 // keeps an empty query. Counts and NEW dots are redone, and the selection moves off a slot
 // that no longer has a match.
@@ -3530,6 +3668,11 @@ protected cb func OnWardrobeButtonClick(evt: ref<inkPointerEvent>) -> Bool {
     } else if button == 7 {
         // As Equipment-EX's own filter icons do; the watcher sees the change.
         let category: ItemFilterCategory = screen.m_wtEquippedOnly ? ItemFilterCategory.AllItems : ItemFilterCategory.Clothes;
+        // EQUIPPED switches NEW off; the watcher's FilterChanged for EQUIPPED redoes the grid.
+        if !screen.m_wtEquippedOnly && screen.m_wtNewOnly {
+            screen.m_wtNewOnly = false;
+            screen.m_wtNewOnlySet = new inkHashMap();
+        }
         screen.m_inventoryGridDataView.SetFilterType(category);
         screen.m_inventoryGridDataView.UpdateView();
     } else if button == 8 || button == 9 {
@@ -3570,6 +3713,15 @@ protected cb func OnWardrobeButtonClick(evt: ref<inkPointerEvent>) -> Bool {
         screen.m_wtPackOpen = !screen.m_wtPackOpen;
         screen.m_wtPackScroll = -1;
         this.WardrobeTabsRedraw(screen);
+    } else if button == WardrobeTabsConfig.SortButton() {
+        screen.m_outfitSystem.m_wtOutfitSort = (screen.m_outfitSystem.m_wtOutfitSort + 1) % 3;
+        WardrobeTabsDebug("Outfit sort: " + this.WardrobeTabsSortName(screen.m_outfitSystem.m_wtOutfitSort));
+        screen.m_wtOutfitScroll = 0.0;
+        this.WardrobeTabsShowOutfits(screen);
+        this.WardrobeTabsStyleOutfits(screen);
+        this.WardrobeTabsRedraw(screen);
+    } else if button == WardrobeTabsConfig.NewOnlyButton() {
+        this.WardrobeTabsToggleNewOnly(screen);
     } else if button >= WardrobeTabsConfig.ColumnButton(WardrobeTabsConfig.MinColumns()) {
         let columns: Int32 = WardrobeTabsConfig.MinColumns() + button - WardrobeTabsConfig.ColumnButton(WardrobeTabsConfig.MinColumns());
         if columns <= WardrobeTabsConfig.MaxColumns() && columns != WardrobeTabsColumns() {

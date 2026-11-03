@@ -22,7 +22,8 @@ WUI_Loc.es-mx.Status-Wearing: "EN USO"
 WUI_Loc.es-mx.Status-Edited: "EDITADO"
 
 # Drawer header buttons.
-WUI_Loc.es-mx.Header-EquippedOnly: "SOLO EQUIPADOS"
+WUI_Loc.es-mx.Header-EquippedOnly: "EQUIPADOS"
+WUI_Loc.es-mx.Header-NewOnly: "NUEVOS"
 WUI_Loc.es-mx.Header-Pack: "PACK: {0}"
 WUI_Loc.es-mx.Pack-All: "TODOS"
 WUI_Loc.es-mx.Pack-BaseGame: "JUEGO BASE"
@@ -64,6 +65,11 @@ WUI_Loc.es-mx.Outfits-Save: "GUARDAR CONJUNTO"
 WUI_Loc.es-mx.Outfits-None: "SIN CONJUNTO"
 WUI_Loc.es-mx.Outfits-Empty: "TODAVÍA NO HAY CONJUNTOS GUARDADOS: GUARDAR CONJUNTO CONSERVA LO QUE V ESTÁ USANDO"
 WUI_Loc.es-mx.Outfits-NoMatch: "NINGÚN CONJUNTO COINCIDE CON \"{0}\""
+WUI_Loc.es-mx.Outfits-Sort: "ORDEN: {0}"
+WUI_Loc.es-mx.Sort-AZ: "A-Z"
+WUI_Loc.es-mx.Sort-Newest: "RECIENTES"
+WUI_Loc.es-mx.Sort-Oldest: "ANTIGUOS"
+WUI_Loc.es-mx.Outfit-Playtime: "{0} H {1} MIN"
 
 # Mod Settings.
 WUI_Loc.es-mx.Settings-Category: "Guardarropa"

@@ -21,7 +21,8 @@ WUI_Loc.jp-jp.Status-Wearing: "着用中"
 WUI_Loc.jp-jp.Status-Edited: "編集済み"
 
 # Drawer header buttons.
-WUI_Loc.jp-jp.Header-EquippedOnly: "装備中のみ"
+WUI_Loc.jp-jp.Header-EquippedOnly: "装備中"
+WUI_Loc.jp-jp.Header-NewOnly: "新着"
 WUI_Loc.jp-jp.Header-Pack: "パック: {0}"
 WUI_Loc.jp-jp.Pack-All: "すべて"
 WUI_Loc.jp-jp.Pack-BaseGame: "本編"
@@ -63,6 +64,11 @@ WUI_Loc.jp-jp.Outfits-Save: "コーデを保存"
 WUI_Loc.jp-jp.Outfits-None: "コーデなし"
 WUI_Loc.jp-jp.Outfits-Empty: "保存済みコーデなし: 「コーデを保存」でVが今着ている服を保存できる"
 WUI_Loc.jp-jp.Outfits-NoMatch: "「{0}」に一致するコーデなし"
+WUI_Loc.jp-jp.Outfits-Sort: "並び順: {0}"
+WUI_Loc.jp-jp.Sort-AZ: "名前順"
+WUI_Loc.jp-jp.Sort-Newest: "新しい順"
+WUI_Loc.jp-jp.Sort-Oldest: "古い順"
+WUI_Loc.jp-jp.Outfit-Playtime: "{0}時間{1}分"
 
 # Mod Settings.
 WUI_Loc.jp-jp.Settings-Category: "ワードローブ"

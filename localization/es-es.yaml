@@ -21,7 +21,8 @@ WUI_Loc.es-es.Status-Wearing: "PUESTO"
 WUI_Loc.es-es.Status-Edited: "EDITADO"
 
 # Drawer header buttons.
-WUI_Loc.es-es.Header-EquippedOnly: "SOLO EQUIPADOS"
+WUI_Loc.es-es.Header-EquippedOnly: "EQUIPADOS"
+WUI_Loc.es-es.Header-NewOnly: "NUEVOS"
 WUI_Loc.es-es.Header-Pack: "PACK: {0}"
 WUI_Loc.es-es.Pack-All: "TODOS"
 WUI_Loc.es-es.Pack-BaseGame: "JUEGO BASE"
@@ -63,6 +64,11 @@ WUI_Loc.es-es.Outfits-Save: "GUARDAR ATUENDO"
 WUI_Loc.es-es.Outfits-None: "SIN ATUENDO"
 WUI_Loc.es-es.Outfits-Empty: "AÚN NO HAY ATUENDOS GUARDADOS: GUARDAR ATUENDO CONSERVA LO QUE LLEVA V"
 WUI_Loc.es-es.Outfits-NoMatch: "NINGÚN ATUENDO COINCIDE CON \"{0}\""
+WUI_Loc.es-es.Outfits-Sort: "ORDEN: {0}"
+WUI_Loc.es-es.Sort-AZ: "A-Z"
+WUI_Loc.es-es.Sort-Newest: "RECIENTES"
+WUI_Loc.es-es.Sort-Oldest: "ANTIGUOS"
+WUI_Loc.es-es.Outfit-Playtime: "{0} H {1} MIN"
 
 # Mod Settings.
 WUI_Loc.es-es.Settings-Category: "Armario"
