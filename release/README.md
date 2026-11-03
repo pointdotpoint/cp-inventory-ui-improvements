@@ -15,7 +15,7 @@ A redesign of the Equipment-EX wardrobe screen for Cyberpunk 2077.
   Move away and the real look comes back. Click to equip.
 - **Camera follows the area**: HEAD, BODY, ARMS, LEGS and FEET each frame that part of V.
 - **NEW tags**: items V didn't own the last time you opened the wardrobe are marked NEW, and
-  so are the slots and tabs that hold them.
+  so are the slots, tabs and packs that hold them.
 - **Mod packs**: each card names the clothing mod its item comes from, and PACK filters the
   grid to one pack. Packs are detected automatically.
 - **Outfits**: a four-column grid with item icons, search and favourites. Each outfit shows

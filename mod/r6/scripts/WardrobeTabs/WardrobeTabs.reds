@@ -1590,6 +1590,32 @@ private func WardrobeTabsRedrawPacks(screen: ref<WardrobeScreenController>) -> V
     }
     let view: ref<ViewManager> = this.WardrobeTabsView();
     let list: ref<WardrobeTabsPackList> = this.WardrobeTabsPacks();
+    // NEW dots: on PACK while anything is NEW, and on each row whose pack holds a NEW item
+    // (ALL with any). Packs are looked up from the NEW records, whatever the item source.
+    let newItems: array<TweakDBID> = screen.m_outfitSystem.m_wtNewItems;
+    let newPacks: array<wref<WardrobeTabsPack>>;
+    for record in newItems {
+        ArrayPush(newPacks, WardrobeTabsPackOf(ItemID.FromTDBID(record)));
+    }
+    let baseNew: Bool = false;
+    let packNew: array<Bool>;
+    ArrayResize(packNew, ArraySize(list.packs));
+    for pack in newPacks {
+        if IsDefined(pack) {
+            if pack == list.baseMark {
+                baseNew = true;
+            } else {
+                let find: Int32 = 0;
+                while find < ArraySize(list.packs) {
+                    if list.packs[find] == pack {
+                        packNew[find] = true;
+                    }
+                    find += 1;
+                }
+            }
+        }
+    }
+    screen.m_wtButtonNews[button].SetVisible(ArraySize(newItems) > 0);
     screen.m_wtButtonTexts[button].SetText(WardrobeTabsTextF(n"WUI-Header-Pack", [this.WardrobeTabsPackChoiceName(view.m_wtPackChoice)]));
     this.WardrobeTabsStyleButton(screen, button, view.m_wtPackChoice != 0 || screen.m_wtPackOpen);
     let open: Bool = screen.m_wtPackOpen && !view.m_wtOutfitsSection;
@@ -1642,6 +1668,7 @@ private func WardrobeTabsRedrawPacks(screen: ref<WardrobeScreenController>) -> V
             let count: Int32 = choice == 0 ? total : (choice == 1 ? list.baseCount : list.packs[choice - 2].count);
             screen.m_wtButtonTexts[at].SetText(this.WardrobeTabsPackChoiceName(choice));
             screen.m_wtButtonCounts[at].SetText(ToString(count));
+            screen.m_wtButtonNews[at].SetVisible(choice == 0 ? ArraySize(newItems) > 0 : (choice == 1 ? baseNew : packNew[choice - 2]));
             this.WardrobeTabsStyleButton(screen, at, choice == view.m_wtPackChoice);
         }
         row += 1;
