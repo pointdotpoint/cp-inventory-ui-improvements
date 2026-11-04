@@ -81,7 +81,7 @@ public abstract class WardrobeTabsConfig {
     public static func CameraAreas() -> Int32 = 5;
 
     // Release version, logged once per wardrobe opening.
-    public static func Version() -> String = "1.0.2";
+    public static func Version() -> String = "1.0.3";
     // Routine log lines (try-ons, camera moves, refills, clicks) for development; failures and
     // the opening line are always logged.
     public static func Verbose() -> Bool = false;
@@ -438,6 +438,13 @@ public let m_wtTab: Int32;
 
 @addField(WardrobeScreenController)
 public let m_wtBuilt: Bool;
+
+// VFocus's preview collider (WardrobeTabsWatchVFocus): looked up once per opening.
+@addField(WardrobeScreenController)
+public let m_wtVFocusLooked: Bool;
+
+@addField(WardrobeScreenController)
+public let m_wtVFocusCollider: wref<inkWidget>;
 
 @addField(WardrobeScreenController)
 public let m_wtAllItems: array<ref<IScriptable>>;
@@ -3464,6 +3471,32 @@ private func WardrobeTabsEndTryOn(screen: ref<WardrobeScreenController>) -> Void
     this.WardrobeTabsRedrawLook(screen);
 }
 
+// VFocus (Nexus 33527) lays an interactive 1200 x 2000 canvas over V for its zoom and pan
+// (bvzWardrobeCollider) and makes it the wardrobe root's last child, so it takes input before
+// anything else. Centred, it reaches into the drawer: clicks on the slot sidebar and the first
+// outfit column went to it. Kept as the root's first child instead, it gets only the clicks
+// nothing else takes, which over V is all of them. VFocus raises it again on the frame after
+// its OnInitialize, so this runs every tick. Nothing happens without VFocus.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsWatchVFocus(screen: ref<WardrobeScreenController>) -> Void {
+    let root: ref<inkCompoundWidget> = this.GetRootCompoundWidget();
+    if !IsDefined(root) {
+        return;
+    }
+    if !screen.m_wtVFocusLooked {
+        screen.m_wtVFocusLooked = true;
+        screen.m_wtVFocusCollider = root.GetWidgetByPathName(n"bvzWardrobeCollider");
+        if IsDefined(screen.m_wtVFocusCollider) {
+            ModLog(n"WardrobeTabs", "VFocus found: its preview area goes under the drawer");
+        }
+    }
+    let collider: wref<inkWidget> = screen.m_wtVFocusCollider;
+    if IsDefined(collider) && root.GetWidgetByIndex(0) != collider {
+        root.ReorderChild(collider, 0);
+        WardrobeTabsDebug("VFocus preview area moved under the drawer");
+    }
+}
+
 @addMethod(inkPreviewGameController)
 protected cb func OnWardrobeTabsWatch(proxy: ref<inkAnimProxy>) -> Bool {
     let screen: ref<WardrobeScreenController> = this as WardrobeScreenController;
@@ -3473,6 +3506,7 @@ protected cb func OnWardrobeTabsWatch(proxy: ref<inkAnimProxy>) -> Bool {
     if !screen.m_wtBuilt {
         this.WardrobeTabsBuild(screen);
     }
+    this.WardrobeTabsWatchVFocus(screen);
     this.WardrobeTabsWatchTryOn(screen);
     this.WardrobeTabsWatchLift(screen);
     this.WardrobeTabsWatchSearchClear(screen);
