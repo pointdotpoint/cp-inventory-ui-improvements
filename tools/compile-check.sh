@@ -5,6 +5,9 @@
 #   --minimal: only the mod's hard requirements (Equipment-EX, Codeware, ArchiveXL, TweakXL),
 #   none of the other installed script mods (Mod Settings, Virtual Atelier, ...): what a
 #   player with a bare setup compiles.
+# EQUIPMENTEX=<dir>: the Equipment-EX scripts --minimal compiles against (default: the game's
+#   r6/scripts/EquipmentEx). Point it at plain Equipment-EX when WEAVE is installed, since WEAVE
+#   overwrites EquipmentEx.reds and --minimal leaves out WEAVE's own scripts.
 set -euo pipefail
 
 GAME="${GAME:-$HOME/.local/share/Steam/steamapps/common/Cyberpunk 2077}"
@@ -15,9 +18,9 @@ trap 'rm -rf "$STAGE"' EXIT
 MINIMAL=0
 [ "${1:-}" = "--minimal" ] && MINIMAL=1
 
-mkdir -p "$STAGE/r6/scripts/_plugins" "$STAGE/r6/cache" "$STAGE/engine/tools"
+mkdir -p "$STAGE/r6/scripts/_plugins" "$STAGE/r6/scripts/EquipmentEx" "$STAGE/r6/cache" "$STAGE/engine/tools"
 if [ "$MINIMAL" = 1 ]; then
-    cp -r "$GAME/r6/scripts/EquipmentEx" "$STAGE/r6/scripts/"
+    cp -r "${EQUIPMENTEX:-$GAME/r6/scripts/EquipmentEx}/." "$STAGE/r6/scripts/EquipmentEx/"
     PLUGINS="ArchiveXL/Scripts Codeware/Scripts TweakXL/Scripts"
 else
     cp -r "$GAME/r6/scripts/." "$STAGE/r6/scripts/"

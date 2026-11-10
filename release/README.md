@@ -37,6 +37,10 @@ A redesign of the Equipment-EX wardrobe screen for Cyberpunk 2077.
 Optional: [Mod Settings](https://www.nexusmods.com/cyberpunk2077/mods/4885) for the settings
 below.
 
+Works with [WEAVE](https://www.nexusmods.com/cyberpunk2077/mods/28273) too, which replaces
+Equipment-EX's scripts with a faster version (see its page for what it needs). Recommended if
+you own thousands of clothing items.
+
 ## Install
 
 Install with Vortex or Mod Organizer, or extract the archive into the game folder (the
@@ -55,6 +59,9 @@ Changes apply the next time the wardrobe opens.
 ## Good to know
 
 - Mouse and keyboard only. There is no controller navigation yet.
+- With thousands of clothing items, Equipment-EX takes several seconds to build its item list
+  every time the wardrobe opens (about 6 seconds with 9,000 items in testing). With WEAVE the
+  same wardrobe opens in about a second.
 - The mod's labels follow the game's language. Every language the game offers is included;
   the non-English texts are machine translations, so corrections are welcome. Slot, item and
   outfit names come from the game, Equipment-EX and the clothing mods.

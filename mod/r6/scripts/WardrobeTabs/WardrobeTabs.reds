@@ -81,7 +81,7 @@ public abstract class WardrobeTabsConfig {
     public static func CameraAreas() -> Int32 = 5;
 
     // Release version, logged once per wardrobe opening.
-    public static func Version() -> String = "1.0.3";
+    public static func Version() -> String = "1.0.4";
     // Routine log lines (try-ons, camera moves, refills, clicks) for development; failures and
     // the opening line are always logged.
     public static func Verbose() -> Bool = false;
@@ -232,7 +232,7 @@ public abstract class WardrobeTabsConfig {
 
     // Display name: some items' names arrive as an unresolved "LocKey#..." string.
     public static func ItemName(item: wref<InventoryGridItemData>) -> String {
-        return WardrobeTabsConfig.CleanName(GetLocalizedText(item.Item.GetName()));
+        return WardrobeTabsConfig.CleanName(WardrobeTabsRawName(item));
     }
 
     // Some mods name items like keys: "casual_pt37_boots_black" (Veegee's translations),
@@ -1022,11 +1022,12 @@ private func WardrobeTabsDecorateCard() -> Void {
         newTag.SetVisible(false);
         return;
     }
-    let wearing: Bool = data.Item.IsEquipped();
-    let fresh: Bool = WardrobeTabsIsNew(data.Item.GetID());
+    let wearing: Bool = IsDefined(data.Item) && data.Item.IsEquipped();
+    let id: ItemID = WardrobeTabsItemID(data);
+    let fresh: Bool = WardrobeTabsIsNew(id);
     tag.SetVisible(wearing);
     newTag.SetVisible(fresh && !wearing);
-    let pack: wref<WardrobeTabsPack> = WardrobeTabsPackOf(data.Item.GetID());
+    let pack: wref<WardrobeTabsPack> = WardrobeTabsPackOf(id);
     packText.SetText(IsDefined(pack) ? pack.name : "");
     label.SetText(WardrobeTabsConfig.ItemName(data));
     label.SetWrapping(true, WardrobeTabsConfig.CardNameWidth() * k);
@@ -1567,7 +1568,7 @@ private func WardrobeTabsPacks() -> ref<WardrobeTabsPackList> {
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsItemPack(item: ref<InventoryGridItemData>) -> wref<WardrobeTabsPack> {
     if !item.m_wtPackReady {
-        item.m_wtPack = WardrobeTabsPackIn(this.WardrobeTabsPacks(), item.Item.GetID());
+        item.m_wtPack = WardrobeTabsPackIn(this.WardrobeTabsPacks(), WardrobeTabsItemID(item));
         item.m_wtPackReady = true;
     }
     return item.m_wtPack;
@@ -1587,7 +1588,7 @@ private func WardrobeTabsCountPacks(screen: ref<WardrobeScreenController>) -> Vo
     for slot in screen.m_wtSlots {
         for child in slot.Children {
             if !child.m_wtPackReady {
-                child.m_wtPack = WardrobeTabsPackIn(list, child.Item.GetID());
+                child.m_wtPack = WardrobeTabsPackIn(list, WardrobeTabsItemID(child));
                 child.m_wtPackReady = true;
             }
             let pack: wref<WardrobeTabsPack> = child.m_wtPack;
@@ -2202,7 +2203,7 @@ private func WardrobeTabsStyleOutfits(screen: ref<WardrobeScreenController>) -> 
     let index: Int32 = 0;
     while index < count {
         let name: CName = screen.m_wtOutfitNames[index];
-        let worn: Bool = screen.m_outfitSystem.IsEquipped(name);
+        let worn: Bool = WardrobeTabsOutfitWorn(screen.m_outfitSystem, name);
         // The linked outfit after an edit: EDITED where WEARING would be, its bar dimmed.
         let edited: Bool = screen.m_wtLinkChanges >= 0 && Equals(name, screen.m_outfitSystem.m_wtLinked);
         let favourite: Bool = ArrayContains(screen.m_outfitSystem.m_wtFavourites, name);
@@ -2256,7 +2257,7 @@ private func WardrobeTabsWatchOutfits(screen: ref<WardrobeScreenController>) -> 
     let worn: String = screen.m_outfitSystem.IsActive() ? "+" : "-";
     for name in outfits {
         sig += NameToString(name) + ";";
-        if screen.m_outfitSystem.IsEquipped(name) {
+        if WardrobeTabsOutfitWorn(screen.m_outfitSystem, name) {
             worn += NameToString(name);
         }
     }
@@ -2522,7 +2523,7 @@ private func WardrobeTabsUpdateNewSlots(screen: ref<WardrobeScreenController>) -
     let index: Int32 = 0;
     while index < ArraySize(screen.m_wtSlots) {
         for child in screen.m_wtSlots[index].Children {
-            if WardrobeTabsIsNew(child.Item.GetID()) && (!this.WardrobeTabsFiltering(screen) || this.WardrobeTabsMatches(screen, child)) {
+            if WardrobeTabsIsNew(WardrobeTabsItemID(child)) && (!this.WardrobeTabsFiltering(screen) || this.WardrobeTabsMatches(screen, child)) {
                 screen.m_wtSlotNew[index] = true;
                 break;
             }
@@ -2555,6 +2556,7 @@ private func WardrobeTabsCapture(screen: ref<WardrobeScreenController>) -> Void 
         if IsDefined(slot) {
             if slot.m_wtTab == 0 {
                 slot.m_wtTab = WardrobeTabsConfig.TabOfSlot(slot.ItemData.SlotID) + 1;
+                WardrobeTabsDropDisplayCopies(slot);
             }
             ArrayPush(screen.m_wtSlots, slot);
         }
@@ -2624,9 +2626,11 @@ private func WardrobeTabsUpdateWorn(screen: ref<WardrobeScreenController>) -> Bo
     let index: Int32 = 0;
     while index < count {
         for child in screen.m_wtSlots[index].Children {
-            if screen.m_outfitSystem.IsEquipped(child.Item.GetID()) {
+            let id: ItemID = WardrobeTabsItemID(child);
+            if screen.m_outfitSystem.IsEquipped(id) {
+                WardrobeTabsEnsureBuilt(child);
                 screen.m_wtWorn[index] = child;
-                ArrayPush(listed, ItemID.GetTDBID(child.Item.GetID()));
+                ArrayPush(listed, ItemID.GetTDBID(id));
                 break;
             }
         }
@@ -2711,6 +2715,7 @@ private func WardrobeTabsAddWorn(screen: ref<WardrobeScreenController>, slot: re
         if ItemID.GetTDBID(data.ID) == recordID && screen.m_outfitSystem.IsEquipped(data.ID) {
             let item: ref<InventoryGridItemData> = new InventoryGridItemData();
             item.Item = UIInventoryItem.Make(screen.m_player, slot.ItemData.SlotID, data, screen.m_uiInventorySystem.GetInventoryItemsManager());
+            WardrobeTabsMarkBuilt(item, data, slot.ItemData.SlotID, screen.m_player, GetLocalizedText(item.Item.GetName()));
             item.DisplayContextData = screen.m_itemDisplayContext;
             item.Parent = slot;
             ArrayInsert(slot.Children, 0, item);
@@ -2732,7 +2737,7 @@ private func WardrobeTabsWornName(screen: ref<WardrobeScreenController>, index: 
 
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsWornIcon(screen: ref<WardrobeScreenController>, index: Int32) -> String {
-    return IsDefined(screen.m_wtWorn[index]) ? screen.m_wtWorn[index].Item.GetIconPath() : screen.m_wtWornIcons[index];
+    return IsDefined(screen.m_wtWorn[index]) && IsDefined(screen.m_wtWorn[index].Item) ? screen.m_wtWorn[index].Item.GetIconPath() : screen.m_wtWornIcons[index];
 }
 
 // Cheap per-tick check: the number of used slots, and whether each remembered item is
@@ -2746,7 +2751,7 @@ private func WardrobeTabsWornChanged(screen: ref<WardrobeScreenController>) -> B
         return true;
     }
     for worn in screen.m_wtWorn {
-        if IsDefined(worn) && !screen.m_outfitSystem.IsEquipped(worn.Item.GetID()) {
+        if IsDefined(worn) && !screen.m_outfitSystem.IsEquipped(WardrobeTabsItemID(worn)) {
             return true;
         }
     }
@@ -2792,7 +2797,7 @@ private func WardrobeTabsPrepareSearchNames(screen: ref<WardrobeScreenController
         let joined: String = "";
         let index: Int32 = start;
         while index < end {
-            let name: String = IsDefined(pending[index].Item) ? WardrobeTabsConfig.ItemName(pending[index]) : "";
+            let name: String = WardrobeTabsConfig.ItemName(pending[index]);
             ArrayPush(names, name);
             if index > start {
                 joined += separator;
@@ -2822,13 +2827,14 @@ private func WardrobeTabsPrepareSearchNames(screen: ref<WardrobeScreenController
 // Mirrors InventoryGridDataView.FilterItem: the name search, and the "equipped" filter.
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsMatches(screen: ref<WardrobeScreenController>, item: ref<InventoryGridItemData>) -> Bool {
-    if !IsDefined(item) || !IsDefined(item.Item) {
+    // With WEAVE, Item is null until the card is first shown; the helpers read its cache.
+    if !IsDefined(item) {
         return false;
     }
-    if screen.m_wtEquippedOnly && !item.Item.IsEquipped() {
+    if screen.m_wtEquippedOnly && !WardrobeTabsItemEquipped(screen.m_outfitSystem, item) {
         return false;
     }
-    if screen.m_wtNewOnly && (!IsDefined(screen.m_wtNewOnlySet) || !screen.m_wtNewOnlySet.KeyExist(TDBID.ToNumber(ItemID.GetTDBID(item.Item.GetID())))) {
+    if screen.m_wtNewOnly && (!IsDefined(screen.m_wtNewOnlySet) || !screen.m_wtNewOnlySet.KeyExist(TDBID.ToNumber(ItemID.GetTDBID(WardrobeTabsItemID(item))))) {
         return false;
     }
     if !this.WardrobeTabsPackPasses(item) {
@@ -2901,6 +2907,7 @@ private func WardrobeTabsApply(screen: ref<WardrobeScreenController>, resetScrol
         screen.QueueScrollPositionRestore();
     }
     screen.m_inventoryGridDataSource.Reset(kept);
+    WardrobeTabsForceFilterPass(screen.m_inventoryGridDataView);
     screen.m_inventoryGridDataView.UpdateView();
     if resetScroll {
         screen.m_inventoryScrollController.SetScrollPosition(0.0);
@@ -3238,11 +3245,11 @@ private func WardrobeTabsUpdateLink(screen: ref<WardrobeScreenController>) -> Vo
         return;
     }
     let outfits: array<CName> = system.GetOutfits();
-    if IsNameValid(system.m_wtLinked) && system.IsEquipped(system.m_wtLinked) {
+    if IsNameValid(system.m_wtLinked) && WardrobeTabsOutfitWorn(system, system.m_wtLinked) {
         return;
     }
     for outfit in outfits {
-        if system.IsEquipped(outfit) {
+        if WardrobeTabsOutfitWorn(system, outfit) {
             system.m_wtLinked = outfit;
             return;
         }
@@ -3652,7 +3659,7 @@ protected cb func OnWardrobeTabsWatch(proxy: ref<inkAnimProxy>) -> Bool {
         // Equipped items are no longer NEW; the refill below redraws their cards.
         for worn in screen.m_wtWorn {
             if IsDefined(worn) {
-                this.WardrobeTabsClearNew(screen, worn.Item.GetID());
+                this.WardrobeTabsClearNew(screen, WardrobeTabsItemID(worn));
             }
         }
         if screen.m_wtEquippedOnly {
@@ -3763,7 +3770,7 @@ protected cb func OnWardrobeTileClick(evt: ref<inkPointerEvent>) -> Bool {
                     // A listed item may be worn in a slot it was reassigned to; an item read
                     // from the player's slot has only that slot.
                     if IsDefined(screen.m_wtWorn[slot]) {
-                        screen.m_outfitSystem.UnequipItem(screen.m_wtWorn[slot].Item.GetID());
+                        screen.m_outfitSystem.UnequipItem(WardrobeTabsItemID(screen.m_wtWorn[slot]));
                     } else {
                         screen.m_outfitSystem.UnequipSlot(screen.m_wtSlots[slot].ItemData.SlotID);
                     }
@@ -3963,7 +3970,7 @@ protected cb func OnWardrobeOutfitClick(evt: ref<inkPointerEvent>) -> Bool {
         if !this.WardrobeTabsPressedHere(screen, evt) {
             return false;
         }
-        if this.WardrobeTabsOutfitAccess(screen) && !screen.m_outfitSystem.IsEquipped(name) {
+        if this.WardrobeTabsOutfitAccess(screen) && !WardrobeTabsOutfitWorn(screen.m_outfitSystem, name) {
             this.PlaySound(n"Button", n"OnPress");
             let loaded: Bool = screen.m_outfitSystem.LoadOutfit(name);
             if loaded {
@@ -3995,7 +4002,7 @@ protected cb func OnWardrobeOutfitHoverOver(evt: ref<inkPointerEvent>) -> Bool {
     screen.m_buttonHints.RemoveButtonHint(n"drop_item");
     if index >= 0 {
         screen.m_buttonHints.AddButtonHint(n"drop_item", GetLocalizedTextByKey(n"UI-Wardrobe-Deleteset"));
-        if !screen.m_outfitSystem.IsEquipped(screen.m_wtOutfitNames[index]) {
+        if !WardrobeTabsOutfitWorn(screen.m_outfitSystem, screen.m_wtOutfitNames[index]) {
             screen.m_buttonHints.AddButtonHint(n"click", GetLocalizedTextByKey(n"Gameplay-Devices-Interactions-Equip"));
         }
     }
