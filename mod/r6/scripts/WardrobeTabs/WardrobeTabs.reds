@@ -81,7 +81,7 @@ public abstract class WardrobeTabsConfig {
     public static func CameraAreas() -> Int32 = 5;
 
     // Release version, logged once per wardrobe opening.
-    public static func Version() -> String = "1.0.4";
+    public static func Version() -> String = "1.0.5";
     // Routine log lines (try-ons, camera moves, refills, clicks) for development; failures and
     // the opening line are always logged.
     public static func Verbose() -> Bool = false;
@@ -332,6 +332,8 @@ public class WardrobeTabsPack {
     public let name: String;
     public let lower: String;
     public let count: Int32;
+    // Its index in WardrobeTabsPackList.packs (choice order + 2).
+    public let order: Int32;
 
     public static func Create(name: String) -> ref<WardrobeTabsPack> {
         let pack: ref<WardrobeTabsPack> = new WardrobeTabsPack();
@@ -426,6 +428,7 @@ public func WardrobeTabsDetectPack(list: ref<WardrobeTabsPackList>, record: Twea
     }
     let pack: ref<WardrobeTabsPack> = WardrobeTabsPack.Create(StrLen(known) > 0 ? known : StrUpper(prefix));
     pack.prefix = prefix;
+    pack.order = ArraySize(list.packs);
     ArrayPush(list.packs, pack);
     return pack;
 }
@@ -550,6 +553,33 @@ public let m_wtPackMenu: wref<inkCanvas>;
 @addField(WardrobeScreenController)
 public let m_wtPackRowChoice: array<Int32>;
 
+// m_wtPackRowChoice is sorted only when the list shows and something it depends on changed:
+// the pack count (packs are only appended), the chosen pack or the counts (cleared by
+// WardrobeTabsCountPacks). With hundreds of packs the sort ran on every redraw before 1.0.5.
+@addField(WardrobeScreenController)
+public let m_wtPackRowsReady: Bool;
+
+@addField(WardrobeScreenController)
+public let m_wtPackRowsPacks: Int32;
+
+@addField(WardrobeScreenController)
+public let m_wtPackRowsChoice: Int32;
+
+// Per pack (by WardrobeTabsPack.order), whether it holds a NEW record, and for base game
+// (m_wtPackNewBase). Worked out while the list shows, again when the NEW list or the pack
+// list changes size (NEW records are only added or removed, packs only appended).
+@addField(WardrobeScreenController)
+public let m_wtPackNew: array<Bool>;
+
+@addField(WardrobeScreenController)
+public let m_wtPackNewBase: Bool;
+
+@addField(WardrobeScreenController)
+public let m_wtPackNewItems: Int32;
+
+@addField(WardrobeScreenController)
+public let m_wtPackNewPacks: Int32;
+
 // The PACK list scrolls: the first choice shown in the top row (-1 when the list has just
 // opened: WardrobeTabsRedrawPacks then scrolls the chosen pack into view), and its scroll bar.
 @addField(WardrobeScreenController)
@@ -642,6 +672,15 @@ public let m_wtButtonCounts: array<wref<inkText>>;
 // holds a NEW item.
 @addField(WardrobeScreenController)
 public let m_wtButtonNews: array<wref<inkRectangle>>;
+
+// Per button, the state it was last styled with (WardrobeTabsStyleButton) and, for slot rows,
+// whether its label is lit as worn, so hovering restyles one button (WardrobeTabsRestyle)
+// instead of redrawing everything.
+@addField(WardrobeScreenController)
+public let m_wtButtonActive: array<Bool>;
+
+@addField(WardrobeScreenController)
+public let m_wtButtonWorn: array<Bool>;
 
 @addField(WardrobeScreenController)
 public let m_wtSlotNew: array<Bool>;
@@ -1580,6 +1619,7 @@ private func WardrobeTabsItemPack(item: ref<InventoryGridItemData>) -> wref<Ward
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsCountPacks(screen: ref<WardrobeScreenController>) -> Void {
     screen.m_wtPackCounted = true;
+    screen.m_wtPackRowsReady = false;
     let list: ref<WardrobeTabsPackList> = this.WardrobeTabsPacks();
     for pack in list.packs {
         pack.count = 0;
@@ -1629,60 +1669,70 @@ private func WardrobeTabsRedrawPacks(screen: ref<WardrobeScreenController>) -> V
     }
     let view: ref<ViewManager> = this.WardrobeTabsView();
     let list: ref<WardrobeTabsPackList> = this.WardrobeTabsPacks();
-    // NEW dots: on PACK while anything is NEW, and on each row whose pack holds a NEW item
-    // (ALL with any). Packs are looked up from the NEW records, whatever the item source.
-    let newItems: array<TweakDBID> = screen.m_outfitSystem.m_wtNewItems;
-    let newPacks: array<wref<WardrobeTabsPack>>;
-    for record in newItems {
-        ArrayPush(newPacks, WardrobeTabsPackOf(ItemID.FromTDBID(record)));
-    }
-    let baseNew: Bool = false;
-    let packNew: array<Bool>;
-    ArrayResize(packNew, ArraySize(list.packs));
-    for pack in newPacks {
-        if IsDefined(pack) {
-            if pack == list.baseMark {
-                baseNew = true;
-            } else {
-                let find: Int32 = 0;
-                while find < ArraySize(list.packs) {
-                    if list.packs[find] == pack {
-                        packNew[find] = true;
-                    }
-                    find += 1;
-                }
-            }
-        }
-    }
-    screen.m_wtButtonNews[button].SetVisible(ArraySize(newItems) > 0);
+    let newCount: Int32 = ArraySize(screen.m_outfitSystem.m_wtNewItems);
+    screen.m_wtButtonNews[button].SetVisible(newCount > 0);
     screen.m_wtButtonTexts[button].SetText(WardrobeTabsTextF(n"WUI-Header-Pack", [this.WardrobeTabsPackChoiceName(view.m_wtPackChoice)]));
     this.WardrobeTabsStyleButton(screen, button, view.m_wtPackChoice != 0 || screen.m_wtPackOpen);
     let open: Bool = screen.m_wtPackOpen && !view.m_wtOutfitsSection;
-    if open && !screen.m_wtPackCounted {
-        this.WardrobeTabsCountPacks(screen);
-    }
     if IsDefined(screen.m_wtPackMenu) {
         screen.m_wtPackMenu.SetVisible(open);
     }
-    ArrayClear(screen.m_wtPackRowChoice);
+    // Everything below only feeds the open list; this runs on every redraw.
+    if !open {
+        return;
+    }
+    if !screen.m_wtPackCounted {
+        this.WardrobeTabsCountPacks(screen);
+    }
+    // NEW dots on each row whose pack holds a NEW item (ALL with any). Packs are looked up
+    // from the NEW records, whatever the item source; the lookup may append packs.
+    if screen.m_wtPackNewItems != newCount || screen.m_wtPackNewPacks != ArraySize(list.packs) {
+        let newItems: array<TweakDBID> = screen.m_outfitSystem.m_wtNewItems;
+        let newPacks: array<wref<WardrobeTabsPack>>;
+        for record in newItems {
+            ArrayPush(newPacks, WardrobeTabsPackIn(list, ItemID.FromTDBID(record)));
+        }
+        ArrayClear(screen.m_wtPackNew);
+        ArrayResize(screen.m_wtPackNew, ArraySize(list.packs));
+        // WardrobeTabsPackIn gives null for base-game items (before 1.0.5 this compared with
+        // baseMark, which it never returns, so BASE GAME never showed a NEW dot).
+        screen.m_wtPackNewBase = false;
+        for pack in newPacks {
+            if !IsDefined(pack) {
+                screen.m_wtPackNewBase = true;
+            } else {
+                if pack.order >= 0 && pack.order < ArraySize(screen.m_wtPackNew) {
+                    screen.m_wtPackNew[pack.order] = true;
+                }
+            }
+        }
+        screen.m_wtPackNewItems = newCount;
+        screen.m_wtPackNewPacks = ArraySize(list.packs);
+    }
     let total: Int32 = list.baseCount;
     for pack in list.packs {
         total += pack.count;
     }
-    ArrayPush(screen.m_wtPackRowChoice, 0);
-    ArrayPush(screen.m_wtPackRowChoice, 1);
     // Packs with owned items (and the chosen one), by name.
-    let index: Int32 = 0;
-    while index < ArraySize(list.packs) {
-        if list.packs[index].count > 0 || view.m_wtPackChoice == index + 2 {
-            let at: Int32 = 2;
-            while at < ArraySize(screen.m_wtPackRowChoice)
-                && StrCmp(list.packs[screen.m_wtPackRowChoice[at] - 2].lower, list.packs[index].lower) <= 0 {
-                at += 1;
+    if !screen.m_wtPackRowsReady || screen.m_wtPackRowsPacks != ArraySize(list.packs) || screen.m_wtPackRowsChoice != view.m_wtPackChoice {
+        ArrayClear(screen.m_wtPackRowChoice);
+        ArrayPush(screen.m_wtPackRowChoice, 0);
+        ArrayPush(screen.m_wtPackRowChoice, 1);
+        let index: Int32 = 0;
+        while index < ArraySize(list.packs) {
+            if list.packs[index].count > 0 || view.m_wtPackChoice == index + 2 {
+                let at: Int32 = 2;
+                while at < ArraySize(screen.m_wtPackRowChoice)
+                    && StrCmp(list.packs[screen.m_wtPackRowChoice[at] - 2].lower, list.packs[index].lower) <= 0 {
+                    at += 1;
+                }
+                ArrayInsert(screen.m_wtPackRowChoice, at, index + 2);
             }
-            ArrayInsert(screen.m_wtPackRowChoice, at, index + 2);
+            index += 1;
         }
-        index += 1;
+        screen.m_wtPackRowsReady = true;
+        screen.m_wtPackRowsPacks = ArraySize(list.packs);
+        screen.m_wtPackRowsChoice = view.m_wtPackChoice;
     }
     // More choices than rows: the rows show a window from m_wtPackScroll on.
     let size: Int32 = ArraySize(screen.m_wtPackRowChoice);
@@ -1710,7 +1760,8 @@ private func WardrobeTabsRedrawPacks(screen: ref<WardrobeScreenController>) -> V
             let count: Int32 = choice == 0 ? total : (choice == 1 ? list.baseCount : list.packs[choice - 2].count);
             screen.m_wtButtonTexts[at].SetText(this.WardrobeTabsPackChoiceName(choice));
             screen.m_wtButtonCounts[at].SetText(ToString(count));
-            screen.m_wtButtonNews[at].SetVisible(choice == 0 ? ArraySize(newItems) > 0 : (choice == 1 ? baseNew : packNew[choice - 2]));
+            screen.m_wtButtonNews[at].SetVisible(choice == 0 ? newCount > 0
+                : (choice == 1 ? screen.m_wtPackNewBase : (choice - 2 < ArraySize(screen.m_wtPackNew) && screen.m_wtPackNew[choice - 2])));
             this.WardrobeTabsStyleButton(screen, at, choice == view.m_wtPackChoice);
         }
         row += 1;
@@ -3107,12 +3158,67 @@ private func WardrobeTabsAreaSlots(screen: ref<WardrobeScreenController>, area: 
 
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsStyleButton(screen: ref<WardrobeScreenController>, button: Int32, active: Bool) -> Void {
+    if ArraySize(screen.m_wtButtonActive) < ArraySize(screen.m_wtButtons) {
+        ArrayResize(screen.m_wtButtonActive, ArraySize(screen.m_wtButtons));
+        ArrayResize(screen.m_wtButtonWorn, ArraySize(screen.m_wtButtons));
+    }
+    screen.m_wtButtonActive[button] = active;
+    screen.m_wtButtonWorn[button] = false;
     let hovered: Bool = screen.m_wtHover == screen.m_wtButtons[button];
     screen.m_wtButtonBgs[button].SetTintColor(active ? new HDRColor(0.090, 0.173, 0.180, 1.0)
         : (hovered ? new HDRColor(0.412, 0.086, 0.090, 1.0) : new HDRColor(0.263, 0.086, 0.094, 1.0)));
     screen.m_wtButtonTexts[button].SetTintColor(active ? new HDRColor(0.369, 0.965, 1.0, 1.0)
         : (hovered ? new HDRColor(1.370, 0.444, 0.405, 1.0) : new HDRColor(1.176, 0.381, 0.348, 1.0)));
     screen.m_wtButtonCounts[button].SetTintColor(active ? new HDRColor(0.204, 0.569, 0.592, 1.0) : new HDRColor(0.682, 0.231, 0.212, 1.0));
+}
+
+// A slot row whose slot is worn (and not selected) has a blue label, except while hovered.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsTintWorn(screen: ref<WardrobeScreenController>, button: Int32) -> Void {
+    if screen.m_wtButtonWorn[button] && screen.m_wtHover != screen.m_wtButtons[button] {
+        screen.m_wtButtonTexts[button].SetTintColor(new HDRColor(0.369, 0.965, 1.0, 1.0));
+    }
+}
+
+// Hover changes only restyle the widget they touch: a full WardrobeTabsRedraw per pointer
+// move lagged badly with thousands of items and hundreds of packs (reported on 1.0.4).
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsRestyle(screen: ref<WardrobeScreenController>, widget: wref<inkWidget>) -> Void {
+    if !IsDefined(widget) {
+        return;
+    }
+    let button: Int32 = 0;
+    while button < ArraySize(screen.m_wtButtons) {
+        if screen.m_wtButtons[button] == widget {
+            if button < ArraySize(screen.m_wtButtonActive) {
+                // StyleButton clears the worn mark; put it back.
+                let worn: Bool = screen.m_wtButtonWorn[button];
+                this.WardrobeTabsStyleButton(screen, button, screen.m_wtButtonActive[button]);
+                screen.m_wtButtonWorn[button] = worn;
+                this.WardrobeTabsTintWorn(screen, button);
+            }
+            return;
+        }
+        button += 1;
+    }
+    for head in screen.m_wtGroupHeads {
+        if head == widget {
+            this.WardrobeTabsRedrawBody(screen, this.WardrobeTabsSlotIndex(screen, this.WardrobeTabsView().m_wtSlot));
+            return;
+        }
+    }
+    for tile in screen.m_wtTiles {
+        if tile == widget {
+            this.WardrobeTabsRedrawBody(screen, this.WardrobeTabsSlotIndex(screen, this.WardrobeTabsView().m_wtSlot));
+            return;
+        }
+    }
+    for cell in screen.m_wtOutfitCells {
+        if cell == widget {
+            this.WardrobeTabsStyleOutfits(screen);
+            return;
+        }
+    }
 }
 
 @addMethod(inkPreviewGameController)
@@ -3193,9 +3299,8 @@ private func WardrobeTabsRedrawButtons(screen: ref<WardrobeScreenController>, se
             screen.m_wtButtonTexts[button].SetText(slot.ItemData.CategoryName);
             screen.m_wtButtonCounts[button].SetText(filtering ? ToString(screen.m_wtMatches[index]) : ToString(ArraySize(slot.Children)));
             this.WardrobeTabsStyleButton(screen, button, index == selected);
-            if index != selected && this.WardrobeTabsIsWorn(screen, index) && screen.m_wtHover != screen.m_wtButtons[button] {
-                screen.m_wtButtonTexts[button].SetTintColor(new HDRColor(0.369, 0.965, 1.0, 1.0));
-            }
+            screen.m_wtButtonWorn[button] = index != selected && this.WardrobeTabsIsWorn(screen, index);
+            this.WardrobeTabsTintWorn(screen, button);
             ArrayPush(screen.m_wtChipSlots, index);
         }
         chip += 1;
@@ -3926,8 +4031,10 @@ protected cb func OnWardrobeTabsHoverOver(evt: ref<inkPointerEvent>) -> Bool {
     }
     let target: wref<inkWidget> = evt.GetCurrentTarget();
     if screen.m_wtHover != target {
+        let old: wref<inkWidget> = screen.m_wtHover;
         screen.m_wtHover = target;
-        this.WardrobeTabsRedraw(screen);
+        this.WardrobeTabsRestyle(screen, old);
+        this.WardrobeTabsRestyle(screen, target);
     }
     return false;
 }
@@ -3941,7 +4048,7 @@ protected cb func OnWardrobeTabsHoverOut(evt: ref<inkPointerEvent>) -> Bool {
     let target: wref<inkWidget> = evt.GetCurrentTarget();
     if screen.m_wtHover == target {
         screen.m_wtHover = null;
-        this.WardrobeTabsRedraw(screen);
+        this.WardrobeTabsRestyle(screen, target);
     }
     return false;
 }
@@ -3997,7 +4104,11 @@ protected cb func OnWardrobeOutfitHoverOver(evt: ref<inkPointerEvent>) -> Bool {
     }
     let target: wref<inkWidget> = evt.GetCurrentTarget();
     let index: Int32 = this.WardrobeTabsOutfitIndex(screen, target);
+    let old: wref<inkWidget> = screen.m_wtHover;
     screen.m_wtHover = target;
+    if old != target {
+        this.WardrobeTabsRestyle(screen, old);
+    }
     screen.m_buttonHints.RemoveButtonHint(n"click");
     screen.m_buttonHints.RemoveButtonHint(n"drop_item");
     if index >= 0 {
