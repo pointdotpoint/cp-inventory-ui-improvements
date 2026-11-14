@@ -128,6 +128,8 @@ public abstract class WardrobeTabsConfig {
     // Tiles per group, the + tile included.
     public static func GroupTiles() -> Int32 = 9;
     public static func TileMax() -> Float = 170.0;
+    // Watcher ticks (0.05 s) to keep refitting body tile icons after a new one is requested.
+    public static func TileFitTicks() -> Int32 = 40;
     public static func TileGap() -> Float = 12.0;
 
     // Slot sidebar, left of the grid inside its container: slot chips per page, chip height and
@@ -639,6 +641,10 @@ public let m_wtTilePlus: array<wref<inkText>>;
 
 @addField(WardrobeScreenController)
 public let m_wtTileSlots: array<Int32>;
+
+// Watcher ticks left to refit tile icons after one was requested (WardrobeTabsWatchTileFit).
+@addField(WardrobeScreenController)
+public let m_wtTileFitTicks: Int32;
 
 // Drawer header.
 @addField(WardrobeScreenController)
@@ -3045,7 +3051,6 @@ private func WardrobeTabsRedrawBody(screen: ref<WardrobeScreenController>, selec
             let shownTiles: Int32 = Min(count, perGroup - 1) + 1;
             let size: Float = MinF(WardrobeTabsConfig.TileMax(), (width - gap * Cast<Float>(shownTiles - 1)) / Cast<Float>(shownTiles));
             let tileHeight: Float = MinF(size * 0.86, height - WardrobeTabsConfig.GroupHeader() - 14.0);
-            let scale: Float = MinF(0.7, tileHeight / 200.0);
             tile = 0;
             while tile < perGroup {
                 let at: Int32 = group * perGroup + tile;
@@ -3063,8 +3068,8 @@ private func WardrobeTabsRedrawBody(screen: ref<WardrobeScreenController>, selec
                     screen.m_wtTileBars[at].SetVisible(isItem && clothing && worn[tile] == selected);
                     screen.m_wtTilePlus[at].SetVisible(isPlus);
                     screen.m_wtTilePlus[at].SetTintColor(hovered ? activeRed : mildRed);
-                    screen.m_wtTileIcons[at].SetScale(new Vector2(scale, scale));
                     this.WardrobeTabsSetIcon(screen, at, isItem ? this.WardrobeTabsWornIcon(screen, worn[tile]) : "");
+                    this.WardrobeTabsFitIcon(screen, at);
                 }
                 tile += 1;
             }
@@ -3091,6 +3096,42 @@ private func WardrobeTabsSetIcon(screen: ref<WardrobeScreenController>, tile: In
     icon.SetVisible(NotEquals(path, ""));
     if NotEquals(path, "") {
         InkImageUtils.RequestSetImage(this, icon, path);
+        // The icon's size is known only once it has loaded: refit for a while.
+        screen.m_wtTileFitTicks = WardrobeTabsConfig.TileFitTicks();
+    }
+}
+
+// Scales a tile's icon to fit inside the tile. Icons size themselves to their atlas part
+// (SetFitToContent), and those differ: a full-body outfit icon is much taller than a shirt's,
+// and with one scale for all (0.7, or tileHeight / 200) it spilled out of its tile.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsFitIcon(screen: ref<WardrobeScreenController>, tile: Int32) -> Void {
+    let icon: wref<inkImage> = screen.m_wtTileIcons[tile];
+    let box: Vector2 = screen.m_wtTiles[tile].GetSize();
+    let natural: Vector2 = icon.GetDesiredSize();
+    if natural.X <= 0.0 || natural.Y <= 0.0 {
+        natural = icon.GetSize();
+    }
+    let scale: Float = MinF(0.7, box.Y / 200.0);
+    if natural.X > 0.0 && natural.Y > 0.0 {
+        scale = MinF(0.7, MinF(box.X * 0.92 / natural.X, box.Y * 0.92 / natural.Y));
+    }
+    icon.SetScale(new Vector2(scale, scale));
+}
+
+// Watcher tick: refits the body tiles' icons while some may still be loading.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsWatchTileFit(screen: ref<WardrobeScreenController>) -> Void {
+    if screen.m_wtTileFitTicks <= 0 {
+        return;
+    }
+    screen.m_wtTileFitTicks -= 1;
+    let tile: Int32 = 0;
+    while tile < ArraySize(screen.m_wtTiles) {
+        if screen.m_wtTiles[tile].IsVisible() && NotEquals(screen.m_wtTileIconPaths[tile], "") {
+            this.WardrobeTabsFitIcon(screen, tile);
+        }
+        tile += 1;
     }
 }
 
@@ -3724,6 +3765,7 @@ protected cb func OnWardrobeTabsWatch(proxy: ref<inkAnimProxy>) -> Bool {
     this.WardrobeTabsWatchVFocus(screen);
     this.WardrobeTabsWatchTryOn(screen);
     this.WardrobeTabsWatchLift(screen);
+    this.WardrobeTabsWatchTileFit(screen);
     this.WardrobeTabsWatchSearchClear(screen);
     if this.WardrobeTabsView().m_wtOutfitsSection {
         this.WardrobeTabsWatchOutfits(screen);
