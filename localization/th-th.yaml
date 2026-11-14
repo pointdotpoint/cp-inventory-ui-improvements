@@ -23,6 +23,7 @@ WUI_Loc.th-th.Status-Edited: "แก้ไขแล้ว"
 # Drawer header buttons.
 WUI_Loc.th-th.Header-EquippedOnly: "ที่สวมอยู่"
 WUI_Loc.th-th.Header-NewOnly: "ใหม่"
+WUI_Loc.th-th.Header-ClearNew: "ล้างทั้งหมด"
 WUI_Loc.th-th.Header-Pack: "แพ็ก: {0}"
 WUI_Loc.th-th.Pack-All: "ทั้งหมด"
 WUI_Loc.th-th.Pack-BaseGame: "เกมหลัก"

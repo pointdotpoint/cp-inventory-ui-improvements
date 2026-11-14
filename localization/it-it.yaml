@@ -23,6 +23,7 @@ WUI_Loc.it-it.Status-Edited: "MODIFICATO"
 # Drawer header buttons.
 WUI_Loc.it-it.Header-EquippedOnly: "INDOSSATI"
 WUI_Loc.it-it.Header-NewOnly: "NUOVI"
+WUI_Loc.it-it.Header-ClearNew: "CANCELLA TUTTO"
 WUI_Loc.it-it.Header-Pack: "PACK: {0}"
 WUI_Loc.it-it.Pack-All: "TUTTI"
 WUI_Loc.it-it.Pack-BaseGame: "GIOCO BASE"

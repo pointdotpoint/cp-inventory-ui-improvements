@@ -23,6 +23,7 @@ WUI_Loc.ru-ru.Status-Edited: "ИЗМЕНЕНО"
 # Drawer header buttons.
 WUI_Loc.ru-ru.Header-EquippedOnly: "НАДЕТОЕ"
 WUI_Loc.ru-ru.Header-NewOnly: "НОВОЕ"
+WUI_Loc.ru-ru.Header-ClearNew: "СБРОСИТЬ ВСЁ"
 WUI_Loc.ru-ru.Header-Pack: "ПАК: {0}"
 WUI_Loc.ru-ru.Pack-All: "ВСЕ"
 WUI_Loc.ru-ru.Pack-BaseGame: "ОСНОВНАЯ ИГРА"

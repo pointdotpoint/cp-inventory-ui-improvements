@@ -23,6 +23,7 @@ WUI_Loc.cz-cz.Status-Edited: "UPRAVENO"
 # Drawer header buttons (room: 18 letters; PACK 16 with the pack name).
 WUI_Loc.cz-cz.Header-EquippedOnly: "NA SOBĚ"
 WUI_Loc.cz-cz.Header-NewOnly: "NOVÉ"
+WUI_Loc.cz-cz.Header-ClearNew: "VYMAZAT VŠE"
 WUI_Loc.cz-cz.Header-Pack: "BALÍK: {0}"
 WUI_Loc.cz-cz.Pack-All: "VŠE"
 WUI_Loc.cz-cz.Pack-BaseGame: "ZÁKLADNÍ HRA"

@@ -23,6 +23,7 @@ WUI_Loc.pl-pl.Status-Edited: "ZMIENIONY"
 # Drawer header buttons (room: 18 letters; PACK 16 with the pack name).
 WUI_Loc.pl-pl.Header-EquippedOnly: "ZAŁOŻONE"
 WUI_Loc.pl-pl.Header-NewOnly: "NOWE"
+WUI_Loc.pl-pl.Header-ClearNew: "WYCZYŚĆ WSZYSTKO"
 WUI_Loc.pl-pl.Header-Pack: "PAKIET: {0}"
 WUI_Loc.pl-pl.Pack-All: "WSZYSTKIE"
 WUI_Loc.pl-pl.Pack-BaseGame: "GRA BAZOWA"

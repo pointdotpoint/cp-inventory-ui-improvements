@@ -23,6 +23,7 @@ WUI_Loc.hu-hu.Status-Edited: "MÓDOSÍTVA"
 # Drawer header buttons (room: 18 letters; PACK 16 with the pack name).
 WUI_Loc.hu-hu.Header-EquippedOnly: "VISELT"
 WUI_Loc.hu-hu.Header-NewOnly: "ÚJ"
+WUI_Loc.hu-hu.Header-ClearNew: "MIND TÖRLÉSE"
 WUI_Loc.hu-hu.Header-Pack: "CSOMAG: {0}"
 WUI_Loc.hu-hu.Pack-All: "MIND"
 WUI_Loc.hu-hu.Pack-BaseGame: "ALAPJÁTÉK"

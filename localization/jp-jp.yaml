@@ -23,6 +23,7 @@ WUI_Loc.jp-jp.Status-Edited: "編集済み"
 # Drawer header buttons.
 WUI_Loc.jp-jp.Header-EquippedOnly: "装備中"
 WUI_Loc.jp-jp.Header-NewOnly: "新着"
+WUI_Loc.jp-jp.Header-ClearNew: "すべて既読"
 WUI_Loc.jp-jp.Header-Pack: "パック: {0}"
 WUI_Loc.jp-jp.Pack-All: "すべて"
 WUI_Loc.jp-jp.Pack-BaseGame: "本編"

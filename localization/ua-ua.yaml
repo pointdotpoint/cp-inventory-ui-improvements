@@ -23,6 +23,7 @@ WUI_Loc.ua-ua.Status-Edited: "ЗМІНЕНО"
 # Drawer header buttons.
 WUI_Loc.ua-ua.Header-EquippedOnly: "ВДЯГНЕНЕ"
 WUI_Loc.ua-ua.Header-NewOnly: "НОВЕ"
+WUI_Loc.ua-ua.Header-ClearNew: "СКИНУТИ ВСЕ"
 WUI_Loc.ua-ua.Header-Pack: "ПАК: {0}"
 WUI_Loc.ua-ua.Pack-All: "ВСІ"
 WUI_Loc.ua-ua.Pack-BaseGame: "ОСНОВНА ГРА"

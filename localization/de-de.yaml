@@ -23,6 +23,7 @@ WUI_Loc.de-de.Status-Edited: "GEÄNDERT"
 # Drawer header buttons.
 WUI_Loc.de-de.Header-EquippedOnly: "GETRAGEN"
 WUI_Loc.de-de.Header-NewOnly: "NEU"
+WUI_Loc.de-de.Header-ClearNew: "ALLE LÖSCHEN"
 WUI_Loc.de-de.Header-Pack: "PAKET: {0}"
 WUI_Loc.de-de.Pack-All: "ALLE"
 WUI_Loc.de-de.Pack-BaseGame: "HAUPTSPIEL"

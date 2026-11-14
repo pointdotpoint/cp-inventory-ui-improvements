@@ -27,6 +27,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
             "Status-Edited",
             "Header-EquippedOnly",
             "Header-NewOnly",
+            "Header-ClearNew",
             "Header-Pack",
             "Pack-All",
             "Pack-BaseGame",
@@ -86,6 +87,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "EDITED");
         this.Text("WUI-Header-EquippedOnly", "EQUIPPED");
         this.Text("WUI-Header-NewOnly", "NEW");
+        this.Text("WUI-Header-ClearNew", "CLEAR ALL");
         this.Text("WUI-Header-Pack", "PACK: {0}");
         this.Text("WUI-Pack-All", "ALL");
         this.Text("WUI-Pack-BaseGame", "BASE GAME");
@@ -143,6 +145,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "معدّل");
         this.Text("WUI-Header-EquippedOnly", "الملبوس");
         this.Text("WUI-Header-NewOnly", "الجديد");
+        this.Text("WUI-Header-ClearNew", "مسح الكل");
         this.Text("WUI-Header-Pack", "الحزمة: {0}");
         this.Text("WUI-Pack-All", "الكل");
         this.Text("WUI-Pack-BaseGame", "اللعبة الأساسية");
@@ -199,6 +202,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "UPRAVENO");
         this.Text("WUI-Header-EquippedOnly", "NA SOBĚ");
         this.Text("WUI-Header-NewOnly", "NOVÉ");
+        this.Text("WUI-Header-ClearNew", "VYMAZAT VŠE");
         this.Text("WUI-Header-Pack", "BALÍK: {0}");
         this.Text("WUI-Pack-All", "VŠE");
         this.Text("WUI-Pack-BaseGame", "ZÁKLADNÍ HRA");
@@ -255,6 +259,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "GEÄNDERT");
         this.Text("WUI-Header-EquippedOnly", "GETRAGEN");
         this.Text("WUI-Header-NewOnly", "NEU");
+        this.Text("WUI-Header-ClearNew", "ALLE LÖSCHEN");
         this.Text("WUI-Header-Pack", "PAKET: {0}");
         this.Text("WUI-Pack-All", "ALLE");
         this.Text("WUI-Pack-BaseGame", "HAUPTSPIEL");
@@ -311,6 +316,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "EDITADO");
         this.Text("WUI-Header-EquippedOnly", "EQUIPADOS");
         this.Text("WUI-Header-NewOnly", "NUEVOS");
+        this.Text("WUI-Header-ClearNew", "BORRAR TODO");
         this.Text("WUI-Header-Pack", "PACK: {0}");
         this.Text("WUI-Pack-All", "TODOS");
         this.Text("WUI-Pack-BaseGame", "JUEGO BASE");
@@ -367,6 +373,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "EDITADO");
         this.Text("WUI-Header-EquippedOnly", "EQUIPADOS");
         this.Text("WUI-Header-NewOnly", "NUEVOS");
+        this.Text("WUI-Header-ClearNew", "BORRAR TODO");
         this.Text("WUI-Header-Pack", "PACK: {0}");
         this.Text("WUI-Pack-All", "TODOS");
         this.Text("WUI-Pack-BaseGame", "JUEGO BASE");
@@ -423,6 +430,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "MODIFIÉE");
         this.Text("WUI-Header-EquippedOnly", "ÉQUIPÉS");
         this.Text("WUI-Header-NewOnly", "NOUVEAUX");
+        this.Text("WUI-Header-ClearNew", "TOUT EFFACER");
         this.Text("WUI-Header-Pack", "PACK : {0}");
         this.Text("WUI-Pack-All", "TOUS");
         this.Text("WUI-Pack-BaseGame", "JEU DE BASE");
@@ -479,6 +487,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "MÓDOSÍTVA");
         this.Text("WUI-Header-EquippedOnly", "VISELT");
         this.Text("WUI-Header-NewOnly", "ÚJ");
+        this.Text("WUI-Header-ClearNew", "MIND TÖRLÉSE");
         this.Text("WUI-Header-Pack", "CSOMAG: {0}");
         this.Text("WUI-Pack-All", "MIND");
         this.Text("WUI-Pack-BaseGame", "ALAPJÁTÉK");
@@ -535,6 +544,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "MODIFICATO");
         this.Text("WUI-Header-EquippedOnly", "INDOSSATI");
         this.Text("WUI-Header-NewOnly", "NUOVI");
+        this.Text("WUI-Header-ClearNew", "CANCELLA TUTTO");
         this.Text("WUI-Header-Pack", "PACK: {0}");
         this.Text("WUI-Pack-All", "TUTTI");
         this.Text("WUI-Pack-BaseGame", "GIOCO BASE");
@@ -591,6 +601,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "編集済み");
         this.Text("WUI-Header-EquippedOnly", "装備中");
         this.Text("WUI-Header-NewOnly", "新着");
+        this.Text("WUI-Header-ClearNew", "すべて既読");
         this.Text("WUI-Header-Pack", "パック: {0}");
         this.Text("WUI-Pack-All", "すべて");
         this.Text("WUI-Pack-BaseGame", "本編");
@@ -647,6 +658,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "편집됨");
         this.Text("WUI-Header-EquippedOnly", "장착");
         this.Text("WUI-Header-NewOnly", "신규");
+        this.Text("WUI-Header-ClearNew", "모두 지우기");
         this.Text("WUI-Header-Pack", "팩: {0}");
         this.Text("WUI-Pack-All", "전체");
         this.Text("WUI-Pack-BaseGame", "기본 게임");
@@ -703,6 +715,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "ZMIENIONY");
         this.Text("WUI-Header-EquippedOnly", "ZAŁOŻONE");
         this.Text("WUI-Header-NewOnly", "NOWE");
+        this.Text("WUI-Header-ClearNew", "WYCZYŚĆ WSZYSTKO");
         this.Text("WUI-Header-Pack", "PAKIET: {0}");
         this.Text("WUI-Pack-All", "WSZYSTKIE");
         this.Text("WUI-Pack-BaseGame", "GRA BAZOWA");
@@ -759,6 +772,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "EDITADO");
         this.Text("WUI-Header-EquippedOnly", "EQUIPADOS");
         this.Text("WUI-Header-NewOnly", "NOVOS");
+        this.Text("WUI-Header-ClearNew", "LIMPAR TUDO");
         this.Text("WUI-Header-Pack", "PACK: {0}");
         this.Text("WUI-Pack-All", "TODOS");
         this.Text("WUI-Pack-BaseGame", "JOGO BASE");
@@ -815,6 +829,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "ИЗМЕНЕНО");
         this.Text("WUI-Header-EquippedOnly", "НАДЕТОЕ");
         this.Text("WUI-Header-NewOnly", "НОВОЕ");
+        this.Text("WUI-Header-ClearNew", "СБРОСИТЬ ВСЁ");
         this.Text("WUI-Header-Pack", "ПАК: {0}");
         this.Text("WUI-Pack-All", "ВСЕ");
         this.Text("WUI-Pack-BaseGame", "ОСНОВНАЯ ИГРА");
@@ -871,6 +886,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "แก้ไขแล้ว");
         this.Text("WUI-Header-EquippedOnly", "ที่สวมอยู่");
         this.Text("WUI-Header-NewOnly", "ใหม่");
+        this.Text("WUI-Header-ClearNew", "ล้างทั้งหมด");
         this.Text("WUI-Header-Pack", "แพ็ก: {0}");
         this.Text("WUI-Pack-All", "ทั้งหมด");
         this.Text("WUI-Pack-BaseGame", "เกมหลัก");
@@ -927,6 +943,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "DÜZENLENDİ");
         this.Text("WUI-Header-EquippedOnly", "GİYİLENLER");
         this.Text("WUI-Header-NewOnly", "YENİ");
+        this.Text("WUI-Header-ClearNew", "TÜMÜNÜ TEMİZLE");
         this.Text("WUI-Header-Pack", "PAKET: {0}");
         this.Text("WUI-Pack-All", "TÜMÜ");
         this.Text("WUI-Pack-BaseGame", "ANA OYUN");
@@ -983,6 +1000,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "ЗМІНЕНО");
         this.Text("WUI-Header-EquippedOnly", "ВДЯГНЕНЕ");
         this.Text("WUI-Header-NewOnly", "НОВЕ");
+        this.Text("WUI-Header-ClearNew", "СКИНУТИ ВСЕ");
         this.Text("WUI-Header-Pack", "ПАК: {0}");
         this.Text("WUI-Pack-All", "ВСІ");
         this.Text("WUI-Pack-BaseGame", "ОСНОВНА ГРА");
@@ -1039,6 +1057,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "已编辑");
         this.Text("WUI-Header-EquippedOnly", "已装备");
         this.Text("WUI-Header-NewOnly", "新");
+        this.Text("WUI-Header-ClearNew", "全部清除");
         this.Text("WUI-Header-Pack", "包: {0}");
         this.Text("WUI-Pack-All", "全部");
         this.Text("WUI-Pack-BaseGame", "原版游戏");
@@ -1095,6 +1114,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Status-Edited", "已編輯");
         this.Text("WUI-Header-EquippedOnly", "已裝備");
         this.Text("WUI-Header-NewOnly", "新增");
+        this.Text("WUI-Header-ClearNew", "全部清除");
         this.Text("WUI-Header-Pack", "包: {0}");
         this.Text("WUI-Pack-All", "全部");
         this.Text("WUI-Pack-BaseGame", "原版遊戲");

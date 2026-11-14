@@ -23,6 +23,7 @@ WUI_Loc.zh-tw.Status-Edited: "已編輯"
 # Drawer header buttons.
 WUI_Loc.zh-tw.Header-EquippedOnly: "已裝備"
 WUI_Loc.zh-tw.Header-NewOnly: "新增"
+WUI_Loc.zh-tw.Header-ClearNew: "全部清除"
 WUI_Loc.zh-tw.Header-Pack: "包: {0}"
 WUI_Loc.zh-tw.Pack-All: "全部"
 WUI_Loc.zh-tw.Pack-BaseGame: "原版遊戲"

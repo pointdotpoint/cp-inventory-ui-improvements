@@ -23,6 +23,7 @@ WUI_Loc.fr-fr.Status-Edited: "MODIFIÉE"
 # Drawer header buttons.
 WUI_Loc.fr-fr.Header-EquippedOnly: "ÉQUIPÉS"
 WUI_Loc.fr-fr.Header-NewOnly: "NOUVEAUX"
+WUI_Loc.fr-fr.Header-ClearNew: "TOUT EFFACER"
 WUI_Loc.fr-fr.Header-Pack: "PACK : {0}"
 WUI_Loc.fr-fr.Pack-All: "TOUS"
 WUI_Loc.fr-fr.Pack-BaseGame: "JEU DE BASE"

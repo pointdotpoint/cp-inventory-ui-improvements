@@ -23,6 +23,7 @@ WUI_Loc.kr-kr.Status-Edited: "편집됨"
 # Drawer header buttons.
 WUI_Loc.kr-kr.Header-EquippedOnly: "장착"
 WUI_Loc.kr-kr.Header-NewOnly: "신규"
+WUI_Loc.kr-kr.Header-ClearNew: "모두 지우기"
 WUI_Loc.kr-kr.Header-Pack: "팩: {0}"
 WUI_Loc.kr-kr.Pack-All: "전체"
 WUI_Loc.kr-kr.Pack-BaseGame: "기본 게임"

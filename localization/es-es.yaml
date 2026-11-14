@@ -23,6 +23,7 @@ WUI_Loc.es-es.Status-Edited: "EDITADO"
 # Drawer header buttons.
 WUI_Loc.es-es.Header-EquippedOnly: "EQUIPADOS"
 WUI_Loc.es-es.Header-NewOnly: "NUEVOS"
+WUI_Loc.es-es.Header-ClearNew: "BORRAR TODO"
 WUI_Loc.es-es.Header-Pack: "PACK: {0}"
 WUI_Loc.es-es.Pack-All: "TODOS"
 WUI_Loc.es-es.Pack-BaseGame: "JUEGO BASE"

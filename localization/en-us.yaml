@@ -35,6 +35,7 @@ WUI_Loc.en-us.Status-Edited: "EDITED"
 # the filter showing only items tagged NEW, 6 letters; PACK 16 letters with the pack name).
 WUI_Loc.en-us.Header-EquippedOnly: "EQUIPPED"
 WUI_Loc.en-us.Header-NewOnly: "NEW"
+WUI_Loc.en-us.Header-ClearNew: "CLEAR ALL"
 WUI_Loc.en-us.Header-Pack: "PACK: {0}"
 WUI_Loc.en-us.Pack-All: "ALL"
 WUI_Loc.en-us.Pack-BaseGame: "BASE GAME"

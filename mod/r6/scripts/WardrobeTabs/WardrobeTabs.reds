@@ -2603,6 +2603,20 @@ private func WardrobeTabsClearNew(screen: ref<WardrobeScreenController>, itemID:
     return true;
 }
 
+// CLEAR ALL (button 7 while the NEW filter is on): drops every NEW tag and switches the filter
+// off. The records stay in m_wtSeen, so they never come back as NEW.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsClearAllNew(screen: ref<WardrobeScreenController>) -> Void {
+    let count: Int32 = ArraySize(screen.m_outfitSystem.m_wtNewItems);
+    ArrayClear(screen.m_outfitSystem.m_wtNewItems);
+    this.WardrobeTabsView().m_wtNewSet = new inkHashMap();
+    screen.m_wtNewOnly = false;
+    screen.m_wtNewOnlySet = new inkHashMap();
+    WardrobeTabsDebug("NEW tags cleared: " + ToString(count));
+    // Refills the grid (cards redraw without their tags), redoes the dots, redraws.
+    this.WardrobeTabsFilterChanged(screen);
+}
+
 // Splits a freshly populated source into its slots and tags each slot with its area.
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsCapture(screen: ref<WardrobeScreenController>) -> Void {
@@ -3301,7 +3315,9 @@ private func WardrobeTabsRedrawButtons(screen: ref<WardrobeScreenController>, se
         screen.m_wtButtonNews[area].SetVisible(fresh);
         area += 1;
     }
-    this.WardrobeTabsStyleButton(screen, 7, screen.m_wtEquippedOnly);
+    // Button 7 is EQUIPPED, or CLEAR ALL (every NEW tag) while the NEW filter is on.
+    screen.m_wtButtonTexts[7].SetText(screen.m_wtNewOnly ? WardrobeTabsText(n"WUI-Header-ClearNew") : WardrobeTabsText(n"WUI-Header-EquippedOnly"));
+    this.WardrobeTabsStyleButton(screen, 7, screen.m_wtEquippedOnly && !screen.m_wtNewOnly);
     let sort: Int32 = WardrobeTabsConfig.SortButton();
     if sort < buttons {
         screen.m_wtButtonTexts[sort].SetText(WardrobeTabsTextF(n"WUI-Outfits-Sort", [this.WardrobeTabsSortName(screen.m_outfitSystem.m_wtOutfitSort)]));
@@ -3983,6 +3999,8 @@ protected cb func OnWardrobeButtonClick(evt: ref<inkPointerEvent>) -> Bool {
     let view: ref<ViewManager> = this.WardrobeTabsView();
     if button <= WardrobeTabsConfig.OtherTab() {
         this.WardrobeTabsSelectArea(screen, button);
+    } else if button == 7 && screen.m_wtNewOnly {
+        this.WardrobeTabsClearAllNew(screen);
     } else if button == 7 {
         // As Equipment-EX's own filter icons do; the watcher sees the change.
         let category: ItemFilterCategory = screen.m_wtEquippedOnly ? ItemFilterCategory.AllItems : ItemFilterCategory.Clothes;

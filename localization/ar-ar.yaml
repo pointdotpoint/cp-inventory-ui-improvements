@@ -23,6 +23,7 @@ WUI_Loc.ar-ar.Status-Edited: "معدّل"
 # Drawer header buttons.
 WUI_Loc.ar-ar.Header-EquippedOnly: "الملبوس"
 WUI_Loc.ar-ar.Header-NewOnly: "الجديد"
+WUI_Loc.ar-ar.Header-ClearNew: "مسح الكل"
 WUI_Loc.ar-ar.Header-Pack: "الحزمة: {0}"
 WUI_Loc.ar-ar.Pack-All: "الكل"
 WUI_Loc.ar-ar.Pack-BaseGame: "اللعبة الأساسية"
