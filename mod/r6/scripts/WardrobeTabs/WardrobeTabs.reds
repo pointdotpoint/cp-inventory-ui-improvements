@@ -200,6 +200,8 @@ public abstract class WardrobeTabsConfig {
     public static func NewOnlyButton() -> Int32 = WardrobeTabsConfig.ColumnButton(WardrobeTabsConfig.MaxColumns()) + 1;
     // SORT in the outfits view's header, after NEW: A-Z, newest, oldest (OutfitSystem.m_wtOutfitSort).
     public static func SortButton() -> Int32 = WardrobeTabsConfig.NewOnlyButton() + 1;
+    // CLEAR ALL below NEW, shown only while the NEW filter is on: drops every NEW tag.
+    public static func ClearNewButton() -> Int32 = WardrobeTabsConfig.SortButton() + 1;
     public static func MinColumns() -> Int32 = 4;
     public static func MaxColumns() -> Int32 = 7;
 
@@ -1508,6 +1510,12 @@ private func WardrobeTabsBuildPacks(screen: ref<WardrobeScreenController>, conta
         ArrayPush(screen.m_wtClothingOnly, this.WardrobeTabsMakeButton(screen, screen.m_wtHeader, WardrobeTabsText(n"WUI-Header-NewOnly"), width - 125.0, 148.0, 115.0, 62.0));
         // SORT (SortButton()), in the outfits view right of NO OUTFIT; its label is set per redraw.
         ArrayPush(screen.m_wtOutfitsOnly, this.WardrobeTabsMakeButton(screen, screen.m_wtHeader, "", 620.0, 148.0, 300.0, 62.0));
+        // CLEAR ALL (ClearNewButton()), below NEW and right-aligned with it; shown per redraw
+        // while the NEW filter is on.
+        if ArraySize(screen.m_wtButtons) != WardrobeTabsConfig.ClearNewButton() {
+            ModLog(n"WardrobeTabs", "CLEAR ALL button at index " + ToString(ArraySize(screen.m_wtButtons)) + ", expected " + ToString(WardrobeTabsConfig.ClearNewButton()));
+        }
+        this.WardrobeTabsMakeButton(screen, screen.m_wtHeader, WardrobeTabsText(n"WUI-Header-ClearNew"), width - 185.0, 218.0, 175.0, 52.0).SetVisible(false);
     }
 }
 
@@ -2496,6 +2504,9 @@ private func WardrobeTabsRefresh(screen: ref<WardrobeScreenController>) -> Void 
             widget.SetVisible(!clothing);
         }
     }
+    if WardrobeTabsConfig.ClearNewButton() < ArraySize(screen.m_wtButtons) {
+        screen.m_wtButtons[WardrobeTabsConfig.ClearNewButton()].SetVisible(clothing && screen.m_wtNewOnly);
+    }
     if !clothing {
         // Filled now rather than on the next tick.
         screen.m_wtOutfitSig = "";
@@ -2603,7 +2614,7 @@ private func WardrobeTabsClearNew(screen: ref<WardrobeScreenController>, itemID:
     return true;
 }
 
-// CLEAR ALL (button 7 while the NEW filter is on): drops every NEW tag and switches the filter
+// CLEAR ALL (ClearNewButton(), below NEW while the NEW filter is on): drops every NEW tag and switches the filter
 // off. The records stay in m_wtSeen, so they never come back as NEW.
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsClearAllNew(screen: ref<WardrobeScreenController>) -> Void {
@@ -3315,9 +3326,12 @@ private func WardrobeTabsRedrawButtons(screen: ref<WardrobeScreenController>, se
         screen.m_wtButtonNews[area].SetVisible(fresh);
         area += 1;
     }
-    // Button 7 is EQUIPPED, or CLEAR ALL (every NEW tag) while the NEW filter is on.
-    screen.m_wtButtonTexts[7].SetText(screen.m_wtNewOnly ? WardrobeTabsText(n"WUI-Header-ClearNew") : WardrobeTabsText(n"WUI-Header-EquippedOnly"));
-    this.WardrobeTabsStyleButton(screen, 7, screen.m_wtEquippedOnly && !screen.m_wtNewOnly);
+    this.WardrobeTabsStyleButton(screen, 7, screen.m_wtEquippedOnly);
+    let clearNew: Int32 = WardrobeTabsConfig.ClearNewButton();
+    if clearNew < buttons {
+        screen.m_wtButtons[clearNew].SetVisible(clothing && screen.m_wtNewOnly);
+        this.WardrobeTabsStyleButton(screen, clearNew, false);
+    }
     let sort: Int32 = WardrobeTabsConfig.SortButton();
     if sort < buttons {
         screen.m_wtButtonTexts[sort].SetText(WardrobeTabsTextF(n"WUI-Outfits-Sort", [this.WardrobeTabsSortName(screen.m_outfitSystem.m_wtOutfitSort)]));
@@ -3999,8 +4013,6 @@ protected cb func OnWardrobeButtonClick(evt: ref<inkPointerEvent>) -> Bool {
     let view: ref<ViewManager> = this.WardrobeTabsView();
     if button <= WardrobeTabsConfig.OtherTab() {
         this.WardrobeTabsSelectArea(screen, button);
-    } else if button == 7 && screen.m_wtNewOnly {
-        this.WardrobeTabsClearAllNew(screen);
     } else if button == 7 {
         // As Equipment-EX's own filter icons do; the watcher sees the change.
         let category: ItemFilterCategory = screen.m_wtEquippedOnly ? ItemFilterCategory.AllItems : ItemFilterCategory.Clothes;
@@ -4058,6 +4070,8 @@ protected cb func OnWardrobeButtonClick(evt: ref<inkPointerEvent>) -> Bool {
         this.WardrobeTabsRedraw(screen);
     } else if button == WardrobeTabsConfig.NewOnlyButton() {
         this.WardrobeTabsToggleNewOnly(screen);
+    } else if button == WardrobeTabsConfig.ClearNewButton() {
+        this.WardrobeTabsClearAllNew(screen);
     } else if button >= WardrobeTabsConfig.ColumnButton(WardrobeTabsConfig.MinColumns()) {
         let columns: Int32 = WardrobeTabsConfig.MinColumns() + button - WardrobeTabsConfig.ColumnButton(WardrobeTabsConfig.MinColumns());
         if columns <= WardrobeTabsConfig.MaxColumns() && columns != WardrobeTabsColumns() {

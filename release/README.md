@@ -22,7 +22,8 @@ A redesign of the Equipment-EX wardrobe screen for Cyberpunk 2077.
   the playtime it was created at, and SORT orders them A-Z, newest or oldest first
   (favourites stay on top). After you change
   a saved look, UPDATE saves the change and REVERT puts the outfit back.
-- **EQUIPPED** shows only what V is wearing; **NEW** shows only items tagged NEW.
+- **EQUIPPED** shows only what V is wearing; **NEW** shows only items tagged NEW. While NEW
+  is on, **CLEAR ALL** below it removes every NEW tag at once.
 
 ## Requirements
 
