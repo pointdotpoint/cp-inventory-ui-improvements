@@ -43,6 +43,10 @@ Works with [WEAVE](https://www.nexusmods.com/cyberpunk2077/mods/28273) too, whic
 Equipment-EX's scripts with a faster version (see its page for what it needs). Recommended if
 you own thousands of clothing items.
 
+Works with [HUD Painter](https://www.nexusmods.com/cyberpunk2077/mods/14935): the wardrobe takes
+the colours of your HUD Painter preset, like the rest of the game's interface. Without it the
+wardrobe keeps the game's own colours.
+
 ## Install
 
 Install with Vortex or Mod Organizer, or extract the archive into the game folder (the

@@ -92,7 +92,7 @@ public abstract class WardrobeTabsConfig {
     public static func FeetLift() -> Float = 300.0;
 
     // NEW tags and the dots on rows and tabs that hold NEW items.
-    public static func NewColor() -> HDRColor = new HDRColor(1.0, 0.85, 0.25, 1.0)
+    public static func NewColor() -> CName = n"MainColors.Yellow"
 
     // Horizontal shift of the V preview: centred between the body column and the drawer
     // (-140 before the slot sidebar widened the drawer, minus half of GridLeft()).
@@ -1066,7 +1066,7 @@ private func WardrobeTabsDecorateCard() -> Void {
         tag.Reparent(root);
         let tagBg: ref<inkRectangle> = new inkRectangle();
         tagBg.SetAnchor(inkEAnchor.Fill);
-        tagBg.SetTintColor(new HDRColor(0.369, 0.965, 1.0, 1.0));
+        WardrobeTabsPaint(tagBg, n"MainColors.Blue");
         tagBg.SetInteractive(false);
         tagBg.Reparent(tag);
         let tagText: ref<inkText> = new inkText();
@@ -1090,7 +1090,7 @@ private func WardrobeTabsDecorateCard() -> Void {
         newTag.Reparent(root);
         let newBg: ref<inkRectangle> = new inkRectangle();
         newBg.SetAnchor(inkEAnchor.Fill);
-        newBg.SetTintColor(WardrobeTabsConfig.NewColor());
+        WardrobeTabsPaint(newBg, WardrobeTabsConfig.NewColor());
         newBg.SetInteractive(false);
         newBg.Reparent(newTag);
         let newText: ref<inkText> = new inkText();
@@ -1115,7 +1115,8 @@ private func WardrobeTabsDecorateCard() -> Void {
         packText.SetSize((WardrobeTabsConfig.CardArtWidth() - 12.0) * k, 22.0 * t);
         packText.SetMargin(new inkMargin((WardrobeTabsConfig.CardArtLeft() + 8.0) * k, 154.0 * k - 22.0 * t, 0.0, 0.0));
         packText.SetOverflowPolicy(textOverflowPolicy.DotsEnd);
-        packText.SetTintColor(new HDRColor(0.92, 0.62, 0.56, 0.85));
+        WardrobeTabsPaint(packText, n"MainColors.Red");
+        packText.SetOpacity(0.75);
         packText.SetInteractive(false);
         packText.Reparent(root);
     }
@@ -1140,7 +1141,7 @@ private func WardrobeTabsDecorateCard() -> Void {
     label.SetText(WardrobeTabsConfig.ItemName(data));
     label.SetWrapping(true, WardrobeTabsConfig.CardNameWidth() * k);
     label.SetSize(WardrobeTabsConfig.CardNameWidth() * k, 50.0 * t);
-    label.SetTintColor(wearing ? new HDRColor(0.369, 0.965, 1.0, 1.0) : new HDRColor(1.176, 0.381, 0.348, 1.0));
+    WardrobeTabsPaint(label, wearing ? n"MainColors.Blue" : n"MainColors.Red");
 }
 
 // Card hover for try-on, from the vanilla item display (the path Equipment-EX's tooltip
@@ -1262,6 +1263,29 @@ private func WardrobeTabsMakeRect(color: HDRColor, opacity: Float) -> ref<inkRec
 }
 
 @addMethod(inkPreviewGameController)
+private func WardrobeTabsMakeStyledRect(color: CName, opacity: Float) -> ref<inkRectangle> {
+    let rect: ref<inkRectangle> = this.WardrobeTabsMakeRect(new HDRColor(1.0, 1.0, 1.0, 1.0), opacity);
+    WardrobeTabsPaint(rect, color);
+    return rect;
+}
+
+// The mod's colours are properties of the game's main_colors.inkstyle (MainColors.Red...),
+// bound rather than set, so a mod that patches that style (HUD Painter) recolours the
+// wardrobe with the rest of the UI. Without one the vanilla values apply.
+public func WardrobeTabsPaint(widget: ref<inkWidget>, color: CName) -> Void {
+    if !IsDefined(widget) {
+        return;
+    }
+    if !Equals(widget.GetStylePath(), WardrobeTabsMainColors()) {
+        widget.SetStyle(WardrobeTabsMainColors());
+    }
+    widget.UnbindProperty(n"tintColor");
+    widget.BindProperty(n"tintColor", color);
+}
+
+public func WardrobeTabsMainColors() -> ResRef = r"base\\gameplay\\gui\\common\\main_colors.inkstyle"
+
+@addMethod(inkPreviewGameController)
 private func WardrobeTabsMakeButton(screen: ref<WardrobeScreenController>, parent: ref<inkCompoundWidget>, text: String, x: Float, y: Float, width: Float, height: Float) -> ref<inkCanvas> {
     let button: ref<inkCanvas> = new inkCanvas();
     button.SetAnchor(inkEAnchor.TopLeft);
@@ -1274,12 +1298,12 @@ private func WardrobeTabsMakeButton(screen: ref<WardrobeScreenController>, paren
     button.RegisterToCallback(n"OnHoverOver", this, n"OnWardrobeTabsHoverOver");
     button.RegisterToCallback(n"OnHoverOut", this, n"OnWardrobeTabsHoverOut");
     button.Reparent(parent);
-    let bg: ref<inkRectangle> = this.WardrobeTabsMakeRect(new HDRColor(0.263, 0.086, 0.094, 1.0), 0.8);
+    let bg: ref<inkRectangle> = this.WardrobeTabsMakeStyledRect(n"MainColors.DarkRed", 0.8);
     bg.Reparent(button);
     let edge: ref<inkRectangle> = new inkRectangle();
     edge.SetAnchor(inkEAnchor.BottomFillHorizontaly);
     edge.SetSize(width, 3.0);
-    edge.SetTintColor(new HDRColor(0.682, 0.231, 0.212, 1.0));
+    WardrobeTabsPaint(edge, n"MainColors.MildRed");
     edge.SetInteractive(false);
     edge.Reparent(button);
     let label: ref<inkText> = this.WardrobeTabsMakeText(Cast<Int32>(height * 0.45), 0.0);
@@ -1297,7 +1321,7 @@ private func WardrobeTabsMakeButton(screen: ref<WardrobeScreenController>, paren
     news.SetAnchorPoint(1.0, 0.0);
     news.SetSize(10.0, 10.0);
     news.SetMargin(new inkMargin(0.0, 5.0, 5.0, 0.0));
-    news.SetTintColor(WardrobeTabsConfig.NewColor());
+    WardrobeTabsPaint(news, WardrobeTabsConfig.NewColor());
     news.SetVisible(false);
     news.SetInteractive(false);
     news.Reparent(button);
@@ -1437,17 +1461,17 @@ private func WardrobeTabsBuildHeader(screen: ref<WardrobeScreenController>, head
     let accent: ref<inkRectangle> = new inkRectangle();
     accent.SetAnchor(inkEAnchor.TopFillHorizontaly);
     accent.SetSize(width, 4.0);
-    accent.SetTintColor(new HDRColor(1.176, 0.381, 0.348, 1.0));
+    WardrobeTabsPaint(accent, n"MainColors.Red");
     accent.SetInteractive(false);
     accent.Reparent(overlay);
     let title: ref<inkText> = this.WardrobeTabsMakeText(72, 0.0);
     title.SetMargin(new inkMargin(0.0, 10.0, 0.0, 0.0));
-    title.SetTintColor(new HDRColor(1.0, 0.86, 0.88, 1.0));
+    WardrobeTabsPaint(title, n"MainColors.White");
     title.Reparent(overlay);
     screen.m_wtTitle = title;
     let subtitle: ref<inkText> = this.WardrobeTabsMakeText(28, width - 40.0);
     subtitle.SetMargin(new inkMargin(4.0, 98.0, 0.0, 0.0));
-    subtitle.SetTintColor(new HDRColor(0.682, 0.231, 0.212, 1.0));
+    WardrobeTabsPaint(subtitle, n"MainColors.MildRed");
     subtitle.Reparent(overlay);
     screen.m_wtSubtitle = subtitle;
 
@@ -1533,7 +1557,7 @@ private func WardrobeTabsBuildPacks(screen: ref<WardrobeScreenController>, conta
     track.SetAnchor(inkEAnchor.TopLeft);
     track.SetSize(5.0, 0.0);
     track.SetMargin(new inkMargin(312.0, 8.0, 0.0, 0.0));
-    track.SetTintColor(new HDRColor(0.486, 0.129, 0.204, 1.0));
+    WardrobeTabsPaint(track, n"MainColors.DarkerRed");
     track.SetOpacity(0.5);
     track.SetInteractive(false);
     track.SetVisible(false);
@@ -1543,7 +1567,7 @@ private func WardrobeTabsBuildPacks(screen: ref<WardrobeScreenController>, conta
     thumb.SetAnchor(inkEAnchor.TopLeft);
     thumb.SetSize(5.0, 0.0);
     thumb.SetMargin(new inkMargin(312.0, 8.0, 0.0, 0.0));
-    thumb.SetTintColor(new HDRColor(1.176, 0.381, 0.348, 1.0));
+    WardrobeTabsPaint(thumb, n"MainColors.Red");
     thumb.SetInteractive(false);
     thumb.SetVisible(false);
     thumb.Reparent(menu);
@@ -1570,7 +1594,7 @@ private func WardrobeTabsBuildPacks(screen: ref<WardrobeScreenController>, conta
         box.childOrder = inkEChildOrder.Forward;
         box.SetInteractive(false);
         box.Reparent(rowButton);
-        this.WardrobeTabsMakeRect(new HDRColor(0.682, 0.231, 0.212, 1.0), 1.0).Reparent(box);
+        this.WardrobeTabsMakeStyledRect(n"MainColors.MildRed", 1.0).Reparent(box);
         let well: ref<inkRectangle> = this.WardrobeTabsMakeRect(new HDRColor(0.03, 0.02, 0.03, 1.0), 1.0);
         well.SetMargin(new inkMargin(2.0, 2.0, 2.0, 2.0));
         well.Reparent(box);
@@ -1580,7 +1604,7 @@ private func WardrobeTabsBuildPacks(screen: ref<WardrobeScreenController>, conta
         tick.SetAnchorPoint(0.0, 0.5);
         tick.SetSize(10.0, 10.0);
         tick.SetMargin(new inkMargin(19.0, 0.0, 0.0, 0.0));
-        tick.SetTintColor(new HDRColor(0.369, 0.965, 1.0, 1.0));
+        WardrobeTabsPaint(tick, n"MainColors.Blue");
         tick.SetInteractive(false);
         tick.SetVisible(false);
         tick.Reparent(rowButton);
@@ -1649,7 +1673,7 @@ private func WardrobeTabsBuildSearchClear(screen: ref<WardrobeScreenController>)
     mark.SetText("X");
     mark.SetAnchor(inkEAnchor.Centered);
     mark.SetAnchorPoint(0.5, 0.5);
-    mark.SetTintColor(new HDRColor(0.682, 0.231, 0.212, 1.0));
+    WardrobeTabsPaint(mark, n"MainColors.MildRed");
     mark.SetInteractive(false);
     mark.Reparent(clear);
     screen.m_wtSearchClear = clear;
@@ -1693,7 +1717,7 @@ protected cb func OnWardrobeSearchClear(evt: ref<inkPointerEvent>) -> Bool {
 protected cb func OnWardrobeSearchClearHoverOver(evt: ref<inkPointerEvent>) -> Bool {
     let clear: ref<inkCompoundWidget> = evt.GetCurrentTarget() as inkCompoundWidget;
     if IsDefined(clear) {
-        clear.GetWidgetByIndex(0).SetTintColor(new HDRColor(1.370, 0.444, 0.405, 1.0));
+        WardrobeTabsPaint(clear.GetWidgetByIndex(0), n"MainColors.ActiveRed");
     }
     return false;
 }
@@ -1702,7 +1726,7 @@ protected cb func OnWardrobeSearchClearHoverOver(evt: ref<inkPointerEvent>) -> B
 protected cb func OnWardrobeSearchClearHoverOut(evt: ref<inkPointerEvent>) -> Bool {
     let clear: ref<inkCompoundWidget> = evt.GetCurrentTarget() as inkCompoundWidget;
     if IsDefined(clear) {
-        clear.GetWidgetByIndex(0).SetTintColor(new HDRColor(0.682, 0.231, 0.212, 1.0));
+        WardrobeTabsPaint(clear.GetWidgetByIndex(0), n"MainColors.MildRed");
     }
     return false;
 }
@@ -1995,17 +2019,17 @@ private func WardrobeTabsBuildBar(screen: ref<WardrobeScreenController>, contain
     let line: ref<inkRectangle> = new inkRectangle();
     line.SetAnchor(inkEAnchor.TopFillHorizontaly);
     line.SetSize(width, 2.0);
-    line.SetTintColor(new HDRColor(0.486, 0.129, 0.204, 1.0));
+    WardrobeTabsPaint(line, n"MainColors.DarkerRed");
     line.SetInteractive(false);
     line.Reparent(bar);
     let heading: ref<inkText> = this.WardrobeTabsMakeText(34, 0.0);
     heading.SetText(WardrobeTabsText(n"WUI-Bar-CurrentLook"));
     heading.SetMargin(new inkMargin(24.0, 18.0, 0.0, 0.0));
-    heading.SetTintColor(new HDRColor(1.0, 0.86, 0.88, 1.0));
+    WardrobeTabsPaint(heading, n"MainColors.White");
     heading.Reparent(bar);
     let look: ref<inkText> = this.WardrobeTabsMakeText(26, 590.0);
     look.SetMargin(new inkMargin(24.0, 66.0, 0.0, 0.0));
-    look.SetTintColor(new HDRColor(0.682, 0.231, 0.212, 1.0));
+    WardrobeTabsPaint(look, n"MainColors.MildRed");
     look.Reparent(bar);
     screen.m_wtLook = look;
     // OUTFITS, which reads BACK in the outfits view; saving is done there (SAVE OUTFIT).
@@ -2076,7 +2100,7 @@ private func WardrobeTabsBuildOutfits(screen: ref<WardrobeScreenController>) -> 
     track.SetAnchor(inkEAnchor.TopLeft);
     track.SetSize(6.0, height);
     track.SetMargin(new inkMargin(WardrobeTabsConfig.OutfitBarLeft(), 0.0, 0.0, 0.0));
-    track.SetTintColor(new HDRColor(0.486, 0.129, 0.204, 1.0));
+    WardrobeTabsPaint(track, n"MainColors.DarkerRed");
     track.SetOpacity(0.5);
     track.SetInteractive(false);
     track.Reparent(manager, 0);
@@ -2085,13 +2109,13 @@ private func WardrobeTabsBuildOutfits(screen: ref<WardrobeScreenController>) -> 
     thumb.SetAnchor(inkEAnchor.TopLeft);
     thumb.SetSize(6.0, height);
     thumb.SetMargin(new inkMargin(WardrobeTabsConfig.OutfitBarLeft(), 0.0, 0.0, 0.0));
-    thumb.SetTintColor(new HDRColor(1.176, 0.381, 0.348, 1.0));
+    WardrobeTabsPaint(thumb, n"MainColors.Red");
     thumb.SetInteractive(false);
     thumb.Reparent(manager, 0);
     screen.m_wtOutfitThumb = thumb;
     let empty: ref<inkText> = this.WardrobeTabsMakeText(30, 0.0);
     empty.SetMargin(new inkMargin(8.0, 12.0, 0.0, 0.0));
-    empty.SetTintColor(new HDRColor(0.682, 0.231, 0.212, 1.0));
+    WardrobeTabsPaint(empty, n"MainColors.MildRed");
     empty.Reparent(content);
     screen.m_wtOutfitEmpty = empty;
 }
@@ -2112,12 +2136,12 @@ private func WardrobeTabsMakeOutfitCell(screen: ref<WardrobeScreenController>) -
     cell.RegisterToCallback(n"OnHoverOver", this, n"OnWardrobeOutfitHoverOver");
     cell.RegisterToCallback(n"OnHoverOut", this, n"OnWardrobeOutfitHoverOut");
     cell.Reparent(screen.m_wtOutfitContent);
-    let bg: ref<inkRectangle> = this.WardrobeTabsMakeRect(new HDRColor(0.15, 0.035, 0.08, 1.0), 0.9);
+    let bg: ref<inkRectangle> = this.WardrobeTabsMakeStyledRect(n"MainColors.MediumRed", 0.9);
     bg.Reparent(cell);
     let bar: ref<inkRectangle> = new inkRectangle();
     bar.SetAnchor(inkEAnchor.BottomFillHorizontaly);
     bar.SetSize(width, 5.0);
-    bar.SetTintColor(new HDRColor(0.369, 0.965, 1.0, 1.0));
+    WardrobeTabsPaint(bar, n"MainColors.Blue");
     bar.SetInteractive(false);
     bar.Reparent(cell);
     let name: ref<inkText> = this.WardrobeTabsMakeText(36, width - 110.0);
@@ -2174,7 +2198,7 @@ private func WardrobeTabsMakeOutfitCell(screen: ref<WardrobeScreenController>) -
             let more: ref<inkText> = this.WardrobeTabsMakeText(24, 0.0);
             more.SetAnchor(inkEAnchor.Centered);
             more.SetAnchorPoint(0.5, 0.5);
-            more.SetTintColor(new HDRColor(1.176, 0.381, 0.348, 1.0));
+            WardrobeTabsPaint(more, n"MainColors.Red");
             more.Reparent(holder);
             ArrayPush(screen.m_wtOutfitMores, more);
         }
@@ -2388,11 +2412,11 @@ private func WardrobeTabsStyleOutfits(screen: ref<WardrobeScreenController>) -> 
         let edited: Bool = screen.m_wtLinkChanges >= 0 && Equals(name, screen.m_outfitSystem.m_wtLinked);
         let favourite: Bool = ArrayContains(screen.m_outfitSystem.m_wtFavourites, name);
         let hovered: Bool = screen.m_wtHover == screen.m_wtOutfitCells[index];
-        screen.m_wtOutfitCellBgs[index].SetTintColor(hovered ? new HDRColor(0.30, 0.06, 0.08, 1.0) : new HDRColor(0.15, 0.035, 0.08, 1.0));
+        WardrobeTabsPaint(screen.m_wtOutfitCellBgs[index], hovered ? n"MainColors.DarkerRed" : n"MainColors.MediumRed");
         screen.m_wtOutfitCellBars[index].SetVisible(worn || edited);
         screen.m_wtOutfitCellBars[index].SetOpacity(worn ? 1.0 : 0.4);
-        screen.m_wtOutfitCellNames[index].SetTintColor(worn ? new HDRColor(0.369, 0.965, 1.0, 1.0)
-            : (hovered ? new HDRColor(1.370, 0.444, 0.405, 1.0) : new HDRColor(1.176, 0.381, 0.348, 1.0)));
+        WardrobeTabsPaint(screen.m_wtOutfitCellNames[index], worn ? n"MainColors.Blue"
+            : (hovered ? n"MainColors.ActiveRed" : n"MainColors.Red"));
         let parts: Int32 = screen.m_wtOutfitParts[index];
         // Item count, the playtime it was created at, then WEARING or EDITED.
         let info: String = WardrobeTabsCount("WUI-Count-Items", parts);
@@ -2406,10 +2430,10 @@ private func WardrobeTabsStyleOutfits(screen: ref<WardrobeScreenController>) -> 
             info += " | " + WardrobeTabsText(n"WUI-Status-Edited");
         }
         screen.m_wtOutfitCellInfos[index].SetText(info);
-        screen.m_wtOutfitCellInfos[index].SetTintColor(worn ? new HDRColor(0.204, 0.569, 0.592, 1.0) : new HDRColor(0.682, 0.231, 0.212, 1.0));
+        WardrobeTabsPaint(screen.m_wtOutfitCellInfos[index], worn ? n"MainColors.MildBlue" : n"MainColors.MildRed");
         let starHovered: Bool = screen.m_wtStarHover == screen.m_wtOutfitStars[index];
-        screen.m_wtOutfitStarIcons[index].SetTintColor(favourite ? new HDRColor(0.98, 0.84, 0.36, 1.0)
-            : (starHovered ? new HDRColor(1.370, 0.444, 0.405, 1.0) : new HDRColor(0.682, 0.231, 0.212, 1.0)));
+        WardrobeTabsPaint(screen.m_wtOutfitStarIcons[index], favourite ? n"MainColors.Yellow"
+            : (starHovered ? n"MainColors.ActiveRed" : n"MainColors.MildRed"));
         screen.m_wtOutfitStarIcons[index].SetOpacity(favourite || starHovered ? 1.0 : 0.45);
         index += 1;
     }
@@ -2491,14 +2515,14 @@ private func WardrobeTabsBuildBody(screen: ref<WardrobeScreenController>, wrappe
 
     let label: ref<inkText> = this.WardrobeTabsMakeText(32, 0.0);
     label.SetText(WardrobeTabsText(n"WUI-Body-Wearing"));
-    label.SetTintColor(new HDRColor(0.682, 0.231, 0.212, 1.0));
+    WardrobeTabsPaint(label, n"MainColors.MildRed");
     label.Reparent(body);
     // Guide line beside the groups, as on the inventory's clothing column.
     let guide: ref<inkRectangle> = new inkRectangle();
     guide.SetAnchor(inkEAnchor.TopLeft);
     guide.SetSize(3.0, WardrobeTabsConfig.GroupsHeight());
     guide.SetMargin(new inkMargin(-30.0, 60.0, 0.0, 0.0));
-    guide.SetTintColor(new HDRColor(0.486, 0.129, 0.204, 1.0));
+    WardrobeTabsPaint(guide, n"MainColors.DarkerRed");
     guide.SetOpacity(0.6);
     guide.SetInteractive(false);
     guide.Reparent(body);
@@ -2552,12 +2576,12 @@ private func WardrobeTabsBuildBody(screen: ref<WardrobeScreenController>, wrappe
             tile.RegisterToCallback(n"OnHoverOver", this, n"OnWardrobeTabsHoverOver");
             tile.RegisterToCallback(n"OnHoverOut", this, n"OnWardrobeTabsHoverOut");
             tile.Reparent(body);
-            let bg: ref<inkRectangle> = this.WardrobeTabsMakeRect(new HDRColor(0.15, 0.035, 0.08, 1.0), 0.9);
+            let bg: ref<inkRectangle> = this.WardrobeTabsMakeStyledRect(n"MainColors.MediumRed", 0.9);
             bg.Reparent(tile);
             let bar: ref<inkRectangle> = new inkRectangle();
             bar.SetAnchor(inkEAnchor.BottomFillHorizontaly);
             bar.SetSize(100.0, 5.0);
-            bar.SetTintColor(new HDRColor(0.369, 0.965, 1.0, 1.0));
+            WardrobeTabsPaint(bar, n"MainColors.Blue");
             bar.SetInteractive(false);
             bar.Reparent(tile);
             let icon: ref<inkImage> = new inkImage();
@@ -3134,10 +3158,10 @@ private func WardrobeTabsRedrawBody(screen: ref<WardrobeScreenController>, selec
     let gap: Float = WardrobeTabsConfig.TileGap();
     let perGroup: Int32 = WardrobeTabsConfig.GroupTiles();
     let clothing: Bool = !this.WardrobeTabsView().m_wtOutfitsSection;
-    let red: HDRColor = new HDRColor(1.176, 0.381, 0.348, 1.0);
-    let activeRed: HDRColor = new HDRColor(1.370, 0.444, 0.405, 1.0);
-    let mildRed: HDRColor = new HDRColor(0.682, 0.231, 0.212, 1.0);
-    let blue: HDRColor = new HDRColor(0.369, 0.965, 1.0, 1.0);
+    let red: CName = n"MainColors.Red";
+    let activeRed: CName = n"MainColors.ActiveRed";
+    let mildRed: CName = n"MainColors.MildRed";
+    let blue: CName = n"MainColors.Blue";
     let otherWorn: Bool = false;
     let index: Int32 = 0;
     while index < ArraySize(screen.m_wtSlots) {
@@ -3164,10 +3188,10 @@ private func WardrobeTabsRedrawBody(screen: ref<WardrobeScreenController>, selec
             }
             let y: Float = 60.0 + Cast<Float>(group) * height;
             head.SetMargin(new inkMargin(0.0, y, 0.0, 0.0));
-            screen.m_wtGroupLabels[group].SetTintColor(screen.m_wtHover == head ? activeRed : red);
+            WardrobeTabsPaint(screen.m_wtGroupLabels[group], screen.m_wtHover == head ? activeRed : red);
             let count: Int32 = ArraySize(worn);
             screen.m_wtGroupCounts[group].SetText(count == 0 ? WardrobeTabsText(n"WUI-Body-NothingWorn") : WardrobeTabsTextF(n"WUI-Body-Worn", [ToString(count)]));
-            screen.m_wtGroupCounts[group].SetTintColor(mildRed);
+            WardrobeTabsPaint(screen.m_wtGroupCounts[group], mildRed);
             // Detail line: the hovered tile's slot and item, else the worn slots' names.
             let detail: String = "";
             let hoveredSlot: Int32 = -1;
@@ -3186,7 +3210,7 @@ private func WardrobeTabsRedrawBody(screen: ref<WardrobeScreenController>, selec
                 }
             }
             screen.m_wtGroupDetails[group].SetText(detail);
-            screen.m_wtGroupDetails[group].SetTintColor(hoveredSlot >= 0 ? blue : mildRed);
+            WardrobeTabsPaint(screen.m_wtGroupDetails[group], hoveredSlot >= 0 ? blue : mildRed);
 
             let shownTiles: Int32 = Min(count, perGroup - 1) + 1;
             let size: Float = MinF(WardrobeTabsConfig.TileMax(), (width - gap * Cast<Float>(shownTiles - 1)) / Cast<Float>(shownTiles));
@@ -3203,11 +3227,11 @@ private func WardrobeTabsRedrawBody(screen: ref<WardrobeScreenController>, selec
                     let hovered: Bool = screen.m_wtHover == widget;
                     widget.SetSize(size, tileHeight);
                     widget.SetMargin(new inkMargin(Cast<Float>(tile) * (size + gap), y + WardrobeTabsConfig.GroupHeader(), 0.0, 0.0));
-                    screen.m_wtTileBgs[at].SetTintColor(hovered ? new HDRColor(0.30, 0.06, 0.08, 1.0) : new HDRColor(0.15, 0.035, 0.08, 1.0));
+                    WardrobeTabsPaint(screen.m_wtTileBgs[at], hovered ? n"MainColors.DarkerRed" : n"MainColors.MediumRed");
                     screen.m_wtTileBgs[at].SetOpacity(isPlus ? 0.5 : 0.9);
                     screen.m_wtTileBars[at].SetVisible(isItem && clothing && worn[tile] == selected);
                     screen.m_wtTilePlus[at].SetVisible(isPlus);
-                    screen.m_wtTilePlus[at].SetTintColor(hovered ? activeRed : mildRed);
+                    WardrobeTabsPaint(screen.m_wtTilePlus[at], hovered ? activeRed : mildRed);
                     this.WardrobeTabsSetIcon(screen, at, isItem ? this.WardrobeTabsWornIcon(screen, worn[tile]) : "");
                     this.WardrobeTabsFitIcon(screen, at);
                 }
@@ -3346,18 +3370,18 @@ private func WardrobeTabsStyleButton(screen: ref<WardrobeScreenController>, butt
     screen.m_wtButtonActive[button] = active;
     screen.m_wtButtonWorn[button] = false;
     let hovered: Bool = screen.m_wtHover == screen.m_wtButtons[button];
-    screen.m_wtButtonBgs[button].SetTintColor(active ? new HDRColor(0.090, 0.173, 0.180, 1.0)
-        : (hovered ? new HDRColor(0.412, 0.086, 0.090, 1.0) : new HDRColor(0.263, 0.086, 0.094, 1.0)));
-    screen.m_wtButtonTexts[button].SetTintColor(active ? new HDRColor(0.369, 0.965, 1.0, 1.0)
-        : (hovered ? new HDRColor(1.370, 0.444, 0.405, 1.0) : new HDRColor(1.176, 0.381, 0.348, 1.0)));
-    screen.m_wtButtonCounts[button].SetTintColor(active ? new HDRColor(0.204, 0.569, 0.592, 1.0) : new HDRColor(0.682, 0.231, 0.212, 1.0));
+    WardrobeTabsPaint(screen.m_wtButtonBgs[button], active ? n"MainColors.FaintBlue"
+        : (hovered ? n"MainColors.Fullscreen_SecondaryBackground4" : n"MainColors.DarkRed"));
+    WardrobeTabsPaint(screen.m_wtButtonTexts[button], active ? n"MainColors.Blue"
+        : (hovered ? n"MainColors.ActiveRed" : n"MainColors.Red"));
+    WardrobeTabsPaint(screen.m_wtButtonCounts[button], active ? n"MainColors.MildBlue" : n"MainColors.MildRed");
 }
 
 // A slot row whose slot is worn (and not selected) has a blue label, except while hovered.
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsTintWorn(screen: ref<WardrobeScreenController>, button: Int32) -> Void {
     if screen.m_wtButtonWorn[button] && screen.m_wtHover != screen.m_wtButtons[button] {
-        screen.m_wtButtonTexts[button].SetTintColor(new HDRColor(0.369, 0.965, 1.0, 1.0));
+        WardrobeTabsPaint(screen.m_wtButtonTexts[button], n"MainColors.Blue");
     }
 }
 
@@ -3579,7 +3603,7 @@ private func WardrobeTabsRedrawLook(screen: ref<WardrobeScreenController>) -> Vo
     let linked: CName = screen.m_outfitSystem.m_wtLinked;
     let changes: Int32 = screen.m_wtLinkChanges;
     let tried: wref<UIInventoryItem> = screen.m_wtTrying;
-    screen.m_wtLook.SetTintColor(IsDefined(tried) ? new HDRColor(0.369, 0.965, 1.0, 1.0) : new HDRColor(0.682, 0.231, 0.212, 1.0));
+    WardrobeTabsPaint(screen.m_wtLook, IsDefined(tried) ? n"MainColors.Blue" : n"MainColors.MildRed");
     if IsDefined(tried) {
         screen.m_wtLook.SetText(WardrobeTabsTextF(n"WUI-Look-TryingOn", [WardrobeTabsConfig.CleanName(GetLocalizedText(tried.GetName()))]));
     } else if changes > 0 {
