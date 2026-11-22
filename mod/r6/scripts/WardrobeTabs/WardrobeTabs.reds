@@ -81,7 +81,7 @@ public abstract class WardrobeTabsConfig {
     public static func CameraAreas() -> Int32 = 5;
 
     // Release version, logged once per wardrobe opening.
-    public static func Version() -> String = "1.0.5";
+    public static func Version() -> String = "1.0.6";
     // Routine log lines (try-ons, camera moves, refills, clicks) for development; failures and
     // the opening line are always logged.
     public static func Verbose() -> Bool = false;
@@ -1272,6 +1272,10 @@ private func WardrobeTabsMakeStyledRect(color: CName, opacity: Float) -> ref<ink
 // The mod's colours are properties of the game's main_colors.inkstyle (MainColors.Red...),
 // bound rather than set, so a mod that patches that style (HUD Painter) recolours the
 // wardrobe with the rest of the UI. Without one the vanilla values apply.
+// Each widget needs the style itself: bindings on a widget without it resolved to white
+// (no inheritance from a styled parent, tested in game). BindProperty replaces an existing
+// binding, as vanilla's hover handlers rely on; an UnbindProperty before it crashed the game
+// on every wardrobe opening (null read at Cyberpunk2077.exe+0x22CA324, tested in game).
 public func WardrobeTabsPaint(widget: ref<inkWidget>, color: CName) -> Void {
     if !IsDefined(widget) {
         return;
@@ -1279,7 +1283,6 @@ public func WardrobeTabsPaint(widget: ref<inkWidget>, color: CName) -> Void {
     if !Equals(widget.GetStylePath(), WardrobeTabsMainColors()) {
         widget.SetStyle(WardrobeTabsMainColors());
     }
-    widget.UnbindProperty(n"tintColor");
     widget.BindProperty(n"tintColor", color);
 }
 
@@ -3679,6 +3682,11 @@ private func WardrobeTabsWatchTryOn(screen: ref<WardrobeScreenController>) -> Vo
         }
     }
     if IsDefined(hovered) && hovered.IsEquipped() {
+        hovered = null;
+    }
+    // A mod widget under the pointer (CLEAR ALL, a PACK list row) lies over the cards, and the
+    // card below it still gets its hover: no try-on then (it also cleared that card's NEW tag).
+    if IsDefined(screen.m_wtHover) {
         hovered = null;
     }
     if hovered != screen.m_wtTryHover {
