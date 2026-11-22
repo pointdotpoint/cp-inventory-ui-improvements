@@ -27,6 +27,7 @@ WUI_Loc.ru-ru.Header-ClearNew: "СБРОСИТЬ ВСЁ"
 WUI_Loc.ru-ru.Header-Pack: "ПАК: {0}"
 WUI_Loc.ru-ru.Pack-All: "ВСЕ"
 WUI_Loc.ru-ru.Pack-BaseGame: "ОСНОВНАЯ ИГРА"
+WUI_Loc.ru-ru.Pack-Several: "ВЫБРАНО: {0}"
 
 # Drawer header subtitle.
 WUI_Loc.ru-ru.Count-Items-One: "{0} ПРЕДМЕТ"

@@ -27,6 +27,7 @@ WUI_Loc.jp-jp.Header-ClearNew: "すべて既読"
 WUI_Loc.jp-jp.Header-Pack: "パック: {0}"
 WUI_Loc.jp-jp.Pack-All: "すべて"
 WUI_Loc.jp-jp.Pack-BaseGame: "本編"
+WUI_Loc.jp-jp.Pack-Several: "{0}件選択中"
 
 # Drawer header subtitle.
 WUI_Loc.jp-jp.Count-Items-One: "アイテム{0}点"

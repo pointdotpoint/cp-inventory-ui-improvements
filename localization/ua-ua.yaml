@@ -27,6 +27,7 @@ WUI_Loc.ua-ua.Header-ClearNew: "СКИНУТИ ВСЕ"
 WUI_Loc.ua-ua.Header-Pack: "ПАК: {0}"
 WUI_Loc.ua-ua.Pack-All: "ВСІ"
 WUI_Loc.ua-ua.Pack-BaseGame: "ОСНОВНА ГРА"
+WUI_Loc.ua-ua.Pack-Several: "ВИБРАНО: {0}"
 
 # Drawer header subtitle.
 WUI_Loc.ua-ua.Count-Items-One: "{0} ПРЕДМЕТ"

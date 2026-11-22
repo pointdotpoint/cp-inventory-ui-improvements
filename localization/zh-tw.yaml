@@ -27,6 +27,7 @@ WUI_Loc.zh-tw.Header-ClearNew: "全部清除"
 WUI_Loc.zh-tw.Header-Pack: "包: {0}"
 WUI_Loc.zh-tw.Pack-All: "全部"
 WUI_Loc.zh-tw.Pack-BaseGame: "原版遊戲"
+WUI_Loc.zh-tw.Pack-Several: "已選 {0} 個"
 
 # Drawer header subtitle.
 WUI_Loc.zh-tw.Count-Items-One: "{0} 件物品"

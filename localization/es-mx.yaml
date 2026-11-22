@@ -28,6 +28,7 @@ WUI_Loc.es-mx.Header-ClearNew: "BORRAR TODO"
 WUI_Loc.es-mx.Header-Pack: "PACK: {0}"
 WUI_Loc.es-mx.Pack-All: "TODOS"
 WUI_Loc.es-mx.Pack-BaseGame: "JUEGO BASE"
+WUI_Loc.es-mx.Pack-Several: "{0} SELECCIONADOS"
 
 # Drawer header subtitle.
 WUI_Loc.es-mx.Count-Items-One: "{0} OBJETO"

@@ -27,6 +27,7 @@ WUI_Loc.ar-ar.Header-ClearNew: "مسح الكل"
 WUI_Loc.ar-ar.Header-Pack: "الحزمة: {0}"
 WUI_Loc.ar-ar.Pack-All: "الكل"
 WUI_Loc.ar-ar.Pack-BaseGame: "اللعبة الأساسية"
+WUI_Loc.ar-ar.Pack-Several: "{0} محددة"
 
 # Drawer header subtitle.
 WUI_Loc.ar-ar.Count-Items-One: "العناصر: {0}"

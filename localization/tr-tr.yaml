@@ -27,6 +27,7 @@ WUI_Loc.tr-tr.Header-ClearNew: "TÜMÜNÜ TEMİZLE"
 WUI_Loc.tr-tr.Header-Pack: "PAKET: {0}"
 WUI_Loc.tr-tr.Pack-All: "TÜMÜ"
 WUI_Loc.tr-tr.Pack-BaseGame: "ANA OYUN"
+WUI_Loc.tr-tr.Pack-Several: "{0} SEÇİLDİ"
 
 # Drawer header subtitle (Turkish keeps the noun singular after a number).
 WUI_Loc.tr-tr.Count-Items-One: "{0} EŞYA"

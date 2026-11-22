@@ -27,6 +27,7 @@ WUI_Loc.cz-cz.Header-ClearNew: "VYMAZAT VŠE"
 WUI_Loc.cz-cz.Header-Pack: "BALÍK: {0}"
 WUI_Loc.cz-cz.Pack-All: "VŠE"
 WUI_Loc.cz-cz.Pack-BaseGame: "ZÁKLADNÍ HRA"
+WUI_Loc.cz-cz.Pack-Several: "VYBRÁNO: {0}"
 
 # Drawer header subtitle.
 WUI_Loc.cz-cz.Count-Items-One: "{0} PŘEDMĚT"

@@ -27,6 +27,7 @@ WUI_Loc.fr-fr.Header-ClearNew: "TOUT EFFACER"
 WUI_Loc.fr-fr.Header-Pack: "PACK : {0}"
 WUI_Loc.fr-fr.Pack-All: "TOUS"
 WUI_Loc.fr-fr.Pack-BaseGame: "JEU DE BASE"
+WUI_Loc.fr-fr.Pack-Several: "{0} SÉLECTIONNÉS"
 
 # Drawer header subtitle.
 WUI_Loc.fr-fr.Count-Items-One: "{0} OBJET"

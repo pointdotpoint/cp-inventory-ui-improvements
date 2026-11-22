@@ -27,6 +27,7 @@ WUI_Loc.it-it.Header-ClearNew: "CANCELLA TUTTO"
 WUI_Loc.it-it.Header-Pack: "PACK: {0}"
 WUI_Loc.it-it.Pack-All: "TUTTI"
 WUI_Loc.it-it.Pack-BaseGame: "GIOCO BASE"
+WUI_Loc.it-it.Pack-Several: "{0} SELEZIONATI"
 
 # Drawer header subtitle.
 WUI_Loc.it-it.Count-Items-One: "{0} OGGETTO"

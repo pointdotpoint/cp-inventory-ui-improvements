@@ -39,6 +39,7 @@ WUI_Loc.en-us.Header-ClearNew: "CLEAR ALL"
 WUI_Loc.en-us.Header-Pack: "PACK: {0}"
 WUI_Loc.en-us.Pack-All: "ALL"
 WUI_Loc.en-us.Pack-BaseGame: "BASE GAME"
+WUI_Loc.en-us.Pack-Several: "{0} SELECTED"
 
 # Drawer header subtitle, e.g. "12 ITEMS  |  3 MATCH  |  WEARING <item name>".
 WUI_Loc.en-us.Count-Items-One: "{0} ITEM"

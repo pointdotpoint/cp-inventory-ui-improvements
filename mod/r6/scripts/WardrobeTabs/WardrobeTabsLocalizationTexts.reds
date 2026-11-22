@@ -31,6 +31,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
             "Header-Pack",
             "Pack-All",
             "Pack-BaseGame",
+            "Pack-Several",
             "Count-Items-One",
             "Count-Items-Many",
             "Count-Match",
@@ -91,6 +92,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "PACK: {0}");
         this.Text("WUI-Pack-All", "ALL");
         this.Text("WUI-Pack-BaseGame", "BASE GAME");
+        this.Text("WUI-Pack-Several", "{0} SELECTED");
         this.Text("WUI-Count-Items-One", "{0} ITEM");
         this.Text("WUI-Count-Items-Many", "{0} ITEMS");
         this.Text("WUI-Count-Match", "{0} MATCH");
@@ -149,6 +151,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "الحزمة: {0}");
         this.Text("WUI-Pack-All", "الكل");
         this.Text("WUI-Pack-BaseGame", "اللعبة الأساسية");
+        this.Text("WUI-Pack-Several", "{0} محددة");
         this.Text("WUI-Count-Items-One", "العناصر: {0}");
         this.Text("WUI-Count-Items-Many", "العناصر: {0}");
         this.Text("WUI-Count-Match", "المطابقة: {0}");
@@ -206,6 +209,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "BALÍK: {0}");
         this.Text("WUI-Pack-All", "VŠE");
         this.Text("WUI-Pack-BaseGame", "ZÁKLADNÍ HRA");
+        this.Text("WUI-Pack-Several", "VYBRÁNO: {0}");
         this.Text("WUI-Count-Items-One", "{0} PŘEDMĚT");
         this.Text("WUI-Count-Items-Many", "PŘEDMĚTY: {0}");
         this.Text("WUI-Count-Match", "SHODY: {0}");
@@ -263,6 +267,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "PAKET: {0}");
         this.Text("WUI-Pack-All", "ALLE");
         this.Text("WUI-Pack-BaseGame", "HAUPTSPIEL");
+        this.Text("WUI-Pack-Several", "{0} AUSGEWÄHLT");
         this.Text("WUI-Count-Items-One", "{0} GEGENSTAND");
         this.Text("WUI-Count-Items-Many", "{0} GEGENSTÄNDE");
         this.Text("WUI-Count-Match", "{0} TREFFER");
@@ -320,6 +325,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "PACK: {0}");
         this.Text("WUI-Pack-All", "TODOS");
         this.Text("WUI-Pack-BaseGame", "JUEGO BASE");
+        this.Text("WUI-Pack-Several", "{0} SELECCIONADOS");
         this.Text("WUI-Count-Items-One", "{0} OBJETO");
         this.Text("WUI-Count-Items-Many", "{0} OBJETOS");
         this.Text("WUI-Count-Match", "COINCIDENCIAS: {0}");
@@ -377,6 +383,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "PACK: {0}");
         this.Text("WUI-Pack-All", "TODOS");
         this.Text("WUI-Pack-BaseGame", "JUEGO BASE");
+        this.Text("WUI-Pack-Several", "{0} SELECCIONADOS");
         this.Text("WUI-Count-Items-One", "{0} OBJETO");
         this.Text("WUI-Count-Items-Many", "{0} OBJETOS");
         this.Text("WUI-Count-Match", "COINCIDENCIAS: {0}");
@@ -434,6 +441,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "PACK : {0}");
         this.Text("WUI-Pack-All", "TOUS");
         this.Text("WUI-Pack-BaseGame", "JEU DE BASE");
+        this.Text("WUI-Pack-Several", "{0} SÉLECTIONNÉS");
         this.Text("WUI-Count-Items-One", "{0} OBJET");
         this.Text("WUI-Count-Items-Many", "{0} OBJETS");
         this.Text("WUI-Count-Match", "RÉSULTATS : {0}");
@@ -491,6 +499,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "CSOMAG: {0}");
         this.Text("WUI-Pack-All", "MIND");
         this.Text("WUI-Pack-BaseGame", "ALAPJÁTÉK");
+        this.Text("WUI-Pack-Several", "{0} KIVÁLASZTVA");
         this.Text("WUI-Count-Items-One", "{0} TÁRGY");
         this.Text("WUI-Count-Items-Many", "{0} TÁRGY");
         this.Text("WUI-Count-Match", "{0} TALÁLAT");
@@ -548,6 +557,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "PACK: {0}");
         this.Text("WUI-Pack-All", "TUTTI");
         this.Text("WUI-Pack-BaseGame", "GIOCO BASE");
+        this.Text("WUI-Pack-Several", "{0} SELEZIONATI");
         this.Text("WUI-Count-Items-One", "{0} OGGETTO");
         this.Text("WUI-Count-Items-Many", "{0} OGGETTI");
         this.Text("WUI-Count-Match", "RISULTATI: {0}");
@@ -605,6 +615,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "パック: {0}");
         this.Text("WUI-Pack-All", "すべて");
         this.Text("WUI-Pack-BaseGame", "本編");
+        this.Text("WUI-Pack-Several", "{0}件選択中");
         this.Text("WUI-Count-Items-One", "アイテム{0}点");
         this.Text("WUI-Count-Items-Many", "アイテム{0}点");
         this.Text("WUI-Count-Match", "{0}件一致");
@@ -662,6 +673,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "팩: {0}");
         this.Text("WUI-Pack-All", "전체");
         this.Text("WUI-Pack-BaseGame", "기본 게임");
+        this.Text("WUI-Pack-Several", "{0}개 선택됨");
         this.Text("WUI-Count-Items-One", "아이템 {0}개");
         this.Text("WUI-Count-Items-Many", "아이템 {0}개");
         this.Text("WUI-Count-Match", "{0}개 일치");
@@ -719,6 +731,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "PAKIET: {0}");
         this.Text("WUI-Pack-All", "WSZYSTKIE");
         this.Text("WUI-Pack-BaseGame", "GRA BAZOWA");
+        this.Text("WUI-Pack-Several", "WYBRANO: {0}");
         this.Text("WUI-Count-Items-One", "{0} PRZEDMIOT");
         this.Text("WUI-Count-Items-Many", "PRZEDMIOTY: {0}");
         this.Text("WUI-Count-Match", "PASUJĄCE: {0}");
@@ -776,6 +789,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "PACK: {0}");
         this.Text("WUI-Pack-All", "TODOS");
         this.Text("WUI-Pack-BaseGame", "JOGO BASE");
+        this.Text("WUI-Pack-Several", "{0} SELECIONADOS");
         this.Text("WUI-Count-Items-One", "{0} ITEM");
         this.Text("WUI-Count-Items-Many", "{0} ITENS");
         this.Text("WUI-Count-Match", "RESULTADOS: {0}");
@@ -833,6 +847,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "ПАК: {0}");
         this.Text("WUI-Pack-All", "ВСЕ");
         this.Text("WUI-Pack-BaseGame", "ОСНОВНАЯ ИГРА");
+        this.Text("WUI-Pack-Several", "ВЫБРАНО: {0}");
         this.Text("WUI-Count-Items-One", "{0} ПРЕДМЕТ");
         this.Text("WUI-Count-Items-Many", "ПРЕДМЕТЫ: {0}");
         this.Text("WUI-Count-Match", "НАЙДЕНО: {0}");
@@ -890,6 +905,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "แพ็ก: {0}");
         this.Text("WUI-Pack-All", "ทั้งหมด");
         this.Text("WUI-Pack-BaseGame", "เกมหลัก");
+        this.Text("WUI-Pack-Several", "เลือก {0} รายการ");
         this.Text("WUI-Count-Items-One", "{0} ชิ้น");
         this.Text("WUI-Count-Items-Many", "{0} ชิ้น");
         this.Text("WUI-Count-Match", "ตรงกัน {0}");
@@ -947,6 +963,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "PAKET: {0}");
         this.Text("WUI-Pack-All", "TÜMÜ");
         this.Text("WUI-Pack-BaseGame", "ANA OYUN");
+        this.Text("WUI-Pack-Several", "{0} SEÇİLDİ");
         this.Text("WUI-Count-Items-One", "{0} EŞYA");
         this.Text("WUI-Count-Items-Many", "{0} EŞYA");
         this.Text("WUI-Count-Match", "{0} EŞLEŞME");
@@ -1004,6 +1021,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "ПАК: {0}");
         this.Text("WUI-Pack-All", "ВСІ");
         this.Text("WUI-Pack-BaseGame", "ОСНОВНА ГРА");
+        this.Text("WUI-Pack-Several", "ВИБРАНО: {0}");
         this.Text("WUI-Count-Items-One", "{0} ПРЕДМЕТ");
         this.Text("WUI-Count-Items-Many", "ПРЕДМЕТИ: {0}");
         this.Text("WUI-Count-Match", "ЗНАЙДЕНО: {0}");
@@ -1061,6 +1079,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "包: {0}");
         this.Text("WUI-Pack-All", "全部");
         this.Text("WUI-Pack-BaseGame", "原版游戏");
+        this.Text("WUI-Pack-Several", "已选 {0} 个");
         this.Text("WUI-Count-Items-One", "{0} 件物品");
         this.Text("WUI-Count-Items-Many", "{0} 件物品");
         this.Text("WUI-Count-Match", "{0} 个匹配");
@@ -1118,6 +1137,7 @@ public class WardrobeTabsLocPackage extends WardrobeTabsLocPackageBase {
         this.Text("WUI-Header-Pack", "包: {0}");
         this.Text("WUI-Pack-All", "全部");
         this.Text("WUI-Pack-BaseGame", "原版遊戲");
+        this.Text("WUI-Pack-Several", "已選 {0} 個");
         this.Text("WUI-Count-Items-One", "{0} 件物品");
         this.Text("WUI-Count-Items-Many", "{0} 件物品");
         this.Text("WUI-Count-Match", "{0} 個符合");

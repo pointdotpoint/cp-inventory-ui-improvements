@@ -27,6 +27,7 @@ WUI_Loc.th-th.Header-ClearNew: "ล้างทั้งหมด"
 WUI_Loc.th-th.Header-Pack: "แพ็ก: {0}"
 WUI_Loc.th-th.Pack-All: "ทั้งหมด"
 WUI_Loc.th-th.Pack-BaseGame: "เกมหลัก"
+WUI_Loc.th-th.Pack-Several: "เลือก {0} รายการ"
 
 # Drawer header subtitle.
 WUI_Loc.th-th.Count-Items-One: "{0} ชิ้น"

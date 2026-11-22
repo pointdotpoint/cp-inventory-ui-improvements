@@ -27,6 +27,7 @@ WUI_Loc.pl-pl.Header-ClearNew: "WYCZYŚĆ WSZYSTKO"
 WUI_Loc.pl-pl.Header-Pack: "PAKIET: {0}"
 WUI_Loc.pl-pl.Pack-All: "WSZYSTKIE"
 WUI_Loc.pl-pl.Pack-BaseGame: "GRA BAZOWA"
+WUI_Loc.pl-pl.Pack-Several: "WYBRANO: {0}"
 
 # Drawer header subtitle.
 WUI_Loc.pl-pl.Count-Items-One: "{0} PRZEDMIOT"

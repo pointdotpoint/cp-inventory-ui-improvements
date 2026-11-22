@@ -27,6 +27,7 @@ WUI_Loc.hu-hu.Header-ClearNew: "MIND TÖRLÉSE"
 WUI_Loc.hu-hu.Header-Pack: "CSOMAG: {0}"
 WUI_Loc.hu-hu.Pack-All: "MIND"
 WUI_Loc.hu-hu.Pack-BaseGame: "ALAPJÁTÉK"
+WUI_Loc.hu-hu.Pack-Several: "{0} KIVÁLASZTVA"
 
 # Drawer header subtitle (Hungarian keeps the noun singular after a number).
 WUI_Loc.hu-hu.Count-Items-One: "{0} TÁRGY"

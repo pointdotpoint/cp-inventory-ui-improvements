@@ -27,6 +27,7 @@ WUI_Loc.kr-kr.Header-ClearNew: "모두 지우기"
 WUI_Loc.kr-kr.Header-Pack: "팩: {0}"
 WUI_Loc.kr-kr.Pack-All: "전체"
 WUI_Loc.kr-kr.Pack-BaseGame: "기본 게임"
+WUI_Loc.kr-kr.Pack-Several: "{0}개 선택됨"
 
 # Drawer header subtitle.
 WUI_Loc.kr-kr.Count-Items-One: "아이템 {0}개"

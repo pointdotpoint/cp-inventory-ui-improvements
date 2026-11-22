@@ -338,6 +338,8 @@ public class WardrobeTabsPack {
     public let count: Int32;
     // Its index in WardrobeTabsPackList.packs (choice order + 2).
     public let order: Int32;
+    // Ticked in the PACK list (WardrobeTabsPackList.Toggle).
+    public let selected: Bool;
 
     public static func Create(name: String) -> ref<WardrobeTabsPack> {
         let pack: ref<WardrobeTabsPack> = new WardrobeTabsPack();
@@ -356,14 +358,61 @@ public class WardrobeTabsPackList {
     public let baseMark: ref<WardrobeTabsPack>;
     public let names: ref<WardrobeTabsPackNames>;
     public let baseCount: Int32;
+    // The pack filter, kept for the game session: BASE GAME ticked or not, each pack's own
+    // `selected`, how many choices are ticked (0: no filter, every item passes), the ticked
+    // choice while there is exactly one (for the PACK button's label) and a counter that
+    // changes with every toggle (the PACK list's rows are cached against it).
+    public let baseSelected: Bool;
+    public let selected: Int32;
+    public let only: Int32;
+    public let version: Int32;
+
+    // A choice is 0 ALL, 1 BASE GAME, 2 + n pack n. ALL is "ticked" while nothing else is.
+    public func IsSelected(choice: Int32) -> Bool {
+        if choice == 0 {
+            return this.selected == 0;
+        }
+        if choice == 1 {
+            return this.baseSelected;
+        }
+        return choice - 2 < ArraySize(this.packs) && this.packs[choice - 2].selected;
+    }
+
+    // Ticks or unticks a choice; ALL unticks every one.
+    public func Toggle(choice: Int32) -> Void {
+        if choice == 0 {
+            this.baseSelected = false;
+            for pack in this.packs {
+                pack.selected = false;
+            }
+        } else {
+            if choice == 1 {
+                this.baseSelected = !this.baseSelected;
+            } else {
+                if choice - 2 < ArraySize(this.packs) {
+                    this.packs[choice - 2].selected = !this.packs[choice - 2].selected;
+                }
+            }
+        }
+        this.selected = this.baseSelected ? 1 : 0;
+        this.only = this.baseSelected ? 1 : 0;
+        let index: Int32 = 0;
+        while index < ArraySize(this.packs) {
+            if this.packs[index].selected {
+                this.selected += 1;
+                this.only = index + 2;
+            }
+            index += 1;
+        }
+        if this.selected != 1 {
+            this.only = 0;
+        }
+        this.version += 1;
+    }
 }
 
 @addField(ViewManager)
 public let m_wtPackList: ref<WardrobeTabsPackList>;
-
-// The pack filter: 0 all, 1 base game, 2 + n the list's pack n. Kept for the game session.
-@addField(ViewManager)
-public let m_wtPackChoice: Int32;
 
 // The pack an item's record comes from (null: base game), worked out once per record. TweakDB
 // keeps no source mod, so packs are inferred: base-game items name themselves with a numeric
@@ -558,7 +607,7 @@ public let m_wtPackMenu: wref<inkCanvas>;
 public let m_wtPackRowChoice: array<Int32>;
 
 // m_wtPackRowChoice is sorted only when the list shows and something it depends on changed:
-// the pack count (packs are only appended), the chosen pack or the counts (cleared by
+// the pack count (packs are only appended), the ticked packs or the counts (cleared by
 // WardrobeTabsCountPacks). With hundreds of packs the sort ran on every redraw before 1.0.5.
 @addField(WardrobeScreenController)
 public let m_wtPackRowsReady: Bool;
@@ -566,8 +615,20 @@ public let m_wtPackRowsReady: Bool;
 @addField(WardrobeScreenController)
 public let m_wtPackRowsPacks: Int32;
 
+// WardrobeTabsPackList.version the rows were sorted for.
 @addField(WardrobeScreenController)
 public let m_wtPackRowsChoice: Int32;
+
+// Each PACK row's check box and its tick, by row; ALL (always the first choice) has none.
+@addField(WardrobeScreenController)
+public let m_wtPackBoxes: array<wref<inkWidget>>;
+
+@addField(WardrobeScreenController)
+public let m_wtPackTicks: array<wref<inkWidget>>;
+
+// CLEAR ALL's holder in the grid container (WardrobeTabsBuildPacks).
+@addField(WardrobeScreenController)
+public let m_wtClearNewHolder: wref<inkCanvas>;
 
 // Per pack (by WardrobeTabsPack.order), whether it holds a NEW record, and for base game
 // (m_wtPackNewBase). Worked out while the list shows, again when the NEW list or the pack
@@ -1450,6 +1511,8 @@ private func WardrobeTabsBuildPacks(screen: ref<WardrobeScreenController>, conta
     }
     let rows: Int32 = WardrobeTabsConfig.PackRows();
     let height: Float = WardrobeTabsConfig.PackRowHeight();
+    ArrayClear(screen.m_wtPackBoxes);
+    ArrayClear(screen.m_wtPackTicks);
     let menu: ref<inkCanvas> = new inkCanvas();
     menu.SetName(n"wardrobePackList");
     menu.SetAnchor(inkEAnchor.TopRight);
@@ -1490,12 +1553,38 @@ private func WardrobeTabsBuildPacks(screen: ref<WardrobeScreenController>, conta
         this.WardrobeTabsMakeButton(screen, menu, "", 10.0, 8.0 + Cast<Float>(row) * (height + 4.0), 300.0, height);
         let text: wref<inkText> = screen.m_wtButtonTexts[ArraySize(screen.m_wtButtonTexts) - 1];
         text.SetFitToContent(false);
-        text.SetSize(210.0, 30.0);
+        text.SetSize(180.0, 30.0);
         text.SetFontSize(24);
         text.SetOverflowPolicy(textOverflowPolicy.DotsEnd);
         text.SetAnchor(inkEAnchor.CenterLeft);
         text.SetAnchorPoint(0.0, 0.5);
-        text.SetMargin(new inkMargin(16.0, 0.0, 0.0, 0.0));
+        text.SetMargin(new inkMargin(46.0, 0.0, 0.0, 0.0));
+        // Check box: several packs can be ticked at once.
+        let rowButton: wref<inkCanvas> = screen.m_wtButtons[ArraySize(screen.m_wtButtons) - 1];
+        // (inkBorder cannot be created from script, so the box is a square with a dark well.)
+        let box: ref<inkCanvas> = new inkCanvas();
+        box.SetAnchor(inkEAnchor.CenterLeft);
+        box.SetAnchorPoint(0.0, 0.5);
+        box.SetSize(20.0, 20.0);
+        box.SetMargin(new inkMargin(14.0, 0.0, 0.0, 0.0));
+        box.childOrder = inkEChildOrder.Forward;
+        box.SetInteractive(false);
+        box.Reparent(rowButton);
+        this.WardrobeTabsMakeRect(new HDRColor(0.682, 0.231, 0.212, 1.0), 1.0).Reparent(box);
+        let well: ref<inkRectangle> = this.WardrobeTabsMakeRect(new HDRColor(0.03, 0.02, 0.03, 1.0), 1.0);
+        well.SetMargin(new inkMargin(2.0, 2.0, 2.0, 2.0));
+        well.Reparent(box);
+        ArrayPush(screen.m_wtPackBoxes, box);
+        let tick: ref<inkRectangle> = new inkRectangle();
+        tick.SetAnchor(inkEAnchor.CenterLeft);
+        tick.SetAnchorPoint(0.0, 0.5);
+        tick.SetSize(10.0, 10.0);
+        tick.SetMargin(new inkMargin(19.0, 0.0, 0.0, 0.0));
+        tick.SetTintColor(new HDRColor(0.369, 0.965, 1.0, 1.0));
+        tick.SetInteractive(false);
+        tick.SetVisible(false);
+        tick.Reparent(rowButton);
+        ArrayPush(screen.m_wtPackTicks, tick);
         row += 1;
     }
     // Column buttons 4 5 6 7 (ColumnButton()), between the area tabs and PACK.
@@ -1510,12 +1599,26 @@ private func WardrobeTabsBuildPacks(screen: ref<WardrobeScreenController>, conta
         ArrayPush(screen.m_wtClothingOnly, this.WardrobeTabsMakeButton(screen, screen.m_wtHeader, WardrobeTabsText(n"WUI-Header-NewOnly"), width - 125.0, 148.0, 115.0, 62.0));
         // SORT (SortButton()), in the outfits view right of NO OUTFIT; its label is set per redraw.
         ArrayPush(screen.m_wtOutfitsOnly, this.WardrobeTabsMakeButton(screen, screen.m_wtHeader, "", 620.0, 148.0, 300.0, 62.0));
-        // CLEAR ALL (ClearNewButton()), below NEW and right-aligned with it; shown per redraw
-        // while the NEW filter is on.
+        // CLEAR ALL (ClearNewButton()), below NEW; its holder is shown per redraw while the NEW
+        // filter is on. There is no room for it in the header (230 high, the buttons end at
+        // 210), so it lies over the grid's top right corner, and like the PACK list it is the
+        // grid container's first child: drawn over the cards, taking their clicks. In 1.0.5
+        // it was the header's child reaching 40 units below it, and the cards drew over it.
         if ArraySize(screen.m_wtButtons) != WardrobeTabsConfig.ClearNewButton() {
             ModLog(n"WardrobeTabs", "CLEAR ALL button at index " + ToString(ArraySize(screen.m_wtButtons)) + ", expected " + ToString(WardrobeTabsConfig.ClearNewButton()));
         }
-        this.WardrobeTabsMakeButton(screen, screen.m_wtHeader, WardrobeTabsText(n"WUI-Header-ClearNew"), width - 185.0, 218.0, 175.0, 52.0).SetVisible(false);
+        let holder: ref<inkCanvas> = new inkCanvas();
+        holder.SetName(n"wardrobeClearNew");
+        holder.SetAnchor(inkEAnchor.TopRight);
+        holder.SetAnchorPoint(1.0, 0.0);
+        holder.SetSize(175.0, 52.0);
+        holder.SetMargin(new inkMargin(0.0, 2.0, 0.0, 0.0));
+        holder.childOrder = inkEChildOrder.Forward;
+        holder.SetVisible(false);
+        holder.Reparent(container, 0);
+        this.WardrobeTabsMakeRect(new HDRColor(0.03, 0.02, 0.03, 1.0), 1.0).Reparent(holder);
+        this.WardrobeTabsMakeButton(screen, holder, WardrobeTabsText(n"WUI-Header-ClearNew"), 0.0, 0.0, 175.0, 52.0);
+        screen.m_wtClearNewHolder = holder;
     }
 }
 
@@ -1662,6 +1765,16 @@ private func WardrobeTabsCountPacks(screen: ref<WardrobeScreenController>) -> Vo
     WardrobeTabsDebug("Packs: " + ToString(list.baseCount) + " base-game items;" + summary);
 }
 
+// The PACK button's label: ALL, the one ticked pack, or how many are ticked.
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsPackFilterName() -> String {
+    let list: ref<WardrobeTabsPackList> = this.WardrobeTabsPacks();
+    if list.selected > 1 {
+        return WardrobeTabsTextF(n"WUI-Pack-Several", [ToString(list.selected)]);
+    }
+    return this.WardrobeTabsPackChoiceName(list.only);
+}
+
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsPackChoiceName(choice: Int32) -> String {
     let list: ref<WardrobeTabsPackList> = this.WardrobeTabsPacks();
@@ -1685,8 +1798,8 @@ private func WardrobeTabsRedrawPacks(screen: ref<WardrobeScreenController>) -> V
     let list: ref<WardrobeTabsPackList> = this.WardrobeTabsPacks();
     let newCount: Int32 = ArraySize(screen.m_outfitSystem.m_wtNewItems);
     screen.m_wtButtonNews[button].SetVisible(newCount > 0);
-    screen.m_wtButtonTexts[button].SetText(WardrobeTabsTextF(n"WUI-Header-Pack", [this.WardrobeTabsPackChoiceName(view.m_wtPackChoice)]));
-    this.WardrobeTabsStyleButton(screen, button, view.m_wtPackChoice != 0 || screen.m_wtPackOpen);
+    screen.m_wtButtonTexts[button].SetText(WardrobeTabsTextF(n"WUI-Header-Pack", [this.WardrobeTabsPackFilterName()]));
+    this.WardrobeTabsStyleButton(screen, button, list.selected != 0 || screen.m_wtPackOpen);
     let open: Bool = screen.m_wtPackOpen && !view.m_wtOutfitsSection;
     if IsDefined(screen.m_wtPackMenu) {
         screen.m_wtPackMenu.SetVisible(open);
@@ -1727,14 +1840,14 @@ private func WardrobeTabsRedrawPacks(screen: ref<WardrobeScreenController>) -> V
     for pack in list.packs {
         total += pack.count;
     }
-    // Packs with owned items (and the chosen one), by name.
-    if !screen.m_wtPackRowsReady || screen.m_wtPackRowsPacks != ArraySize(list.packs) || screen.m_wtPackRowsChoice != view.m_wtPackChoice {
+    // Packs with owned items (and the ticked ones), by name.
+    if !screen.m_wtPackRowsReady || screen.m_wtPackRowsPacks != ArraySize(list.packs) || screen.m_wtPackRowsChoice != list.version {
         ArrayClear(screen.m_wtPackRowChoice);
         ArrayPush(screen.m_wtPackRowChoice, 0);
         ArrayPush(screen.m_wtPackRowChoice, 1);
         let index: Int32 = 0;
         while index < ArraySize(list.packs) {
-            if list.packs[index].count > 0 || view.m_wtPackChoice == index + 2 {
+            if list.packs[index].count > 0 || list.packs[index].selected {
                 let at: Int32 = 2;
                 while at < ArraySize(screen.m_wtPackRowChoice)
                     && StrCmp(list.packs[screen.m_wtPackRowChoice[at] - 2].lower, list.packs[index].lower) <= 0 {
@@ -1746,19 +1859,20 @@ private func WardrobeTabsRedrawPacks(screen: ref<WardrobeScreenController>) -> V
         }
         screen.m_wtPackRowsReady = true;
         screen.m_wtPackRowsPacks = ArraySize(list.packs);
-        screen.m_wtPackRowsChoice = view.m_wtPackChoice;
+        screen.m_wtPackRowsChoice = list.version;
     }
     // More choices than rows: the rows show a window from m_wtPackScroll on.
     let size: Int32 = ArraySize(screen.m_wtPackRowChoice);
     let maxScroll: Int32 = Max(size - rows, 0);
     if screen.m_wtPackScroll < 0 {
+        // The first ticked row (ALL, the first row, while none is).
         let chosen: Int32 = 0;
-        let find: Int32 = 0;
-        while find < size {
-            if screen.m_wtPackRowChoice[find] == view.m_wtPackChoice {
+        let find: Int32 = size - 1;
+        while find >= 0 {
+            if list.IsSelected(screen.m_wtPackRowChoice[find]) {
                 chosen = find;
             }
-            find += 1;
+            find -= 1;
         }
         screen.m_wtPackScroll = chosen < rows ? 0 : chosen - rows / 2;
     }
@@ -1776,7 +1890,12 @@ private func WardrobeTabsRedrawPacks(screen: ref<WardrobeScreenController>) -> V
             screen.m_wtButtonCounts[at].SetText(ToString(count));
             screen.m_wtButtonNews[at].SetVisible(choice == 0 ? newCount > 0
                 : (choice == 1 ? screen.m_wtPackNewBase : (choice - 2 < ArraySize(screen.m_wtPackNew) && screen.m_wtPackNew[choice - 2])));
-            this.WardrobeTabsStyleButton(screen, at, choice == view.m_wtPackChoice);
+            let ticked: Bool = list.IsSelected(choice);
+            this.WardrobeTabsStyleButton(screen, at, ticked);
+            if row < ArraySize(screen.m_wtPackBoxes) && row < ArraySize(screen.m_wtPackTicks) {
+                screen.m_wtPackBoxes[row].SetVisible(choice != 0);
+                screen.m_wtPackTicks[row].SetVisible(choice != 0 && ticked);
+            }
         }
         row += 1;
     }
@@ -1812,16 +1931,12 @@ protected cb func OnWardrobePackWheel(evt: ref<inkPointerEvent>) -> Bool {
 
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsPackPasses(item: ref<InventoryGridItemData>) -> Bool {
-    let choice: Int32 = this.WardrobeTabsView().m_wtPackChoice;
-    if choice == 0 {
+    let list: ref<WardrobeTabsPackList> = this.WardrobeTabsPacks();
+    if list.selected == 0 {
         return true;
     }
     let pack: wref<WardrobeTabsPack> = this.WardrobeTabsItemPack(item);
-    if choice == 1 {
-        return !IsDefined(pack);
-    }
-    let list: ref<WardrobeTabsPackList> = this.WardrobeTabsPacks();
-    return IsDefined(pack) && choice - 2 < ArraySize(list.packs) && pack == list.packs[choice - 2];
+    return IsDefined(pack) ? pack.selected : list.baseSelected;
 }
 
 // Slot sidebar in the column the grid container freed on its left: one chip per slot of the
@@ -2504,8 +2619,8 @@ private func WardrobeTabsRefresh(screen: ref<WardrobeScreenController>) -> Void 
             widget.SetVisible(!clothing);
         }
     }
-    if WardrobeTabsConfig.ClearNewButton() < ArraySize(screen.m_wtButtons) {
-        screen.m_wtButtons[WardrobeTabsConfig.ClearNewButton()].SetVisible(clothing && screen.m_wtNewOnly);
+    if IsDefined(screen.m_wtClearNewHolder) {
+        screen.m_wtClearNewHolder.SetVisible(clothing && screen.m_wtNewOnly);
     }
     if !clothing {
         // Filled now rather than on the next tick.
@@ -2964,7 +3079,7 @@ private func WardrobeTabsUpdateMatches(screen: ref<WardrobeScreenController>) ->
 
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsFiltering(screen: ref<WardrobeScreenController>) -> Bool {
-    return screen.m_wtEquippedOnly || screen.m_wtNewOnly || NotEquals(screen.m_wtQuery, "") || this.WardrobeTabsView().m_wtPackChoice != 0;
+    return screen.m_wtEquippedOnly || screen.m_wtNewOnly || NotEquals(screen.m_wtQuery, "") || this.WardrobeTabsPacks().selected != 0;
 }
 
 // Shows the selected slot's items in the grid, those matching any search or filter. Excluding
@@ -3328,8 +3443,8 @@ private func WardrobeTabsRedrawButtons(screen: ref<WardrobeScreenController>, se
     }
     this.WardrobeTabsStyleButton(screen, 7, screen.m_wtEquippedOnly);
     let clearNew: Int32 = WardrobeTabsConfig.ClearNewButton();
-    if clearNew < buttons {
-        screen.m_wtButtons[clearNew].SetVisible(clothing && screen.m_wtNewOnly);
+    if clearNew < buttons && IsDefined(screen.m_wtClearNewHolder) {
+        screen.m_wtClearNewHolder.SetVisible(clothing && screen.m_wtNewOnly);
         this.WardrobeTabsStyleButton(screen, clearNew, false);
     }
     let sort: Int32 = WardrobeTabsConfig.SortButton();
@@ -4079,11 +4194,17 @@ protected cb func OnWardrobeButtonClick(evt: ref<inkPointerEvent>) -> Bool {
         }
         this.WardrobeTabsRedraw(screen);
     } else if button > WardrobeTabsConfig.PackButton() {
+        // A pack row (or BASE GAME) ticks or unticks and the list stays open, so several can be
+        // ticked; ALL unticks every one and closes the list, as does PACK.
         let row: Int32 = screen.m_wtPackScroll + button - WardrobeTabsConfig.PackButton() - 1;
-        screen.m_wtPackOpen = false;
-        if row < ArraySize(screen.m_wtPackRowChoice) && screen.m_wtPackRowChoice[row] != view.m_wtPackChoice {
-            view.m_wtPackChoice = screen.m_wtPackRowChoice[row];
-            WardrobeTabsDebug("Pack filter: " + this.WardrobeTabsPackChoiceName(view.m_wtPackChoice));
+        let packs: ref<WardrobeTabsPackList> = this.WardrobeTabsPacks();
+        let choice: Int32 = row < ArraySize(screen.m_wtPackRowChoice) ? screen.m_wtPackRowChoice[row] : 0;
+        if choice == 0 {
+            screen.m_wtPackOpen = false;
+        }
+        if choice != 0 || packs.selected != 0 {
+            packs.Toggle(choice);
+            WardrobeTabsDebug("Pack filter: " + this.WardrobeTabsPackFilterName() + (choice == 0 ? "" : " (" + this.WardrobeTabsPackChoiceName(choice) + (packs.IsSelected(choice) ? " on)" : " off)")));
             this.WardrobeTabsFilterChanged(screen);
         } else {
             this.WardrobeTabsRedraw(screen);
