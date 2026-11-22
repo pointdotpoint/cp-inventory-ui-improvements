@@ -81,7 +81,7 @@ public abstract class WardrobeTabsConfig {
     public static func CameraAreas() -> Int32 = 5;
 
     // Release version, logged once per wardrobe opening.
-    public static func Version() -> String = "1.0.6";
+    public static func Version() -> String = "1.0.7";
     // Routine log lines (try-ons, camera moves, refills, clicks) for development; failures and
     // the opening line are always logged.
     public static func Verbose() -> Bool = false;
@@ -113,6 +113,8 @@ public abstract class WardrobeTabsConfig {
     // the container's bottom) on top of the area tabs and the backdrop empty.
     public static func ContainerHeight() -> Float = 1414.0;
     // The outfit bar covers the bottom of the grid; the grid gets as much extra scroll room.
+    // Resizing the cards' scroll area and its render target to end above the bar instead
+    // left the grid empty in game (1.0.7 test).
     public static func BarHeight() -> Float = 120.0;
     // Backdrop behind the grid.
     public static func GridBackdrop() -> Float = 0.5;
@@ -792,6 +794,17 @@ public let m_wtOutfitQuery: String;
 @addField(ViewManager)
 public let m_wtHoverCard: wref<InventoryItemDisplayController>;
 
+// The mod widget under the pointer (the screen's m_wtHover), for the cards: a card under a
+// mod widget (CLEAR ALL, a PACK list row, an outfit bar button) still gets the pointer's
+// press and release, which would equip it.
+@addField(ViewManager)
+public let m_wtModHover: wref<inkWidget>;
+
+// The pointer is over the outfit bar's back (buttons included, or not: the buttons set
+// m_wtModHover themselves).
+@addField(ViewManager)
+public let m_wtBarHover: wref<inkWidget>;
+
 // What the watcher last saw under the cursor, for how many ticks, and for how many ticks
 // nothing has been; the item on the preview and the slot it went into.
 @addField(WardrobeScreenController)
@@ -1192,6 +1205,51 @@ public func WardrobeTabsHideNewTag() -> Void {
     }
 }
 
+// True while a shown mod widget lies over this card under the pointer: the card's press,
+// release and hold are dropped then. A hidden widget (CLEAR ALL hides once used) may never
+// get its hover out, so it does not count.
+@addMethod(InventoryItemDisplayController)
+private func WardrobeTabsCovered() -> Bool {
+    let view: ref<ViewManager> = ViewManager.GetInstance(GetGameInstance());
+    if !IsDefined(view) || !IsDefined(view.m_wtModHover) && !IsDefined(view.m_wtBarHover) || !this.WardrobeTabsInCard() {
+        return false;
+    }
+    let widget: wref<inkWidget> = IsDefined(view.m_wtModHover) ? view.m_wtModHover : view.m_wtBarHover;
+    let depth: Int32 = 0;
+    while IsDefined(widget) && depth < 16 {
+        if !widget.IsVisible() {
+            return false;
+        }
+        widget = widget.GetParentWidget();
+        depth += 1;
+    }
+    return true;
+}
+
+@wrapMethod(InventoryItemDisplayController)
+protected cb func OnDisplayClicked(evt: ref<inkPointerEvent>) -> Bool {
+    if this.WardrobeTabsCovered() {
+        return false;
+    }
+    return wrappedMethod(evt);
+}
+
+@wrapMethod(InventoryItemDisplayController)
+protected cb func OnDisplayPressed(evt: ref<inkPointerEvent>) -> Bool {
+    if this.WardrobeTabsCovered() {
+        return false;
+    }
+    return wrappedMethod(evt);
+}
+
+@wrapMethod(InventoryItemDisplayController)
+protected cb func OnDisplayHold(evt: ref<inkPointerEvent>) -> Bool {
+    if this.WardrobeTabsCovered() {
+        return false;
+    }
+    return wrappedMethod(evt);
+}
+
 @wrapMethod(InventoryItemDisplayController)
 protected cb func OnDisplayHoverOut(evt: ref<inkPointerEvent>) -> Bool {
     let result: Bool = wrappedMethod(evt);
@@ -1210,6 +1268,8 @@ protected cb func OnUninitialize() -> Bool {
         this.WardrobeTabsEndTryOn(screen);
         let view: ref<ViewManager> = this.WardrobeTabsView();
         view.m_wtHoverCard = null;
+        view.m_wtModHover = null;
+        view.m_wtBarHover = null;
         if IsDefined(screen.m_wtWatcher) {
             screen.m_wtWatcher.UnregisterFromAllCallbacks(inkanimEventType.OnEndLoop);
             screen.m_wtWatcher.Stop();
@@ -2019,6 +2079,11 @@ private func WardrobeTabsBuildBar(screen: ref<WardrobeScreenController>, contain
     let back: ref<inkRectangle> = this.WardrobeTabsMakeRect(new HDRColor(0.045, 0.012, 0.025, 1.0), 0.96);
     back.SetInteractive(true);
     back.Reparent(bar);
+    // Cards scrolled under the bar still get the pointer's press and release (a click on
+    // UPDATE equipped the card below; player report on 1.0.6): the back marks the whole bar
+    // as covering them.
+    back.RegisterToCallback(n"OnHoverOver", this, n"OnWardrobeTabsBarHoverOver");
+    back.RegisterToCallback(n"OnHoverOut", this, n"OnWardrobeTabsBarHoverOut");
     let line: ref<inkRectangle> = new inkRectangle();
     line.SetAnchor(inkEAnchor.TopFillHorizontaly);
     line.SetSize(width, 2.0);
@@ -4260,6 +4325,7 @@ protected cb func OnWardrobeTabsHoverOver(evt: ref<inkPointerEvent>) -> Bool {
     if screen.m_wtHover != target {
         let old: wref<inkWidget> = screen.m_wtHover;
         screen.m_wtHover = target;
+        this.WardrobeTabsView().m_wtModHover = target;
         this.WardrobeTabsRestyle(screen, old);
         this.WardrobeTabsRestyle(screen, target);
     }
@@ -4275,7 +4341,23 @@ protected cb func OnWardrobeTabsHoverOut(evt: ref<inkPointerEvent>) -> Bool {
     let target: wref<inkWidget> = evt.GetCurrentTarget();
     if screen.m_wtHover == target {
         screen.m_wtHover = null;
+        this.WardrobeTabsView().m_wtModHover = null;
         this.WardrobeTabsRestyle(screen, target);
+    }
+    return false;
+}
+
+@addMethod(inkPreviewGameController)
+protected cb func OnWardrobeTabsBarHoverOver(evt: ref<inkPointerEvent>) -> Bool {
+    this.WardrobeTabsView().m_wtBarHover = evt.GetCurrentTarget();
+    return false;
+}
+
+@addMethod(inkPreviewGameController)
+protected cb func OnWardrobeTabsBarHoverOut(evt: ref<inkPointerEvent>) -> Bool {
+    let view: ref<ViewManager> = this.WardrobeTabsView();
+    if view.m_wtBarHover == evt.GetCurrentTarget() {
+        view.m_wtBarHover = null;
     }
     return false;
 }
@@ -4333,6 +4415,7 @@ protected cb func OnWardrobeOutfitHoverOver(evt: ref<inkPointerEvent>) -> Bool {
     let index: Int32 = this.WardrobeTabsOutfitIndex(screen, target);
     let old: wref<inkWidget> = screen.m_wtHover;
     screen.m_wtHover = target;
+    this.WardrobeTabsView().m_wtModHover = target;
     if old != target {
         this.WardrobeTabsRestyle(screen, old);
     }
@@ -4356,6 +4439,7 @@ protected cb func OnWardrobeOutfitHoverOut(evt: ref<inkPointerEvent>) -> Bool {
     }
     if screen.m_wtHover == evt.GetCurrentTarget() {
         screen.m_wtHover = null;
+        this.WardrobeTabsView().m_wtModHover = null;
     }
     screen.m_buttonHints.RemoveButtonHint(n"click");
     screen.m_buttonHints.RemoveButtonHint(n"drop_item");
