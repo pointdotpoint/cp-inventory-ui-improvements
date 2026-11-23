@@ -112,11 +112,11 @@ public abstract class WardrobeTabsConfig {
     // is widened: its GetSize() read 0 while building, which left the outfit bar (anchored to
     // the container's bottom) on top of the area tabs and the backdrop empty.
     public static func ContainerHeight() -> Float = 1414.0;
-    // The outfit bar along the bottom of the grid container. The cards end GridBottom() above
-    // the container's bottom, as the outfits view does, so no card sits under the bar. The
-    // cards are drawn by a cache widget into a render target shown by the stashCacheRT image,
-    // which clips them; both are resized in OnInitialize, before the first frame. Resizing
-    // them once the wardrobe was shown left the grid empty (1.0.7 test), and shrinking the
+    // The outfit bar along the bottom of the grid container, opaque over the cards' bottom
+    // edge; the grid gets GridBottom() of extra scroll room so its last row clears the bar.
+    // The cards are drawn by a cache widget into a render target shown by the stashCacheRT
+    // image. Resizing both left the grid empty when done after the first frame, and drew
+    // black triangles on the cards when done in OnInitialize (1.0.7 tests); shrinking the
     // scroll area inside the cache with its own mask clipped nothing.
     public static func BarHeight() -> Float = 120.0;
     public static func GridBottom() -> Float = WardrobeTabsConfig.BarHeight() + 30.0;
@@ -656,6 +656,15 @@ public let m_wtPackNewPacks: Int32;
 @addField(WardrobeScreenController)
 public let m_wtPackScroll: Int32;
 
+// True while the mod holds Equipment-EX's m_isCursorOverManager for the open PACK list.
+// Equipment-EX (and WEAVE) scroll the card grid from a global OnPreOnRelative listener, read
+// before any widget, unless that flag says the pointer is over the outfit manager; so the
+// list's own handler cannot stop the grid. Putting the grid's position back after each notch
+// made it jerk down and up, and inkScrollController.SetInputDisabled left it scrolling (both
+// tested in game).
+@addField(WardrobeScreenController)
+public let m_wtPackGridLocked: Bool;
+
 @addField(WardrobeScreenController)
 public let m_wtPackTrack: wref<inkRectangle>;
 
@@ -958,6 +967,7 @@ private func WardrobeTabsSpawnGrid(area: ref<inkCompoundWidget>, columns: Int32)
     let grid: ref<inkWidget> = this.SpawnFromExternal(area, r"wardrobe_tabs\\gui\\grid.inkwidget", StringToName("Root" + ToString(columns)));
     if IsDefined(grid) {
         grid.SetName(n"vendor_virtualgrid");
+        grid.SetMargin(new inkMargin(0.0, 0.0, 0.0, WardrobeTabsConfig.GridBottom()));
     }
     return grid;
 }
@@ -1001,16 +1011,6 @@ private func WardrobeTabsSetColumns(screen: ref<WardrobeScreenController>, colum
 // The bottom margin is scroll room for the outfit bar that covers the grid's bottom edge.
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsInstallGrid() -> Void {
-    // The cards' cache widget and the image showing its render target end above the outfit bar.
-    let height: Float = WardrobeTabsConfig.ContainerHeight() - WardrobeTabsConfig.GridBottom();
-    let cache: ref<inkWidget> = this.GetChildWidgetByPath(n"wrapper/wrapper/vendorPanel/inventoryContainer/stash_scroll_area_cache");
-    let image: ref<inkWidget> = this.GetChildWidgetByPath(n"wrapper/wrapper/vendorPanel/inventoryContainer/stashCacheRT");
-    if IsDefined(cache) && IsDefined(image) {
-        cache.SetHeight(height);
-        image.SetHeight(height);
-    } else {
-        ModLog(n"WardrobeTabs", "Card cache not found; cards run under the outfit bar");
-    }
     let area: ref<inkCompoundWidget> = this.GetChildWidgetByPath(n"wrapper/wrapper/vendorPanel/inventoryContainer/stash_scroll_area_cache/scrollArea") as inkCompoundWidget;
     if !IsDefined(area) || !GameInstance.GetResourceDepot().ResourceExists(r"wardrobe_tabs\\gui\\grid.inkwidget") {
         ModLog(n"WardrobeTabs", "Card grid unavailable; retaining original grid");
@@ -1348,6 +1348,35 @@ private func WardrobeTabsMakeStyledRect(color: CName, opacity: Float) -> ref<ink
     return rect;
 }
 
+// HUD Painter's presets set 84 MainColors but not MediumRed or DarkerRed, so those stayed red
+// under any preset. Tile and outfit cell backs use covered colours at the opacity that gives
+// the vanilla shade over black: MediumRed (0.208) is DarkRed (0.263) at 0.79, DarkerRed (0.408)
+// is MildRed (0.682) at 0.6.
+public func WardrobeTabsPaintBack(rect: ref<inkWidget>, hovered: Bool, opacity: Float) -> Void {
+    if !IsDefined(rect) {
+        return;
+    }
+    if hovered {
+        WardrobeTabsPaint(rect, n"MainColors.MildRed");
+        rect.SetOpacity(opacity * 0.6);
+    } else {
+        WardrobeTabsPaint(rect, n"MainColors.DarkRed");
+        rect.SetOpacity(opacity * 0.79);
+    }
+}
+
+// A dark back that follows the preset: black with a faint DarkRed layer, the vanilla look of
+// the former fixed maroon (0.045, 0.012, 0.025).
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsMakeDarkBack(parent: ref<inkCompoundWidget>, opacity: Float, interactive: Bool) -> ref<inkRectangle> {
+    let back: ref<inkRectangle> = this.WardrobeTabsMakeRect(new HDRColor(0.0, 0.0, 0.0, 1.0), opacity);
+    back.SetInteractive(interactive);
+    back.Reparent(parent);
+    let tint: ref<inkRectangle> = this.WardrobeTabsMakeStyledRect(n"MainColors.DarkRed", 0.17);
+    tint.Reparent(parent);
+    return back;
+}
+
 // The mod's colours are properties of the game's main_colors.inkstyle (MainColors.Red...),
 // bound rather than set, so a mod that patches that style (HUD Painter) recolours the
 // wardrobe with the rest of the UI. Without one the vanilla values apply.
@@ -1457,6 +1486,17 @@ private func WardrobeTabsBuild(screen: ref<WardrobeScreenController>) -> Void {
             child += 1;
         }
 
+        // Equipment-EX's tiled cell frames (item_grid_frame3 and shadow_cell, 3% and 6%
+        // opacity) are sized for vanilla cells and do not scroll: they never line up with the
+        // cards.
+        let frames: ref<inkWidget> = grid.GetWidgetByPathName(n"inventoryBackgroundWrapper/inkImageWidget2");
+        if IsDefined(frames) {
+            frames.SetVisible(false);
+        }
+        let shadows: ref<inkWidget> = grid.GetWidgetByPathName(n"inventoryBackgroundWrapper/inkImageWidget2a");
+        if IsDefined(shadows) {
+            shadows.SetVisible(false);
+        }
         // Backdrop behind the cards. The container draws children in Backward order, so the
         // last child is drawn first.
         let backdrop: ref<inkRectangle> = this.WardrobeTabsMakeRect(new HDRColor(0.0, 0.0, 0.0, 1.0), WardrobeTabsConfig.GridBackdrop());
@@ -1645,8 +1685,8 @@ private func WardrobeTabsBuildPacks(screen: ref<WardrobeScreenController>, conta
     track.SetAnchor(inkEAnchor.TopLeft);
     track.SetSize(5.0, 0.0);
     track.SetMargin(new inkMargin(312.0, 8.0, 0.0, 0.0));
-    WardrobeTabsPaint(track, n"MainColors.DarkerRed");
-    track.SetOpacity(0.5);
+    WardrobeTabsPaint(track, n"MainColors.MildRed");
+    track.SetOpacity(0.3);
     track.SetInteractive(false);
     track.SetVisible(false);
     track.Reparent(menu);
@@ -2035,10 +2075,23 @@ protected cb func OnWardrobePackWheel(evt: ref<inkPointerEvent>) -> Bool {
     if !IsDefined(screen) || !evt.IsAction(n"mouse_wheel") || evt.GetAxisData() == 0.0 {
         return false;
     }
+    evt.Consume();
     let step: Int32 = WardrobeTabsConfig.PackWheelRows();
     screen.m_wtPackScroll = Max(screen.m_wtPackScroll + (evt.GetAxisData() > 0.0 ? -step : step), 0);
     this.WardrobeTabsRedrawPacks(screen);
     return true;
+}
+
+// Every tick: while the PACK list is shown the wheel scrolls only the list (and the grid
+// not at all, wherever the pointer is).
+@addMethod(inkPreviewGameController)
+private func WardrobeTabsWatchPackScroll(screen: ref<WardrobeScreenController>) -> Void {
+    let open: Bool = IsDefined(screen.m_wtPackMenu) && screen.m_wtPackMenu.IsVisible();
+    if Equals(open, screen.m_wtPackGridLocked) {
+        return;
+    }
+    screen.m_isCursorOverManager = open;
+    screen.m_wtPackGridLocked = open;
 }
 
 @addMethod(inkPreviewGameController)
@@ -2101,9 +2154,8 @@ private func WardrobeTabsBuildBar(screen: ref<WardrobeScreenController>, contain
     bar.childOrder = inkEChildOrder.Forward;
     bar.Reparent(container, 0);
     screen.m_wtBar = bar;
-    let back: ref<inkRectangle> = this.WardrobeTabsMakeRect(new HDRColor(0.045, 0.012, 0.025, 1.0), 0.96);
-    back.SetInteractive(true);
-    back.Reparent(bar);
+    // Opaque: the cards scroll under the bar and must not show through it.
+    let back: ref<inkRectangle> = this.WardrobeTabsMakeDarkBack(bar, 1.0, true);
     // Cards scrolled under the bar still get the pointer's press and release (a click on
     // UPDATE equipped the card below; player report on 1.0.6): the back marks the whole bar
     // as covering them.
@@ -2112,7 +2164,8 @@ private func WardrobeTabsBuildBar(screen: ref<WardrobeScreenController>, contain
     let line: ref<inkRectangle> = new inkRectangle();
     line.SetAnchor(inkEAnchor.TopFillHorizontaly);
     line.SetSize(width, 2.0);
-    WardrobeTabsPaint(line, n"MainColors.DarkerRed");
+    WardrobeTabsPaint(line, n"MainColors.MildRed");
+    line.SetOpacity(0.6);
     line.SetInteractive(false);
     line.Reparent(bar);
     let heading: ref<inkText> = this.WardrobeTabsMakeText(34, 0.0);
@@ -2193,8 +2246,8 @@ private func WardrobeTabsBuildOutfits(screen: ref<WardrobeScreenController>) -> 
     track.SetAnchor(inkEAnchor.TopLeft);
     track.SetSize(6.0, height);
     track.SetMargin(new inkMargin(WardrobeTabsConfig.OutfitBarLeft(), 0.0, 0.0, 0.0));
-    WardrobeTabsPaint(track, n"MainColors.DarkerRed");
-    track.SetOpacity(0.5);
+    WardrobeTabsPaint(track, n"MainColors.MildRed");
+    track.SetOpacity(0.3);
     track.SetInteractive(false);
     track.Reparent(manager, 0);
     screen.m_wtOutfitTrack = track;
@@ -2229,7 +2282,8 @@ private func WardrobeTabsMakeOutfitCell(screen: ref<WardrobeScreenController>) -
     cell.RegisterToCallback(n"OnHoverOver", this, n"OnWardrobeOutfitHoverOver");
     cell.RegisterToCallback(n"OnHoverOut", this, n"OnWardrobeOutfitHoverOut");
     cell.Reparent(screen.m_wtOutfitContent);
-    let bg: ref<inkRectangle> = this.WardrobeTabsMakeStyledRect(n"MainColors.MediumRed", 0.9);
+    let bg: ref<inkRectangle> = this.WardrobeTabsMakeRect(new HDRColor(1.0, 1.0, 1.0, 1.0), 1.0);
+    WardrobeTabsPaintBack(bg, false, 0.9);
     bg.Reparent(cell);
     let bar: ref<inkRectangle> = new inkRectangle();
     bar.SetAnchor(inkEAnchor.BottomFillHorizontaly);
@@ -2274,9 +2328,7 @@ private func WardrobeTabsMakeOutfitCell(screen: ref<WardrobeScreenController>) -
         holder.SetMargin(new inkMargin(24.0 + Cast<Float>(slot) * (size + WardrobeTabsConfig.OutfitIconGap()), WardrobeTabsConfig.OutfitIconTop(), 0.0, 0.0));
         holder.SetInteractive(false);
         holder.Reparent(cell);
-        let back: ref<inkRectangle> = this.WardrobeTabsMakeRect(new HDRColor(0.045, 0.012, 0.025, 1.0), 0.7);
-        back.SetInteractive(false);
-        back.Reparent(holder);
+        this.WardrobeTabsMakeDarkBack(holder, 0.7, false);
         let image: ref<inkImage> = new inkImage();
         image.SetAnchor(inkEAnchor.Centered);
         image.SetAnchorPoint(0.5, 0.5);
@@ -2505,7 +2557,7 @@ private func WardrobeTabsStyleOutfits(screen: ref<WardrobeScreenController>) -> 
         let edited: Bool = screen.m_wtLinkChanges >= 0 && Equals(name, screen.m_outfitSystem.m_wtLinked);
         let favourite: Bool = ArrayContains(screen.m_outfitSystem.m_wtFavourites, name);
         let hovered: Bool = screen.m_wtHover == screen.m_wtOutfitCells[index];
-        WardrobeTabsPaint(screen.m_wtOutfitCellBgs[index], hovered ? n"MainColors.DarkerRed" : n"MainColors.MediumRed");
+        WardrobeTabsPaintBack(screen.m_wtOutfitCellBgs[index], hovered, 0.9);
         screen.m_wtOutfitCellBars[index].SetVisible(worn || edited);
         screen.m_wtOutfitCellBars[index].SetOpacity(worn ? 1.0 : 0.4);
         WardrobeTabsPaint(screen.m_wtOutfitCellNames[index], worn ? n"MainColors.Blue"
@@ -2615,8 +2667,8 @@ private func WardrobeTabsBuildBody(screen: ref<WardrobeScreenController>, wrappe
     guide.SetAnchor(inkEAnchor.TopLeft);
     guide.SetSize(3.0, WardrobeTabsConfig.GroupsHeight());
     guide.SetMargin(new inkMargin(-30.0, 60.0, 0.0, 0.0));
-    WardrobeTabsPaint(guide, n"MainColors.DarkerRed");
-    guide.SetOpacity(0.6);
+    WardrobeTabsPaint(guide, n"MainColors.MildRed");
+    guide.SetOpacity(0.36);
     guide.SetInteractive(false);
     guide.Reparent(body);
 
@@ -2669,7 +2721,8 @@ private func WardrobeTabsBuildBody(screen: ref<WardrobeScreenController>, wrappe
             tile.RegisterToCallback(n"OnHoverOver", this, n"OnWardrobeTabsHoverOver");
             tile.RegisterToCallback(n"OnHoverOut", this, n"OnWardrobeTabsHoverOut");
             tile.Reparent(body);
-            let bg: ref<inkRectangle> = this.WardrobeTabsMakeStyledRect(n"MainColors.MediumRed", 0.9);
+            let bg: ref<inkRectangle> = this.WardrobeTabsMakeRect(new HDRColor(1.0, 1.0, 1.0, 1.0), 1.0);
+            WardrobeTabsPaintBack(bg, false, 0.9);
             bg.Reparent(tile);
             let bar: ref<inkRectangle> = new inkRectangle();
             bar.SetAnchor(inkEAnchor.BottomFillHorizontaly);
@@ -3320,8 +3373,7 @@ private func WardrobeTabsRedrawBody(screen: ref<WardrobeScreenController>, selec
                     let hovered: Bool = screen.m_wtHover == widget;
                     widget.SetSize(size, tileHeight);
                     widget.SetMargin(new inkMargin(Cast<Float>(tile) * (size + gap), y + WardrobeTabsConfig.GroupHeader(), 0.0, 0.0));
-                    WardrobeTabsPaint(screen.m_wtTileBgs[at], hovered ? n"MainColors.DarkerRed" : n"MainColors.MediumRed");
-                    screen.m_wtTileBgs[at].SetOpacity(isPlus ? 0.5 : 0.9);
+                    WardrobeTabsPaintBack(screen.m_wtTileBgs[at], hovered, isPlus ? 0.5 : 0.9);
                     screen.m_wtTileBars[at].SetVisible(isItem && clothing && worn[tile] == selected);
                     screen.m_wtTilePlus[at].SetVisible(isPlus);
                     WardrobeTabsPaint(screen.m_wtTilePlus[at], hovered ? activeRed : mildRed);
@@ -4033,6 +4085,7 @@ protected cb func OnWardrobeTabsWatch(proxy: ref<inkAnimProxy>) -> Bool {
     this.WardrobeTabsWatchVFocus(screen);
     this.WardrobeTabsWatchTryOn(screen);
     this.WardrobeTabsWatchLift(screen);
+    this.WardrobeTabsWatchPackScroll(screen);
     this.WardrobeTabsWatchTileFit(screen);
     this.WardrobeTabsWatchSearchClear(screen);
     if this.WardrobeTabsView().m_wtOutfitsSection {
