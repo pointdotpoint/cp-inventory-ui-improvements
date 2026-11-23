@@ -81,7 +81,7 @@ public abstract class WardrobeTabsConfig {
     public static func CameraAreas() -> Int32 = 5;
 
     // Release version, logged once per wardrobe opening.
-    public static func Version() -> String = "1.0.6";
+    public static func Version() -> String = "1.0.7";
     // Routine log lines (try-ons, camera moves, refills, clicks) for development; failures and
     // the opening line are always logged.
     public static func Verbose() -> Bool = false;
@@ -597,6 +597,10 @@ public let m_wtSearchOwned: Bool;
 // data whenever it rebuilds the grid).
 @addField(InventoryGridItemData)
 public let m_wtSearchName: String;
+
+// A worn item this mod added to its slot's list (WardrobeTabsAddWorn), not Equipment-EX's.
+@addField(InventoryGridItemData)
+public let m_wtAdded: Bool;
 
 @addField(InventoryGridItemData)
 public let m_wtSearchReady: Bool;
@@ -2930,6 +2934,15 @@ private func WardrobeTabsCapture(screen: ref<WardrobeScreenController>) -> Void 
                 slot.m_wtTab = WardrobeTabsConfig.TabOfSlot(slot.ItemData.SlotID) + 1;
                 WardrobeTabsDropDisplayCopies(slot);
             }
+            // Equipment-EX 1.3 reuses its slots across openings: worn entries this mod added
+            // before go, and WardrobeTabsUpdateWorn adds whatever is worn now.
+            let at: Int32 = ArraySize(slot.Children) - 1;
+            while at >= 0 {
+                if slot.Children[at].m_wtAdded {
+                    ArrayErase(slot.Children, at);
+                }
+                at -= 1;
+            }
             ArrayPush(screen.m_wtSlots, slot);
         }
     }
@@ -3080,6 +3093,16 @@ private func WardrobeTabsUpdateWorn(screen: ref<WardrobeScreenController>) -> Bo
     return true;
 }
 
+// Equipment-EX 1.3's EQUIPPED filter reads InventoryGridItemData.IsEquipped, a field 1.2
+// lacks: set by name through Codeware's reflection so the mod compiles against both.
+public func WardrobeTabsSetEquippedField(item: ref<InventoryGridItemData>) -> Void {
+    let type: ref<ReflectionClass> = Reflection.GetClassOf(ToVariant(item));
+    let prop: ref<ReflectionProp> = IsDefined(type) ? type.GetProperty(n"IsEquipped") : null;
+    if IsDefined(prop) {
+        prop.SetValue(ToVariant(item), ToVariant(true));
+    }
+}
+
 // Built as Equipment-EX's PopulateInventoryGrid builds its items.
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsAddWorn(screen: ref<WardrobeScreenController>, slot: ref<InventoryGridSlotData>, recordID: TweakDBID, candidates: array<InventoryItemData>) -> ref<InventoryGridItemData> {
@@ -3090,6 +3113,8 @@ private func WardrobeTabsAddWorn(screen: ref<WardrobeScreenController>, slot: re
             WardrobeTabsMarkBuilt(item, data, slot.ItemData.SlotID, screen.m_player, GetLocalizedText(item.Item.GetName()));
             item.DisplayContextData = screen.m_itemDisplayContext;
             item.Parent = slot;
+            item.m_wtAdded = true;
+            WardrobeTabsSetEquippedField(item);
             ArrayInsert(slot.Children, 0, item);
             return item;
         }
@@ -4097,14 +4122,26 @@ protected cb func OnWardrobeTabsWatch(proxy: ref<inkAnimProxy>) -> Bool {
     if this.WardrobeTabsView().m_wtOutfitsSection {
         this.WardrobeTabsWatchOutfits(screen);
     }
-    // A freshly populated source starts with slot data this mod has not tagged yet. After
-    // WardrobeTabsApply the source holds item data only, which never matches.
+    // A freshly populated source starts with slot data. After WardrobeTabsApply the source
+    // holds item data only, so any slot data first means Equipment-EX published its grid.
+    // Up to 1.0.6 only untagged slot data counted; Equipment-EX 1.3 keeps its slots in
+    // WardrobeCache across openings, so on the second opening they were tagged already and
+    // its stock slot list stayed.
     if screen.m_inventoryGridDataSource.GetArraySize() > 0u {
         let first: ref<InventoryGridSlotData> = screen.m_inventoryGridDataSource.GetItem(0u) as InventoryGridSlotData;
-        if IsDefined(first) && first.m_wtTab == 0 {
+        if IsDefined(first) {
             this.WardrobeTabsCapture(screen);
             return true;
         }
+    }
+    // Equipment-EX 1.3's RefreshVisibility (after an equip, the EQUIPPED filter) sets each
+    // slot's IsCollapsed from its persistent collapsed list, and its filter hides the items
+    // of a collapsed slot: the selected slot is kept open.
+    let open: Int32 = this.WardrobeTabsSlotIndex(screen, this.WardrobeTabsView().m_wtSlot);
+    if open >= 0 && screen.m_wtSlots[open].IsCollapsed {
+        screen.m_wtSlots[open].IsCollapsed = false;
+        WardrobeTabsForceFilterPass(screen.m_inventoryGridDataView);
+        screen.m_inventoryGridDataView.UpdateView();
     }
     // WEAVE edits the source in place (drop, batch drop, slot reassignment, its equipped
     // copies): it rebuilds it from the slot data it finds there, and after WardrobeTabsApply

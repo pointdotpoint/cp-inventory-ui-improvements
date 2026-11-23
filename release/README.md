@@ -41,7 +41,9 @@ below.
 
 Works with [WEAVE](https://www.nexusmods.com/cyberpunk2077/mods/28273) too, which replaces
 Equipment-EX's scripts with a faster version (see its page for what it needs). Recommended if
-you own thousands of clothing items.
+you own thousands of clothing items. If you use WEAVE, don't install an Equipment-EX update
+over it: the update replaces WEAVE's copy of Equipment-EX's script, and the game then reports a
+script error for WEAVE and this mod and turns off all script mods.
 
 Works with [HUD Painter](https://www.nexusmods.com/cyberpunk2077/mods/14935): the wardrobe takes
 the colours of your HUD Painter preset, like the rest of the game's interface. Without it the
