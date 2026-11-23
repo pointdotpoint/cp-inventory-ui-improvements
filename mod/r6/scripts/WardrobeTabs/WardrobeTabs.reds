@@ -112,10 +112,14 @@ public abstract class WardrobeTabsConfig {
     // is widened: its GetSize() read 0 while building, which left the outfit bar (anchored to
     // the container's bottom) on top of the area tabs and the backdrop empty.
     public static func ContainerHeight() -> Float = 1414.0;
-    // The outfit bar covers the bottom of the grid; the grid gets as much extra scroll room.
-    // Resizing the cards' scroll area and its render target to end above the bar instead
-    // left the grid empty in game (1.0.7 test).
+    // The outfit bar along the bottom of the grid container. The cards end GridBottom() above
+    // the container's bottom, as the outfits view does, so no card sits under the bar. The
+    // cards are drawn by a cache widget into a render target shown by the stashCacheRT image,
+    // which clips them; both are resized in OnInitialize, before the first frame. Resizing
+    // them once the wardrobe was shown left the grid empty (1.0.7 test), and shrinking the
+    // scroll area inside the cache with its own mask clipped nothing.
     public static func BarHeight() -> Float = 120.0;
+    public static func GridBottom() -> Float = WardrobeTabsConfig.BarHeight() + 30.0;
     // Backdrop behind the grid.
     public static func GridBackdrop() -> Float = 0.5;
 
@@ -954,7 +958,6 @@ private func WardrobeTabsSpawnGrid(area: ref<inkCompoundWidget>, columns: Int32)
     let grid: ref<inkWidget> = this.SpawnFromExternal(area, r"wardrobe_tabs\\gui\\grid.inkwidget", StringToName("Root" + ToString(columns)));
     if IsDefined(grid) {
         grid.SetName(n"vendor_virtualgrid");
-        grid.SetMargin(new inkMargin(0.0, 0.0, 0.0, WardrobeTabsConfig.BarHeight() + 10.0));
     }
     return grid;
 }
@@ -998,6 +1001,16 @@ private func WardrobeTabsSetColumns(screen: ref<WardrobeScreenController>, colum
 // The bottom margin is scroll room for the outfit bar that covers the grid's bottom edge.
 @addMethod(inkPreviewGameController)
 private func WardrobeTabsInstallGrid() -> Void {
+    // The cards' cache widget and the image showing its render target end above the outfit bar.
+    let height: Float = WardrobeTabsConfig.ContainerHeight() - WardrobeTabsConfig.GridBottom();
+    let cache: ref<inkWidget> = this.GetChildWidgetByPath(n"wrapper/wrapper/vendorPanel/inventoryContainer/stash_scroll_area_cache");
+    let image: ref<inkWidget> = this.GetChildWidgetByPath(n"wrapper/wrapper/vendorPanel/inventoryContainer/stashCacheRT");
+    if IsDefined(cache) && IsDefined(image) {
+        cache.SetHeight(height);
+        image.SetHeight(height);
+    } else {
+        ModLog(n"WardrobeTabs", "Card cache not found; cards run under the outfit bar");
+    }
     let area: ref<inkCompoundWidget> = this.GetChildWidgetByPath(n"wrapper/wrapper/vendorPanel/inventoryContainer/stash_scroll_area_cache/scrollArea") as inkCompoundWidget;
     if !IsDefined(area) || !GameInstance.GetResourceDepot().ResourceExists(r"wardrobe_tabs\\gui\\grid.inkwidget") {
         ModLog(n"WardrobeTabs", "Card grid unavailable; retaining original grid");
@@ -1173,13 +1186,19 @@ private func WardrobeTabsInCard() -> Bool {
     return false;
 }
 
+// A card under a mod widget (the outfit bar, CLEAR ALL, a PACK list row) still gets the
+// pointer's hover. It is still recorded for the try-on watcher, which waits until nothing
+// covers the card, but its own hover (tooltip, button hints) is skipped.
 @wrapMethod(InventoryItemDisplayController)
 protected cb func OnDisplayHoverOver(evt: ref<inkPointerEvent>) -> Bool {
-    let result: Bool = wrappedMethod(evt);
-    if this.WardrobeTabsInCard() {
+    let inCard: Bool = this.WardrobeTabsInCard();
+    if inCard {
         ViewManager.GetInstance(GetGameInstance()).m_wtHoverCard = this;
     }
-    return result;
+    if inCard && this.WardrobeTabsCovered() {
+        return false;
+    }
+    return wrappedMethod(evt);
 }
 
 public func WardrobeTabsIsNew(itemID: ItemID) -> Bool {
@@ -1429,9 +1448,15 @@ private func WardrobeTabsBuild(screen: ref<WardrobeScreenController>) -> Void {
                 let margin: inkMargin = widget.GetMargin();
                 margin.left += gridLeft;
                 widget.SetMargin(margin);
+            } else {
+                // The scroll bar (anchored to fill vertically) ends with the cards.
+                let margin: inkMargin = widget.GetMargin();
+                margin.bottom += WardrobeTabsConfig.GridBottom();
+                widget.SetMargin(margin);
             }
             child += 1;
         }
+
         // Backdrop behind the cards. The container draws children in Backward order, so the
         // last child is drawn first.
         let backdrop: ref<inkRectangle> = this.WardrobeTabsMakeRect(new HDRColor(0.0, 0.0, 0.0, 1.0), WardrobeTabsConfig.GridBackdrop());
@@ -3749,9 +3774,10 @@ private func WardrobeTabsWatchTryOn(screen: ref<WardrobeScreenController>) -> Vo
     if IsDefined(hovered) && hovered.IsEquipped() {
         hovered = null;
     }
-    // A mod widget under the pointer (CLEAR ALL, a PACK list row) lies over the cards, and the
-    // card below it still gets its hover: no try-on then (it also cleared that card's NEW tag).
-    if IsDefined(screen.m_wtHover) {
+    // A mod widget under the pointer (CLEAR ALL, a PACK list row, the outfit bar) lies over the
+    // cards, and the card below it still gets its hover: no try-on then (it also cleared that
+    // card's NEW tag).
+    if IsDefined(screen.m_wtHover) || IsDefined(view.m_wtBarHover) {
         hovered = null;
     }
     if hovered != screen.m_wtTryHover {
@@ -4349,7 +4375,15 @@ protected cb func OnWardrobeTabsHoverOut(evt: ref<inkPointerEvent>) -> Bool {
 
 @addMethod(inkPreviewGameController)
 protected cb func OnWardrobeTabsBarHoverOver(evt: ref<inkPointerEvent>) -> Bool {
-    this.WardrobeTabsView().m_wtBarHover = evt.GetCurrentTarget();
+    let view: ref<ViewManager> = this.WardrobeTabsView();
+    view.m_wtBarHover = evt.GetCurrentTarget();
+    // The pointer may have come down from a card that runs under the bar: its tooltip and
+    // button hints go, as the card is covered now.
+    let screen: ref<WardrobeScreenController> = this as WardrobeScreenController;
+    if IsDefined(screen) && IsDefined(view.m_wtHoverCard) {
+        screen.m_tooltipManager.HideTooltips();
+        screen.ShowItemButtonHints(null);
+    }
     return false;
 }
 
