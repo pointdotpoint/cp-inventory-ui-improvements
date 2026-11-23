@@ -81,7 +81,7 @@ public abstract class WardrobeTabsConfig {
     public static func CameraAreas() -> Int32 = 5;
 
     // Release version, logged once per wardrobe opening.
-    public static func Version() -> String = "1.0.7";
+    public static func Version() -> String = "1.0.6";
     // Routine log lines (try-ons, camera moves, refills, clicks) for development; failures and
     // the opening line are always logged.
     public static func Verbose() -> Bool = false;
@@ -116,7 +116,7 @@ public abstract class WardrobeTabsConfig {
     // edge; the grid gets GridBottom() of extra scroll room so its last row clears the bar.
     // The cards are drawn by a cache widget into a render target shown by the stashCacheRT
     // image. Resizing both left the grid empty when done after the first frame, and drew
-    // black triangles on the cards when done in OnInitialize (1.0.7 tests); shrinking the
+    // black triangles on the cards when done in OnInitialize (1.0.6 tests); shrinking the
     // scroll area inside the cache with its own mask clipped nothing.
     public static func BarHeight() -> Float = 120.0;
     public static func GridBottom() -> Float = WardrobeTabsConfig.BarHeight() + 30.0;
@@ -534,6 +534,11 @@ public let m_wtVFocusCollider: wref<inkWidget>;
 
 @addField(WardrobeScreenController)
 public let m_wtAllItems: array<ref<IScriptable>>;
+
+// Entries WardrobeTabsApply last put in the grid's source; another size means Equipment-EX
+// or WEAVE replaced them (see OnWardrobeTabsWatch).
+@addField(WardrobeScreenController)
+public let m_wtShown: Int32;
 
 @addField(WardrobeScreenController)
 public let m_wtWatcher: ref<inkAnimProxy>;
@@ -2157,7 +2162,7 @@ private func WardrobeTabsBuildBar(screen: ref<WardrobeScreenController>, contain
     // Opaque: the cards scroll under the bar and must not show through it.
     let back: ref<inkRectangle> = this.WardrobeTabsMakeDarkBack(bar, 1.0, true);
     // Cards scrolled under the bar still get the pointer's press and release (a click on
-    // UPDATE equipped the card below; player report on 1.0.6): the back marks the whole bar
+    // UPDATE equipped the card below; player report on 1.0.5): the back marks the whole bar
     // as covering them.
     back.RegisterToCallback(n"OnHoverOver", this, n"OnWardrobeTabsBarHoverOver");
     back.RegisterToCallback(n"OnHoverOut", this, n"OnWardrobeTabsBarHoverOut");
@@ -3274,6 +3279,7 @@ private func WardrobeTabsApply(screen: ref<WardrobeScreenController>, resetScrol
         screen.QueueScrollPositionRestore();
     }
     screen.m_inventoryGridDataSource.Reset(kept);
+    screen.m_wtShown = ArraySize(kept);
     WardrobeTabsForceFilterPass(screen.m_inventoryGridDataView);
     screen.m_inventoryGridDataView.UpdateView();
     if resetScroll {
@@ -4099,6 +4105,19 @@ protected cb func OnWardrobeTabsWatch(proxy: ref<inkAnimProxy>) -> Bool {
             this.WardrobeTabsCapture(screen);
             return true;
         }
+    }
+    // WEAVE edits the source in place (drop, batch drop, slot reassignment, its equipped
+    // copies): it rebuilds it from the slot data it finds there, and after WardrobeTabsApply
+    // there is none, so the grid went empty and the dropped item stayed in m_wtSlots (bug
+    // 1174032). Any size other than what Apply pushed means such an edit: a full populate
+    // gives fresh slot data, which the check above captures on the next tick.
+    let size: Int32 = Cast<Int32>(screen.m_inventoryGridDataSource.GetArraySize());
+    if ArraySize(screen.m_wtSlots) > 0 && size != screen.m_wtShown {
+        WardrobeTabsDebug("Grid changed outside the mod (" + ToString(screen.m_wtShown) + " -> " + ToString(size) + "): full refill");
+        screen.PopulateInventoryGrid();
+        // A populate that brings no slot data is not captured; take its size so it runs once.
+        screen.m_wtShown = Cast<Int32>(screen.m_inventoryGridDataSource.GetArraySize());
+        return true;
     }
     if ArraySize(screen.m_wtSlots) == 0 {
         return true;
